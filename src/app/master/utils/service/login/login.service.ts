@@ -75,6 +75,7 @@ export class LoginService {
       .pipe(
         map(resp => {
           localStorage.clear();
+          this.leerToken();
           return resp;
         })
       );
@@ -139,6 +140,8 @@ export class LoginService {
 
   // metodo para guard(login.guard.ts)
   estaAutenticado(): boolean {
+    console.log(this.userToken.length);
+
     if (this.userToken.length < 1) {
       return false;
     }

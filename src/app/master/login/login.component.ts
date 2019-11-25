@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("autenticado: ", this.loginS.estaAutenticado());
     if (this.loginS.estaAutenticado()) {
       this.router.navigateByUrl(url.principal);
     } else {

@@ -21,19 +21,14 @@ export class SidebarComponent implements OnInit {
   email: string;
 
   constructor(private sidebarS: SidebarService) {
-    console.log(this.datosUser);
-
-    if (this.datosUser !== null) {
-      //   console.log("DATOS");
-      this.imagen = this.datosUser.adusfoto;
-      this.nombre = this.datosUser.adusnomb;
-      this.email = this.datosUser.adusemai;
-      this.cargarMenu();
-      this.cargarFto();
-    } else {
-      console.log("salir");
-      // window.location.href = "#/login";
+    if (this.datosUser === null) {
+      return;
     }
+    this.imagen = this.datosUser.adusfoto;
+    this.nombre = this.datosUser.adusnomb;
+    this.email = this.datosUser.adusemai;
+    this.cargarMenu();
+    this.cargarFto();
   }
 
   ngOnInit() {
