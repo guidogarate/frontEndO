@@ -1,4 +1,4 @@
-<body  class="animaciones haciadentro">
+<body class="animaciones haciadentro">
   <!-- Page content -->
   <div class="container page-content animaciones haciadentro">
     <!-- Main content -->
@@ -35,11 +35,7 @@
                     <span matPrefix class="px-1">
                       <i class="icon-cloud text-muted"></i>
                     </span>
-                    <mat-select
-                      [(value)]="selected"
-                      formControlName="id_database"
-                      required
-                    >
+                    <mat-select formControlName="id_database" required>
                       <mat-option
                         *ngFor="let database of databases"
                         [value]="database.id"

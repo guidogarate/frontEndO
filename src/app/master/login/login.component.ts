@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("autenticado: ", this.loginS.estaAutenticado());
     if (this.loginS.estaAutenticado()) {
       this.router.navigateByUrl(url.principal);
     } else {
@@ -124,12 +123,15 @@ export class LoginComponent implements OnInit {
       }
     } else {
       if (registra === "passw") {
+        console.log("registrar contraseña");
         this.usuario = this.loginForm.get("ingresoCompleto").value;
-        if (this.usuario.passw === this.usuario.passs2) {
+        console.log(this.usuario);
+        if (this.usuario.passw === this.usuario.passw2) {
           this.loginS.regContra(this.usuario).subscribe(resp => {
+            console.log(resp);
             if (resp["ok"]) {
               new Noty({
-                text: resp["messagge"],
+                text: "Contraseña registrado correctamente",
                 theme: "nest",
                 progressBar: false,
                 timeout: 3500,
