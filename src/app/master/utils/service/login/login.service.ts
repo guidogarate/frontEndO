@@ -74,6 +74,7 @@ export class LoginService {
       })
       .pipe(
         map(resp => {
+          localStorage.clear();
           return resp;
         })
       );

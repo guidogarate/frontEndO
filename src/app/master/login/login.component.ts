@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { LoginModels } from "../utils/models/login/login.models";
 import { LoginService } from "../utils/service/login/login.service";
 import * as Noty from "noty";
@@ -19,13 +20,20 @@ export class LoginComponent implements OnInit {
   ingresarContra = false;
   passw2 = false;
   BotonEnviar = true;
-
-  constructor(private loginS: LoginService) {
+  estaAutenticado = false;
+  constructor(private loginS: LoginService, private router: Router) {
     this.formulario();
     this.cargarDB();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.loginS.estaAutenticado()) {
+      this.router.navigateByUrl(url.principal);
+    } else {
+      this.router.navigateByUrl(url.salir);
+    }
+    this.estaAutenticado = true;
+  }
 
   formulario() {
     this.loginForm = new FormGroup({
@@ -45,7 +53,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ingresar() {
+  ingresar(registra?: string) {
     this.usuario = this.loginForm.get("ingresoCompleto").value;
     if (
       this.loginForm.get("ingresoCompleto.id_database").valid &&
@@ -53,67 +61,99 @@ export class LoginComponent implements OnInit {
     ) {
       this.estaRegistrado();
     }
-    console.log(this.loginForm.get("ingresoCompleto").valid);
-    console.log(this.usuario);
-    if (this.loginForm.get("ingresoCompleto").valid) {
-      // AQUI IMPLEMENTAR DOS FUNCIONES
-      // UNO QUE REGISTRE CONTRASEÑA
-      // Y OTRO PARA INGRESAR AL SISTEMA
-      this.loading = true;
-      this.btnIngresar = "Ingresando...";
-      this.loginS.login(this.usuario).subscribe(resp => {
-        this.loading = false;
-        this.btnIngresar = "Ingresar";
-        console.log(resp);
-        if (resp["ok"]) {
+    if (registra === "ingr") {
+      this.usuario = this.loginForm.get("ingresoCompleto").value;
+      if (this.loginForm.get("ingresoCompleto").valid) {
+        // aqui va codigo
+        this.loading = true;
+        this.btnIngresar = "Ingresando...";
+        this.loginS.login(this.usuario).subscribe(resp => {
+          this.loading = false;
+          this.btnIngresar = "Ingresar";
+          console.log(resp);
+          if (resp["ok"]) {
+            new Noty({
+              text: "Ingresando...",
+              theme: "nest",
+              progressBar: false,
+              timeout: 3500,
+              type: "error",
+              layout: "bottomRight"
+            }).show();
+            window.location.href = url.principal;
+            this.loginForm.get("ingresoCompleto.cod_user").reset();
+            this.loginForm.get("ingresoCompleto.passw").reset();
+          } else {
+            if (resp["messagge"] === "ingresar contraseña") {
+              new Noty({
+                text: resp["messagge"],
+                theme: "nest",
+                progressBar: false,
+                timeout: 3500,
+                type: "error",
+                layout: "bottomRight"
+              }).show();
+              this.loginForm.get("ingresoCompleto.passw").reset();
+              this.passw2 = true;
+              this.ingresarContra = true;
+            } else {
+              new Noty({
+                text: resp["messagge"],
+                theme: "nest",
+                progressBar: false,
+                timeout: 3500,
+                type: "error",
+                layout: "bottomRight"
+              }).show();
+            }
+          }
+        });
+      } else {
+        if (!this.loginForm.get("ingresoCompleto.id_database").valid) {
           new Noty({
-            text: resp["messagge"],
+            text: "Selecciona una base de datos",
             theme: "nest",
             progressBar: false,
             timeout: 3500,
             type: "error",
             layout: "bottomRight"
           }).show();
-          window.location.href = url.principal;
-          this.loginForm.get("ingresoCompleto.cod_user").reset();
-          this.loginForm.get("ingresoCompleto.passw").reset();
-        } else {
-          if (resp["messagge"] === "ingresar contraseña") {
-            new Noty({
-              text: resp["messagge"],
-              theme: "nest",
-              progressBar: false,
-              timeout: 3500,
-              type: "error",
-              layout: "bottomRight"
-            }).show();
-            this.loginForm.get("ingresoCompleto.passw").reset();
-            this.passw2 = true;
-            this.ingresarContra = true;
-          } else {
-            new Noty({
-              text: resp["messagge"],
-              theme: "nest",
-              progressBar: false,
-              timeout: 3500,
-              type: "error",
-              layout: "bottomRight"
-            }).show();
-          }
         }
-      });
-    } else {
-      if (!this.loginForm.get("ingresoCompleto.id_database").valid) {
-        new Noty({
-          text: "Selecciona una base de datos",
-          theme: "nest",
-          progressBar: false,
-          timeout: 3500,
-          type: "error",
-          layout: "bottomRight"
-        }).show();
+        return;
       }
-      return;
+    } else {
+      if (registra === "passw") {
+        this.usuario = this.loginForm.get("ingresoCompleto").value;
+        if (this.usuario.passw === this.usuario.passs2) {
+          this.loginS.regContra(this.usuario).subscribe(resp => {
+            if (resp["ok"]) {
+              new Noty({
+                text: resp["messagge"],
+                theme: "nest",
+                progressBar: false,
+                timeout: 3500,
+                type: "error",
+                layout: "bottomRight"
+              }).show();
+              this.passw2 = false;
+              this.ingresarContra = false;
+              this.loginForm.get("ingresoCompleto.passw").reset();
+            }
+            return;
+          });
+        } else {
+          new Noty({
+            text: "Contraseñas incorrecta",
+            theme: "nest",
+            progressBar: false,
+            timeout: 3500,
+            type: "error",
+            layout: "bottomRight"
+          }).show();
+        }
+      } else {
+        return;
+      }
     }
   }
 

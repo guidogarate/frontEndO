@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { LoginService } from "src/app/master/utils/service/login/login.service";
 import url from "src/app/master/config/url.config";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-navbar",
@@ -8,15 +9,13 @@ import url from "src/app/master/config/url.config";
   styleUrls: ["./navbar.component.css"]
 })
 export class NavbarComponent implements OnInit {
-  constructor(private loginS: LoginService) {}
+  constructor(private loginS: LoginService, public router: Router) {}
 
   ngOnInit() {}
   salir() {
     this.loginS.logout().subscribe(resp => {
-      localStorage.clear();
-      setTimeout(() => {
-        window.location.href = url.salir;
-      }, 1000);
+      // this.router.navigate(["/login"]);
+      window.location.href = "#/login";
     });
   }
 }
