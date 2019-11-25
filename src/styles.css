@@ -1,0 +1,35 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* estilo de ingreso fadeIn*/
+.puntero {
+  cursor: pointer;
+}
+
+/* Animaciones */
+.animaciones {
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@keyframes haciadentroa {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.haciadentro {
+  animation-name: haciadentroa;
+}

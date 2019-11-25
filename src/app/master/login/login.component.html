@@ -1,0 +1,144 @@
+<body class="animaciones haciadentro">
+  <!-- Page content -->
+  <div class="container page-content animaciones haciadentro">
+    <!-- Main content -->
+    <div class="content-wrapper">
+      <div class="content d-flex justify-content-center align-items-center  ">
+        <!-- Login card -->
+        <form
+          class="login-form"
+          ngNativeValidate
+          autocomplete="off"
+          [formGroup]="loginForm"
+          (ngSubmit)="ingresar()"
+        >
+          <div class="card mb-0">
+            <div class="card-body">
+              <div class="text-center mb-3">
+                <i
+                  class="icon-people icon-2x text-warning-400 border-warning-400 border-3 rounded-round p-3 mb-3 mt-1"
+                ></i>
+                <h5 class="mb-0">Ingrese a su cuentra</h5>
+                <span class="d-block text-muted"
+                  >Introdusca sus credenciales</span
+                >
+              </div>
+              <div formGroupName="ingresoCompleto">
+                <div
+                  class="form-group form-group-feedback form-group-feedback-left"
+                >
+                  <mat-form-field
+                    style="width:100%;"
+                    on-focusout="seleccione()"
+                  >
+                    <mat-label> Selecciona una base de datos</mat-label>
+                    <span matPrefix class="px-1">
+                      <i class="icon-cloud text-muted"></i>
+                    </span>
+                    <mat-select
+                      [(value)]="selected"
+                      formControlName="id_database"
+                      required
+                    >
+                      <mat-option
+                        *ngFor="let database of databases"
+                        [value]="database.id"
+                      >
+                        {{ database.nombre }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div
+                  class="form-group form-group-feedback form-group-feedback-left"
+                >
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Usuario"
+                    required
+                    formControlName="cod_user"
+                    name="cod_user"
+                    on-focusout="seleccione()"
+                  />
+                  <div class="form-control-feedback">
+                    <i class="icon-user text-muted"></i>
+                  </div>
+                </div>
+                <!-- <input name="date" formControlName="cod_user" type="text" on-focus="focusFunction()" on-focusout="focusOutFunction()"> -->
+                <div
+                  class="form-group form-group-feedback form-group-feedback-left"
+                >
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Contraseña"
+                    required
+                    [readonly]="desabiliContra"
+                    formControlName="passw"
+                    name="passw"
+                  />
+                  <div class="form-control-feedback">
+                    <i class="icon-lock2 text-muted"></i>
+                  </div>
+                </div>
+                <div
+                  *ngIf="passw2"
+                  class="form-group form-group-feedback form-group-feedback-left"
+                >
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Repetir contraseña"
+                    required
+                    [disabled]="true"
+                    formControlName="passw2"
+                    name="passw2"
+                  />
+                  <div class="form-control-feedback">
+                    <i class="icon-lock2 text-muted"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block"
+                  id="regContra"
+                  *ngIf="!ingresarContra"
+                >
+                  <i
+                    *ngIf="loading"
+                    class="icon-spinner spinner position-left"
+                  ></i>
+                  {{ btnIngresar }}
+                  <i
+                    *ngIf="!loading"
+                    class="icon-circle-right2 position-right"
+                  ></i>
+                </button>
+                <button
+                  *ngIf="ingresarContra"
+                  type="submit"
+                  class="btn btn-info btn-sm  btn-block"
+                  id="ingresarContra"
+                >
+                  Registrar Contraseña
+                </button>
+              </div>
+
+              <span class="form-text text-center text-muted"
+                >Al continuar, confirma que ha leido nuestro
+                <a href="#">Terminos &amp; Condiciones</a> y
+                <a href="#">Politicas de Cookies</a>
+                <strong> SAGE-SOFT</strong></span
+              >
+            </div>
+          </div>
+        </form>
+        <!-- /login card -->
+      </div>
+    </div>
+  </div>
+</body>
