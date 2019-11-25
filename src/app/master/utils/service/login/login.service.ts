@@ -112,6 +112,7 @@ export class LoginService {
       cod_user: usuario.cod_user,
       passw1: usuario.passw,
       passs: usuario.passs
+
     });
     const url1 = `${url.prod}${url.regContra}`;
     return this.httpClient
@@ -123,7 +124,6 @@ export class LoginService {
       .pipe(
         map(resp => {
           if (resp["ok"]) {
-            console.log(resp);
             return { ok: true };
           } else {
             return resp;
@@ -140,8 +140,6 @@ export class LoginService {
 
   // metodo para guard(login.guard.ts)
   estaAutenticado(): boolean {
-    console.log(this.userToken.length);
-
     if (this.userToken.length < 1) {
       return false;
     }
