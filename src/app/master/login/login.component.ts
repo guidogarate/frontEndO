@@ -128,7 +128,6 @@ export class LoginComponent implements OnInit {
         if (this.usuario.passw === this.usuario.passw2) {
 
           this.loginS.regContra(this.usuario).subscribe(resp => {
-            console.log(resp);
             if (resp["ok"]) {
               new Noty({
                 text: "Contraseña registrado correctamente",
@@ -166,6 +165,7 @@ export class LoginComponent implements OnInit {
         this.passw2 = true;
         this.ingresarContra = true;
       }
+
     });
   }
 
@@ -192,7 +192,6 @@ export class LoginComponent implements OnInit {
           layout: "bottomRight"
         }).show();
       } else {
-        // console.log("consulta a la bd");
         this.usuario = this.loginForm.get("ingresoCompleto").value;
         this.estaRegistrado();
         this.desabiliContra = false;

@@ -18,10 +18,4 @@ export class NavbarComponent implements OnInit {
       window.location.href = "#/login";
     });
   }
-
-  buscar( termino:string ){
-    // console.log(termino);
-    this.router.navigate( ['/buscar',termino] );
-  }
-  
 }
