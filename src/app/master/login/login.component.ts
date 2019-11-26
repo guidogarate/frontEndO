@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
 
   ingresar(registra?: string) {
     this.usuario = this.loginForm.get("ingresoCompleto").value;
+    console.log("usuario: ",this.usuario);
     if (
       this.loginForm.get("ingresoCompleto.id_database").valid &&
       this.loginForm.get("ingresoCompleto.cod_user").valid
@@ -64,6 +65,7 @@ export class LoginComponent implements OnInit {
     if (registra === "ingr") {
       this.usuario = this.loginForm.get("ingresoCompleto").value;
       if (this.loginForm.get("ingresoCompleto").valid) {
+        console.log("es valido");
         // aqui va codigo
         this.loading = true;
         this.btnIngresar = "Ingresando...";
@@ -109,6 +111,7 @@ export class LoginComponent implements OnInit {
           }
         });
       } else {
+        console.log("datos no validos =(");
         if (!this.loginForm.get("ingresoCompleto.id_database").valid) {
           new Noty({
             text: "Selecciona una base de datos",
@@ -137,10 +140,11 @@ export class LoginComponent implements OnInit {
                 type: "error",
                 layout: "bottomRight"
               }).show();
-              this.passw2 = false;
-              this.ingresarContra = false;
-              this.loginForm.get("ingresoCompleto.passw").reset();
             }
+            this.passw2 = false;
+            this.ingresarContra = false;
+            this.loginForm.get("ingresoCompleto.passw").reset();
+            this.loginForm.get("ingresoCompleto.passw2").reset();
             return;
           });
         } else {
