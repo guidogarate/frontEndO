@@ -125,8 +125,7 @@ export class LoginComponent implements OnInit {
       if (registra === "passw") {
         console.log("registrar contraseña");
         this.usuario = this.loginForm.get("ingresoCompleto").value;
-
-        if (this.usuario.passw === this.usuario.passs) {
+        if (this.usuario.passw === this.usuario.passw2) {
 
           this.loginS.regContra(this.usuario).subscribe(resp => {
             console.log(resp);

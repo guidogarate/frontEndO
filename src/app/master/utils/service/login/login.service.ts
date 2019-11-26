@@ -111,7 +111,7 @@ export class LoginService {
       id_database: usuario.id_database,
       cod_user: usuario.cod_user,
       passw1: usuario.passw,
-      passs: usuario.passs
+      passw2: usuario.passw2
 
     });
     const url1 = `${url.prod}${url.regContra}`;
