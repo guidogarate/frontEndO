@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ɵConsole } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { LoginModels } from "../utils/models/login/login.models";
@@ -64,6 +64,9 @@ export class LoginComponent implements OnInit {
     }
     if (registra === "ingr") {
       this.usuario = this.loginForm.get("ingresoCompleto").value;
+      console.log("ingreso valido:", this.usuario);
+      console.log("ingreso valido:", this.loginForm.get("ingresoCompleto"));
+      console.log("ingreso valido:", this.loginForm.get("ingresoCompleto").valid);
       if (this.loginForm.get("ingresoCompleto").valid) {
         console.log("es valido");
         // aqui va codigo
@@ -141,10 +144,15 @@ export class LoginComponent implements OnInit {
                 layout: "bottomRight"
               }).show();
             }
-            this.passw2 = false;
-            this.ingresarContra = false;
+            console.log("ingreso completo inicial: ",this.loginForm.get("ingresoCompleto"));
+            this.loginForm.get("ingresoCompleto.cod_user").reset();
             this.loginForm.get("ingresoCompleto.passw").reset();
-            this.loginForm.get("ingresoCompleto.passw2").reset();
+            this.passw2 = false;
+            // this.estaAutenticado = true;
+            this.ingresarContra = false;
+            console.log("passw2 -> ", this.passw2);
+            console.log("INGRESAR CONTRASEÑA -> ", this.ingresarContra);
+            console.log("ingreso completo: FINAL",this.loginForm.get("ingresoCompleto"));
             return;
           });
         } else {

@@ -17,6 +17,13 @@
       <h6 class="mb-0 text-white text-shadow-dark">{{ nombre }}</h6>
       <span class="font-size-sm text-white text-shadow-dark">{{ email }}</span>
     </div>
+    <div class="col-md-12">
+      <input style="padding-left: 25px;" class="form-control text-white" type="text" placeholder="Buscar" 
+      (keyup.enter)="buscar(buscarTexto.value)" #buscarTexto>
+      <div class="form-control-feedback" style="color:white">
+        <i class="icon-search4"></i>
+    </div>
+    </div>
 
     <div class="sidebar-user-material-footer">
       <a
