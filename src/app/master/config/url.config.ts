@@ -12,7 +12,9 @@ const url = {
   cargarMenu: "sys_000/sys_002/cargar-menu",
   cargarFto: "sys_000/sys_002/cargar-favoritos",
   eliminarFto: "sys_000/sys_002/eliminar-favoritos",
-  agregarFto: "sys_000/sys_002/agregar-favoritos"
+  agregarFto: "sys_000/sys_002/agregar-favoritos",
+  cargarTipoCambioPredeterminado: "adm_000/adm_001/mostrar-pred",
+  cargarListaTipoCambio: "adm_000/adm_001/mostrar-todo",
 };
 
 export default url;
