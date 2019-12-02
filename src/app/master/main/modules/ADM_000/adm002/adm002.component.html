@@ -41,8 +41,8 @@
                           <div class="text-left">
                               <div class="col-md-12">
                                   <label class="col-form-label col-lg-6">Fecha</label>
-                                  <div class="col-lg-6">
-                                    <input type="text" readonly class="form-control"  value= "{{predeterminado.fecha | date:'mediumDate'}}">
+                                  <div class="col-lg-6 col-xs-12">
+                                    <input type="text" readonly class="form-control"  value= "{{predeterminado.fecha | date:'mediumDate':'+0400'}}">
                                   </div>
                               </div>
                          </div>
@@ -96,7 +96,7 @@
                       <div class="card-body">
                         <div class="row">
 
-                          <div class="col-md-6">
+                          <div class="col-md-6 col-xs-12">
                             <div class="form-group">
                               <label>Basic date range picker:</label>
                               <div class="input-group">
@@ -108,20 +108,29 @@
                           </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-xs-12">
                             <div class="form-group">
-                                <div class="form-check form-check-switchery">
+                                <!-- <div class="form-check form-check-switchery">
                                     <label class="form-check-label">
-                                      <input type="checkbox" class="form-check-input-switchery-primary" checked data-fouc>
-                                      Switch in <span class="font-weight-semibold">primary</span> context
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-switchery">
-                                    <label class="form-check-label">
-                                      <input type="checkbox" class="form-check-input-switchery-primary" checked data-fouc>
-                                      Switch in <span class="font-weight-semibold">primary</span> context
-                                    </label>
-                                </div>
+                                      <input type="checkbox" class="form-check-input-switchery-primary" 
+                                      checked data-fouc value="{{tipoCambio.pred}}">
+                                      predeterminado <span class="font-weight-semibold">primary</span> context
+                                    </label> -->
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                          <input type="checkbox" class="form-check-input"  value="{{tipoCambio.pred}}" checked>
+                                          <!-- <input type="checkbox" [ngModel]="tipoCambio.pred" (change)="checkValue(isChecked?'A':'B')" />tipoCambio.pred -->
+                                          predeterminado
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <!-- <input type="checkbox" (ngModel)="{{tipoCambio.estado}}" (change)="checkValue(isChecked?'A':'B')" />tipoCambio.pred -->
+                                          <input type="checkbox" class="form-check-input" value="{{tipoCambio.estado}}" checked>
+                                          abierto / cerrado
+                                        </label>
+                                    </div>
+                                <!-- </div> -->
                             </div>
                           </div>
                           
@@ -133,7 +142,7 @@
                                 <div class="col-md-12 col-xs-12">
                                   <label class="col-lg-12">T/C Oficial</label>
                                   <div class="col-lg-12">
-                                    <input type="number" readonly class="form-control">
+                                    <input type="text" name="tcOficial" class="form-control" value="{{tipoCambio.tc_oficial}}">
                                   </div>
                                 </div>
                               </div>
@@ -141,7 +150,7 @@
                                   <div class="col-md-12 col-xs-12">
                                     <label class="col-lg-12">T/C Compras</label>
                                     <div class="col-lg-12">
-                                      <input type="number" readonly class="form-control">
+                                      <input type="text" name="tcCompras" class="form-control" value="{{tipoCambio.tc_compra}}">
                                     </div>
                                   </div>
                               </div>
@@ -149,7 +158,7 @@
                               <div class="col-md-12 col-xs-12">
                                   <label class="col-lg-12">T/C Ventas</label>
                                   <div class="col-lg-12">
-                                    <input type="number" readonly class="form-control">
+                                    <input type="text" name="tcVenta" class="form-control" value="{{tipoCambio.tc_venta}}">
                                   </div>
                                 </div>
                               </div>
@@ -157,7 +166,7 @@
                                   <div class="col-md-12 col-xs-12">
                                     <label class="col-lg-12">T/C UFV</label>
                                     <div class="col-lg-12">
-                                      <input type="number" readonly class="form-control">
+                                      <input type="text" name="tcUfv" class="form-control" value="{{tipoCambio.tc_ufv}}">
                                     </div>
                                   </div>
                               </div>
@@ -166,51 +175,38 @@
                   </div>
             </div>
       </div>
-
-   
-        <div class="row">
-            
+      <div class="row">
         <div class="col-xl-12">
           <!-- table basic  -->
-          <div class="table-responsive">
+          <div *ngIf="ListTipoCambio!=undefined" class="table-responsive">
               <table class="table">
                 <thead>
                   <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
+                    <th>Fecha</th>
+                    <th>T/C Oficial</th>
+                    <th>T/C Compra</th>
+                    <th>T/C Venta</th>
+                    <th>T/C UFV</th>
                     <th>Estado</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Eugene</td>
-                    <td>Kopyov</td>
-                    <td>@Kopyov</td>
-                    <td><span class="badge badge-success">Activo</span></td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Victoria</td>
-                    <td>Baker</td>
-                    <td>@Vicky</td>
-                    <td><span class="badge badge-danger">Inactivo</span></td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>James</td>
-                    <td>Alexander</td>
-                    <td>@Alex</td>
-                    <td><span class="badge badge-danger">Inactivo</span></td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>Franklin</td>
-                    <td>Morrison</td>
-                    <td>@Frank</td>
-                    <td><span class="badge badge-success">Activo</span></td>
+                <tbody >
+                  <tr *ngFor="let item of ListTipoCambio" (click)="cargarEdicion(item)">
+                    <td>{{item.fecha | date:'mediumDate':'+0400'}} </td>
+                    <td>{{item.tc_oficial}}</td>
+                    <td>{{item.tc_compra}}</td>
+                    <td>{{item.tc_venta}}</td>
+                    <td>{{ item.tc_ufv }} </td>
+                    <td *ngIf="item.estado == '1'"> 
+                      <span  class="badge badge-success">
+                         Activo 
+                      </span>
+                    </td>
+                    <td *ngIf="item.estado == '0'"> 
+                        <span  class="badge badge-danger">
+                           Inactivo 
+                        </span>
+                      </td>
                   </tr>
                 </tbody>
               </table>
@@ -221,9 +217,9 @@
       <!-- /dashboard content -->
   
       <!-- Dashboard content -->
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-xl-8">
-          <!-- Latest posts -->
+          Latest posts 
           <div class="card">
             <div class="card-header header-elements-inline">
               <h6 class="card-title">Latest posts</h6>
@@ -364,9 +360,9 @@
               </div>
             </div>
           </div>
-          <!-- /latest posts -->
+          latest posts
         </div>
-      </div>
+      </div> -->
       <!-- /dashboard content -->
     </div>
     <!-- /content area -->

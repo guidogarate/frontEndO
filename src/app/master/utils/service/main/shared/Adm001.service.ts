@@ -2,17 +2,21 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import url from "src/app/master/config/url.config";
+import {TipoCambio} from '../../../models/TipoCambio';
+  import { from } from 'rxjs';
 
 @Injectable()
 export class Adm001Service {
   token = localStorage.getItem("id");
-  indice = "0";
+
+  tipoCambio : TipoCambio = new TipoCambio();
+  /* campos de tipo de cambio*/ 
   constructor(private httpClient: HttpClient) {
     console.log("cargando predeterminados adm001service: ");
   }
 
   CargarPredeterminados() {
-    const url1 = `${url.prod}${url.cargarTipoCambioPredeterminado}`;
+    const url1 = `${url.prod}${url.mostrarPred}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -27,57 +31,120 @@ export class Adm001Service {
       );
   }
 
-//   CargarListaTipoCambio() {
-//     const url1 = `${url.prod}${url.cargarListaTipoCambio}`;
-//     return this.httpClient
-//       .post(url1, null, {
-//         headers: new HttpHeaders({
-//           authorization: this.token,
-//           indice : this.indice
-//         })
-//       })
-//       .pipe(
-//         map(resp => {
-//           return resp;
-//         })
-//       );
-//   }
+  CargarListaTipoCambio(indice: string,mes: string, anho: string) {
+    const json = JSON.stringify({
+            indice: indice,
+            mes : mes,
+            anho : anho
+          });
+    console.log("datos service parametros: ", json);
+    const url1 = `${url.prod}${url.busqPagi}`;
+    return this.httpClient
+      .post(url1, json, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          console.log("mostrar Lista", resp);
+          return resp;
+        })
+      );
+  }
 
-//   eliminarFavorito(id: number) {
-//     const json = JSON.stringify({
-//       id_favorito: id
-//     });
-//     const url1 = `${url.prod}${url.eliminarFto}`;
-//     return this.httpClient
-//       .post(url1, json, {
-//         headers: new HttpHeaders({
-//           authorization: this.token,
-//           "Content-Type": "application/json"
-//         })
-//       })
-//       .pipe(
-//         map(resp => {
-//           return resp;
-//         })
-//       );
-//   }
 
-//   agregarFavorito(id: number) {
-//     const json = JSON.stringify({
-//       id_favorito: id
-//     });
-//     const url1 = `${url.prod}${url.agregarFto}`;
-//     return this.httpClient
-//       .post(url1, json, {
-//         headers: new HttpHeaders({
-//           authorization: this.token,
-//           "Content-Type": "application/json"
-//         })
-//       })
-//       .pipe(
-//         map(resp => {
-//           return resp;
-//         })
-//       );
-//   }
+  paginado(mes: string,anho:string){
+
+      const json = JSON.stringify({
+        mes : mes,
+        anho : anho
+      });
+      const url1 = `${url.prod}${url.paginado}`;
+      return this.httpClient
+      .get(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+
+  }
+
+  eliminar() {
+    // id: number
+    // const json = JSON.stringify({
+    //   id_favorito: id
+    // });
+    const url1 = `${url.prod}${url.eliminar}`;
+    return this.httpClient
+      .post(url1, null, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
+
+  agregar(tipoCambio: TipoCambio) {
+    // id: number
+    
+    const json = JSON.stringify({
+      adtcfecd: tipoCambio.adtcfecd,
+      adtctipo: tipoCambio.adtctipo,
+      adtctipc: tipoCambio.adtctipc,
+      adtctipv : tipoCambio.adtctipv,
+      adtccufv : tipoCambio.adtccufv,
+      adtcesta : tipoCambio.adtcesta,
+      adtcpred : tipoCambio.adtcpred
+    });
+    const url1 = `${url.prod}${url.agregar}`;
+    return this.httpClient
+      .post(url1, json, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
+
+  actualizar(tipoCambio: TipoCambio) {
+    // id: number
+    const json = JSON.stringify({
+      adtctipo: tipoCambio.adtctipo,
+      adtctipc: tipoCambio.adtctipc,
+      adtctipv : tipoCambio.adtctipv,
+      adtccufv : tipoCambio.adtccufv,
+      adtcesta : tipoCambio.adtcesta,
+      adtcpred : tipoCambio.adtcpred
+    });
+    const url1 = `${url.prod}${url.actualizar}`;
+    return this.httpClient
+      .post(url1, json, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
 }

@@ -13,8 +13,12 @@ const url = {
   cargarFto: "sys_000/sys_002/cargar-favoritos",
   eliminarFto: "sys_000/sys_002/eliminar-favoritos",
   agregarFto: "sys_000/sys_002/agregar-favoritos",
-  cargarTipoCambioPredeterminado: "adm_000/adm_001/mostrar-pred",
-  cargarListaTipoCambio: "adm_000/adm_001/mostrar-todo",
+  mostrarPred : "adm_000/adm_001/mostrar-pred",
+  busqPagi: "adm_000/adm_001/busq-pagi",
+  paginado : "adm_000/adm_001/paginado",
+  eliminar : "adm_000/adm_001/eliminar/2025-5-1",
+  agregar : "adm_000/adm_001/agregar",
+  actualizar : "adm_000/adm_001/actualizar/2018-11-28"
 };
 
 export default url;
