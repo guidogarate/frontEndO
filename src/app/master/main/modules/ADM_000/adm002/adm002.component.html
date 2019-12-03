@@ -8,7 +8,7 @@
         <div class="d-flex">
           <h6>
             <i class="icon-home mr-2"></i>
-            <span>Fecha del dia </span>
+            <span>Fecha del dia</span>
           </h6>
           <a href="#" class="header-elements-toggle text-default d-md-none"
             ><i class="icon-more"></i
@@ -21,6 +21,21 @@
     <!-- Content area -->
     <div class="content">
       <!-- Dashboard content -->
+      <div class="card">
+        <div class="content">
+          <div class="col-md-12 offset-md-4" style="text-align: center;">
+              <a [routerLink]="" routerLinkActive="router-link-active" (click) ="Guardar()" >
+                  <i style="font-size: 1.2em;" class="icon-file-text" data-toggle="tooltip" data-placement="top" title="Guardar"></i>
+                </a>
+                <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Limpiar()" >
+                    <i style="font-size: 1.2em;" class="icon-file-empty" data-toggle="tooltip" data-placement="top" title="Limpiar"></i>
+                  </a>
+                  <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Limpiar()" >
+                      <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+                  </a>
+            </div>
+          </div>
+      </div>
       <div class="card-body" style="background-color: white;">
           <div class="row d-flex justify-content-between">
               <div class="col-lg-3">
@@ -29,14 +44,12 @@
               </div>
               <!-- <app-buscar-dialogo [tipo-busqueda]="tipoBusqueda"></app-buscar-dialogo> -->
           </div>
-          
           <div class="row">
               <div class="col-md-6">
                   <div class="card">
                       <div class="card-header">
                           <h6 class="card-title"><b> Fecha Actual</b></h6>
                       </div>
-
                       <div class="card-body" *ngIf="predeterminado!=undefined">
                           <div class="text-left">
                               <div class="col-md-12">
@@ -47,9 +60,7 @@
                               </div>
                          </div>
                         <div class="row" style="padding-top: 15px;">
-                         
                               <div class="text-left">
-                              
                                 <div class="col-md-12 col-xs-12">
                                   <label class="col-lg-12">T/C Oficial</label>
                                   <div class="col-lg-12">
@@ -66,11 +77,11 @@
                                   </div>
                               </div>
                               <div class="text-left">
-                              <div class="col-md-12 col-xs-12">
-                                  <label class="col-lg-12">T/C Ventas</label>
-                                  <div class="col-lg-12">
-                                    <input type="number" readonly class="form-control" value={{predeterminado.tc_venta}}>
-                                  </div>
+                                <div class="col-md-12 col-xs-12">
+                                    <label class="col-lg-12">T/C Ventas</label>
+                                    <div class="col-lg-12">
+                                      <input type="number" readonly class="form-control" value={{predeterminado.tc_venta}}>
+                                    </div>
                                 </div>
                               </div>
                               <div class="text-left">
@@ -85,55 +96,39 @@
                       </div>
                   </div>
               </div>
-
-
               <div class="col-md-6">
                   <div class="card">
                       <div class="card-header">
-                          <h6 class="card-title"><b> Ingreso de Fecha</b></h6>
+                            <h6 class="card-title"><b> Ingreso de Fecha</b></h6>
                       </div>
-
                       <div class="card-body">
                         <div class="row">
-
                           <div class="col-md-6 col-xs-12">
                             <div class="form-group">
-                              <label>Basic date range picker:</label>
+                              <!-- <label>Basic date range picker:</label> -->
                               <div class="input-group">
-                                <span class="input-group-prepend">
+                                <span class="input-group-prepend"></span>
                                 <span class="input-group-text"><i class="icon-calendar22"></i></span>
-                              </span>
-                              <input type="text" class="form-control daterange-basic" placeholder="Fecha" value=""> 
+                              <input type="text" class="form-control daterange-basic" placeholder="Fecha" value="{{tipoCambio.fecha| date |date:'mediumDate':'+0400'}}"> 
                             </div>
                           </div>
                         </div>
-
                         <div class="col-md-6 col-xs-12">
                             <div class="form-group">
-                                <!-- <div class="form-check form-check-switchery">
-                                    <label class="form-check-label">
-                                      <input type="checkbox" class="form-check-input-switchery-primary" 
-                                      checked data-fouc value="{{tipoCambio.pred}}">
-                                      predeterminado <span class="font-weight-semibold">primary</span> context
-                                    </label> -->
                                     <div class="form-check">
                                         <label class="form-check-label">
                                           <input type="checkbox" class="form-check-input"  value="{{tipoCambio.pred}}" checked>
-                                          <!-- <input type="checkbox" [ngModel]="tipoCambio.pred" (change)="checkValue(isChecked?'A':'B')" />tipoCambio.pred -->
                                           predeterminado
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <!-- <input type="checkbox" (ngModel)="{{tipoCambio.estado}}" (change)="checkValue(isChecked?'A':'B')" />tipoCambio.pred -->
                                           <input type="checkbox" class="form-check-input" value="{{tipoCambio.estado}}" checked>
                                           abierto / cerrado
                                         </label>
                                     </div>
-                                <!-- </div> -->
                             </div>
                           </div>
-                          
                         </div>
 
                         <div class="row" style="padding-top: 15px;">

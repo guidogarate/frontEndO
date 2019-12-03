@@ -5,6 +5,7 @@ import url from "src/app/master/config/url.config";
 import {TipoCambio} from '../../../models/TipoCambio';
   import { from } from 'rxjs';
 
+
 @Injectable()
 export class Adm001Service {
   token = localStorage.getItem("id");
@@ -37,7 +38,6 @@ export class Adm001Service {
             mes : mes,
             anho : anho
           });
-    console.log("datos service parametros: ", json);
     const url1 = `${url.prod}${url.busqPagi}`;
     return this.httpClient
       .post(url1, json, {
@@ -54,7 +54,7 @@ export class Adm001Service {
       );
   }
 
-
+/* metodos para llamada al service*/
   paginado(mes: string,anho:string){
 
       const json = JSON.stringify({
@@ -63,9 +63,10 @@ export class Adm001Service {
       });
       const url1 = `${url.prod}${url.paginado}`;
       return this.httpClient
-      .get(url1, {
+      .post(url1,json,{
         headers: new HttpHeaders({
-          authorization: this.token
+          authorization: this.token,
+          "Content-Type": "application/json"
         })
       })
       .pipe(
@@ -77,13 +78,9 @@ export class Adm001Service {
   }
 
   eliminar() {
-    // id: number
-    // const json = JSON.stringify({
-    //   id_favorito: id
-    // });
     const url1 = `${url.prod}${url.eliminar}`;
     return this.httpClient
-      .post(url1, null, {
+      .delete(url1, {
         headers: new HttpHeaders({
           authorization: this.token,
           "Content-Type": "application/json"
@@ -124,7 +121,7 @@ export class Adm001Service {
   }
 
   actualizar(tipoCambio: TipoCambio) {
-    // id: number
+   
     const json = JSON.stringify({
       adtctipo: tipoCambio.adtctipo,
       adtctipc: tipoCambio.adtctipc,
@@ -135,7 +132,7 @@ export class Adm001Service {
     });
     const url1 = `${url.prod}${url.actualizar}`;
     return this.httpClient
-      .post(url1, json, {
+      .put(url1, json, {
         headers: new HttpHeaders({
           authorization: this.token,
           "Content-Type": "application/json"
