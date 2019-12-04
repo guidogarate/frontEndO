@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import url from "src/app/master/config/url.config";
 import {TipoCambio} from '../../../models/TipoCambio';
-  import { from } from 'rxjs';
+import { from } from 'rxjs';
 
 
 @Injectable()
@@ -77,8 +77,10 @@ export class Adm001Service {
 
   }
 
-  eliminar() {
-    const url1 = `${url.prod}${url.eliminar}`;
+  eliminar( fecha: any ) {
+    // fech : String = fecha;
+    const url1 = `${url.prod}${url.eliminar}${fecha}`;
+    console.log("eliminando fecha: ", url1)
     return this.httpClient
       .delete(url1, {
         headers: new HttpHeaders({

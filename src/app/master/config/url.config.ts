@@ -16,7 +16,7 @@ const url = {
   mostrarPred : "adm_000/adm_001/mostrar-pred",
   busqPagi: "adm_000/adm_001/busq-pagi",
   paginado : "adm_000/adm_001/paginado",
-  eliminar : "adm_000/adm_001/eliminar/2025-5-1",
+  eliminar : "adm_000/adm_001/eliminar/",
   agregar : "adm_000/adm_001/agregar",
   actualizar : "adm_000/adm_001/actualizar/2018-11-28"
 };

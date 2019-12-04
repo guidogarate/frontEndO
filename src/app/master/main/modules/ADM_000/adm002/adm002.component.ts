@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe} from '@angular/common';
 import { Adm001Service } from 'src/app/master/utils/service/main/shared/Adm001.service';
  declare function init_plugins();
 
@@ -15,22 +16,11 @@ export class Adm002Component implements OnInit {
   mes : string;
   anho : string;
   paginacion : string;
-  today: number = Date.now();
-
+  today: any = Date.now();
   tipoCambio: any;
 
-  // tipoCambio : any = {
-  //   fecha: this.today,
-  //   tc_oficial: "0",
-  //   tc_compra: "0",
-  //   tc_venta : "0",
-  //   tc_ufv : "0",
-  //   estado : "0",
-  //   pred : "0"
-  // }
-
-  constructor( private adm001Service: Adm001Service) { 
-    console.log("en adm002");
+  constructor( private adm001Service: Adm001Service, private datePipe : DatePipe) { 
+    
     this.cargarPredeterminado();
     this.indice= "0";
     this.mes = "2";
@@ -39,7 +29,7 @@ export class Adm002Component implements OnInit {
     this.paginado();
     this.Limpiar();
     // this.fechaActual= new Date();
-    console.log("fecha: ", this.today);
+   // console.log("fecha con formato: ", this.datePipe.transform(this.today,"yyy-MM-dd"));
   }
 
   ngOnInit() {
@@ -77,7 +67,7 @@ export class Adm002Component implements OnInit {
    cargarEdicion(item: any){
     console.log("cargando fecha: ", item);
     this.tipoCambio={
-      fecha: item.fecha,
+      fecha: this.datePipe.transform(item.fecha,"yyy-MM-dd","+0400"),
       tc_oficial: item.tc_oficial,
       tc_compra: item.tc_compra,
       tc_venta : item.tc_venta,
@@ -85,7 +75,7 @@ export class Adm002Component implements OnInit {
       estado : item.estado,
       pred : item.pred
     }
-    console.log("fecha edicion : ", this.tipoCambio);
+    console.log("fecha para Editar : ", this.tipoCambio);
    }
 
 //    checkValue(event: any){
@@ -113,7 +103,7 @@ export class Adm002Component implements OnInit {
         Limpiar(){
 
           this.tipoCambio = {
-            fecha: this.today,
+            fecha: this.datePipe.transform(this.today,"yyy-MM-dd"),
             tc_oficial: "0",
             tc_compra: "0",
             tc_venta : "0",
@@ -125,7 +115,17 @@ export class Adm002Component implements OnInit {
         }
 
         Eliminar(){
-
+          console.log("fecha a eliminar: ", this.tipoCambio);
+          this.adm001Service.eliminar(this.tipoCambio.fecha).subscribe(resp =>{
+            if(resp["ok"]){
+              console.log("Eliminando: ", resp);
+              this.cargarLista();
+            }
+            else {
+              console.log("no se pudo eliminar",resp);
+              return resp;
+            }
+          });
         }
 
 

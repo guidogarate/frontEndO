@@ -30,7 +30,7 @@
                 <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Limpiar()" >
                     <i style="font-size: 1.2em;" class="icon-file-empty" data-toggle="tooltip" data-placement="top" title="Limpiar"></i>
                   </a>
-                  <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Limpiar()" >
+                  <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Eliminar()" >
                       <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
                   </a>
             </div>
@@ -50,12 +50,13 @@
                       <div class="card-header">
                           <h6 class="card-title"><b> Fecha Actual</b></h6>
                       </div>
-                      <div class="card-body" *ngIf="predeterminado!=undefined">
+                      <div class="card-body">
                           <div class="text-left">
                               <div class="col-md-12">
                                   <label class="col-form-label col-lg-6">Fecha</label>
                                   <div class="col-lg-6 col-xs-12">
-                                    <input type="text" readonly class="form-control"  value= "{{predeterminado.fecha | date:'mediumDate':'+0400'}}">
+                                    <input  *ngIf="predeterminado!=undefined" type="text" readonly class="form-control"  value= "{{predeterminado.fecha | date:'yyyy-MM-dd'}}">
+                                    <input  *ngIf="predeterminado== undefined" type="text" readonly class="form-control"  value="">
                                   </div>
                               </div>
                          </div>
@@ -64,7 +65,8 @@
                                 <div class="col-md-12 col-xs-12">
                                   <label class="col-lg-12">T/C Oficial</label>
                                   <div class="col-lg-12">
-                                    <input type="number" readonly class="form-control" value={{predeterminado.tc_oficial}}>
+                                    <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control" value={{predeterminado.tc_oficial}}>
+                                    <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control" value="">
                                   </div>
                                 </div>
                               </div>
@@ -72,7 +74,8 @@
                                   <div class="col-md-12 col-xs-12">
                                     <label class="col-lg-12">T/C Compras</label>
                                     <div class="col-lg-12">
-                                      <input type="number" readonly class="form-control" value={{predeterminado.tc_compra}}>
+                                      <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control" value={{predeterminado.tc_compra}}>
+                                      <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control" value="">
                                     </div>
                                   </div>
                               </div>
@@ -80,7 +83,8 @@
                                 <div class="col-md-12 col-xs-12">
                                     <label class="col-lg-12">T/C Ventas</label>
                                     <div class="col-lg-12">
-                                      <input type="number" readonly class="form-control" value={{predeterminado.tc_venta}}>
+                                      <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control" value={{predeterminado.tc_venta}}>
+                                      <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control" value="">
                                     </div>
                                 </div>
                               </div>
@@ -88,7 +92,8 @@
                                   <div class="col-md-12 col-xs-12">
                                     <label class="col-lg-12">T/C UFV</label>
                                     <div class="col-lg-12">
-                                      <input type="number" readonly class="form-control" value= {{predeterminado.tc_ufv}}>
+                                      <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control" value= {{predeterminado.tc_ufv}}>
+                                      <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control" value= "">
                                     </div>
                                   </div>
                               </div>
@@ -103,14 +108,26 @@
                       </div>
                       <div class="card-body">
                         <div class="row">
-                          <div class="col-md-6 col-xs-12">
+                          <div class="col-md-6 col-xs-12" style="padding-left: 0px;">
                             <div class="form-group">
-                              <!-- <label>Basic date range picker:</label> -->
+                              <!-- <div class="input-group">
+                                <span class="input-group-prepend">
+                                  <span class="input-group-text"><i class="icon-calendar5"></i></span>
+                                </span>
+                                <input type="text" class="form-control pickadate" placeholder="Try me&hellip;">
+                              </div> -->
                               <div class="input-group">
-                                <span class="input-group-prepend"></span>
-                                <span class="input-group-text"><i class="icon-calendar22"></i></span>
-                              <input type="text" class="form-control daterange-basic" placeholder="Fecha" value="{{tipoCambio.fecha| date |date:'mediumDate':'+0400'}}"> 
-                            </div>
+                                <span class="input-group-prepend">
+                                  <span class="input-group-text"><i class="icon-calendar22"></i></span>
+                                </span>
+                                <input type="text" id="anytime-date" class="form-control daterange-single" value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}">
+                              </div>
+                              <!-- <div class="input-group">
+                                <span class="input-group-prepend">
+                                  <span class="input-group-text"><i class="icon-calendar5"></i></span>
+                                </span>
+                                <input type="text" class="form-control pickadate-strings" placeholder="Try me&hellip;">
+                              </div> -->
                           </div>
                         </div>
                         <div class="col-md-6 col-xs-12">
@@ -207,6 +224,18 @@
               </table>
             </div>
           <!-- /table basic -->
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="pagination pagination-flat align-self-center">
+              <li class="page-item"><a href="#" class="page-link">&larr; &nbsp; Prev</a></li>
+              <li class="page-item active"><a href="#" class="page-link">1</a></li>
+              <li class="page-item"><a href="#" class="page-link">2</a></li>
+              <li class="page-item disabled"><a href="#" class="page-link">3</a></li>
+              <li class="page-item"><a href="#" class="page-link">4</a></li>
+              <li class="page-item"><a href="#" class="page-link">Next &nbsp; &rarr;</a></li>
+            </ul>
+          </div>
         </div>
       </div>
       <!-- /dashboard content -->
@@ -416,4 +445,4 @@
     <!-- /footer -->
   </div>
   <!-- /main content -->
-  
+ 
