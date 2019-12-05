@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { LoginModels } from "../utils/models/login/login.models";
 import { LoginService } from "../utils/service/login/login.service";
-import * as Noty from "noty";
+import * as Noty from "src/assets/global_assets/js/plugins/notifications/noty.min.js";
 import url from "src/app/master/config/url.config";
 @Component({
   selector: "app-login",
@@ -54,6 +54,13 @@ export class LoginComponent implements OnInit {
   }
 
   ingresar(registra?: string) {
+    new Noty({
+      theme: " alert alert-success alert-styled-left p-0 bg-white",
+      layout: "topRight",
+      type: "info",
+      timeout: 2500,
+      text: "Change a few things up and try submitting again."
+    }).show();
     this.usuario = this.loginForm.get("ingresoCompleto").value;
     if (
       this.loginForm.get("ingresoCompleto.id_database").valid &&
