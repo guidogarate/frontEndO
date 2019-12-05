@@ -23,18 +23,32 @@
       <!-- Dashboard content -->
       <div class="card">
         <div class="content">
-          <div class="col-md-12 offset-md-4" style="text-align: center;">
-              <a [routerLink]="" routerLinkActive="router-link-active" (click) ="Guardar()" >
-                  <i style="font-size: 1.2em;" class="icon-file-text" data-toggle="tooltip" data-placement="top" title="Guardar"></i>
-                </a>
-                <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Limpiar()" >
-                    <i style="font-size: 1.2em;" class="icon-file-empty" data-toggle="tooltip" data-placement="top" title="Limpiar"></i>
-                  </a>
-                  <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Eliminar()" >
-                      <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
-                  </a>
-            </div>
-          </div>
+          <div *ngIf="!editar" class="col-md-12 offset-md-4" style="text-align: center;">
+              <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Limpiar()" >
+                  <i style="font-size: 1.2em;" class="icon-file-empty" data-toggle="tooltip" data-placement="top" title="Nuevo"></i>
+              </a>
+              <!-- <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Editar()" >
+                  <i style="font-size: 1.2em;" class="icon-pencil7" data-toggle="tooltip" data-placement="top" title="Editar"></i>
+              </a> -->
+              <a  style="padding-left: 15px;"[routerLink]="" routerLinkActive="router-link-active" (click) ="Guardar()" >
+                  <i style="font-size: 1.2em;" class="icon-file-check" data-toggle="tooltip" data-placement="top" title="Guardar"></i>
+              </a>
+              <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Eliminar()" >
+                  <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+              </a>
+           </div>
+            <!-- TODO: menu para Edicion -->
+           <div *ngIf="editar" class="col-md-12 offset-md-4" style="text-align: center;">
+              <a [routerLink]="" routerLinkActive="router-link-active" (click) ="Actualizar()" >
+                  <i style="font-size: 1.2em;" class="icon-file-check" data-toggle="tooltip" data-placement="top" title="Actualizar"></i>
+              </a>
+              <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Cancelar()" >
+                  <i style="font-size: 1.2em;" class="icon-cancel-square" data-toggle="tooltip" data-placement="top" title="Cancelar()"></i>
+              </a>
+           </div>
+        </div>
+          
+          
       </div>
       <div class="card-body" style="background-color: white;">
           <div class="row d-flex justify-content-between">
@@ -110,38 +124,28 @@
                         <div class="row">
                           <div class="col-md-6 col-xs-12" style="padding-left: 0px;">
                             <div class="form-group">
-                              <!-- <div class="input-group">
-                                <span class="input-group-prepend">
-                                  <span class="input-group-text"><i class="icon-calendar5"></i></span>
-                                </span>
-                                <input type="text" class="form-control pickadate" placeholder="Try me&hellip;">
-                              </div> -->
                               <div class="input-group">
                                 <span class="input-group-prepend">
                                   <span class="input-group-text"><i class="icon-calendar22"></i></span>
                                 </span>
-                                <input type="text" id="anytime-date" class="form-control daterange-single" value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}">
-                              </div>
-                              <!-- <div class="input-group">
-                                <span class="input-group-prepend">
-                                  <span class="input-group-text"><i class="icon-calendar5"></i></span>
-                                </span>
-                                <input type="text" class="form-control pickadate-strings" placeholder="Try me&hellip;">
-                              </div> -->
+                                <input type="text" id="anytime-date" class="form-control daterange-single" required value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}" [(ngModel)]="tipoCambio.fecha">
+                            </div>
                           </div>
                         </div>
                         <div class="col-md-6 col-xs-12">
                             <div class="form-group">
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                          <input type="checkbox" class="form-check-input"  value="{{tipoCambio.pred}}" checked>
+                                          <input name="pred" type="checkbox" class="form-check-input" [checked]="tipoCambio.pred == 'true'" [(ngModel)]="tipoCambio.pred">
                                           predeterminado
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                          <input type="checkbox" class="form-check-input" value="{{tipoCambio.estado}}" checked>
-                                          abierto / cerrado
+                                          <input name="estado" type="checkbox" class="form-check-input"  [checked]="tipoCambio.estado == 'true'" [(ngModel)]="tipoCambio.estado" >
+                                          <span *ngIf="tipoCambio.estado">abierto</span>
+                                          <span *ngIf="!tipoCambio.estado">cerrado</span>
+                                              
                                         </label>
                                     </div>
                             </div>
@@ -149,12 +153,11 @@
                         </div>
 
                         <div class="row" style="padding-top: 15px;">
-                         
                               <div class="text-left">
                                 <div class="col-md-12 col-xs-12">
                                   <label class="col-lg-12">T/C Oficial</label>
                                   <div class="col-lg-12">
-                                    <input type="text" name="tcOficial" class="form-control" value="{{tipoCambio.tc_oficial}}">
+                                    <input type="text" name="tcOficial" class="form-control" required value="{{tipoCambio.tc_oficial}}" [(ngModel)]="tipoCambio.tc_oficial" >
                                   </div>
                                 </div>
                               </div>
@@ -162,7 +165,7 @@
                                   <div class="col-md-12 col-xs-12">
                                     <label class="col-lg-12">T/C Compras</label>
                                     <div class="col-lg-12">
-                                      <input type="text" name="tcCompras" class="form-control" value="{{tipoCambio.tc_compra}}">
+                                      <input type="text" name="tcCompras" class="form-control" required value="{{tipoCambio.tc_compra}}" [(ngModel)]="tipoCambio.tc_compra">
                                     </div>
                                   </div>
                               </div>
@@ -170,7 +173,7 @@
                               <div class="col-md-12 col-xs-12">
                                   <label class="col-lg-12">T/C Ventas</label>
                                   <div class="col-lg-12">
-                                    <input type="text" name="tcVenta" class="form-control" value="{{tipoCambio.tc_venta}}">
+                                    <input type="text" name="tcVenta" class="form-control" required value="{{tipoCambio.tc_venta}}" [(ngModel)]="tipoCambio.tc_venta">
                                   </div>
                                 </div>
                               </div>
@@ -178,11 +181,12 @@
                                   <div class="col-md-12 col-xs-12">
                                     <label class="col-lg-12">T/C UFV</label>
                                     <div class="col-lg-12">
-                                      <input type="text" name="tcUfv" class="form-control" value="{{tipoCambio.tc_ufv}}">
+                                      <input type="text" name="tcUfv" class="form-control" required value="{{tipoCambio.tc_ufv}}" [(ngModel)]="tipoCambio.tc_ufv">
                                     </div>
                                   </div>
                               </div>
                         </div> 
+                        <pre>{{tipoCambio | json}} </pre>
                       </div>
                   </div>
             </div>
@@ -229,10 +233,10 @@
           <div class="col-md-12">
             <ul class="pagination pagination-flat align-self-center">
               <li class="page-item"><a href="#" class="page-link">&larr; &nbsp; Prev</a></li>
-              <li class="page-item active"><a href="#" class="page-link">1</a></li>
-              <li class="page-item"><a href="#" class="page-link">2</a></li>
+              <!-- <li *ngFor="let item of paginado" class="page-item active"><a href="#" class="page-link">1</a></li> -->
+              <!-- <li class="page-item"><a href="#" class="page-link">2</a></li>
               <li class="page-item disabled"><a href="#" class="page-link">3</a></li>
-              <li class="page-item"><a href="#" class="page-link">4</a></li>
+              <li class="page-item"><a href="#" class="page-link">4</a></li> -->
               <li class="page-item"><a href="#" class="page-link">Next &nbsp; &rarr;</a></li>
             </ul>
           </div>

@@ -4,6 +4,6 @@ export class TipoCambio {
   adtctipc : number;
   adtctipv : number;
   adtccufv : number;
-  adtcesta : number;
-  adtcpred : number;
+  adtcesta : string;
+  adtcpred : string;
 }

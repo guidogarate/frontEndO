@@ -78,7 +78,7 @@ export class Adm001Service {
   }
 
   eliminar( fecha: any ) {
-    // fech : String = fecha;
+  
     const url1 = `${url.prod}${url.eliminar}${fecha}`;
     console.log("eliminando fecha: ", url1)
     return this.httpClient
@@ -107,6 +107,7 @@ export class Adm001Service {
       adtcesta : tipoCambio.adtcesta,
       adtcpred : tipoCambio.adtcpred
     });
+    console.log("service guardar: ", json);
     const url1 = `${url.prod}${url.agregar}`;
     return this.httpClient
       .post(url1, json, {
@@ -132,7 +133,8 @@ export class Adm001Service {
       adtcesta : tipoCambio.adtcesta,
       adtcpred : tipoCambio.adtcpred
     });
-    const url1 = `${url.prod}${url.actualizar}`;
+    console.log("fecha para actualizar: ", tipoCambio.adtcfecd);
+    const url1 = `${url.prod}${url.actualizar}${tipoCambio.adtcfecd}`;
     return this.httpClient
       .put(url1, json, {
         headers: new HttpHeaders({

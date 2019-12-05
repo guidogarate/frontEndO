@@ -15,21 +15,21 @@ export class Adm002Component implements OnInit {
   indice : string;
   mes : string;
   anho : string;
-  paginacion : string;
+  totalPaginacion : string;
   today: any = Date.now();
   tipoCambio: any;
+  tipoCambioSend: any;
+  editar: boolean = false;
 
   constructor( private adm001Service: Adm001Service, private datePipe : DatePipe) { 
     
     this.cargarPredeterminado();
-    this.indice= "0";
+    this.indice = "0";
     this.mes = "2";
     this.anho = "2019" ;
     this.cargarLista();
-    this.paginado();
+    this.Paginacion();
     this.Limpiar();
-    // this.fechaActual= new Date();
-   // console.log("fecha con formato: ", this.datePipe.transform(this.today,"yyy-MM-dd"));
   }
 
   ngOnInit() {
@@ -51,9 +51,7 @@ export class Adm002Component implements OnInit {
    }
 
    cargarLista(){
-     
     this.adm001Service.CargarListaTipoCambio(this.indice,this.mes,this.anho).subscribe(resp =>{
-
       if(resp["ok"]){
         this.ListTipoCambio = resp["adm_001_mostrarTodo"];
         console.log("listaTipoCambio: ", this.ListTipoCambio);
@@ -65,29 +63,24 @@ export class Adm002Component implements OnInit {
    }
 
    cargarEdicion(item: any){
-    console.log("cargando fecha: ", item);
     this.tipoCambio={
       fecha: this.datePipe.transform(item.fecha,"yyy-MM-dd","+0400"),
       tc_oficial: item.tc_oficial,
       tc_compra: item.tc_compra,
       tc_venta : item.tc_venta,
       tc_ufv : item.tc_ufv,
-      estado : item.estado,
-      pred : item.pred
+      estado :  item.estado == 1,
+      pred : item.pred == 1
     }
-    console.log("fecha para Editar : ", this.tipoCambio);
+    this.editar= true;
    }
 
-//    checkValue(event: any){
-//     console.log(event);
-//  }
-
-        paginado(){
+        Paginacion(){
           this.adm001Service.paginado(this.mes,this.anho).subscribe(resp =>{
             console.log("cargando paginado");
             if(resp["ok"]){
-              this.paginacion = resp["total"];
-              console.log("paginacion: ", this.paginacion);
+              this.totalPaginacion = resp["total"];
+              console.log("paginacion: ", this.totalPaginacion);
             }
             else {
               console.log("no se cargo paginado",resp);
@@ -97,7 +90,52 @@ export class Adm002Component implements OnInit {
 
         }
         Guardar(){
+         
+          this.tipoCambioSend={
+            adtcfecd: this.datePipe.transform(this.tipoCambio.fecha,"yyyy-MM-dd","0000"),
+            adtctipo:  this.tipoCambio.tc_oficial,
+            adtctipc: this.tipoCambio.tc_compra,
+            adtctipv : this.tipoCambio.tc_venta,
+            adtccufv : this.tipoCambio.tc_ufv,
+            adtcesta :  this.tipoCambio.estado ? "1" : "0",
+            adtcpred : this.tipoCambio.pred ? "1 ": "0"
+          }
+          this.adm001Service.agregar(this.tipoCambioSend).subscribe(resp =>{
+            if(resp["ok"]){
+              console.log("Guardando: ", resp);
+              this.Limpiar();
+              this.cargarLista();
+            }
+            else {
+              console.log("no se pudo guardar",resp);
+              return resp;
+            }
+          });
+        }
 
+        Actualizar(){
+          //console.log("fecha a actualizar: ", this.tipoCambio);
+          this.tipoCambioSend={
+            adtcfecd: this.datePipe.transform(this.tipoCambio.fecha,"yyyy-MM-dd","+0400"),
+            adtctipo:  this.tipoCambio.tc_oficial,
+            adtctipc: this.tipoCambio.tc_compra,
+            adtctipv : this.tipoCambio.tc_venta,
+            adtccufv : this.tipoCambio.tc_ufv,
+            adtcesta :  this.tipoCambio.estado ? "1" : "0",
+            adtcpred : this.tipoCambio.pred ? "1": "0"
+          }
+          console.log("para actualizar: ", this.tipoCambioSend);
+          this.adm001Service.actualizar(this.tipoCambioSend).subscribe(resp =>{
+            if(resp["ok"]){
+              console.log("Actualizando: ", resp);
+              this.cargarLista();
+              this.Cancelar();
+            }
+            else {
+              console.log("no se pudo guardar",resp);
+              return resp;
+            }
+          });
         }
 
         Limpiar(){
@@ -108,17 +146,15 @@ export class Adm002Component implements OnInit {
             tc_compra: "0",
             tc_venta : "0",
             tc_ufv : "0",
-            estado : "0",
-            pred : "0"
+            estado : false,
+            pred : false
           }
-
         }
 
         Eliminar(){
-          console.log("fecha a eliminar: ", this.tipoCambio);
           this.adm001Service.eliminar(this.tipoCambio.fecha).subscribe(resp =>{
             if(resp["ok"]){
-              console.log("Eliminando: ", resp);
+              this.Limpiar();
               this.cargarLista();
             }
             else {
@@ -126,6 +162,15 @@ export class Adm002Component implements OnInit {
               return resp;
             }
           });
+        }
+
+        Cancelar(){
+          this.Limpiar();
+          this.editar= false;
+        }
+
+        Editar(){
+          this.editar= true;
         }
 
 
