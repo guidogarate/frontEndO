@@ -5,14 +5,33 @@
     <!-- Page header -->
     <div class="card-body" style="background-color: white;padding: 0.5rem;">
       <div class="card-body" style="padding: 0.5rem;">
-        <div class="d-flex">
-          <h6>
-            <i class="icon-home mr-2"></i>
-            <span>Fecha del dia</span>
-          </h6>
-          <a href="#" class="header-elements-toggle text-default d-md-none"
-            ><i class="icon-more"></i
-          ></a>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+                <i class="icon-home mr-2"></i>
+                <span>Fecha del dia</span>
+            </div>
+            <div class="col-md-6"> 
+              <div class="col-md-12 offset-md-4 col-sm-6 offset-sm-4" *ngIf="listaMeses!= undefined">               
+                  <i class="icon-search4 mr-2"></i>
+                    <span></span>
+                    <select [(ngModel)]="mes" (change)="cargarLista()">
+                        <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option>
+                    </select>
+                    <span style="padding-left: 5px;"></span>
+                    <select [(ngModel)]="anho" (change)="cargarLista()">
+                      <option *ngFor="let item of listaAnhos" [value]="item.id">{{item.name}}</option>
+                    </select>  
+                  
+                    <!-- <select [(ngModel)]="selectedValue">
+                        <option *ngFor="let c of countries" [ngValue]="c">{{c.name}}</option>
+                      </select> -->
+              </div>
+            </div>
+          </div>
+          <!-- <a href="#" class="header-elements-toggle text-default d-md-none"> -->
+            <!-- <i class="icon-more"></i> -->
+          <!-- </a> -->
         </div>
       </div>
     </div>
@@ -24,14 +43,11 @@
       <div class="card">
         <div class="content">
           <div *ngIf="!editar" class="col-md-12 offset-md-4" style="text-align: center;">
-              <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Limpiar()" >
-                  <i style="font-size: 1.2em;" class="icon-file-empty" data-toggle="tooltip" data-placement="top" title="Nuevo"></i>
-              </a>
-              <!-- <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Editar()" >
-                  <i style="font-size: 1.2em;" class="icon-pencil7" data-toggle="tooltip" data-placement="top" title="Editar"></i>
-              </a> -->
               <a  style="padding-left: 15px;"[routerLink]="" routerLinkActive="router-link-active" (click) ="Guardar()" >
                   <i style="font-size: 1.2em;" class="icon-file-check" data-toggle="tooltip" data-placement="top" title="Guardar"></i>
+              </a>
+              <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Limpiar()" >
+                  <i style="font-size: 1.2em;" class="icon-file-empty" data-toggle="tooltip" data-placement="top" title="Nuevo"></i>
               </a>
               <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Eliminar()" >
                   <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
@@ -45,6 +61,9 @@
               <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Cancelar()" >
                   <i style="font-size: 1.2em;" class="icon-cancel-square" data-toggle="tooltip" data-placement="top" title="Cancelar()"></i>
               </a>
+              <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Eliminar()" >
+                <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+            </a>
            </div>
         </div>
           
@@ -56,7 +75,6 @@
                   <legend class="text-uppercase font-size-sm font-weight-bold">Registro de Grupos
                   </legend>
               </div>
-              <!-- <app-buscar-dialogo [tipo-busqueda]="tipoBusqueda"></app-buscar-dialogo> -->
           </div>
           <div class="row">
               <div class="col-md-6">
@@ -69,7 +87,7 @@
                               <div class="col-md-12">
                                   <label class="col-form-label col-lg-6">Fecha</label>
                                   <div class="col-lg-6 col-xs-12">
-                                    <input  *ngIf="predeterminado!=undefined" type="text" readonly class="form-control"  value= "{{predeterminado.fecha | date:'yyyy-MM-dd'}}">
+                                    <input  *ngIf="predeterminado!=undefined" type="text" readonly class="form-control"  value="{{predeterminado.fecha |date:'yyyy-MM-dd'}}">
                                     <input  *ngIf="predeterminado== undefined" type="text" readonly class="form-control"  value="">
                                   </div>
                               </div>
@@ -142,7 +160,7 @@
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                          <input name="estado" type="checkbox" class="form-check-input"  [checked]="tipoCambio.estado == 'true'" [(ngModel)]="tipoCambio.estado" >
+                                          <input name="estado" type="checkbox" class="form-check-input" [checked]="tipoCambio.estado == 'true'" [(ngModel)]="tipoCambio.estado" >
                                           <span *ngIf="tipoCambio.estado">abierto</span>
                                           <span *ngIf="!tipoCambio.estado">cerrado</span>
                                               
@@ -186,7 +204,7 @@
                                   </div>
                               </div>
                         </div> 
-                        <pre>{{tipoCambio | json}} </pre>
+                       
                       </div>
                   </div>
             </div>
@@ -233,10 +251,10 @@
           <div class="col-md-12">
             <ul class="pagination pagination-flat align-self-center">
               <li class="page-item"><a href="#" class="page-link">&larr; &nbsp; Prev</a></li>
-              <!-- <li *ngFor="let item of paginado" class="page-item active"><a href="#" class="page-link">1</a></li> -->
-              <!-- <li class="page-item"><a href="#" class="page-link">2</a></li>
-              <li class="page-item disabled"><a href="#" class="page-link">3</a></li>
-              <li class="page-item"><a href="#" class="page-link">4</a></li> -->
+              <li *ngFor="let item of ArrayPaginacion" class="page-item" >
+                <a class="page-link" [routerLink]="" (click)="cargarPaginacion(item)"
+                routerLinkActive="router-link-active"
+                >{{item}}</a></li>
               <li class="page-item"><a href="#" class="page-link">Next &nbsp; &rarr;</a></li>
             </ul>
           </div>

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import url from "src/app/master/config/url.config";
-import {TipoCambio} from '../../../models/TipoCambio';
+import {TipoCambio} from '../../models/TipoCambio';
 import { from } from 'rxjs';
 
 
@@ -48,7 +48,7 @@ export class Adm001Service {
       })
       .pipe(
         map(resp => {
-          console.log("mostrar Lista", resp);
+         // console.log("mostrar Lista", resp);
           return resp;
         })
       );
@@ -133,8 +133,9 @@ export class Adm001Service {
       adtcesta : tipoCambio.adtcesta,
       adtcpred : tipoCambio.adtcpred
     });
-    console.log("fecha para actualizar: ", tipoCambio.adtcfecd);
     const url1 = `${url.prod}${url.actualizar}${tipoCambio.adtcfecd}`;
+    console.log("actualizando a: ", tipoCambio.adtcfecd);
+    console.log("actualizando a: ", json);
     return this.httpClient
       .put(url1, json, {
         headers: new HttpHeaders({
