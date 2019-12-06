@@ -7,7 +7,7 @@
     <div class="card-body text-center">
       <a href="#">
         <img
-          src="{{ imagen }}"
+          src="{{ imagen | imagenpipe }}"
           class="img-fluid rounded-circle shadow-1 mb-3"
           width="80"
           height="80"
@@ -15,7 +15,9 @@
         />
       </a>
       <h6 class="mb-0 text-white text-shadow-dark">{{ nombre }}</h6>
-      <span class="font-size-sm text-white text-shadow-dark">{{ email }}</span>
+      <span class="font-size-sm text-white text-shadow-dark">{{
+        email | emailpipe
+      }}</span>
     </div>
 
     <div class="sidebar-user-material-footer">

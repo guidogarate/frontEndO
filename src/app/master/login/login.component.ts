@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { Router } from "@angular/router";
 import { LoginModels } from "../utils/models/login/login.models";
 import { LoginService } from "../utils/service/login/login.service";
 import * as Noty from "src/assets/global_assets/js/plugins/notifications/noty.min.js";
@@ -23,9 +22,8 @@ export class LoginComponent implements OnInit {
   ingresarContra = false;
   passw2 = false;
   BotonEnviar = true;
-  estaAutenticado = false;
 
-  constructor(private loginS: LoginService, private router: Router) {
+  constructor(private loginS: LoginService) {
     this.cargarDB();
   }
 
@@ -34,11 +32,10 @@ export class LoginComponent implements OnInit {
     //   init_select();
     // });
     if (this.loginS.estaAutenticado()) {
-      this.router.navigateByUrl(url.principal);
+      window.location.href = url.principal;
     } else {
-      this.router.navigateByUrl(url.salir);
+      window.location.href = url.salir;
     }
-    this.estaAutenticado = true;
   }
 
   cargarDB() {
@@ -65,11 +62,10 @@ export class LoginComponent implements OnInit {
     }
     this.desabiliContra = false;
     peticion.subscribe(resp => {
-      this.btnIngre = "Ingresar";
       this.btnRegis = "Registrar Contraseña";
-      this.loading = false;
       this.loadingReg = false;
-      console.log(resp);
+      this.loading = false;
+      this.btnIngre = "Ingresar";
       if (resp["ok"]) {
         if (resp["messagge"] === "contraseña registrado correctamente") {
           this.usuario.passs = null;
@@ -79,14 +75,18 @@ export class LoginComponent implements OnInit {
           new Noty({
             theme: "limitless",
             layout: "bottomRight",
-            type: "info",
+            type: "success",
             timeout: 6000,
             text: resp["messagge"],
             closeWith: ["button"]
           }).show();
         } else {
+          this.btnIngre = "Ingresando...";
+          this.loading = true;
+          setTimeout(() => {
+            form.reset();
+          }, 1000);
           window.location.href = url.principal;
-          form.reset();
         }
       } else {
         new Noty({
