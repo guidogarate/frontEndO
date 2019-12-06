@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { LoginModels } from "../utils/models/login/login.models";
 import { LoginService } from "../utils/service/login/login.service";
 import * as Noty from "src/assets/global_assets/js/plugins/notifications/noty.min.js";
+import { Observable } from "rxjs";
+// declare function init_select();
 import url from "src/app/master/config/url.config";
 @Component({
   selector: "app-login",
@@ -11,22 +13,26 @@ import url from "src/app/master/config/url.config";
   styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
-  usuario: LoginModels = new LoginModels();
-  loginForm: FormGroup;
+  usuario: LoginModels = new LoginModels("", "", "", null);
   desabiliContra = true;
   databases: [];
   loading = false;
-  btnIngresar = "Ingresar";
+  loadingReg = false;
+  btnIngre = "Ingresar";
+  btnRegis = "Registrar Contraseña";
   ingresarContra = false;
   passw2 = false;
   BotonEnviar = true;
   estaAutenticado = false;
+
   constructor(private loginS: LoginService, private router: Router) {
-    this.formulario();
     this.cargarDB();
   }
 
   ngOnInit() {
+    // setTimeout(() => {
+    //   init_select();
+    // });
     if (this.loginS.estaAutenticado()) {
       this.router.navigateByUrl(url.principal);
     } else {
@@ -35,176 +41,91 @@ export class LoginComponent implements OnInit {
     this.estaAutenticado = true;
   }
 
-  formulario() {
-    this.loginForm = new FormGroup({
-      ingresoCompleto: new FormGroup({
-        id_database: new FormControl("", [Validators.required]),
-        cod_user: new FormControl(""),
-        passw: new FormControl(""),
-        passw2: new FormControl("")
-      })
-    });
-    this.loginForm.get("ingresoCompleto.cod_user").reset();
-    this.loginForm.get("ingresoCompleto.passw").reset();
-  }
   cargarDB() {
     this.loginS.cargarDB().subscribe(resp => {
       this.databases = resp;
     });
   }
 
-  ingresar(registra?: string) {
-    new Noty({
-      theme: " alert alert-success alert-styled-left p-0 bg-white",
-      layout: "topRight",
-      type: "info",
-      timeout: 2500,
-      text: "Change a few things up and try submitting again."
-    }).show();
-    this.usuario = this.loginForm.get("ingresoCompleto").value;
-    if (
-      this.loginForm.get("ingresoCompleto.id_database").valid &&
-      this.loginForm.get("ingresoCompleto.cod_user").valid
-    ) {
-      this.estaRegistrado();
+  ingresar(form: NgForm) {
+    console.log(this.usuario);
+    if (form.invalid) {
+      return;
     }
-    if (registra === "ingr") {
-      this.usuario = this.loginForm.get("ingresoCompleto").value;
-      if (this.loginForm.get("ingresoCompleto").valid) {
-        // aqui va codigo
-        this.loading = true;
-        this.btnIngresar = "Ingresando...";
-        this.loginS.login(this.usuario).subscribe(resp => {
-          this.loading = false;
-          this.btnIngresar = "Ingresar";
-          console.log(resp);
-          if (resp["ok"]) {
-            new Noty({
-              text: "Ingresando...",
-              theme: "nest",
-              progressBar: false,
-              timeout: 3500,
-              type: "error",
-              layout: "bottomRight"
-            }).show();
-            window.location.href = url.principal;
-            this.loginForm.get("ingresoCompleto.cod_user").reset();
-            this.loginForm.get("ingresoCompleto.passw").reset();
-          } else {
-            if (resp["messagge"] === "ingresar contraseña") {
-              new Noty({
-                text: resp["messagge"],
-                theme: "nest",
-                progressBar: false,
-                timeout: 3500,
-                type: "error",
-                layout: "bottomRight"
-              }).show();
-              this.loginForm.get("ingresoCompleto.passw").reset();
-              this.passw2 = true;
-              this.ingresarContra = true;
-            } else {
-              new Noty({
-                text: resp["messagge"],
-                theme: "nest",
-                progressBar: false,
-                timeout: 3500,
-                type: "error",
-                layout: "bottomRight"
-              }).show();
-            }
-          }
-        });
-      } else {
-        if (!this.loginForm.get("ingresoCompleto.id_database").valid) {
-          new Noty({
-            text: "Selecciona una base de datos",
-            theme: "nest",
-            progressBar: false,
-            timeout: 3500,
-            type: "error",
-            layout: "bottomRight"
-          }).show();
-        }
-        return;
-      }
+    let peticion: Observable<any>;
+    this.estaRegistrado();
+    if (this.usuario.passs === null) {
+      this.btnIngre = "Ingresando...";
+      this.loading = true;
+      peticion = this.loginS.login(this.usuario);
     } else {
-      if (registra === "passw") {
-        console.log("registrar contraseña");
-        this.usuario = this.loginForm.get("ingresoCompleto").value;
-
-        if (this.usuario.passw === this.usuario.passs) {
-
-          this.loginS.regContra(this.usuario).subscribe(resp => {
-            console.log(resp);
-            if (resp["ok"]) {
-              new Noty({
-                text: "Contraseña registrado correctamente",
-                theme: "nest",
-                progressBar: false,
-                timeout: 3500,
-                type: "error",
-                layout: "bottomRight"
-              }).show();
-              this.passw2 = false;
-              this.ingresarContra = false;
-              this.loginForm.get("ingresoCompleto.passw").reset();
-            }
-            return;
-          });
-        } else {
+      this.btnRegis = "Registrando..";
+      this.loadingReg = true;
+      peticion = this.loginS.regContra(this.usuario);
+    }
+    this.desabiliContra = false;
+    peticion.subscribe(resp => {
+      this.btnIngre = "Ingresar";
+      this.btnRegis = "Registrar Contraseña";
+      this.loading = false;
+      this.loadingReg = false;
+      console.log(resp);
+      if (resp["ok"]) {
+        if (resp["messagge"] === "contraseña registrado correctamente") {
+          this.usuario.passs = null;
+          this.usuario.passw = null;
+          this.passw2 = false;
+          this.ingresarContra = false;
           new Noty({
-            text: "Contraseñas incorrecta",
-            theme: "nest",
-            progressBar: false,
-            timeout: 3500,
-            type: "error",
-            layout: "bottomRight"
+            theme: "limitless",
+            layout: "bottomRight",
+            type: "info",
+            timeout: 6000,
+            text: resp["messagge"],
+            closeWith: ["button"]
           }).show();
+        } else {
+          window.location.href = url.principal;
+          form.reset();
         }
       } else {
-        return;
-      }
-    }
-  }
-
-  estaRegistrado() {
-    this.loginS.estaRegistrado(this.usuario).subscribe(resp => {
-      if (resp["messagge"] === "Registrar contraseña") {
-        this.passw2 = true;
-        this.ingresarContra = true;
+        new Noty({
+          theme: "limitless",
+          layout: "bottomRight",
+          type: "info",
+          timeout: 5000,
+          text: resp["messagge"],
+          closeWith: ["button"]
+        }).show();
       }
     });
   }
 
-  seleccione() {
-    const id_db = this.loginForm.get("ingresoCompleto.id_database").value;
-    const id_user = this.loginForm.get("ingresoCompleto.cod_user").value;
-    if (id_user === null || id_user === "") {
+  estaRegistrado() {
+    if (this.usuario.databaseid === "") {
       new Noty({
-        text: "Complete el campo Usuario",
-        theme: "nest",
-        progressBar: false,
-        timeout: 3500,
-        type: "error",
-        layout: "bottomRight"
+        theme: "limitless",
+        layout: "bottomRight",
+        type: "info",
+        timeout: 3000,
+        text: "Debe seleccionar una base de datos",
+        closeWith: ["button"]
       }).show();
     } else {
-      if (id_db === null || id_db === "") {
-        new Noty({
-          text: "Seleccione una base de datos",
-          theme: "nest",
-          progressBar: false,
-          timeout: 3500,
-          type: "error",
-          layout: "bottomRight"
-        }).show();
-      } else {
-        // console.log("consulta a la bd");
-        this.usuario = this.loginForm.get("ingresoCompleto").value;
-        this.estaRegistrado();
+      if (this.usuario.cod_user !== "") {
         this.desabiliContra = false;
-        this.BotonEnviar = false;
+        this.loginS.estaRegistrado(this.usuario).subscribe(resp => {
+          if (resp["messagge"] === "Registrar contraseña") {
+            this.passw2 = true;
+            this.ingresarContra = true;
+          } else {
+            this.usuario.passs = null;
+            this.passw2 = false;
+            this.ingresarContra = false;
+          }
+        });
+      } else {
+        return;
       }
     }
   }

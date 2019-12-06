@@ -9,8 +9,8 @@
           class="login-form"
           ngNativeValidate
           autocomplete="off"
-          [formGroup]="loginForm"
-          (ngSubmit)="ingresar()"
+          (ngSubmit)="ingresar(f)"
+          #f="ngForm"
         >
           <div class="card mb-0">
             <div class="card-body">
@@ -23,84 +23,112 @@
                   >Introdusca sus credenciales</span
                 >
               </div>
-              <div formGroupName="ingresoCompleto">
-                <div
-                  class="form-group form-group-feedback form-group-feedback-left"
+              <select
+                [(ngModel)]="usuario.databaseid"
+                name="databaseid"
+                required
+                class="form-control puntero"
+              >
+                <option value="" disabled> Selecciona una base de datos</option>
+                <ng-container *ngFor="let db of databases">
+                  <option [value]="db.id"> {{ db.nombre }}</option>
+                </ng-container>
+              </select>
+              <div
+                class="form-group form-group-feedback form-group-feedback-left"
+              >
+                <!-- <select
+                  data-placeholder="Selecciona una base de datos"
+                  class="form-control select"
+                  data-fouc
+                  [(ngModel)]="usuario.databaseid"
+                  name="databaseid"
+                  required
                 >
-                  <mat-form-field
-                    style="width:100%;"
-                    on-focusout="seleccione()"
+                  <option value="" selected disabled
+                    >Selecciona una base de datos</option
                   >
-                    <mat-label> Selecciona una base de datos</mat-label>
-                    <span matPrefix class="px-1">
-                      <i class="icon-cloud text-muted"></i>
-                    </span>
-                    <mat-select formControlName="id_database" required>
-                      <mat-option
-                        *ngFor="let database of databases"
-                        [value]="database.id"
-                      >
-                        {{ database.nombre }}</mat-option
-                      >
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                <div
-                  class="form-group form-group-feedback form-group-feedback-left"
-                >
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Usuario"
+                  <option
+                    *ngFor="let db of databases"
+                    data-icon="database"
+                    [value]="db.id"
+                  >
+                    {{ db.nombre }}</option
+                  >
+                </select> -->
+
+                <!-- <mat-form-field style="width:100%;" on-focusout="seleccione()">
+                  <mat-label> Selecciona una base de datos</mat-label>
+                  <span matPrefix class="px-1">
+                    <i class="icon-cloud text-muted"></i>
+                  </span>
+                  <mat-select
+                    [(ngModel)]="usuario.databaseid"
                     required
-                    formControlName="cod_user"
-                    name="cod_user"
-                    on-focusout="seleccione()"
-                  />
-                  <div class="form-control-feedback">
-                    <i class="icon-user text-muted"></i>
-                  </div>
+                    name="databaseid"
+                  >
+                    <mat-option
+                      *ngFor="let database of databases"
+                      [value]="database.id"
+                    >
+                      {{ database.nombre }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field> -->
+              </div>
+              <div
+                class="form-group form-group-feedback form-group-feedback-left"
+              >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Usuario"
+                  required
+                  [(ngModel)]="usuario.cod_user"
+                  name="cod_user"
+                  on-focusout="estaRegistrado()"
+                />
+                <div class="form-control-feedback">
+                  <i class="icon-user text-muted"></i>
                 </div>
-                <!-- <input name="date" formControlName="cod_user" type="text" on-focus="focusFunction()" on-focusout="focusOutFunction()"> -->
-                <div
-                  class="form-group form-group-feedback form-group-feedback-left"
-                >
-                  <input
-                    type="password"
-                    class="form-control"
-                    placeholder="Contraseña"
-                    required
-                    [readonly]="desabiliContra"
-                    formControlName="passw"
-                    name="passw"
-                  />
-                  <div class="form-control-feedback">
-                    <i class="icon-lock2 text-muted"></i>
-                  </div>
+              </div>
+              <!-- <input name="date" formControlName="cod_user" type="text" on-focus="focusFunction()" on-focusout="focusOutFunction()"> -->
+              <div
+                class="form-group form-group-feedback form-group-feedback-left"
+              >
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Contraseña"
+                  required
+                  [(ngModel)]="usuario.passw"
+                  name="passw"
+                />
+                <div class="form-control-feedback">
+                  <i class="icon-lock2 text-muted"></i>
                 </div>
-                <div
-                  *ngIf="passw2"
-                  class="form-group form-group-feedback form-group-feedback-left"
-                >
-                  <input
-                    type="password"
-                    class="form-control"
-                    placeholder="Repetir contraseña"
-                    required
-                    [disabled]="true"
-                    formControlName="passw2"
-                    name="passw2"
-                  />
-                  <div class="form-control-feedback">
-                    <i class="icon-lock2 text-muted"></i>
-                  </div>
+              </div>
+              <div
+                *ngIf="passw2"
+                class="form-group form-group-feedback form-group-feedback-left"
+              >
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Repetir contraseña"
+                  required
+                  [(ngModel)]="usuario.passs"
+                  [disabled]="desabiliContra"
+                  name="passw2"
+                />
+                <div class="form-control-feedback">
+                  <i class="icon-lock2 text-muted"></i>
                 </div>
               </div>
 
               <div class="form-group">
                 <button
                   type="submit"
-                  (click)="ingresar('ingr')"
                   class="btn btn-primary btn-block"
                   id="regContra"
                   *ngIf="!ingresarContra"
@@ -109,7 +137,7 @@
                     *ngIf="loading"
                     class="icon-spinner spinner position-left"
                   ></i>
-                  {{ btnIngresar }}
+                  {{ btnIngre }}
                   <i
                     *ngIf="!loading"
                     class="icon-circle-right2 position-right"
@@ -118,11 +146,18 @@
                 <button
                   *ngIf="ingresarContra"
                   type="submit"
-                  (click)="ingresar('passw')"
                   class="btn btn-info btn-sm  btn-block"
                   id="ingresarContra"
                 >
-                  Registrar Contraseña
+                  <i
+                    *ngIf="loadingReg"
+                    class="icon-spinner spinner position-left"
+                  ></i>
+                  {{ btnRegis }}
+                  <i
+                    *ngIf="!loadingReg"
+                    class="icon-circle-right2 position-right"
+                  ></i>
                 </button>
               </div>
 

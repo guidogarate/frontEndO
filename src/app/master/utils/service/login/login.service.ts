@@ -38,9 +38,8 @@ export class LoginService {
   estaRegistrado(usuario: LoginModels) {
     const json = JSON.stringify({
       cod_user: usuario.cod_user,
-      id_database: usuario.id_database
+      id_database: usuario.databaseid
     });
-    console.log(json);
     const url1 = `${url.prod}${url.validarUser}`;
     return this.httpClient
       .post(url1, json, {
@@ -75,6 +74,7 @@ export class LoginService {
       .pipe(
         map(resp => {
           localStorage.clear();
+          // actualizando el token
           this.leerToken();
           return resp;
         })
@@ -83,7 +83,7 @@ export class LoginService {
 
   login(usuario: LoginModels) {
     const json = JSON.stringify({
-      id_database: usuario.id_database,
+      id_database: usuario.databaseid,
       cod_user: usuario.cod_user,
       passw: usuario.passw
     });
@@ -98,7 +98,7 @@ export class LoginService {
         map(resp => {
           if (resp["ok"]) {
             this.guardarToken(resp["datos"], resp["token"]);
-            return { ok: true };
+            return resp;
           } else {
             return resp;
           }
@@ -108,11 +108,10 @@ export class LoginService {
 
   regContra(usuario: LoginModels) {
     const json = JSON.stringify({
-      id_database: usuario.id_database,
+      id_database: usuario.databaseid,
       cod_user: usuario.cod_user,
       passw1: usuario.passw,
-      passs: usuario.passs
-
+      passw2: usuario.passs
     });
     const url1 = `${url.prod}${url.regContra}`;
     return this.httpClient
@@ -123,11 +122,7 @@ export class LoginService {
       })
       .pipe(
         map(resp => {
-          if (resp["ok"]) {
-            return { ok: true };
-          } else {
-            return resp;
-          }
+          return resp;
         })
       );
   }

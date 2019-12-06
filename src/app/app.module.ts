@@ -6,7 +6,7 @@ import { APP_ROUTES } from "./app.routes";
 
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 import { LoginMaterialModule } from "./master/login/login.material.module";
 import { MainModule } from "./master/main/main.module";
 
@@ -22,7 +22,6 @@ import { NopagefoundComponent } from "./master/nopagefound/nopagefound.component
     CommonModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
     BrowserAnimationsModule,
     LoginMaterialModule,
     MainModule

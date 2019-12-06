@@ -1,6 +1,8 @@
 export class LoginModels {
-  id_database: string;
-  cod_user: string;
-  passw: string;
-  passs?: string;
+  constructor(
+    public databaseid: string,
+    public cod_user: string,
+    public passw: string,
+    public passs?: string
+  ) {}
 }
