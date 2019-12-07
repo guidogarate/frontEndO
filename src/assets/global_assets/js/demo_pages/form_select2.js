@@ -20,7 +20,7 @@ function init_select() {
   }
 
   //
-  // Basic examples
+  // Basic examples selectpicker()
   //
   $(".select").select2({
     minimumResultsForSearch: Infinity,
@@ -38,7 +38,7 @@ function init_select() {
     return $icon;
   }
 
-  // Initialize with options
+  // // Initialize with options
   $(".select-icons").select2({
     templateResult: iconFormat,
     allowClear: false,

@@ -15,7 +15,7 @@ export class SidebarComponent implements OnInit {
   datos: any;
   favoritos: any;
   cargandoMenu = true;
-  datosUser: any = JSON.parse(localStorage.getItem("datos_user"));
+  datosUser: any = JSON.parse(sessionStorage.getItem("datos_user"));
   imagen: string;
   nombre: string;
   email: string;

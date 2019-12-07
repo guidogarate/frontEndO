@@ -55,8 +55,8 @@ export class LoginService {
   }
 
   leerToken() {
-    if (localStorage.getItem("id")) {
-      this.userToken = localStorage.getItem("id");
+    if (sessionStorage.getItem("id")) {
+      this.userToken = sessionStorage.getItem("id");
     } else {
       this.userToken = "";
     }
@@ -68,12 +68,12 @@ export class LoginService {
     return this.httpClient
       .post(url1, null, {
         headers: new HttpHeaders({
-          authorization: localStorage.getItem("id")
+          authorization: sessionStorage.getItem("id")
         })
       })
       .pipe(
         map(resp => {
-          localStorage.clear();
+          sessionStorage.clear();
           // actualizando el token
           this.leerToken();
           return resp;
@@ -129,8 +129,8 @@ export class LoginService {
 
   private guardarToken(usuario: any, token: string) {
     this.userToken = token;
-    localStorage.setItem("datos_user", JSON.stringify(usuario));
-    localStorage.setItem("id", token);
+    sessionStorage.setItem("datos_user", JSON.stringify(usuario));
+    sessionStorage.setItem("id", token);
   }
 
   // metodo para guard(login.guard.ts)

@@ -34,6 +34,19 @@
                   <option [value]="db.id"> {{ db.nombre }}</option>
                 </ng-container>
               </select>
+
+              <!-- <select
+                [(ngModel)]="usuario.databaseid"
+                class="form-control select"
+                name="databaseid"
+                #t
+                (change)="cargarLista(t.value)"
+                required
+              >
+                <option *ngFor="let db of databases" [value]="db.id">
+                  {{ db.nombre }}</option
+                >
+              </select> -->
               <div
                 class="form-group form-group-feedback form-group-feedback-left"
               >

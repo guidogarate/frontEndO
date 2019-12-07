@@ -12,11 +12,11 @@ export class SettingService {
   }
 
   guardarAjustes() {
-    localStorage.setItem("ajustes", JSON.stringify(this.ajustes));
+    sessionStorage.setItem("ajustes", JSON.stringify(this.ajustes));
   }
 
   cargarAjustes() {
-    const ajuste = localStorage.getItem("ajustes");
+    const ajuste = sessionStorage.getItem("ajustes");
     if (ajuste) {
       this.ajustes = JSON.parse(ajuste);
       this.aplicarTema(this.ajustes.tema);

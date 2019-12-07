@@ -6,13 +6,14 @@ import * as Noty from "src/assets/global_assets/js/plugins/notifications/noty.mi
 import { Observable } from "rxjs";
 // declare function init_select();
 import url from "src/app/master/config/url.config";
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
-  usuario: LoginModels = new LoginModels("", "", "", null);
+  usuario: LoginModels = new LoginModels("xc", "", "", null);
   desabiliContra = true;
   databases: [];
   loading = false;
@@ -44,61 +45,67 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  cargarLista(value: any) {
+    console.log(value);
+  }
+
   ingresar(form: NgForm) {
+    console.log(this.databases);
     console.log(this.usuario);
     if (form.invalid) {
       return;
     }
-    let peticion: Observable<any>;
-    this.estaRegistrado();
-    if (this.usuario.passs === null) {
-      this.btnIngre = "Ingresando...";
-      this.loading = true;
-      peticion = this.loginS.login(this.usuario);
-    } else {
-      this.btnRegis = "Registrando..";
-      this.loadingReg = true;
-      peticion = this.loginS.regContra(this.usuario);
-    }
-    this.desabiliContra = false;
-    peticion.subscribe(resp => {
-      this.btnRegis = "Registrar Contraseña";
-      this.loadingReg = false;
-      this.loading = false;
-      this.btnIngre = "Ingresar";
-      if (resp["ok"]) {
-        if (resp["messagge"] === "contraseña registrado correctamente") {
-          this.usuario.passs = null;
-          this.usuario.passw = null;
-          this.passw2 = false;
-          this.ingresarContra = false;
-          new Noty({
-            theme: "limitless",
-            layout: "bottomRight",
-            type: "success",
-            timeout: 6000,
-            text: resp["messagge"],
-            closeWith: ["button"]
-          }).show();
-        } else {
-          this.btnIngre = "Ingresando...";
-          this.loading = true;
-          setTimeout(() => {
-            form.reset();
-          }, 1000);
-          window.location.href = url.principal;
-        }
-      } else {
-        new Noty({
-          theme: "limitless",
-          layout: "bottomRight",
-          type: "info",
-          timeout: 5000,
-          text: resp["messagge"],
-          closeWith: ["button"]
-        }).show();
-      }
-    });
+    return;
+    // let peticion: Observable<any>;
+    // this.estaRegistrado();
+    // if (this.usuario.passs === null) {
+    //   this.btnIngre = "Ingresando...";
+    //   this.loading = true;
+    //   peticion = this.loginS.login(this.usuario);
+    // } else {
+    //   this.btnRegis = "Registrando..";
+    //   this.loadingReg = true;
+    //   peticion = this.loginS.regContra(this.usuario);
+    // }
+    // this.desabiliContra = false;
+    // peticion.subscribe(resp => {
+    //   this.btnRegis = "Registrar Contraseña";
+    //   this.loadingReg = false;
+    //   this.loading = false;
+    //   this.btnIngre = "Ingresar";
+    //   if (resp["ok"]) {
+    //     if (resp["messagge"] === "contraseña registrado correctamente") {
+    //       this.usuario.passs = null;
+    //       this.usuario.passw = null;
+    //       this.passw2 = false;
+    //       this.ingresarContra = false;
+    //       new Noty({
+    //         theme: "limitless",
+    //         layout: "bottomRight",
+    //         type: "success",
+    //         timeout: 6000,
+    //         text: resp["messagge"],
+    //         closeWith: ["button"]
+    //       }).show();
+    //     } else {
+    //       this.btnIngre = "Ingresando...";
+    //       this.loading = true;
+    //       setTimeout(() => {
+    //         form.reset();
+    //       }, 1000);
+    //       window.location.href = url.principal;
+    //     }
+    //   } else {
+    //     new Noty({
+    //       theme: "limitless",
+    //       layout: "bottomRight",
+    //       type: "info",
+    //       timeout: 5000,
+    //       text: resp["messagge"],
+    //       closeWith: ["button"]
+    //     }).show();
+    //   }
+    // });
   }
 
   estaRegistrado() {

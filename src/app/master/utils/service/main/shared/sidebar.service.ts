@@ -5,7 +5,7 @@ import url from "src/app/master/config/url.config";
 
 @Injectable()
 export class SidebarService {
-  token = localStorage.getItem("id");
+  token = sessionStorage.getItem("id");
 
   constructor(private httpClient: HttpClient) {}
 
