@@ -18,7 +18,8 @@ const url = {
   paginado : "adm_000/adm_001/paginado",
   eliminar : "adm_000/adm_001/eliminar/",
   agregar : "adm_000/adm_001/agregar",
-  actualizar : "adm_000/adm_001/actualizar/"
+  actualizar : "adm_000/adm_001/actualizar/",
+  gestionesDisponibles : "adm_000/adm_001/gest-dispo"
 };
 
 export default url;

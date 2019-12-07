@@ -96,8 +96,7 @@ export class Adm001Service {
   }
 
   agregar(tipoCambio: TipoCambio) {
-    // id: number
-    
+        
     const json = JSON.stringify({
       adtcfecd: tipoCambio.adtcfecd,
       adtctipo: tipoCambio.adtctipo,
@@ -138,6 +137,24 @@ export class Adm001Service {
     console.log("actualizando a: ", json);
     return this.httpClient
       .put(url1, json, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
+
+  obtenerGestiones(){
+
+    const url1 = `${url.prod}${url.gestionesDisponibles}`;
+    console.log("Obteniendo Gestiones Disponibles: ", url1)
+    return this.httpClient
+      .get(url1, {
         headers: new HttpHeaders({
           authorization: this.token,
           "Content-Type": "application/json"

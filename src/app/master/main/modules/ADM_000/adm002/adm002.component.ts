@@ -16,7 +16,7 @@ export class Adm002Component implements OnInit {
   ListTipoCambio : any;
   indice : string;
   mes : string ="2";
-  anho : string ="2019";
+  anho : string ;
   listaMeses = [
     { id: 1, name: "Enero" },
     { id: 2, name: "Febrero" },
@@ -32,20 +32,7 @@ export class Adm002Component implements OnInit {
     { id: 12, name: "Diciembre" },
   ];
 
-  listaAnhos = [
-    { id: 2014, name: "2014" },
-    { id: 2015, name: "2015" },
-    { id: 2016, name: "2016" },
-    { id: 2017, name: "2017" },
-    { id: 2018, name: "2018" },
-    { id: 2019, name: "2019" },
-    { id: 2020, name: "2020" },
-    { id: 2021, name: "2021" },
-    { id: 2022, name: "2022" },
-    { id: 2023, name: "2023" },
-    { id: 2024, name: "2024" },
-    { id: 2025, name: "2025" },
-  ];
+  listaAnhos = [];
   totalPaginacion : number;
   today: any = Date.now();
   tipoCambio: any;
@@ -56,19 +43,36 @@ export class Adm002Component implements OnInit {
   constructor( private adm001Service: Adm001Service, private datePipe : DatePipe) { 
     
    // this.cargarPredeterminado();
-    this.indice = "0";
-    // this.mes = "2";
-    // this.anho = "2019" ;
-    this.Paginacion();
-    this.cargarLista();
-    setTimeout(() => {
-      this.cargarArrayPaginacion();
-    }, 3000);
-    this.Limpiar();
+    // this.indice = "0";
+    // this.ObtenerGestion();
+    // setTimeout(() => {
+    //   this.Paginacion();
+    //  // if( this.listaAnhos!= undefined && this.totalPaginacion!= undefined || this.totalPaginacion!= -1){
+    //     this.cargarLista();
+    //     this.cargarArrayPaginacion();
+    //   //}
+    // }, 2000);
+    // this.Limpiar();
   }
 
 
   ngOnInit() {
+    this.indice = "0";
+    this.ObtenerGestion();
+    setTimeout(() => {
+      this.Paginacion();
+       console.log("cargando arraypaginacion");
+       setTimeout(()=>{
+        this.cargarLista();
+        this.cargarArrayPaginacion();
+      },1500);
+      
+    }, 1500);
+    
+    
+
+    this.Limpiar();
+    
     // init_plugins();
     // setTimeout(() => {
     //   init_plugins();
@@ -80,7 +84,7 @@ export class Adm002Component implements OnInit {
       if(resp["ok"]){
 
         this.predeterminado = resp["adm_001_mostrarTodo"][0];
-        this.predeterminado.fecha = this.datePipe.transform(this.predeterminado.fecha,"yyy-MM-dd","+0400");
+        this.predeterminado.fecha = this.datePipe.transform(this.predeterminado.fecha,"yyyy-MM-dd","+0400");
       }
       else {
         console.log("no se cargo el TC predeterminado");
@@ -114,18 +118,18 @@ export class Adm002Component implements OnInit {
    }
 
         Paginacion(){
+          console.log("anho: " ,this.anho);
+          console.log("mes: " ,this.mes);
           this.adm001Service.paginado(this.mes,this.anho).subscribe(resp =>{
-            console.log("cargando paginado");
             if(resp["ok"]){
               this.totalPaginacion = resp["total"];
-              console.log("paginacion: ", this.totalPaginacion);
+              console.log("Total paginacion: ", this.totalPaginacion);
             }
             else {
               console.log("no se cargo paginado",resp);
               return resp;
             }
           });
-
         }
 
         Guardar(){        
@@ -152,7 +156,6 @@ export class Adm002Component implements OnInit {
         }
 
         Actualizar(){
-          //console.log("fecha a actualizar: ", this.tipoCambio);
           this.tipoCambioSend={
             adtcfecd: this.datePipe.transform(this.tipoCambio.fecha,"yyyy-MM-dd","+0400"),
             adtctipo:  this.tipoCambio.tc_oficial,
@@ -178,7 +181,6 @@ export class Adm002Component implements OnInit {
         }
 
         Limpiar(){
-
           this.tipoCambio = {
             fecha: this.datePipe.transform(this.today,"yyyy-MM-dd"),
             tc_oficial: "0",
@@ -211,22 +213,34 @@ export class Adm002Component implements OnInit {
         Editar(){
           this.editar= true;
         }
-
+        /* Paginacion*/
         cargarArrayPaginacion(){
-          // let a = "";
+          console.log("cargando array en el metodo con total:", this.totalPaginacion);
           this.ArrayPaginacion= new Array();
           for (var i = 0; i <=this.totalPaginacion ; i++) {
-            // a = i.toString();
             console.log("valor de elemento al array: ", i);
             this.ArrayPaginacion.push(i.toString());
          }
+         console.log("valor de elemento al array: ", this.ArrayPaginacion);
         }
         cargarPaginacion(item: string){
           console.log("cargando lista nro: ", item);
-
           this.indice= item;
-
           this.cargarLista();
+        }
+        /* Fin Paginacion */
+
+        ObtenerGestion() {
+          this.adm001Service.obtenerGestiones().subscribe(resp =>{
+            if(resp["ok"]){
+              this.listaAnhos = resp["gestDispo"];
+             this.anho = this.listaAnhos[1].fecha;
+            }
+            else {
+              console.log("no se cargo lista de Gestiones");
+              return resp;
+            }
+          });
         }
 
 
