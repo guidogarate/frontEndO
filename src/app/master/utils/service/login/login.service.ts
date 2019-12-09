@@ -26,7 +26,6 @@ export class LoginService {
       .pipe(
         map(resp => {
           if (resp["ok"]) {
-            // console.log(resp["newDatabase"]);
             return resp["newDatabase"];
           } else {
             return resp;

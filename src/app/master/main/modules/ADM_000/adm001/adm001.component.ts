@@ -12,4 +12,6 @@ export class Adm001Component implements OnInit {
   ngOnInit() {
   }
 
+  
+
 }

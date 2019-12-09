@@ -1,0 +1,318 @@
+<!-- Page content -->
+
+<!-- Main content -->
+<div class="content-wrapper">
+    <!-- Page header -->
+    <div class="card-body" style="background-color: white;padding: 0.5rem;">
+      <div class="card-body" style="padding: 0.5rem;">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+                <i class="icon-home mr-2"></i>
+                <span>Fecha del dia</span>
+            </div>
+            <div class="col-md-6"> 
+              <div class="col-md-12 offset-md-0 col-sm-6 offset-sm-4" style="text-align: right;" 
+              *ngIf="listaMeses!= undefined">               
+                  <i class="icon-search4 mr-2"></i>
+                    <span></span>
+                    <select [(ngModel)]="mes" (change)="cargarLista()">
+                        <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option>
+                    </select>
+                    <span style="padding-left: 5px;"></span>
+                    <select [(ngModel)]="anho" (change)="cargarLista()">
+                      <option *ngFor="let item of listaAnhos" [value]="item.fecha">{{item.fecha}}</option>
+                    </select>  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /page header -->
+  
+    <!-- Content area -->
+    <div class="content">
+      <!-- Dashboard content -->
+      <div class="card">
+        <div class="content">
+          <div *ngIf="!editar" class="col-md-8 offset-md-4" style="text-align: right; font-size: large;">
+              <a  style="padding-left: 15px;"[routerLink]="" routerLinkActive="router-link-active" (click) ="Guardar()" >
+                  <i style="font-size: 1.2em;" class="icon-file-check" data-toggle="tooltip" data-placement="top" title="Guardar"></i>
+              </a>
+              <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Limpiar()" >
+                  <i style="font-size: 1.2em;" class="icon-file-empty" data-toggle="tooltip" data-placement="top" title="Nuevo"></i>
+              </a>
+              <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Eliminar()" >
+                  <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+              </a>
+           </div>
+            <!-- TODO: menu para Edicion -->
+           <div *ngIf="editar" class="col-md-12 offset-md-4" style="text-align: center; font-size: large;">
+              <a [routerLink]="" routerLinkActive="router-link-active" (click) ="Actualizar()" >
+                  <i style="font-size: 1.2em;" class="icon-file-check" data-toggle="tooltip" data-placement="top" title="Actualizar"></i>
+              </a>
+              <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Cancelar()" >
+                  <i style="font-size: 1.2em;" class="icon-cancel-square" data-toggle="tooltip" data-placement="top" title="Cancelar()"></i>
+              </a>
+              <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Eliminar()" >
+                <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+            </a>
+           </div>
+        </div>
+      </div>
+      <div class="card-body" style="background-color: white;">
+          <div class="row d-flex justify-content-between">
+              <div class="col-lg-3">
+                  <legend class="text-uppercase font-size-sm font-weight-bold">Registro de Grupos
+                  </legend>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="card">
+                      <div class="card-header">
+                          <h6 class="card-title"><b> Fecha Actual</b></h6>
+                      </div>
+                      <div class="card-body">
+                          <div class="text-left">
+                              <div class="col-md-12">
+                                  <label class="col-form-label col-lg-6">Fecha</label>
+                                  <div class="col-lg-6 col-xs-12">
+                                    <input  *ngIf="predeterminado!=undefined" type="text" readonly class="form-control"  value="{{predeterminado.fecha |date:'yyyy-MM-dd'}}">
+                                    <input  *ngIf="predeterminado== undefined" type="text" readonly class="form-control"  value="">
+                                  </div>
+                              </div>
+                         </div>
+                        <div class="row" style="padding-top: 15px;">
+                              <div class="text-left">
+                                <div class="col-md-12 col-xs-12">
+                                  <label class="col-lg-12">T/C Oficial</label>
+                                  <div class="col-lg-12">
+                                    <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control" value={{predeterminado.tc_oficial}}>
+                                    <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control" value="">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="text-left">
+                                  <div class="col-md-12 col-xs-12">
+                                    <label class="col-lg-12">T/C Compras</label>
+                                    <div class="col-lg-12">
+                                      <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control" value={{predeterminado.tc_compra}}>
+                                      <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control" value="">
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="text-left">
+                                <div class="col-md-12 col-xs-12">
+                                    <label class="col-lg-12">T/C Ventas</label>
+                                    <div class="col-lg-12">
+                                      <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control" value={{predeterminado.tc_venta}}>
+                                      <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control" value="">
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="text-left">
+                                  <div class="col-md-12 col-xs-12">
+                                    <label class="col-lg-12">T/C UFV</label>
+                                    <div class="col-lg-12">
+                                      <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control" value= {{predeterminado.tc_ufv}}>
+                                      <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control" value= "">
+                                    </div>
+                                  </div>
+                              </div>
+                        </div> 
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="card">
+                      <div class="card-header">
+                            <h6 class="card-title"><b> Ingreso de Fecha</b></h6>
+                      </div>
+                      <div class="card-body" style="padding-bottom: 0px;">
+                        <div class="row">
+                          <div class="col-md-6 col-xs-12" style="padding-left: 0px;">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <i class="icon-calendar22" style="padding-right: 5px;"></i> 
+                                    <input [disabled]="editar" type="date" type="date" name="fechaEdicion" required 
+                                    value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}" [(ngModel)]="tipoCambio.fecha"
+                                      data-date="" data-date-format="yyyy-MM-dd" max="{{fechaMaxima}}"
+                                    >
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-xs-12">
+                              <div class="form-group">
+                                      <div class="form-check">
+                                          <label class="form-check-label">
+                                            <input name="pred" type="checkbox" class="form-check-input" [checked]="tipoCambio.pred == 'true'" [(ngModel)]="tipoCambio.pred">
+                                            predeterminado
+                                          </label>
+                                      </div>
+                                      <div class="form-check">
+                                          <label class="form-check-label">
+                                            <input name="estado" type="checkbox" class="form-check-input fechalimite" [checked]="tipoCambio.estado == 'true'" [(ngModel)]="tipoCambio.estado" >
+                                            <span *ngIf="tipoCambio.estado">abierto</span>
+                                            <span *ngIf="!tipoCambio.estado">cerrado</span>  
+                                          </label>
+                                      </div>
+                              </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 15px; margin: 0px; padding-bottom: 15px;">
+                              <div class="text-left">
+                                <div class="col-md-12 col-xs-12">
+                                  <label class="col-lg-12">T/C Oficial</label>
+                                  <div class="col-lg-12">
+                                    <input type="text" name="tcOficial" class="form-control" required value="{{tipoCambio.tc_oficial}}" [(ngModel)]="tipoCambio.tc_oficial" >
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="text-left">
+                                  <div class="col-md-12 col-xs-12">
+                                    <label class="col-lg-12">T/C Compras</label>
+                                    <div class="col-lg-12">
+                                      <input type="text" name="tcCompras" class="form-control" required value="{{tipoCambio.tc_compra}}" [(ngModel)]="tipoCambio.tc_compra">
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="text-left">
+                              <div class="col-md-12 col-xs-12">
+                                  <label class="col-lg-12">T/C Ventas</label>
+                                  <div class="col-lg-12">
+                                    <input type="text" name="tcVenta" class="form-control" required value="{{tipoCambio.tc_venta}}" [(ngModel)]="tipoCambio.tc_venta">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="text-left">
+                                  <div class="col-md-12 col-xs-12">
+                                    <label class="col-lg-12">T/C UFV</label>
+                                    <div class="col-lg-12">
+                                      <input type="text" name="tcUfv" class="form-control" required value="{{tipoCambio.tc_ufv}}" [(ngModel)]="tipoCambio.tc_ufv">
+                                    </div>
+                                  </div>
+                              </div>
+                        </div> 
+                       
+                      </div>
+                  </div>
+            </div>
+      </div>
+      <!-- <div class="row"> -->
+        <div class="card">
+          <!-- table basic  -->
+          <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>T/C Oficial</th>
+                    <th>T/C Compra</th>
+                    <th>T/C Venta</th>
+                    <th>T/C UFV</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr *ngFor="let item of ListTipoCambio" (click)="cargarEdicion(item)">
+                    <td>{{item.fecha | date:'mediumDate':'+0400'}} </td>
+                    <td>{{item.tc_oficial}}</td>
+                    <td>{{item.tc_compra}}</td>
+                    <td>{{item.tc_venta}}</td>
+                    <td>{{ item.tc_ufv }} </td>
+                    <td *ngIf="item.estado == '1'"> 
+                      <span  class="badge badge-success">
+                         Activo 
+                      </span>
+                    </td>
+                    <td *ngIf="item.estado == '0'"> 
+                        <span  class="badge badge-danger">
+                           Inactivo 
+                        </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          <!-- /table basic -->
+
+            <hr>
+
+          <div class="row" *ngIf="ListTipoCambio!=undefined">
+            <div class="col-md-8 offset-md-4 col-xs-12">
+              <ul class="pagination pagination-flat align-self-center">
+                <!-- <li class="page-item"><a href="#" class="page-link">&larr; &nbsp; Prev</a></li> -->
+                <li *ngFor="let item of ArrayPaginacion" class="page-item" >
+                  <a class="page-link" (click)="cargarPaginacion(item)" 
+                  [routerLink]="" routerLinkActive="router-link-active">
+                  {{item}}
+                  </a>
+                </li>
+                <!-- <li class="page-item"><a href="#" class="page-link">Next &nbsp; &rarr;</a></li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      <!-- </div> -->
+    </div>
+    <!-- /content area -->
+  
+    <!-- Footer -->
+    <div class="navbar navbar-expand-lg navbar-light">
+      <div class="text-center d-lg-none w-100">
+        <button
+          type="button"
+          class="navbar-toggler dropdown-toggle"
+          data-toggle="collapse"
+          data-target="#navbar-footer"
+        >
+          <i class="icon-unfold mr-2"></i>
+          Footer
+        </button>
+      </div>
+  
+      <div class="navbar-collapse collapse" id="navbar-footer">
+        <span class="navbar-text">
+          &copy; 2015 - 2018. <a href="#">Limitless Web App Kit</a> by
+          <a href="http://themeforest.net/user/Kopyov" target="_blank"
+            >Eugene Kopyov</a
+          >
+        </span>
+  
+        <ul class="navbar-nav ml-lg-auto">
+          <li class="nav-item">
+            <a
+              href="https://kopyov.ticksy.com/"
+              class="navbar-nav-link"
+              target="_blank"
+              ><i class="icon-lifebuoy mr-2"></i> Support</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="http://demo.interface.club/limitless/docs/"
+              class="navbar-nav-link"
+              target="_blank"
+              ><i class="icon-file-text2 mr-2"></i> Docs</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov"
+              class="navbar-nav-link font-weight-semibold"
+              ><span class="text-pink-400"
+                ><i class="icon-cart2 mr-2"></i> Purchase</span
+              ></a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- /footer -->
+  </div>
+  <!-- /main content -->
+ 

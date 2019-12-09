@@ -9,7 +9,7 @@
 
 // Setup module
 // ------------------------------
-
+//function init_plugins() {
 var InputsCheckboxesRadios = function () {
 
 
@@ -122,3 +122,4 @@ var InputsCheckboxesRadios = function () {
 document.addEventListener('DOMContentLoaded', function() {
     InputsCheckboxesRadios.initComponents();
 });
+//}
