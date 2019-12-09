@@ -14,10 +14,14 @@
           alt=""
         />
       </a>
-      <h6 class="mb-0 text-white text-shadow-dark">{{ nombre }}</h6>
-      <span class="font-size-sm text-white text-shadow-dark">{{
-        email | emailpipe
-      }}</span>
+      <h6 class="mb-0 text-white text-shadow-dark">
+        <i *ngIf="wsService.socketStatus" class="icon-primitive-dot verde"></i>
+        <i *ngIf="!wsService.socketStatus" class="icon-primitive-dot rojo"></i
+        >{{ nombre }}
+      </h6>
+      <span class="font-size-sm text-white text-shadow-dark">
+        {{ email | emailpipe }}</span
+      >
     </div>
 
     <div class="sidebar-user-material-footer">

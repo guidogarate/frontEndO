@@ -1,3 +1,16 @@
 .rojo {
   color: rgb(252, 103, 103);
 }
+
+.verde {
+  color: rgb(12, 197, 36);
+}
+
+.verde:hover {
+  /* cursor: progress; */
+  cursor: wait;
+}
+.rojo:hover {
+  /* cursor: progress; */
+  cursor: wait;
+}

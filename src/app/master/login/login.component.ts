@@ -13,7 +13,7 @@ import url from "src/app/master/config/url.config";
   styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
-  usuario: LoginModels = new LoginModels("xc", "", "", null);
+  usuario: LoginModels = new LoginModels("", "", "", null);
   desabiliContra = true;
   databases: [];
   loading = false;

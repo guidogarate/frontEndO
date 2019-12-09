@@ -4,6 +4,10 @@ import { NgModule } from "@angular/core";
 
 import { APP_ROUTES } from "./app.routes";
 
+import { SocketIoModule, SocketIoConfig } from "ngx-socket-io";
+import { environment } from "src/environments/environment";
+const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
+
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
@@ -24,7 +28,8 @@ import { NopagefoundComponent } from "./master/nopagefound/nopagefound.component
     FormsModule,
     BrowserAnimationsModule,
     LoginMaterialModule,
-    MainModule
+    MainModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent]

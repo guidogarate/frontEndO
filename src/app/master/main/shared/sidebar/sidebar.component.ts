@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 
 import { SidebarService } from "src/app/master/utils/service/main/shared/index.shared.service";
 
-import * as Noty from "noty";
+import * as Noty from "src/assets/global_assets/js/plugins/notifications/noty.min.js";
+import { SocketService } from "src/app/master/utils/service/socket/socket.service";
 
 // declare function init_plugins();
 // declare function init_scroll();
@@ -20,7 +21,10 @@ export class SidebarComponent implements OnInit {
   nombre: string;
   email: string;
 
-  constructor(private sidebarS: SidebarService) {
+  constructor(
+    private sidebarS: SidebarService,
+    public wsService: SocketService
+  ) {
     if (this.datosUser === null) {
       return;
     }
@@ -66,20 +70,22 @@ export class SidebarComponent implements OnInit {
         this.cargarFto();
         new Noty({
           text: resp["mensaje"],
-          theme: "nest",
-          progressBar: false,
-          timeout: 3500,
+          theme: "limitless",
+          progressBar: true,
+          timeout: 2000,
           type: "info",
-          layout: "bottomRight"
+          layout: "bottomRight",
+          closeWith: ["button"]
         }).show();
       } else {
         new Noty({
           text: resp["error"],
-          theme: "nest",
-          progressBar: false,
-          timeout: 3500,
+          theme: "limitless",
+          progressBar: true,
+          timeout: 2000,
           type: "error",
-          layout: "bottomRight"
+          layout: "bottomRight",
+          closeWith: ["button"]
         }).show();
       }
     });
@@ -92,20 +98,22 @@ export class SidebarComponent implements OnInit {
         this.cargarFto();
         new Noty({
           text: resp["mensaje"],
-          theme: "nest",
-          progressBar: false,
-          timeout: 3500,
+          theme: "limitless",
+          progressBar: true,
+          timeout: 2000,
           type: "info",
-          layout: "bottomRight"
+          layout: "bottomRight",
+          closeWith: ["button"]
         }).show();
       } else {
         new Noty({
           text: resp["error"],
-          theme: "nest",
-          progressBar: false,
-          timeout: 3500,
+          theme: "limitless",
+          progressBar: true,
+          timeout: 2000,
           type: "error",
-          layout: "bottomRight"
+          layout: "bottomRight",
+          closeWith: ["button"]
         }).show();
       }
     });

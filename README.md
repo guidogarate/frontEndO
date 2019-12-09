@@ -93,6 +93,11 @@ instalamos `npm install alertifyjs --save` y agregamos el css
 ## socket Io
 
 https://www.npmjs.com/package/ngx-socket-io `npm install ngx-socket-io`
+pasos
+app.module ts
+import { SocketIoModule, SocketIoConfig } from "ngx-socket-io";
+import { environment } from "src/environments/environment";
+const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
 
 ## redes neuronales
 

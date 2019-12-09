@@ -23,17 +23,34 @@
                   >Introdusca sus credenciales</span
                 >
               </div>
-              <select
+              <div class="form-group">
+                <select
+                  [(ngModel)]="usuario.databaseid"
+                  name="databaseid"
+                  required
+                  class="form-control puntero"
+                >
+                  <option value="" disabled selected>
+                    Selecciona una base de datos</option
+                  >
+                  <ng-container *ngFor="let db of databases">
+                    <option [value]="db.id"> {{ db.nombre }}</option>
+                  </ng-container>
+                </select>
+              </div>
+              <!-- <select
                 [(ngModel)]="usuario.databaseid"
                 name="databaseid"
                 required
                 class="form-control puntero"
               >
-                <option value="" disabled> Selecciona una base de datos</option>
+                <option value="" disabled selected>
+                  Selecciona una base de datos</option
+                >
                 <ng-container *ngFor="let db of databases">
                   <option [value]="db.id"> {{ db.nombre }}</option>
                 </ng-container>
-              </select>
+              </select> -->
 
               <!-- <select
                 [(ngModel)]="usuario.databaseid"
@@ -69,7 +86,6 @@
                     {{ db.nombre }}</option
                   >
                 </select> -->
-
                 <!-- <mat-form-field style="width:100%;" on-focusout="seleccione()">
                   <mat-label> Selecciona una base de datos</mat-label>
                   <span matPrefix class="px-1">
