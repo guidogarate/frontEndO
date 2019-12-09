@@ -206,7 +206,7 @@
         <div class="card">
           <!-- table basic  -->
           <div class="table-responsive">
-              <table class="table">
+              <table class="table table-hover">
                 <thead>
                   <tr>
                     <th>Fecha</th>
@@ -218,7 +218,7 @@
                   </tr>
                 </thead>
                 <tbody >
-                  <tr *ngFor="let item of ListTipoCambio" (click)="cargarEdicion(item)">
+                  <tr *ngFor="let item of ListTipoCambio" (click)="cargarEdicion(item)" class="puntero">
                     <td>{{item.fecha | date:'mediumDate':'+0400'}} </td>
                     <td>{{item.tc_oficial}}</td>
                     <td>{{item.tc_compra}}</td>

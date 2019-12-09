@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  wsUrl: "http://localhost:5000"
-  // wsUrl: "https://sage-back.herokuapp.com"
+  // wsUrl: "http://localhost:5000"
+  wsUrl: "https://sage-back.herokuapp.com"
 };
 
 /*
