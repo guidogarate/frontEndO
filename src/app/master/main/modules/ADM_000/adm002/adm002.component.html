@@ -36,7 +36,7 @@
       <!-- Dashboard content -->
       <div class="card">
         <div class="content">
-          <div *ngIf="!editar" class="col-md-8 offset-md-4" style="text-align: right;">
+          <div *ngIf="!editar" class="col-md-8 offset-md-4" style="text-align: right; font-size: large;">
               <a  style="padding-left: 15px;"[routerLink]="" routerLinkActive="router-link-active" (click) ="Guardar()" >
                   <i style="font-size: 1.2em;" class="icon-file-check" data-toggle="tooltip" data-placement="top" title="Guardar"></i>
               </a>
@@ -48,7 +48,7 @@
               </a>
            </div>
             <!-- TODO: menu para Edicion -->
-           <div *ngIf="editar" class="col-md-12 offset-md-4" style="text-align: center;">
+           <div *ngIf="editar" class="col-md-12 offset-md-4" style="text-align: center; font-size: large;">
               <a [routerLink]="" routerLinkActive="router-link-active" (click) ="Actualizar()" >
                   <i style="font-size: 1.2em;" class="icon-file-check" data-toggle="tooltip" data-placement="top" title="Actualizar"></i>
               </a>
@@ -130,39 +130,40 @@
                       <div class="card-header">
                             <h6 class="card-title"><b> Ingreso de Fecha</b></h6>
                       </div>
-                      <div class="card-body">
+                      <div class="card-body" style="padding-bottom: 0px;">
                         <div class="row">
                           <div class="col-md-6 col-xs-12" style="padding-left: 0px;">
                             <div class="form-group">
-                              <div class="input-group">
-                                <span class="input-group-prepend">
-                                  <span class="input-group-text"><i class="icon-calendar22"></i></span>
-                                </span>
-                                <input type="text" id="anytime-date" class="form-control daterange-single" required value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}" [(ngModel)]="tipoCambio.fecha">
+                                <div class="input-group">
+                                    <i class="icon-calendar22" style="padding-right: 5px;"></i> 
+                                    <input [disabled]="editar" type="date" type="date" name="fechaEdicion" required 
+                                    value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}" [(ngModel)]="tipoCambio.fecha"
+                                      data-date="" data-date-format="yyyy-MM-dd" max="{{fechaMaxima}}"
+                                    >
+                                </div>
                             </div>
                           </div>
+                          <div class="col-md-6 col-xs-12">
+                              <div class="form-group">
+                                      <div class="form-check">
+                                          <label class="form-check-label">
+                                            <input name="pred" type="checkbox" class="form-check-input" [checked]="tipoCambio.pred == 'true'" [(ngModel)]="tipoCambio.pred">
+                                            predeterminado
+                                          </label>
+                                      </div>
+                                      <div class="form-check">
+                                          <label class="form-check-label">
+                                            <input name="estado" type="checkbox" class="form-check-input fechalimite" [checked]="tipoCambio.estado == 'true'" [(ngModel)]="tipoCambio.estado" >
+                                            <span *ngIf="tipoCambio.estado">abierto</span>
+                                            <span *ngIf="!tipoCambio.estado">cerrado</span>  
+                                          </label>
+                                      </div>
+                              </div>
+                            </div>
                         </div>
-                        <div class="col-md-6 col-xs-12">
-                            <div class="form-group">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                          <input name="pred" type="checkbox" class="form-check-input" [checked]="tipoCambio.pred == 'true'" [(ngModel)]="tipoCambio.pred">
-                                          predeterminado
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                          <input name="estado" type="checkbox" class="form-check-input" [checked]="tipoCambio.estado == 'true'" [(ngModel)]="tipoCambio.estado" >
-                                          <span *ngIf="tipoCambio.estado">abierto</span>
-                                          <span *ngIf="!tipoCambio.estado">cerrado</span>
-                                              
-                                        </label>
-                                    </div>
-                            </div>
-                          </div>
                         </div>
 
-                        <div class="row" style="padding-top: 15px;">
+                        <div class="row" style="padding-top: 15px; margin: 0px; padding-bottom: 15px;">
                               <div class="text-left">
                                 <div class="col-md-12 col-xs-12">
                                   <label class="col-lg-12">T/C Oficial</label>
@@ -238,22 +239,25 @@
               </table>
             </div>
           <!-- /table basic -->
-        </div>
-      <!-- </div> -->
+
+            <hr>
+
           <div class="row" *ngIf="ListTipoCambio!=undefined">
-            <div class="col-md-12">
+            <div class="col-md-8 offset-md-4 col-xs-12">
               <ul class="pagination pagination-flat align-self-center">
-                <li class="page-item"><a href="#" class="page-link">&larr; &nbsp; Prev</a></li>
+                <!-- <li class="page-item"><a href="#" class="page-link">&larr; &nbsp; Prev</a></li> -->
                 <li *ngFor="let item of ArrayPaginacion" class="page-item" >
                   <a class="page-link" (click)="cargarPaginacion(item)" 
                   [routerLink]="" routerLinkActive="router-link-active">
                   {{item}}
                   </a>
                 </li>
-                <li class="page-item"><a href="#" class="page-link">Next &nbsp; &rarr;</a></li>
+                <!-- <li class="page-item"><a href="#" class="page-link">Next &nbsp; &rarr;</a></li> -->
               </ul>
             </div>
           </div>
+        </div>
+      <!-- </div> -->
     </div>
     <!-- /content area -->
   

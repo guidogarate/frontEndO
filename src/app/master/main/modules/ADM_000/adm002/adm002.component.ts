@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe} from '@angular/common';
 import { Adm001Service } from '../../../../utils/service/ADM-001/Adm001.service';
-import { stringify } from 'querystring';
-//import { Adm001Service } from 'src/app/master/utils/service/ADM-001/Adm001.service';
- declare function init_plugins();
+import * as Noty from "noty";
+ declare function init_date();
 
 @Component({
   selector: 'app-adm002',
@@ -39,25 +38,21 @@ export class Adm002Component implements OnInit {
   tipoCambioSend: any;
   editar: boolean = false;
   ArrayPaginacion : string [] ;
+ 
+  fechaMaxima: any;
+  
 
   constructor( private adm001Service: Adm001Service, private datePipe : DatePipe) { 
     
-   // this.cargarPredeterminado();
-    // this.indice = "0";
-    // this.ObtenerGestion();
-    // setTimeout(() => {
-    //   this.Paginacion();
-    //  // if( this.listaAnhos!= undefined && this.totalPaginacion!= undefined || this.totalPaginacion!= -1){
-    //     this.cargarLista();
-    //     this.cargarArrayPaginacion();
-    //   //}
-    // }, 2000);
-    // this.Limpiar();
   }
 
 
   ngOnInit() {
     this.indice = "0";
+
+    setTimeout(() => {
+      init_date();
+    }, 1000);
     this.ObtenerGestion();
     setTimeout(() => {
       this.Paginacion();
@@ -69,14 +64,11 @@ export class Adm002Component implements OnInit {
       
     }, 1500);
     
-    
+    this.configurarFecha();
 
     this.Limpiar();
     
-    // init_plugins();
-    // setTimeout(() => {
-    //   init_plugins();
-    // }, 3000);
+    
 
    }
   cargarPredeterminado(){
@@ -144,6 +136,14 @@ export class Adm002Component implements OnInit {
           }
           this.adm001Service.agregar(this.tipoCambioSend).subscribe(resp =>{
             if(resp["ok"]){
+              new Noty({
+                text: "Guardando",
+                theme: "nest",
+                progressBar: false,
+                timeout: 3500,
+                type: "error",
+                layout: "bottomRight"
+              }).show();
               console.log("Guardando: ", resp);
               this.Limpiar();
               this.cargarLista();
@@ -168,6 +168,14 @@ export class Adm002Component implements OnInit {
           console.log("para actualizar: ", this.tipoCambioSend);
           this.adm001Service.actualizar(this.tipoCambioSend).subscribe(resp =>{
             if(resp["ok"]){
+              new Noty({
+                text: "actualizado",
+                theme: "nest",
+                progressBar: false,
+                timeout: 3500,
+                type: "error",
+                layout: "bottomRight"
+              }).show();
               console.log("Actualizando: ", resp);
               this.cargarLista();
               this.cargarPredeterminado();
@@ -197,6 +205,14 @@ export class Adm002Component implements OnInit {
             if(resp["ok"]){
               this.Limpiar();
               this.cargarLista();
+              new Noty({
+                text: "Eliminando",
+                theme: "nest",
+                progressBar: false,
+                timeout: 3500,
+                type: "error",
+                layout: "bottomRight"
+              }).show();
             }
             else {
               console.log("no se pudo eliminar",resp);
@@ -243,6 +259,13 @@ export class Adm002Component implements OnInit {
           });
         }
 
+        configurarFecha(){
+          this.fechaMaxima= this.datePipe.transform(this.today,"yyyy-MM-dd");
+         
+        }
 
+        
+
+   
 //  fin de clase
 }
