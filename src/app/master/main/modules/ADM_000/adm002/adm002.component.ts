@@ -101,8 +101,8 @@ export class Adm002Component implements OnInit {
       tc_compra: item.tc_compra,
       tc_venta: item.tc_venta,
       tc_ufv: item.tc_ufv,
-      estado: item.estado == 1,
-      pred: item.pred == 1
+      estado: item.estado === 1,
+      pred: item.pred === 1
     };
     this.editar = true;
   }
@@ -231,7 +231,7 @@ export class Adm002Component implements OnInit {
   cargarArrayPaginacion() {
     console.log("cargando array en el metodo con total:", this.totalPaginacion);
     this.ArrayPaginacion = new Array();
-    for (var i = 0; i <= this.totalPaginacion; i++) {
+    for (let i = 0; i <= this.totalPaginacion; i++) {
       console.log("valor de elemento al array: ", i);
       this.ArrayPaginacion.push(i.toString());
     }

@@ -35,9 +35,9 @@ export class Adm001Service {
 
   CargarListaTipoCambio(indice: string, mes: string, anho: string) {
     const json = JSON.stringify({
-      indice: indice,
-      mes: mes,
-      anho: anho
+      indice,
+      mes,
+      anho
     });
     const url1 = `${url.prod}${url.busqPagi}`;
     return this.httpClient
@@ -58,8 +58,8 @@ export class Adm001Service {
   /* metodos para llamada al service*/
   paginado(mes: string, anho: string) {
     const json = JSON.stringify({
-      mes: mes,
-      anho: anho
+      mes,
+      anho
     });
     const url1 = `${url.prod}${url.paginado}`;
     return this.httpClient
