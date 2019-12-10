@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { LoginModels } from "../utils/models/login/login.models";
 import { LoginService } from "../utils/service/login/login.service";
-import * as Noty from "src/assets/global_assets/js/plugins/notifications/noty.min.js";
+import { NotyGlobal } from "src/app/master/utils/global/index.global";
 import { Observable } from "rxjs";
 // declare function init_select();
 import url from "src/app/master/config/url.config";
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   passw2 = false;
   BotonEnviar = true;
 
-  constructor(private loginS: LoginService) {
+  constructor(private loginS: LoginService, private notyG: NotyGlobal) {
     this.cargarDB();
   }
 
@@ -50,8 +50,6 @@ export class LoginComponent implements OnInit {
   }
 
   ingresar(form: NgForm) {
-    console.log(this.databases);
-    console.log(this.usuario);
     if (form.invalid) {
       return;
     }
@@ -79,14 +77,7 @@ export class LoginComponent implements OnInit {
           this.usuario.passw = null;
           this.passw2 = false;
           this.ingresarContra = false;
-          new Noty({
-            theme: "limitless",
-            layout: "bottomRight",
-            type: "success",
-            timeout: 6000,
-            text: resp["messagge"],
-            closeWith: ["button"]
-          }).show();
+          this.notyG.noty("success", resp["messagge"], 6000);
         } else {
           this.btnIngre = "Ingresando...";
           this.loading = true;
@@ -96,28 +87,14 @@ export class LoginComponent implements OnInit {
           window.location.href = url.principal;
         }
       } else {
-        new Noty({
-          theme: "limitless",
-          layout: "bottomRight",
-          type: "info",
-          timeout: 5000,
-          text: resp["messagge"],
-          closeWith: ["button"]
-        }).show();
+        this.notyG.noty("info", resp["messagge"], 5000);
       }
     });
   }
 
   estaRegistrado() {
     if (this.usuario.databaseid === "") {
-      new Noty({
-        theme: "limitless",
-        layout: "bottomRight",
-        type: "info",
-        timeout: 3000,
-        text: "Debe seleccionar una base de datos",
-        closeWith: ["button"]
-      }).show();
+      this.notyG.noty("info", "Debe seleccionar una base de datos", 3000);
     } else {
       if (this.usuario.cod_user !== "") {
         this.desabiliContra = false;

@@ -160,6 +160,7 @@
                   type="submit"
                   class="btn btn-primary btn-block"
                   id="regContra"
+                  [disabled]="loading"
                   *ngIf="!ingresarContra"
                 >
                   <i
@@ -175,6 +176,7 @@
                 <button
                   *ngIf="ingresarContra"
                   type="submit"
+                  [disabled]="loadingReg"
                   class="btn btn-info btn-sm  btn-block"
                   id="ingresarContra"
                 >
@@ -189,7 +191,7 @@
                   ></i>
                 </button>
               </div>
-              
+
               <span class="form-text text-center text-muted"
                 >Al continuar, confirma que ha leido nuestro
                 <a href="#">Terminos &amp; Condiciones</a> y

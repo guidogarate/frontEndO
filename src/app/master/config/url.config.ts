@@ -11,6 +11,7 @@ const url = {
   validarUser: "sys_000/sys_001/validar-user",
   cargarMenu: "sys_000/sys_002/cargar-menu",
   cargarFto: "sys_000/sys_002/cargar-favoritos",
+  cargaMenuFavor: "sys_000/sys_002/cargar-menu-favor",
   eliminarFto: "sys_000/sys_002/eliminar-favoritos",
   agregarFto: "sys_000/sys_002/agregar-favoritos",
   fotoDefecto:

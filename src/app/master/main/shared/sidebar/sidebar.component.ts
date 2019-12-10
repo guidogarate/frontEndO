@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 
 import { SidebarService } from "src/app/master/utils/service/main/shared/index.shared.service";
 
-import * as Noty from "src/assets/global_assets/js/plugins/notifications/noty.min.js";
+import { NotyGlobal } from "src/app/master/utils/global/index.global";
+
 import { SocketService } from "src/app/master/utils/service/socket/socket.service";
 
 // declare function init_plugins();
@@ -23,7 +24,8 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private sidebarS: SidebarService,
-    public wsService: SocketService
+    public wsService: SocketService,
+    private notyG: NotyGlobal
   ) {
     if (this.datosUser === null) {
       return;
@@ -31,8 +33,7 @@ export class SidebarComponent implements OnInit {
     this.imagen = this.datosUser.adusfoto;
     this.nombre = this.datosUser.adusnomb;
     this.email = this.datosUser.adusemai;
-    this.cargarMenu();
-    this.cargarFto();
+    this.cargarMenuFavo();
   }
 
   ngOnInit() {
@@ -42,13 +43,14 @@ export class SidebarComponent implements OnInit {
     // }, 3000);
   }
 
-  cargarMenu() {
-    this.sidebarS.CargarMenu().subscribe(resp => {
+  cargarMenuFavo() {
+    this.sidebarS.cargarMenuFavo().subscribe(resp => {
       if (resp["ok"]) {
         this.datos = resp["menu"];
+        this.favoritos = resp["favoritos"];
         this.cargandoMenu = false;
       } else {
-        console.log("no se cargaron los datos");
+        console.log("NO SE CARGARON LOS DATOS MENU FAVORITOS");
       }
     });
   }
@@ -65,56 +67,22 @@ export class SidebarComponent implements OnInit {
 
   agregarFavorito(id: number) {
     this.sidebarS.agregarFavorito(id).subscribe(resp => {
-      console.log(resp);
       if (resp["ok"]) {
         this.cargarFto();
-        new Noty({
-          text: resp["mensaje"],
-          theme: "limitless",
-          progressBar: true,
-          timeout: 2000,
-          type: "info",
-          layout: "bottomRight",
-          closeWith: ["button"]
-        }).show();
+        this.notyG.noty("info", resp["mensaje"], 2000);
       } else {
-        new Noty({
-          text: resp["error"],
-          theme: "limitless",
-          progressBar: true,
-          timeout: 2000,
-          type: "error",
-          layout: "bottomRight",
-          closeWith: ["button"]
-        }).show();
+        this.notyG.noty("error", resp["error"], 2000);
       }
     });
   }
 
   eliminarFavorito(id: number) {
     this.sidebarS.eliminarFavorito(id).subscribe(resp => {
-      console.log(resp);
       if (resp["ok"]) {
         this.cargarFto();
-        new Noty({
-          text: resp["mensaje"],
-          theme: "limitless",
-          progressBar: true,
-          timeout: 2000,
-          type: "info",
-          layout: "bottomRight",
-          closeWith: ["button"]
-        }).show();
+        this.notyG.noty("info", resp["mensaje"], 2000);
       } else {
-        new Noty({
-          text: resp["error"],
-          theme: "limitless",
-          progressBar: true,
-          timeout: 2000,
-          type: "error",
-          layout: "bottomRight",
-          closeWith: ["button"]
-        }).show();
+        this.notyG.noty("error", resp["error"], 2000);
       }
     });
   }
