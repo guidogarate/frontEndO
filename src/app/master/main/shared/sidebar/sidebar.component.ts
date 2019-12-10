@@ -15,6 +15,7 @@ import { SocketService } from "src/app/master/utils/service/socket/socket.servic
 })
 export class SidebarComponent implements OnInit {
   datos: any;
+  buscar: any;
   favoritos: any;
   cargandoMenu = true;
   datosUser: any = JSON.parse(sessionStorage.getItem("datos_user"));
@@ -66,6 +67,8 @@ export class SidebarComponent implements OnInit {
   }
 
   agregarFavorito(id: number) {
+    console.log(id);
+
     this.sidebarS.agregarFavorito(id).subscribe(resp => {
       if (resp["ok"]) {
         this.cargarFto();
@@ -85,5 +88,36 @@ export class SidebarComponent implements OnInit {
         this.notyG.noty("error", resp["error"], 2000);
       }
     });
+  }
+
+  buscarComponente(component: string) {
+    console.log(component);
+    this.buscar = this.datos;
+    console.log(this.buscar);
+
+    // const buscarLeng = this.buscar.length;
+    // for (let i = 0; i < buscarLeng; i++) {
+    //   const subMen = this.buscar[i].subMenu;
+    //   const subMenLeng = subMen.length;
+    //   for (let j = 0; j < subMenLeng; j++) {
+    //     const componente = subMen[j].componentes;
+    //     const componenteLeng = componente.length;
+    //     for (let k = 0; k < componenteLeng; k++) {
+    //       const BuscarCompo = subMen[k].componentes;
+    //       console.log(BuscarCompo);
+    //     }
+    //   }
+    // }
+    // const cadena = "Esto es una prueba";
+    // const expression = /prueba/;
+    // const index = cadena.search(expression);
+    // if (index >= 0) {
+    //   console.log(
+    //     "la palabra existe dentro de la cadena y se encuentra en la posición " +
+    //       index
+    //   );
+    // } else {
+    //   console.log("la palabra no existe dentro de la cadena");
+    // }
   }
 }
