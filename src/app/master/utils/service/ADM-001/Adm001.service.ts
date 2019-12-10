@@ -161,4 +161,20 @@ export class Adm001Service {
         })
       );
   }
+  obtenerGestionesDisponiblesPredeterminado() {
+    const url1 = `${url.prod}${url.gest_dispo_y_predet}`;
+    console.log("Obteniendo Gestiones Disponibles y Predeterminado: ", url1);
+    return this.httpClient
+      .get(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
 }
