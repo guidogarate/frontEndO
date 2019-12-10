@@ -163,20 +163,31 @@
                                           </label>
                                       </div> -->
                                     
-                                      <div  class="form-check form-check-switchery">
+                                      <!-- <div  class="form-check form-check-switchery">
                                         <label class="form-check-label">
                                           <input name="estado" type="checkbox" class="form-check-input-switchery" 
                                           [checked]="tipoCambio.estado" data-fouc [(ngModel)]="tipoCambio.estado">
                                           <span class="font-weight-semibold" *ngIf="tipoCambio.estado">Abierto</span>
                                           <span class="font-weight-semibold" *ngIf="!tipoCambio.estado">Cerrado</span> 
                                         </label>
-                                      </div>
-                                      <div class="form-check form-check-switchery">
+                                      </div> -->
+                                      <!-- <div class="form-check form-check-switchery">
                                         <label class="form-check-label">
                                           <input name="predeterminado" type="checkbox" class="form-check-input-switchery"
                                           [checked]="tipoCambio.pred" [(ngModel)]="tipoCambio.pred">
                                           <span class="font-weight-semibold" > Predeterminado</span>
                                         </label>
+                                      </div> -->
+                                      <div class="custom-control custom-switch">
+                                          <input type="checkbox" class="custom-control-input" id="switch1" name="sw1"
+                                          [checked]="tipoCambio.estado" data-fouc [(ngModel)]="tipoCambio.estado">
+                                          <label *ngIf="tipoCambio.estado" class="custom-control-label" for="switch1">Abierto</label>
+                                          <label *ngIf="!tipoCambio.estado" class="custom-control-label" for="switch1">Cerrado</label>
+                                      </div>
+                                      <div class="custom-control custom-switch">
+                                          <input type="checkbox" class="custom-control-input" id="switch2" name="sw2"
+                                          [checked]="tipoCambio.pred" [(ngModel)]="tipoCambio.pred">
+                                          <label class="custom-control-label" for="switch2">Predeterminado</label>
                                       </div>
                                     </div>
                                   </div>
