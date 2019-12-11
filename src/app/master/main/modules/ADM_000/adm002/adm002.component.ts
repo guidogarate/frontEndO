@@ -3,7 +3,7 @@ import { DatePipe } from "@angular/common";
 import { Adm001Service } from "../../../../utils/service/ADM-001/Adm001.service";
 import * as Noty from "noty";
 declare function init_date();
-declare function init_check();
+// declare function init_check();
 
 @Component({
   selector: "app-adm002",
@@ -52,8 +52,8 @@ export class Adm002Component implements OnInit {
    
 
     setTimeout(() => {
-     // init_date();
-      init_check();
+      init_date();
+      
     }, 1000);
     this.ObtenerGestionesPredeterminado();
     setTimeout(() => {
@@ -112,7 +112,6 @@ export class Adm002Component implements OnInit {
     };
     console.log("Pa Edicion SAliendo: ", this.tipoCambio);
     this.editar = true;
-       init_check();
   }
 
   Paginacion() {

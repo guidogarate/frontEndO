@@ -634,13 +634,13 @@ function init_date() {
       today: "hoy",
       clear: "Limpiar",
       close: "Cerrar",
-      formatSubmit: "dd/mm/yyyy"
+      formatSubmit: "yyyy/mm/dd"
     });
   
     // Format options
     $(".pickadate-format").pickadate({
       // Escape any “rule” characters with an exclamation mark (!).
-      format: "You selecte!d: dddd, dd mmm, yyyy",
+      format: "You selecte!d: yyyy, mm, dd",
       formatSubmit: "yyyy/mm/dd",
       hiddenPrefix: "prefix__",
       hiddenSuffix: "__suffix"
@@ -682,8 +682,8 @@ function init_date() {
     // Date limits
     $(".pickadate-limits").pickadate({
         inputs:$('.fechalimite'),
-      min: [2019,0, 1],
-      max: [2019, 11, 15]
+      min: [2017,0, 1],
+      max: [2019, 11, 11]
     });
   
     // Disable certain dates
