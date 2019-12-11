@@ -16,6 +16,7 @@ export class Adm002Component implements OnInit {
   indice: string;
   mes: string = "2";
   anho: string;
+  undefinded: string = "undefinded";
   listaMeses = [
     { id: 1, name: "Enero" },
     { id: 2, name: "Febrero" },
