@@ -67,8 +67,6 @@ export class SidebarComponent implements OnInit {
   }
 
   agregarFavorito(id: number) {
-    console.log(id);
-
     this.sidebarS.agregarFavorito(id).subscribe(resp => {
       if (resp["ok"]) {
         this.cargarFto();
