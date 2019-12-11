@@ -3,6 +3,7 @@ import { DatePipe } from "@angular/common";
 import { Adm001Service } from "../../../../utils/service/ADM-001/Adm001.service";
 import * as Noty from "noty";
 declare function init_date();
+declare function init_check();
 
 @Component({
   selector: "app-adm002",
@@ -43,15 +44,18 @@ export class Adm002Component implements OnInit {
   constructor(
     private adm001Service: Adm001Service,
     private datePipe: DatePipe
-  ) {}
+  ) {
+    this.indice = "0";
+  }
 
   ngOnInit() {
-    this.indice = "0";
+   
 
     setTimeout(() => {
-      init_date();
+     // init_date();
+      init_check();
     }, 1000);
-    this.ObtenerGestion();
+    this.ObtenerGestionesPredeterminado();
     setTimeout(() => {
       this.Paginacion();
       console.log("cargando arraypaginacion");
@@ -64,7 +68,7 @@ export class Adm002Component implements OnInit {
     this.configurarFecha();
 
     this.Limpiar();
-    this.predeterminado = this.cargarPredeterminado();
+    
   }
   cargarPredeterminado() {
     this.adm001Service.CargarPredeterminados().subscribe(resp => {
@@ -95,16 +99,20 @@ export class Adm002Component implements OnInit {
   }
 
   cargarEdicion(item: any) {
+
+    console.log("Pa Edicion: ", item);
     this.tipoCambio = {
       fecha: this.datePipe.transform(item.fecha, "yyyy-MM-dd", "+0400"),
       tc_oficial: item.tc_oficial,
       tc_compra: item.tc_compra,
       tc_venta: item.tc_venta,
       tc_ufv: item.tc_ufv,
-      estado: item.estado === 1,
-      pred: item.pred === 1
+      estado: (item.estado == 1),
+      pred: (item.pred == 1)
     };
+    console.log("Pa Edicion SAliendo: ", this.tipoCambio);
     this.editar = true;
+       init_check();
   }
 
   Paginacion() {
@@ -255,9 +263,27 @@ export class Adm002Component implements OnInit {
       }
     });
   }
-
+  
   configurarFecha() {
     this.fechaMaxima = this.datePipe.transform(this.today, "yyyy-MM-dd");
+  }
+  
+  ObtenerGestionesPredeterminado(){
+    this.adm001Service.obtenerGestionesDisponiblesPredeterminado().subscribe(resp => {
+      if (resp["ok"]) {
+        this.listaAnhos = resp["gestDispo"];
+        this.anho = this.listaAnhos[1].fecha;
+        this.predeterminado = resp["adm_001_mostrarTodo"][0];
+        this.predeterminado.fecha = this.datePipe.transform(
+          this.predeterminado.fecha,
+          "yyyy-MM-dd",
+          "+0400")
+      } else {
+        console.log("no se cargo lista de Gestiones");
+        return resp;
+      }
+    });
+
   }
 
   //  fin de clase

@@ -53,7 +53,7 @@
                   <i style="font-size: 1.2em;" class="icon-file-check" data-toggle="tooltip" data-placement="top" title="Actualizar"></i>
               </a>
               <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Cancelar()" >
-                  <i style="font-size: 1.2em;" class="icon-cancel-square" data-toggle="tooltip" data-placement="top" title="Cancelar()"></i>
+                  <i style="font-size: 1.2em;" class="icon-cancel-square" data-toggle="tooltip" data-placement="top" title="Cancelar"></i>
               </a>
               <a style="padding-left: 15px;" [routerLink]="" routerLinkActive="router-link-active" (click) ="Eliminar()" >
                 <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
@@ -76,7 +76,7 @@
                       </div>
                       <div class="card-body">
                           <div class="text-left">
-                              <div class="col-md-12">
+                              <div class="col-md-12" style="padding-left: 0px;">
                                   <label class="col-form-label col-lg-6">Fecha</label>
                                   <div class="col-lg-6 col-xs-12">
                                     <input  *ngIf="predeterminado!=undefined" type="text" readonly class="form-control"  value="{{predeterminado.fecha |date:'yyyy-MM-dd'}}">
@@ -133,33 +133,64 @@
                       <div class="card-body" style="padding-bottom: 0px;">
                         <div class="row">
                           <div class="col-md-6 col-xs-12" style="padding-left: 0px;">
+                              <!-- <i class="icon-calendar22" style="padding-left: 5px;"></i>  -->
+                            <span class="font-weight-semibold">Fecha </span>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <i class="icon-calendar22" style="padding-right: 5px;"></i> 
-                                    <input [disabled]="editar" type="date" type="date" name="fechaEdicion" required 
-                                    value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}" [(ngModel)]="tipoCambio.fecha"
-                                      data-date="" data-date-format="yyyy-MM-dd" max="{{fechaMaxima}}"
-                                    >
+                                  <input [disabled]="editar" type="date" type="date" name="fechaEdicion" required 
+                                  value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}" [(ngModel)]="tipoCambio.fecha"
+                                  data-date="" data-date-format="yyyy-MM-dd" max="{{fechaMaxima}}"
+                                  >
                                 </div>
                             </div>
                           </div>
                           <div class="col-md-6 col-xs-12">
                               <div class="form-group">
+                                      <!-- <div class="form-check">
+                                          <label class="form-check-label">
+                                            <input name="pred" type="checkbox" class="form-check-input" 
+                                            [checked] ="tipoCambio.estado" [(ngModel)]="tipoCambio.estado">
+                                            <span class="font-weight-semibold" *ngIf="tipoCambio.estado">Abierto </span>
+                                            <span class="font-weight-semibold" *ngIf="!tipoCambio.estado">Cerrado</span> 
+                                          </label>
+                                          
+                                      </div>
                                       <div class="form-check">
                                           <label class="form-check-label">
-                                            <input name="pred" type="checkbox" class="form-check-input" [checked]="tipoCambio.pred == 'true'" [(ngModel)]="tipoCambio.pred">
+                                            <input name="pred" type="checkbox" class="form-check-input" 
+                                            [checked] ="tipoCambio.pred" [(ngModel)]="tipoCambio.pred">
                                             predeterminado
                                           </label>
+                                      </div> -->
+                                    
+                                      <!-- <div  class="form-check form-check-switchery">
+                                        <label class="form-check-label">
+                                          <input name="estado" type="checkbox" class="form-check-input-switchery" 
+                                          [checked]="tipoCambio.estado" data-fouc [(ngModel)]="tipoCambio.estado">
+                                          <span class="font-weight-semibold" *ngIf="tipoCambio.estado">Abierto</span>
+                                          <span class="font-weight-semibold" *ngIf="!tipoCambio.estado">Cerrado</span> 
+                                        </label>
+                                      </div> -->
+                                      <!-- <div class="form-check form-check-switchery">
+                                        <label class="form-check-label">
+                                          <input name="predeterminado" type="checkbox" class="form-check-input-switchery"
+                                          [checked]="tipoCambio.pred" [(ngModel)]="tipoCambio.pred">
+                                          <span class="font-weight-semibold" > Predeterminado</span>
+                                        </label>
+                                      </div> -->
+                                      <div class="custom-control custom-switch">
+                                          <input type="checkbox" class="custom-control-input" id="switch1" name="sw1"
+                                          [checked]="tipoCambio.estado" data-fouc [(ngModel)]="tipoCambio.estado">
+                                          <label *ngIf="tipoCambio.estado" class="custom-control-label" for="switch1">Abierto</label>
+                                          <label *ngIf="!tipoCambio.estado" class="custom-control-label" for="switch1">Cerrado</label>
                                       </div>
-                                      <div class="form-check">
-                                          <label class="form-check-label">
-                                            <input name="estado" type="checkbox" class="form-check-input fechalimite" [checked]="tipoCambio.estado == 'true'" [(ngModel)]="tipoCambio.estado" >
-                                            <span *ngIf="tipoCambio.estado">abierto</span>
-                                            <span *ngIf="!tipoCambio.estado">cerrado</span>  
-                                          </label>
+                                      <div class="custom-control custom-switch">
+                                          <input type="checkbox" class="custom-control-input" id="switch2" name="sw2"
+                                          [checked]="tipoCambio.pred" [(ngModel)]="tipoCambio.pred">
+                                          <label class="custom-control-label" for="switch2">Predeterminado</label>
                                       </div>
-                              </div>
-                            </div>
+                                    </div>
+                                  </div>
                         </div>
                         </div>
 
@@ -197,7 +228,6 @@
                                   </div>
                               </div>
                         </div> 
-                       
                       </div>
                   </div>
             </div>
@@ -205,7 +235,7 @@
       <!-- <div class="row"> -->
         <div class="card">
           <!-- table basic  -->
-          <div class="table-responsive">
+          <div class="table-responsive" *ngIf="ListTipoCambio!= undefined">
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -238,11 +268,17 @@
                 </tbody>
               </table>
             </div>
+            <div *ngIf="ListTipoCambio == undefinded">
+              <div  class="badge-danger">
+                  <span>No hay datos en la Gestion Seleccionada </span>
+              </div>
+
+            </div>
           <!-- /table basic -->
 
             <hr>
 
-          <div class="row" *ngIf="ListTipoCambio!=undefined">
+          <div class="row">
             <div class="col-md-8 offset-md-4 col-xs-12">
               <ul class="pagination pagination-flat align-self-center">
                 <!-- <li class="page-item"><a href="#" class="page-link">&larr; &nbsp; Prev</a></li> -->
