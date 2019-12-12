@@ -239,10 +239,10 @@
                     </a>
                   </li>
 
-                  <li *ngFor="let item of totalPaginacion" class="page-item" >
+                  <li *ngFor="let item of totalPaginacion; let i = index" class="page-item" >
                     <a class="page-link" (click)="cargarPaginacion(item.pag)" 
                     [routerLink]="" routerLinkActive="router-link-active">
-                     {{ item.pag }}
+                     {{ i + 1}}
                     </a>
                   </li>
                   <li class="page-item">
