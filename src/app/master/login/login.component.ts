@@ -4,8 +4,9 @@ import { LoginModels } from "../utils/models/login/login.models";
 import { LoginService } from "../utils/service/login/login.service";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
 import { Observable } from "rxjs";
-// declare function init_select();
+declare function init_select();
 import url from "src/app/master/config/url.config";
+import { DeviceDetectorService } from "ngx-device-detector";
 
 @Component({
   selector: "app-login",
@@ -23,15 +24,17 @@ export class LoginComponent implements OnInit {
   ingresarContra = false;
   passw2 = false;
   BotonEnviar = true;
+  isMobile = this.deviceService.isMobile();
 
-  constructor(private loginS: LoginService, private notyG: NotyGlobal) {
+  constructor(
+    private loginS: LoginService,
+    private deviceService: DeviceDetectorService,
+    private notyG: NotyGlobal
+  ) {
     this.cargarDB();
   }
 
   ngOnInit() {
-    // setTimeout(() => {
-    //   init_select();
-    // });
     if (this.loginS.estaAutenticado()) {
       window.location.href = url.principal;
     } else {
@@ -42,6 +45,9 @@ export class LoginComponent implements OnInit {
   cargarDB() {
     this.loginS.cargarDB().subscribe(resp => {
       this.databases = resp;
+      setTimeout(() => {
+        init_select();
+      }, 1000);
     });
   }
 
@@ -53,7 +59,6 @@ export class LoginComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    // return;
     let peticion: Observable<any>;
     this.estaRegistrado();
     if (this.usuario.passs === null) {
