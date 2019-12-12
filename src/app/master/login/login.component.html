@@ -25,6 +25,32 @@
               </div>
               <div class="form-group">
                 <select
+                  *ngIf="!isMobile"
+                  required
+                  title="Seleccione una base de datos"
+                  class="form-control selectpicker show-tick"
+                  [(ngModel)]="usuario.databaseid"
+                  name="databaseid"
+                >
+                  <option *ngFor="let db of databases" [value]="db.id"
+                    >{{ db.id }} - {{ db.nombre }}</option
+                  >
+                </select>
+                <select
+                  *ngIf="isMobile"
+                  required
+                  [(ngModel)]="usuario.databaseid"
+                  name="databaseid"
+                  class="form-control"
+                >
+                  <option disabled selected value=""
+                    >Seleccione una base de datos</option
+                  >
+                  <option *ngFor="let db of databases" [value]="db.id"
+                    >{{ db.id }} - {{ db.nombre }}</option
+                  >
+                </select>
+                <!-- <select
                   [(ngModel)]="usuario.databaseid"
                   name="databaseid"
                   required
@@ -36,7 +62,7 @@
                   <ng-container *ngFor="let db of databases">
                     <option [value]="db.id"> {{ db.nombre }}</option>
                   </ng-container>
-                </select>
+                </select> -->
               </div>
               <!-- <select
                 [(ngModel)]="usuario.databaseid"

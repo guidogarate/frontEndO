@@ -7,6 +7,7 @@ import { APP_ROUTES } from "./app.routes";
 import { SocketIoModule, SocketIoConfig } from "ngx-socket-io";
 import { environment } from "src/environments/environment";
 const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
+import { DeviceDetectorModule } from "ngx-device-detector";
 
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
@@ -31,7 +32,8 @@ import { NopagefoundComponent } from "./master/nopagefound/nopagefound.component
     LoginMaterialModule,
     MainModule,
     SocketIoModule.forRoot(config),
-    IndexGlobalModule
+    IndexGlobalModule,
+    DeviceDetectorModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
