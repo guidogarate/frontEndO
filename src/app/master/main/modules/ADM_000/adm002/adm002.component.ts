@@ -14,6 +14,7 @@ export class Adm002Component implements OnInit {
   indice: string;
   mes: string = "2";
   anho: string;
+  undefinded: string = "undefinded";
   listaMeses = [
     { id: 1, name: "Enero" },
     { id: 2, name: "Febrero" },
@@ -47,7 +48,14 @@ export class Adm002Component implements OnInit {
   }
 
   ngOnInit() {
+<<<<<<< HEAD
    
+=======
+    setTimeout(() => {
+      // init_date();
+      init_check();
+    }, 1000);
+>>>>>>> 64fe223960c5d074b9dddd64c1ac0e96399c7d21
     this.ObtenerGestionesPredeterminado();
     setTimeout(() => {
       this.Paginacion();
@@ -61,7 +69,6 @@ export class Adm002Component implements OnInit {
     this.configurarFecha();
 
     this.Limpiar();
-    
   }
   cargarPredeterminado() {
     this.adm001Service.CargarPredeterminados().subscribe(resp => {
@@ -92,7 +99,6 @@ export class Adm002Component implements OnInit {
   }
 
   cargarEdicion(item: any) {
-
     console.log("Pa Edicion: ", item);
     this.tipoCambio = {
       fecha: this.datePipe.transform(item.fecha, "yyyy-MM-dd", "+0400"),
@@ -100,10 +106,14 @@ export class Adm002Component implements OnInit {
       tc_compra: item.tc_compra,
       tc_venta: item.tc_venta,
       tc_ufv: item.tc_ufv,
-      estado: (item.estado == 1),
-      pred: (item.pred == 1)
+      estado: item.estado === 1,
+      pred: item.pred === 1
     };
     this.editar = true;
+<<<<<<< HEAD
+=======
+    init_check();
+>>>>>>> 64fe223960c5d074b9dddd64c1ac0e96399c7d21
   }
 
   Paginacion() {
@@ -256,27 +266,29 @@ export class Adm002Component implements OnInit {
       }
     });
   }
-  
+
   configurarFecha() {
     this.fechaMaxima = this.datePipe.transform(this.today, "yyyy-MM-dd");
   }
-  
-  ObtenerGestionesPredeterminado(){
-    this.adm001Service.obtenerGestionesDisponiblesPredeterminado().subscribe(resp => {
-      if (resp["ok"]) {
-        this.listaAnhos = resp["gestDispo"];
-        this.anho = this.listaAnhos[1].fecha;
-        this.predeterminado = resp["adm_001_mostrarTodo"][0];
-        this.predeterminado.fecha = this.datePipe.transform(
-          this.predeterminado.fecha,
-          "yyyy-MM-dd",
-          "+0400")
-      } else {
-        console.log("no se cargo lista de Gestiones");
-        return resp;
-      }
-    });
 
+  ObtenerGestionesPredeterminado() {
+    this.adm001Service
+      .obtenerGestionesDisponiblesPredeterminado()
+      .subscribe(resp => {
+        if (resp["ok"]) {
+          this.listaAnhos = resp["gestDispo"];
+          this.anho = this.listaAnhos[1].fecha;
+          this.predeterminado = resp["adm_001_mostrarTodo"][0];
+          this.predeterminado.fecha = this.datePipe.transform(
+            this.predeterminado.fecha,
+            "yyyy-MM-dd",
+            "+0400"
+          );
+        } else {
+          console.log("no se cargo lista de Gestiones");
+          return resp;
+        }
+      });
   }
 
   //  fin de clase

@@ -9,8 +9,8 @@ export class SidebarService {
 
   constructor(private httpClient: HttpClient) {}
 
-  CargarMenu() {
-    const url1 = `${url.prod}${url.cargarMenu}`;
+  cargarMenuFavo() {
+    const url1 = `${url.prod}${url.cargaMenuFavor}`;
     return this.httpClient
       .post(url1, null, {
         headers: new HttpHeaders({

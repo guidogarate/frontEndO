@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 
 import { SidebarService } from "src/app/master/utils/service/main/shared/index.shared.service";
 
-import * as Noty from "src/assets/global_assets/js/plugins/notifications/noty.min.js";
+import { NotyGlobal } from "src/app/master/utils/global/index.global";
+
 import { SocketService } from "src/app/master/utils/service/socket/socket.service";
 
 // declare function init_plugins();
@@ -14,6 +15,7 @@ import { SocketService } from "src/app/master/utils/service/socket/socket.servic
 })
 export class SidebarComponent implements OnInit {
   datos: any;
+  buscar: any;
   favoritos: any;
   cargandoMenu = true;
   datosUser: any = JSON.parse(sessionStorage.getItem("datos_user"));
@@ -23,7 +25,8 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private sidebarS: SidebarService,
-    public wsService: SocketService
+    public wsService: SocketService,
+    private notyG: NotyGlobal
   ) {
     if (this.datosUser === null) {
       return;
@@ -31,8 +34,7 @@ export class SidebarComponent implements OnInit {
     this.imagen = this.datosUser.adusfoto;
     this.nombre = this.datosUser.adusnomb;
     this.email = this.datosUser.adusemai;
-    this.cargarMenu();
-    this.cargarFto();
+    this.cargarMenuFavo();
   }
 
   ngOnInit() {
@@ -42,13 +44,14 @@ export class SidebarComponent implements OnInit {
     // }, 3000);
   }
 
-  cargarMenu() {
-    this.sidebarS.CargarMenu().subscribe(resp => {
+  cargarMenuFavo() {
+    this.sidebarS.cargarMenuFavo().subscribe(resp => {
       if (resp["ok"]) {
         this.datos = resp["menu"];
+        this.favoritos = resp["favoritos"];
         this.cargandoMenu = false;
       } else {
-        console.log("no se cargaron los datos");
+        console.log("NO SE CARGARON LOS DATOS MENU FAVORITOS");
       }
     });
   }
@@ -65,57 +68,54 @@ export class SidebarComponent implements OnInit {
 
   agregarFavorito(id: number) {
     this.sidebarS.agregarFavorito(id).subscribe(resp => {
-      console.log(resp);
       if (resp["ok"]) {
         this.cargarFto();
-        new Noty({
-          text: resp["mensaje"],
-          theme: "limitless",
-          progressBar: true,
-          timeout: 2000,
-          type: "info",
-          layout: "bottomRight",
-          closeWith: ["button"]
-        }).show();
+        this.notyG.noty("info", resp["mensaje"], 2000);
       } else {
-        new Noty({
-          text: resp["error"],
-          theme: "limitless",
-          progressBar: true,
-          timeout: 2000,
-          type: "error",
-          layout: "bottomRight",
-          closeWith: ["button"]
-        }).show();
+        this.notyG.noty("error", resp["error"], 2000);
       }
     });
   }
 
   eliminarFavorito(id: number) {
     this.sidebarS.eliminarFavorito(id).subscribe(resp => {
-      console.log(resp);
       if (resp["ok"]) {
         this.cargarFto();
-        new Noty({
-          text: resp["mensaje"],
-          theme: "limitless",
-          progressBar: true,
-          timeout: 2000,
-          type: "info",
-          layout: "bottomRight",
-          closeWith: ["button"]
-        }).show();
+        this.notyG.noty("info", resp["mensaje"], 2000);
       } else {
-        new Noty({
-          text: resp["error"],
-          theme: "limitless",
-          progressBar: true,
-          timeout: 2000,
-          type: "error",
-          layout: "bottomRight",
-          closeWith: ["button"]
-        }).show();
+        this.notyG.noty("error", resp["error"], 2000);
       }
     });
+  }
+
+  buscarComponente(component: string) {
+    console.log(component);
+    this.buscar = this.datos;
+    console.log(this.buscar);
+
+    // const buscarLeng = this.buscar.length;
+    // for (let i = 0; i < buscarLeng; i++) {
+    //   const subMen = this.buscar[i].subMenu;
+    //   const subMenLeng = subMen.length;
+    //   for (let j = 0; j < subMenLeng; j++) {
+    //     const componente = subMen[j].componentes;
+    //     const componenteLeng = componente.length;
+    //     for (let k = 0; k < componenteLeng; k++) {
+    //       const BuscarCompo = subMen[k].componentes;
+    //       console.log(BuscarCompo);
+    //     }
+    //   }
+    // }
+    // const cadena = "Esto es una prueba";
+    // const expression = /prueba/;
+    // const index = cadena.search(expression);
+    // if (index >= 0) {
+    //   console.log(
+    //     "la palabra existe dentro de la cadena y se encuentra en la posición " +
+    //       index
+    //   );
+    // } else {
+    //   console.log("la palabra no existe dentro de la cadena");
+    // }
   }
 }

@@ -13,6 +13,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { LoginMaterialModule } from "./master/login/login.material.module";
 import { MainModule } from "./master/main/main.module";
+import { IndexGlobalModule } from "./master/utils/global/index.global.module";
 
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./master/login/login.component";
@@ -29,7 +30,8 @@ import { NopagefoundComponent } from "./master/nopagefound/nopagefound.component
     BrowserAnimationsModule,
     LoginMaterialModule,
     MainModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    IndexGlobalModule
   ],
   providers: [],
   bootstrap: [AppComponent]
