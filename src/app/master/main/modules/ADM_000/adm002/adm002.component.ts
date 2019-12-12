@@ -48,7 +48,6 @@ export class Adm002Component implements OnInit {
   }
 
   ngOnInit() {
-   
     this.ObtenerGestionesPredeterminado();
     setTimeout(() => {
       this.Paginacion();
@@ -115,7 +114,6 @@ export class Adm002Component implements OnInit {
       } else {
         console.log("no se cargo paginado", resp);
         return resp;
-        
       }
     });
   }
