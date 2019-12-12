@@ -48,14 +48,7 @@ export class Adm002Component implements OnInit {
   }
 
   ngOnInit() {
-<<<<<<< HEAD
    
-=======
-    setTimeout(() => {
-      // init_date();
-      init_check();
-    }, 1000);
->>>>>>> 64fe223960c5d074b9dddd64c1ac0e96399c7d21
     this.ObtenerGestionesPredeterminado();
     setTimeout(() => {
       this.Paginacion();
@@ -110,10 +103,6 @@ export class Adm002Component implements OnInit {
       pred: item.pred === 1
     };
     this.editar = true;
-<<<<<<< HEAD
-=======
-    init_check();
->>>>>>> 64fe223960c5d074b9dddd64c1ac0e96399c7d21
   }
 
   Paginacion() {
