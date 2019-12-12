@@ -14,7 +14,7 @@ export class Adm002Component implements OnInit {
   indice: string;
   mes: string = "2";
   anho: string;
-  loading : boolean = true;
+  loading: boolean = true;
   listaMeses = [
     { id: 1, name: "Enero" },
     { id: 2, name: "Febrero" },
@@ -36,7 +36,7 @@ export class Adm002Component implements OnInit {
   tipoCambio: any;
   tipoCambioSend: any;
   editar: boolean = false;
-  
+
   fechaMaxima: any;
 
   constructor(
@@ -47,10 +47,6 @@ export class Adm002Component implements OnInit {
   }
 
   ngOnInit() {
-<<<<<<< HEAD
-=======
-   this.loading= true;
->>>>>>> ff0c3ca8587ae9f27a9f285116dc8c481486184a
     this.ObtenerGestionesPredeterminado();
     setTimeout(() => {
       console.log("cargando arraypaginacion");
@@ -63,7 +59,7 @@ export class Adm002Component implements OnInit {
     this.configurarFecha();
 
     this.Limpiar();
-    this.loading= false;
+    this.loading = false;
   }
   cargarPredeterminado() {
     this.adm001Service.CargarPredeterminados().subscribe(resp => {
@@ -81,18 +77,21 @@ export class Adm002Component implements OnInit {
   }
 
   cargarLista() {
-    this.loading= true;
+    this.loading = true;
     this.adm001Service
       .CargarListaTipoCambio(this.indice, this.mes, this.anho)
       .subscribe(resp => {
         if (resp["ok"]) {
           this.ListTipoCambio = resp["adm_001_mostrarTodo"];
-          console.log("listaTipoCambio: "  + this.indice + " ", this.ListTipoCambio);
+          console.log(
+            "listaTipoCambio: " + this.indice + " ",
+            this.ListTipoCambio
+          );
         } else {
           console.log("no se cargo Lista", resp);
         }
       });
-      this.loading= false;
+    this.loading = false;
   }
 
   cargarEdicion(item: any) {
@@ -119,11 +118,7 @@ export class Adm002Component implements OnInit {
         console.log("Total paginacion: ", this.totalPaginacion);
       } else {
         console.log("no se cargo paginado", resp);
-<<<<<<< HEAD
         return resp;
-=======
-        return resp; 
->>>>>>> ff0c3ca8587ae9f27a9f285116dc8c481486184a
       }
     });
   }
@@ -207,7 +202,7 @@ export class Adm002Component implements OnInit {
   }
 
   Eliminar() {
-    this.loading= true;
+    this.loading = true;
     this.adm001Service.eliminar(this.tipoCambio.fecha).subscribe(resp => {
       if (resp["ok"]) {
         this.Limpiar();
@@ -227,7 +222,7 @@ export class Adm002Component implements OnInit {
         return resp;
       }
     });
-    this.loading= false;
+    this.loading = false;
   }
 
   Cancelar() {
@@ -238,8 +233,8 @@ export class Adm002Component implements OnInit {
   Editar() {
     this.editar = true;
   }
- 
-  cargarPaginacion(item:string ) {
+
+  cargarPaginacion(item: string) {
     console.log("cargando lista nro: ", item);
     this.indice = item;
     this.cargarLista();
@@ -282,15 +277,15 @@ export class Adm002Component implements OnInit {
       });
   }
 
-  ActualizarLista(){
+  ActualizarLista() {
     this.ListTipoCambio = undefined;
-    this.loading= true;
-    this.indice="0";
-    this.Paginacion()
+    this.loading = true;
+    this.indice = "0";
+    this.Paginacion();
     this.cargarLista();
-    this.loading= false;
+    this.loading = false;
   }
-  nada(){}
+  nada() {}
 
   //  fin de clase
 }
