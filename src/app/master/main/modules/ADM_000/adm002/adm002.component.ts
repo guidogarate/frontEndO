@@ -2,8 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { DatePipe } from "@angular/common";
 import { Adm001Service } from "../../../../utils/service/ADM-001/Adm001.service";
 import * as Noty from "noty";
-declare function init_date();
-// declare function init_check();
 
 @Component({
   selector: "app-adm002",
@@ -50,11 +48,6 @@ export class Adm002Component implements OnInit {
 
   ngOnInit() {
    
-
-    setTimeout(() => {
-      init_date();
-      
-    }, 1000);
     this.ObtenerGestionesPredeterminado();
     setTimeout(() => {
       this.Paginacion();
@@ -110,7 +103,6 @@ export class Adm002Component implements OnInit {
       estado: (item.estado == 1),
       pred: (item.pred == 1)
     };
-    console.log("Pa Edicion SAliendo: ", this.tipoCambio);
     this.editar = true;
   }
 
@@ -124,6 +116,7 @@ export class Adm002Component implements OnInit {
       } else {
         console.log("no se cargo paginado", resp);
         return resp;
+        
       }
     });
   }
@@ -219,6 +212,7 @@ export class Adm002Component implements OnInit {
           type: "error",
           layout: "bottomRight"
         }).show();
+        this.Cancelar();
       } else {
         console.log("no se pudo eliminar", resp);
         return resp;
