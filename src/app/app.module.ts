@@ -12,7 +12,7 @@ import { DeviceDetectorModule } from "ngx-device-detector";
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
-import { LoginMaterialModule } from "./master/login/login.material.module";
+// import { LoginMaterialModule } from "./master/login/login.material.module";
 import { MainModule } from "./master/main/main.module";
 import { IndexGlobalModule } from "./master/utils/global/index.global.module";
 
@@ -29,7 +29,7 @@ import { NopagefoundComponent } from "./master/nopagefound/nopagefound.component
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    LoginMaterialModule,
+    // LoginMaterialModule,
     MainModule,
     SocketIoModule.forRoot(config),
     IndexGlobalModule,
