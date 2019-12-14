@@ -1,6 +1,8 @@
-.icon-diff-added:before {
-    font-size: 2em; /* de esta manera modificas el tamaño de tus iconos.*/
+
+  .xl {
+    font-size: 1.5em; /* de esta manera modificas el tamaño de tus iconos.*/
   }
-  .icon-calendar22:before {
+
+  .xxl{
     font-size: 2em;
   }
