@@ -29,7 +29,6 @@
                             <div class="table-responsive text-center">
                                 <table class="table table-sm table-hover table-bordered">
                                     <thead class="thead-dark">
-                                        <th scope="col">Gestion</th>
                                         <th scope="col">Descripcion</th>
                                         <th scope="col">Estado</th>
                                     </thead>
@@ -187,135 +186,179 @@
                         </div>
                     </div>
 
-                    <div class="row" style="display: none;">
+                    <div class="row">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_theme_info">
                             Launch demo modal
                           </button>
                           <!-- Modal -->
-                          <div id="modal_theme_info" class="modal fade" tabindex="-1">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header bg-info">
-                                        <h6 class="modal-title">Info header</h6>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <div class="card-header header-elements-inline">
-                                        <h5 class="card-title"><i class="icon-calendar22 xl"></i>Badges and badge pills</h5>
-                                        <div class="header-elements">
-                                            <div class="list-icons">
-                                                <a class="list-icons-item" (click)="Guardar()"
-                                                [routerLink]="" routerLinkActive="router-link-active"  >
-                                                    <i class="icon-calendar22"> </i>
-                                                </a>
-                                                <a class="list-icons-item" (click)="Editar()"
-                                                [routerLink]="" routerLinkActive="router-link-active"  >
-                                                    <i class="icon-calendar22"> </i>
-                                                </a>
-                                                <a class="list-icons-item" (click)="Eliminar()"
-                                                [routerLink]="" routerLinkActive="router-link-active"  >
-                                                    <i class="icon-trash"> </i>
-                                                </a>
-                                                <a class="list-icons-item" (click)="Cancelar"
-                                                [routerLink]="" routerLinkActive="router-link-active"  >
-                                                    <i class="icon-calendar22"> </i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-left: 15px; margin-right:15px" >
-                                        <div class="col-md-3 col-12">
-                                            <div class="form-group form-group-float">
-                                                <label class="form-group-float-label">Gestion</label>
-                                                <input type="text" class="form-control" placeholder="Gestion">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-12">
-                                            <div class="form-group form-group-float">
-                                                <label class="form-group-float-label">Descripcion</label>
-                                                <input type="text" class="form-control" placeholder="Descripcion">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-12">
-                                            <div class="form-group form-group-float">
-                                                <label class="form-group-float-label">Tipo de Empresa</label>
-                                                <input type="text" class="form-control" placeholder="Tipo de Empresa">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-12">
-                                            <div class="form-group form-group-float">
-                                                <label class="form-group-float-label">Tipo de Empresa</label>
-                                                <input type="text" class="form-control" placeholder="Tipo de Empresa">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row" style="margin-left: 15px; margin-right:15px" >
-                                        <div class="col-md-3 col-12">
-                                            <div class="form-group form-group-float">
-                                                <label class="form-group-float-label">Tipo de Empresa</label>
-                                                <input type="text" class="form-control" placeholder="Tipo de Empresa">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4 col-12">
-                                            <div class="form-group form-group-float">
-                                                <label class="form-group-float-label">Periodos </label>
-                                                <input type="text" class="form-control" placeholder="Periodos">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-12">
-                                            <div class="form-group form-group-float">
-                                                <label class="form-group-float-label">Cantidad de Periodos</label>
-                                                <input type="text" class="form-control" placeholder="Cantidad de peridos">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-12">
-                                            <div class="form-group form-group-float">
-                                                <label class="form-group-float-label">Estado</label>
-                                                <input type="text" class="form-control" placeholder="Estado">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row" style="margin-left: 15px; margin-right:15px" >
-                                        <div class="col-md-8 col-12">
-                                            <div class="form-group form-group-float">
-                                                <label class="form-group-float-label">Mes Inicial de Periodo </label>
-                                                <input type="text" class="form-control" placeholder="Mes">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4 col-12">
-                                            <div class="form-group form-group-float">
-                                                <label class="form-group-float-label">hasta</label>
-                                                <input type="text" class="form-control" placeholder="Mes">
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="modal-body">
-                                        <h6 class="font-weight-semibold">Text in a modal</h6>
-                                        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-        
-                                        <hr>
-        
-                                        <h6 class="font-weight-semibold">Another paragraph</h6>
-                                        <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-                                    </div>
-        
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn bg-info">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
           <!-- /contenido posts -->
+        </div>
+        <!-- modal -->
+        <div id="modal_theme_info" class="modal fade" tabindex="-1" data-backdrop="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-info">
+                        <h6 class="modal-title">Info header</h6>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="card-header header-elements-inline">
+                        <h5 class="card-title"><i class="icon-calendar22 xl"></i>Badges and badge pills</h5>
+                        <div class="header-elements">
+                            <div class="list-icons">
+                                <a class="list-icons-item" (click)="Guardar()"
+                                [routerLink]="" routerLinkActive="router-link-active"  >
+                                    <i class="icon-calendar22"> </i>
+                                </a>
+                                <a class="list-icons-item" (click)="Editar()"
+                                [routerLink]="" routerLinkActive="router-link-active"  >
+                                    <i class="icon-calendar22"> </i>
+                                </a>
+                                <a class="list-icons-item" (click)="Eliminar()"
+                                [routerLink]="" routerLinkActive="router-link-active"  >
+                                    <i class="icon-trash"> </i>
+                                </a>
+                                <a class="list-icons-item" (click)="Cancelar"
+                                [routerLink]="" routerLinkActive="router-link-active"  >
+                                    <i class="icon-calendar22"> </i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-left: 15px; margin-right:15px" >
+                        <div class="col-md-3 col-12">
+                            <div class="form-group form-group-float">
+                                <label class="form-group-float-label">Gestion</label>
+                                <input type="text" class="form-control" placeholder="Gestion">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-12">
+                            <div class="form-group form-group-float">
+                                <label class="form-group-float-label">Descripcion</label>
+                                <input type="text" class="form-control" placeholder="Descripcion">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-12">
+                            <select class="form-control" >
+                            <!-- [(ngModel)]="mes" (change)="ActualizarLista()"> -->
+                                <!-- <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option> -->
+                                <option value="ok">ok</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-12">
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="gestion" name="gpd">
+                                <label class="custom-control-label" for="switch2">Gestion por defecto</label>
+                                <!-- [checked]="tipoCambio.pred" [(ngModel)]="tipoCambio.pred"> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-left: 15px; margin-right:15px" >
+                        <div class="col-md-4 col-12">
+                            <select class="form-control" >
+                                <!-- [(ngModel)]="mes" (change)="ActualizarLista()"> -->
+                                    <!-- <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option> -->
+                                    <option value="ok">ok</option>
+                                </select>
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                            <div class="form-group form-group-float">
+                                <label class="form-group-float-label">Periodos </label>
+                                <input type="text" class="form-control" placeholder="Periodos">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group form-group-float">
+                                <label class="form-group-float-label">Cant. de Periodos</label>
+                                <input type="text" class="form-control" placeholder="Cantidad de peridos">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-left: 15px; margin-right:15px" >
+                        <div class="col-md-6 col-12">
+                            <label for="label">Mes Inicail de Gestion</label>
+                            <select class="form-control" >
+                                <!-- [(ngModel)]="mes" (change)="ActualizarLista()"> -->
+                                    <!-- <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option> -->
+                                    <option value="ok">ok</option>
+                                </select>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                            <label for="label">Hasta</label>
+                            <select class="form-control" >
+                                <!-- [(ngModel)]="mes" (change)="ActualizarLista()"> -->
+                                    <!-- <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option> -->
+                                    <option value="ok">ok</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-left: 15px; margin-right:15px" >
+                        <div class="col-md-12 col-12">
+                           
+                            <span class="font-weight-semibold">Fecha de Inicio de Gestion 
+                                <div class="form-group">
+                                        <div class="input-group">
+                                          <!-- <input [disabled]="editar" type="date" name="fechaEdicion" required 
+                                          value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}" [(ngModel)]="tipoCambio.fecha"
+                                          data-date="" data-date-format="yyyy-MM-dd" max="{{fechaMaxima}}" 
+                                          >    -->
+                                          <input type="date" data-date-format="yyyy-MM-dd" >
+                                        </div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-left: 15px; margin-right:15px" >
+                        <div class="col-md-12 col-12">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">
+                                    Modificar Automaticamente el Estado de la Gestion a “Gestion Cerrada”
+                                </label>
+                              </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-left: 15px; margin-right:15px" >
+                        <div class="col-md-12 col-12">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-10">Fecha de Modificacion Automatica</label>
+                                <div class="col-lg-2">
+                                    <select class="form-control" >
+                                        <!-- [(ngModel)]="mes" (change)="ActualizarLista()"> -->
+                                            <!-- <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option> -->
+                                            <option value="ok">ok</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-body">
+                        <!-- <h6 class="font-weight-semibold">Text in a modal</h6>
+                        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+
+                        <hr>
+
+                        <h6 class="font-weight-semibold">Another paragraph</h6>
+                        <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p> -->
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn bg-info">Save changes</button>
+                    </div>
+                </div>
+            </div>
         </div>
       </div>
       <!-- /dashboard content -->
