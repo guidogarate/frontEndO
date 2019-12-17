@@ -23,7 +23,9 @@ const url = {
   agregar: "adm_000/adm_001/agregar",
   actualizar: "adm_000/adm_001/actualizar/",
   gestionesDisponibles: "adm_000/adm_001/gest-dispo",
-  gest_dispo_y_predet: "adm_000/adm_001/gest-dispo_y_predet"
+  gest_dispo_y_predet: "adm_000/adm_001/gest-dispo_y_predet",
+  get_gestion_periodos: "adm_000/adm_002/get-gestion-periodos",
+  get_periodos:"adm_000/adm_002/get-periodos/"
 };
 
 export default url;
