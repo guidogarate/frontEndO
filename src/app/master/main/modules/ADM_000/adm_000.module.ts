@@ -9,10 +9,11 @@ import { Adm002Component } from './adm002/adm002.component';
 import { Adm003Component } from './adm003/adm003.component';
 
 import { Adm001Service } from '../../../utils/service/ADM-001/Adm001.service';
+import { Adm002Service } from '../../../utils/service/ADM-002/Adm002.service';
 
 @NgModule({
   declarations: [Adm001Component, Adm002Component, Adm003Component],
-  providers: [Adm001Service,DatePipe],
+  providers: [Adm001Service, DatePipe, Adm002Service],
   imports: [CommonModule, ADM_000_MODULES_ROUTES, FormsModule]
 })
 export class ADM00Module {}

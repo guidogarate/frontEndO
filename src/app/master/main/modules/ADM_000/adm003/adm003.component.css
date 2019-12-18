@@ -52,6 +52,9 @@
     .xxl{
       font-size: 1em;
     }
+    .titulo{
+      font-size: larger;
+    }
   }
 
   @media screen and (min-width: 601px) {

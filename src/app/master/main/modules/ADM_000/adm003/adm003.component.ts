@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Adm002Service } from '../../../../utils/service/ADM-002/Adm002.service';
 
 declare function initLabels ();
 declare function initModal();
@@ -10,7 +11,8 @@ declare function initModal();
 })
 export class Adm003Component implements OnInit {
 
-  Lista: any;
+  ListaGestiones: any;
+  ListaPeriodos: any;
   editar: boolean = false;
   mesInicial: string = "1";
   mesFinal: string = "1";
@@ -29,13 +31,34 @@ export class Adm003Component implements OnInit {
     { id: 12, name: "Diciembre" }
   ];
  
-  constructor() { }
+  constructor(
+    private adm002Service : Adm002Service
+  ) {
+    
+   }
 
   ngOnInit() {
+    this.obtenerGestionesPeriodos();
     setTimeout(() => {
       initLabels();
    //   initModal();
     }, 1000);
+  }
+
+  obtenerGestionesPeriodos(){
+    this.adm002Service
+    .ObtenerGestionesPeriodos()
+    .subscribe( resp => {
+      if( resp["ok"]){
+        this.ListaGestiones = resp["gestion"];
+        this.ListaPeriodos = resp["periodos"];
+        console.log("Listas: ", resp);
+      }
+      else{
+        console.log("No se cargo gestiones ni periodos");
+        resp;
+      }
+    });
   }
 
 }
