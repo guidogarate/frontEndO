@@ -4,6 +4,7 @@ import { map } from "rxjs/operators";
 import url from "src/app/master/config/url.config";
 import { TipoCambio } from "../../models/TipoCambio";
 import { from } from "rxjs";
+import { Gestion } from '../../models/Gestion';
 
 @Injectable()
 export class Adm002Service {
@@ -48,6 +49,36 @@ export class Adm002Service {
         })
       );
   }
+
+  AgregarGestion(gestion: Gestion) {
+    const json = JSON.stringify({
+      gestion: gestion.gestion,
+      descripcion: gestion.descripcion,
+      actEmpresa: gestion.actEmpresa,
+      cantPeridos: gestion.cantPeridos,
+      estPeriodo: gestion.estPeriodo,
+      fechaInicio: gestion.fechaInicio,
+      fechaFin: gestion.fechaFin,
+      gtionDefec: gestion.gtionDefec,
+      modAutomatica: gestion.modAutomatica,
+      fechaModAutomatica: gestion.fechaModAutomatica,
+    });
+    console.log("service Agregar: ", json);
+    const url1 = `${url.prod}${url.agregar}`;
+    return this.httpClient
+      .post(url1, json, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
+
 
   // CargarListaTipoCambio(indice: string, mes: string, anho: string) {
   //   const json = JSON.stringify({
@@ -94,31 +125,7 @@ export class Adm002Service {
 
  
 
-  // agregar(tipoCambio: TipoCambio) {
-  //   const json = JSON.stringify({
-  //     adtcfecd: tipoCambio.adtcfecd,
-  //     adtctipo: tipoCambio.adtctipo,
-  //     adtctipc: tipoCambio.adtctipc,
-  //     adtctipv: tipoCambio.adtctipv,
-  //     adtccufv: tipoCambio.adtccufv,
-  //     adtcesta: tipoCambio.adtcesta,
-  //     adtcpred: tipoCambio.adtcpred
-  //   });
-  //   console.log("service guardar: ", json);
-  //   const url1 = `${url.prod}${url.agregar}`;
-  //   return this.httpClient
-  //     .post(url1, json, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token,
-  //         "Content-Type": "application/json"
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         return resp;
-  //       })
-  //     );
-  // }
+  
 
   // actualizar(tipoCambio: TipoCambio) {
   //   const json = JSON.stringify({

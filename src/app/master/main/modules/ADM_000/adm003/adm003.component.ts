@@ -61,4 +61,9 @@ export class Adm003Component implements OnInit {
     });
   }
 
+  AgregarGestion(){
+    // this.adm002Service.
+    console.log("abrir modal");
+  }
+
 }

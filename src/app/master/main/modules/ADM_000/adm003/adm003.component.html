@@ -8,7 +8,7 @@
                 <div class="row card-header header-elements-inline">  
                     <div class="col-md-12 col-12">
                         <h2 class="card-title text-center">Registro de Gestiones
-                            <i class="icon-diff-added xxl float-right"> </i>
+                            <i class="icon-diff-added xxl float-right" (click)="AgregarGestion()"> </i>
                         </h2>
                     </div>
                 </div>
@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="col-md-12 col-12">
                             <h3 class="text-left">
-                                <i class="icon-calendar22 xxl float-left pr2rem d-none d-sm-none d-md-block"></i>
+                                <i class="icon-calendar22 xxl float-left"></i>
                                 <span class="font-weight-semibold"></span>
                                 Gestion
                             </h3>
@@ -37,8 +37,9 @@
                                         <tr class="table-border-double" *ngFor="let gestion of ListaGestiones">
                                             <td class="puntero">{{gestion.adgtideg}}</td>
                                             <td class="puntero">{{gestion.adgtdesc}}</td>
-                                            <td *ngIf="gestion.adgtesta == 1" class="puntero">Bloqueado</td>
-                                            <td *ngIf="gestion.adgtesta == 0" class="puntero">Desloqueado</td>
+                                            <td class="puntero">{{gestion.adamdesc}}</td>
+                                            <!-- <td *ngIf="gestion.adgtesta == 1" class="puntero"></td>
+                                            <td *ngIf="gestion.adgtesta == 0" class="puntero">Desloqueado</td> -->
                                         </tr>
                                                                               
                                     </tbody>
@@ -52,7 +53,7 @@
                     <div class="row">
                         <div class="col-md-12 col-12">
                             <h3 class="text-left">
-                                <i class="icon-calendar22 float-left xxl d-none d-sm-none d-md-block pr2rem"></i>
+                                <i class="icon-calendar22 float-left xxl"></i>
                                 Periodos de Gestion
                             </h3>
                         </div>
@@ -72,8 +73,8 @@
                                     </thead>
                                     <tbody>
                                         <tr class="table-border-double" *ngFor="let periodo of ListaPeriodos">
-                                            <td class="puntero">{{periodo.adpridep}}</td>
-                                            <td class="puntero">{{periodo.adprmesp}}</td>
+                                            <td class="puntero">{{periodo.adpridep | formatonumeroperiodo}}</td>
+                                            <td class="puntero">{{periodo.adprmesp | nombremes}}</td>
                                             <td class="puntero">{{periodo.adprdesc}}</td>
                                             <td class="puntero">{{periodo.adprideg}}</td>
                                             <td *ngIf="periodo.adpresta == 1" class="puntero">Bloqueado</td>
