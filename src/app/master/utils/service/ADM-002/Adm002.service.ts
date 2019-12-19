@@ -79,6 +79,75 @@ export class Adm002Service {
       );
   }
 
+  EliminarGestion(fecha: any) {
+    const url1 = `${url.prod}${url.eliminar_Gestion}${fecha}`;
+    console.log("eliminando Gestion: ", url1);
+    return this.httpClient
+      .delete(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
+
+  ActualizarGestion(gestion: Gestion) {
+    const json = JSON.stringify({
+      descripcion: gestion.descripcion,
+      actEmpresa: gestion.actEmpresa,
+      cantPeridos: gestion.cantPeridos,
+      estPeriodo: gestion.estPeriodo,
+      fechaInicio: gestion.fechaInicio,
+      fechaFin: gestion.fechaFin,
+      gtionDefec: gestion.gtionDefec,
+      modAutomatica: gestion.modAutomatica,
+      fechaModAutomatica: gestion.fechaModAutomatica,
+    });
+    console.log("service Actualizar Gestion: ", json);
+    const url1 = `${url.prod}${url.actualizar_gestion}${gestion.gestion}`;
+    return this.httpClient
+      .put(url1, json, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
+
+  ActualizarPeriodo(Periodo: any, fechaAnhoDia : any) {
+    const json = JSON.stringify({
+      estPeriodo: Periodo.estadoPeriodo,
+      modAutomatica : Periodo.modAutomatica,
+      fechaModAutomatica : Periodo.fechaModAutomatica
+    });
+    console.log("service Actualizar Periodo: ", json);
+    const url1 = `${url.prod}${url.actualizar_periodo}${fechaAnhoDia}}`;
+    return this.httpClient
+      .put(url1, json, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
+
+
+
 
   // CargarListaTipoCambio(indice: string, mes: string, anho: string) {
   //   const json = JSON.stringify({

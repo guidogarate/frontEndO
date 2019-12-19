@@ -142,32 +142,33 @@
                         <div class="col-md-2 col-12">
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Gestion</label>
-                                <input type="text" class="form-control text-center" placeholder="Gestion">
+                                <input type="text" class="form-control text-center" placeholder="Gestion"
+                                 value="{{gestionModelo.adgtideg}}" required [(ngModel)]="gestionModelo.adgtideg">
                             </div>
                         </div>
                         <div class="col-md-4 col-12">
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Descripcion</label>
-                                <input type="text" class="form-control text-center" placeholder="Descripcion">
+                                <input type="text" class="form-control text-center" placeholder="Descripcion" value="gestionModelo.adgtdesc">
                             </div>
                         </div>
                         <div class="col-md-3 col-12">
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Estado</label>
                                 <select class="form-control">
-                                    <option value="" selected>Estado</option>
-                                     <!-- [(ngModel)]="mes" (change)="ActualizarLista()"> -->
-                                <!-- <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option> -->
-                                <option value="1">Desbloqueado</option>
-                                <option value="2">Bloqueado</option>
+                                    
+                                 <option *ngFor="let item of ListaEstadosGestionPeriodos" [value]="item.adamidea" 
+                                  [(ngModel)]="estado" (change)="ActualizarLista()">{{item.adamdesc}}</option> 
+                                
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3 col-12" style="padding-top: 2em;">
                             <div class="form-group custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="gestion" name="gpd">
-                                <label class="custom-control-label" for="switch2">Gestion por defecto</label>
-                                <!-- [checked]="tipoCambio.pred" [(ngModel)]="tipoCambio.pred"> -->
+                                <label class="custom-control-label" for="switch2"
+                                    checked="gestionModelo.adgtgesd" [(ngModel)]="gestionModelo.adgtgesd">
+                                    Gestion por defecto</label>
                             </div>
                         </div>
                     </div>
@@ -177,11 +178,9 @@
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Tipo de Empresa</label>
                                 <select class="form-control">
-                                    <option value="" selected>Tipo de Empresa</option>
-                                     <!-- [(ngModel)]="mes" (change)="ActualizarLista()"> -->
-                                     <!-- <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option> -->
-                                <option value="1">Comercial</option>
-                                <option value="2">Personal</option>
+                                    <!-- <option value="" selected>Tipo de Empresa</option> -->
+                                    <option *ngFor="let item of ListaTiposEmpresa" [value]="item.adamidea"
+                                    [(ngModel)]="idEmpresa">{{item.adamdesc}}</option>
                                 </select>
                             </div>
                         </div>
@@ -196,7 +195,8 @@
                         <div class="col-md-3 offset-md-1 col-12">
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Cant. de Periodos</label>
-                                <input type="text" class="form-control text-center" placeholder="Cantidad de peridos">
+                                <input type="text" class="form-control text-center" placeholder="Cantidad de peridos"
+                                value="{{gestionModelo.adgtcanp}}" required [(ngModel)]="gestionModelo.adgtcanp">
                             </div>
                         </div>
                     </div>
@@ -231,11 +231,10 @@
                                 <label class="col-form-label col-lg-6">Fecha de Inicio de Gestion</label>
                                 <div class="col-lg-6">
                                     <div class="input-group" style="justify-content: center;" >
-                                       <!-- <input [disabled]="editar" type="date" name="fechaEdicion" required 
-                                          value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}" [(ngModel)]="tipoCambio.fecha"
-                                          data-date="" data-date-format="yyyy-MM-dd" max="{{fechaMaxima}}" 
-                                          >    -->
-                                          <input type="date" data-date-format="yyyy-MM-dd" >
+                                        <input [disabled]="editar" type="date" name="fechaEdicion" required 
+                                        value="{{gestionModelo.adgtdiam |date:'yyyy-MM-dd'}}" [(ngModel)]="gestionModelo.adgtdiam"
+                                        data-date="" data-date-format="yyyy-MM-dd" max="{{fechaMaxima}}" 
+                                        >   
                                     </div>
                                 </div>
                             </div>
@@ -245,7 +244,8 @@
                     <div class="row" style="margin-left: 15px; margin-right:15px" >
                         <div class="col-md-12 col-12 alert alert-primary">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <input type="checkbox" class="form-check-input" id="checkboxGestionCerrada"
+                                            [checked]="gestionModelo.adgtmoda" [(ngModel)]="gestionModelo.adgtmoda">
                                 <label class="form-check-label" for="exampleCheck1">
                                     Modificar Automaticamente el Estado de la Gestion a “Gestion Cerrada”
                                 </label>
@@ -259,11 +259,11 @@
                                 <label class="col-form-label col-lg-8">Fecha de Modificacion Automatica</label>
                                 <div class="col-lg-4">
                                     <div class="input-group" style="justify-content: center;" >
-                                        <!-- <input [disabled]="editar" type="date" name="fechaEdicion" required 
-                                           value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}" [(ngModel)]="tipoCambio.fecha"
+                                        <input [disabled]="editar" type="date" name="fechaEdicion" required 
+                                           value="{{gestionModelo.adgtdiam |date:'yyyy-MM-dd'}}" [(ngModel)]="gestionModelo.adgtdiam"
                                            data-date="" data-date-format="yyyy-MM-dd" max="{{fechaMaxima}}" 
-                                           >    -->
-                                           <input type="date" data-date-format="yyyy-MM-dd" >
+                                           >   
+                                           <!-- <input type="date" data-date-format="yyyy-MM-dd" > -->
                                      </div>
                                 </div>
                             </div>

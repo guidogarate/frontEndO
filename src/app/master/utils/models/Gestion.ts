@@ -4,9 +4,9 @@
     actEmpresa: number;
     cantPeridos: number;
     estPeriodo: number;
-    fechaInicio: string;
-    fechaFin: string;
+    fechaInicio: Date;
+    fechaFin: Date;
     gtionDefec: string;
     modAutomatica: string;
-    fechaModAutomatica: string;
+    fechaModAutomatica: Date;
   }
