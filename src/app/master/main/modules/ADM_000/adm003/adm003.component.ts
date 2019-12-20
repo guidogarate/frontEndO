@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Adm002Service } from '../../../../utils/service/ADM-002/Adm002.service';
 import {Gestion} from '../../../../utils/models/Gestion';
 import { from } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 declare function initLabels ();
-declare function initModal();
+// declare function initModal();
+declare function init_date();
 declare var $: any;
 
 @Component({
@@ -23,8 +25,11 @@ export class Adm003Component implements OnInit {
   idEmpresa : number;
 
   /*Acciones*/
-  editar : boolean = false;
+  editGestion : boolean = false;
+  editPeriodo : boolean = false;
+  // editModifAutoGestion : boolean = false;
 
+  fechainicial : Date ;
   mesInicial: string = "1";
   mesFinal: string = "1";
 
@@ -44,6 +49,7 @@ export class Adm003Component implements OnInit {
   ];
   gestionModel : Gestion;
   gestionModelo : any;
+  periodoModelo : any;
 
   constructor(
     private adm002Service : Adm002Service
@@ -55,8 +61,10 @@ export class Adm003Component implements OnInit {
     this.obtenerGestionesPeriodos();
     setTimeout(() => {
       initLabels();
+      init_date();
    //   initModal();
     }, 1000);
+    //this.armarFecha("2019","abril");
   }
   /* Peticiones */
   obtenerGestionesPeriodos(){
@@ -67,8 +75,9 @@ export class Adm003Component implements OnInit {
         this.ListaGestiones = resp["gestion"];
         this.ListaPeriodos = resp["periodos"];
         this.ListaEstadosGestionPeriodos = resp ["EstGestion"];
+        // console.log("listaestados: ", this.ListaEstadosGestionPeriodos);
         this.ListaTiposEmpresa = resp ["ActiEmpres"];
-        console.log("Listas: ", resp);
+        // console.log("Listas: ", resp);
       }
       else{
         console.log("No se cargo gestiones ni periodos");
@@ -80,11 +89,22 @@ export class Adm003Component implements OnInit {
    // this.loading= true;
     this.adm002Service.EliminarGestion(this.gestionModel.gestion.toString()).subscribe(resp => {
       if (resp["ok"]) {
-        //this.Limpiar();
-        // this.cargarLista();
+        /**
+         * primera opcion  haciendo la llamada al backend
+         */
+        
+        this.limpiarGestion();
         this.obtenerGestionesPeriodos();
-        // this.Cancelar();
-        // this.cargarPredeterminado();
+
+        // this.cargarLista();
+       // this.obtenerGestionesPeriodos();
+
+       /**
+        * Segunda opcion de eliminar para evitar la llamada al backend
+        */
+        this.ListaGestiones= this.ListaGestiones.filter( function(gestion){
+          return gestion.gestion != this.gestionModel.gestion.toString(); 
+        }); 
         new Noty({
           text: "Eliminando",
           theme: "nest",
@@ -106,9 +126,13 @@ export class Adm003Component implements OnInit {
   }
 
   editarGestion( item : any){
-    
+
+  this.editGestion = true;
+  this.cargarGestion(item);
   $('#modal_gestion').modal();
-  this.cargarGestion(item );
+  setTimeout(() => {
+    initLabels();
+  }, 1000);
 
   }
 
@@ -122,40 +146,92 @@ export class Adm003Component implements OnInit {
     $('#modal_gestion').modal();
   }
   Nuevo(){
-    // this.adm002Service.
-    console.log("abrir modal");
-    $('#modal_gestion').modal();
+   
+    if(this.gestionModelo!= undefined){
+      this.limpiarGestion();
+    }else{
+      console.log("abrir modal");
+      $('#modal_gestion').modal();
+    }
   }
 
+  Cancelar(){
+    this.cerrarModal();
+    this.editGestion = false;
+    this.editPeriodo = false;
+  }
 
+  cerrarModal(){
+    $('#modal_gestion').modal("hide");
+    $('#modal_periodo').modal("hide");
+  }
 
   cargarGestion( item : any){
-    this.gestionModel = {
-        gestion : 2017,
-        descripcion : "Gestion 2021",
-        actEmpresa : 1,
-        cantPeridos : 12,
-        estPeriodo : 1,
-        fechaFin :  new Date(),
-        fechaInicio : new Date (),
-        gtionDefec :"0" ,
-        modAutomatica : "1",
-        fechaModAutomatica : new Date()
-    }
-
     this.gestionModelo =  {
-      adgtideg : item.adgtideg,//
-      adgtdesc : item.adgtdesc,//
-      adgtacte : item.adgtacte,//
-      adgtcanp : item.adgtcanp,//
-      adgtesta : item.adgtesta,//
+      adgtideg : item.adgtideg,
+      adgtdesc : item.adgtdesc,
+      adgtacte : item.adgtacte,
+      adgtcanp : item.adgtcanp,
+      adgtesta : item.adgtesta,
       adgtfegi : item.adgtfegi,
       adgtfegf : item.adgtfegf,
-      adgtmoda : item.adgtmoda,//
-      adgtdiam : item.adgtdiam,//
-      adgtgesd : item.adgtgesd//
+      adgtmoda : item.adgtmoda == "1" ? true : false,
+      adgtdiam : item.adgtdiam,
+      adgtgesd : item.adgtgesd == 1 ? true : false,
+    }
+  }
+
+  limpiarGestion(){
+    this.gestionModelo = {}
+  }
+  
+
+  /**
+   * para el Modal del Periodo
+   */
+
+   editarPeriodo(item : any){
+
+  this.editPeriodo = true;
+  this.CargarPeriodo(item);
+  $('#modal_periodo').modal();
+  setTimeout(() => {
+    initLabels();
+  }, 1000);
+   }
+  CargarPeriodo(item : any){
+
+    this.periodoModelo = {
+      adprideg: item.adprideg,
+      adpridep : item.adpridep,
+      adprmesp : item.adprmesp,
+      adprdesc : item.adprdesc,
+      adpresta : item.adpresta,
+      adprfepi : item.adprfepi,
+      adprfepf : item.adprfepf,
+      adprmoda : item.adprmoda,
+      adprdiam : item.adprdiam
+    }
+
+  }
+
+  armarFecha(year: any , month :  any){
+
+    console.log("fecha: ",year+"-"+month);
+    console.log("fechaMes: ",this.mesInicial);
+    
+    let fechaAux1,fechaAux2 : string;
+    let mes2 : number = month + 11;
+    fechaAux1 = year+"-"+month;    
+    this.fechainicial = new Date(fechaAux1);
+
+    let fechafin  = new Date(fechaAux1);
+    
+    fechafin.setMonth(11);
+
+    console.log("fecha : ",this.fechainicial);
+    console.log("fecha : ",fechafin);
   }
 
 
-  }
 }
