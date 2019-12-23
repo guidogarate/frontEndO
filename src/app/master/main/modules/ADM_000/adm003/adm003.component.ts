@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Adm002Service } from '../../../../utils/service/ADM-002/Adm002.service';
 import {Gestion} from '../../../../utils/models/Gestion';
+import { DatePipe } from "@angular/common";
 import { from } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -32,6 +33,7 @@ export class Adm003Component implements OnInit {
   fechainicial : Date ;
   mesInicial: string = "1";
   mesFinal: string = "1";
+  fechaInicioGestion : string;
 
   listaMeses = [
     { id: 1, name: "Enero" },
@@ -47,12 +49,13 @@ export class Adm003Component implements OnInit {
     { id: 11, name: "Noviembre" },
     { id: 12, name: "Diciembre" }
   ];
-  gestionModel : Gestion;
+  // gestionModel : Gestion;
   gestionModelo : any;
   periodoModelo : any;
 
   constructor(
-    private adm002Service : Adm002Service
+    private adm002Service : Adm002Service,
+    private datePipe: DatePipe
   ) {
     
    }
@@ -64,7 +67,7 @@ export class Adm003Component implements OnInit {
       init_date();
    //   initModal();
     }, 1000);
-    //this.armarFecha("2019","abril");
+   
   }
   /* Peticiones */
   obtenerGestionesPeriodos(){
@@ -87,7 +90,7 @@ export class Adm003Component implements OnInit {
   }
   Eliminar() {
    // this.loading= true;
-    this.adm002Service.EliminarGestion(this.gestionModel.gestion.toString()).subscribe(resp => {
+    this.adm002Service.EliminarGestion(this.gestionModelo.gestion.toString()).subscribe(resp => {
       if (resp["ok"]) {
         /**
          * primera opcion  haciendo la llamada al backend
@@ -179,6 +182,10 @@ export class Adm003Component implements OnInit {
       adgtdiam : item.adgtdiam,
       adgtgesd : item.adgtgesd == 1 ? true : false,
     }
+    if(this.gestionModelo.adgtfegi!= null){
+      this.mesInicial = (new Date(this.gestionModelo.adgtfegi).getUTCMonth()+1).toString();
+      this.mesFinal = (new Date(this.gestionModelo.adgtfegf).getUTCMonth()+1).toString();   
+    }
   }
 
   limpiarGestion(){
@@ -217,21 +224,48 @@ export class Adm003Component implements OnInit {
 
   armarFecha(year: any , month :  any){
 
-    console.log("fecha: ",year+"-"+month);
-    console.log("fechaMes: ",this.mesInicial);
     
-    let fechaAux1,fechaAux2 : string;
-    let mes2 : number = month + 11;
+    let fechaAux1 : string;
     fechaAux1 = year+"-"+month;    
-    this.fechainicial = new Date(fechaAux1);
+    console.log(" fecha : ",fechaAux1);
+    this.fechainicial = new Date(year,month-1);
+    console.log(" this.fechainicial : ",this.fechainicial);
+    this.gestionModelo.adgtfegi= this.fechainicial;
+    console.log(" this.fechainicial : ",this.gestionModelo.adgtfegi);
 
-    let fechafin  = new Date(fechaAux1);
-    
-    fechafin.setMonth(11);
+    let fechafin  = new Date(this.gestionModelo.adgtfegi);
+    console.log("fecha fin new :",fechafin);
+    fechafin.setMonth( fechafin.getMonth() + 12);
+    console.log("fecha fin set month 12 :",fechafin);
+    // fechafin.setDate(1); // poniendo a fin de dia de mes
+    fechafin.setDate(0); // poniendo a fin de dia de mes
+    console.log("fecha fin set 0 :",fechafin);
+    this.gestionModelo.adgtfegf = fechafin;
 
-    console.log("fecha : ",this.fechainicial);
-    console.log("fecha : ",fechafin);
+    this.mesFinal = (fechafin.getMonth()+1).toString();
+    this.fechaInicioGestion =  this.datePipe.transform(
+      this.fechainicial,
+      "yyyy-MM-dd" );
+      this.IniciarfechaModificacionAutomatica();
   }
 
+  IniciarfechaModificacionAutomatica(){
+    if (this.gestionModelo.adgtmoda == false){
+
+      if(this.gestionModelo.adgtfegf!= null){
+        this.gestionModelo.adgtdiam = new Date(this.gestionModelo.adgtfegf);
+        this.gestionModelo.adgtdiam.setMonth(this.gestionModelo.adgtdiam.getMonth() + 2);
+        this.gestionModelo.adgtdiam =  this.datePipe.transform(
+          this.gestionModelo.adgtdiam,
+          "y-MMM" );
+      }
+      else{
+        this.gestionModelo.adgtdiam = null;
+      }
+      }else{
+        this.gestionModelo.adgtdiam = null;
+      }
+      
+  }
 
 }

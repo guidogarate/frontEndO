@@ -118,11 +118,11 @@
                                 [routerLink]="" routerLinkActive="router-link-active"  >
                                     <i class="icon-floppy-disk xxl"> </i>
                                 </a>
-                               <a class="list-icons-item" *ngIf="!editar" (click)="Nuevo()"
+                               <a class="list-icons-item" *ngIf="!editar" (click)="limpiarGestion()"
                                 [routerLink]="" routerLinkActive="router-link-active"  >
                                     <i class="icon-file-plus xxl"> </i>
                                 </a>
-                                <a class="list-icons-item" *ngIf="!editar" (click)="Editar()"
+                                <a class="list-icons-item" *ngIf="!editar" (click)="editarGestion(gestionModelo)"
                                 [routerLink]="" routerLinkActive="router-link-active"  >
                                     <i class="icon-pencil7 xxl"> </i>
                                 </a>
@@ -175,7 +175,7 @@
                         <div class="col-md-4 col-12">
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Tipo de Empresa</label>
-                                <select class="form-control" [(ngModel)]=gestionModelo.adgtacte>
+                                <select class="form-control" [(ngModel)]="gestionModelo.adgtacte">
                                     <option *ngFor="let item of ListaTiposEmpresa" placeholder="Tipo de Empresa"
                                     [value]=item.adamidea >{{item.adamdesc}}
                                     </option>
@@ -216,8 +216,8 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-lg-7">Hasta</label>
                                 <div class="col-lg-5">
-                                    <select class="form-control" [(ngModel)]="mesFinal">
-                                        <option *ngFor="let item of listaMeses" disabled [value]="item.id">{{item.name}}</option>
+                                    <select class="form-control" [(ngModel)]="mesFinal" disabled>
+                                        <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -230,9 +230,8 @@
                                 <label class="col-form-label col-lg-6">Fecha de Inicio de Gestion</label>
                                 <div class="col-lg-6">
                                     <div class="input-group" style="justify-content: center;" >
-                                        <input [disabled]="editar" type="date" name="fechaEdicion" required 
-                                        value="{{gestionModelo.adgtdiam |date:'yyyy-MM-dd'}}" [(ngModel)]="gestionModelo.adgtdiam"
-                                        data-date="" data-date-format="yyyy-MM-dd" max="{{fechaMaxima}}" 
+                                        <input [disabled]="editar" type="date" name="fechaEdicion" disabled
+                                        [value]="fechaInicioGestion | date:'short'" [(ngModel)]="fechaInicioGestion"
                                         >   
                                     </div>
                                 </div>
@@ -243,7 +242,7 @@
                     <div class="row" style="margin-left: 15px; margin-right:15px" >
                         <div class="col-md-12 col-12 alert alert-primary">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="checkboxGestionCerrada"
+                                <input type="checkbox" class="form-check-input" id="checkboxGestionCerrada" (click) = "IniciarfechaModificacionAutomatica()"
                                             [checked]="gestionModelo.adgtmoda" [(ngModel)]="gestionModelo.adgtmoda">
                                 <label class="form-check-label" for="exampleCheck1">
                                     Modificar Automaticamente el Estado de la Gestion a “Gestion Cerrada”
@@ -258,15 +257,22 @@
                                 <label class="col-form-label col-lg-8">Fecha de Modificacion Automatica</label>
                                 <div class="col-lg-4">
                                     <div class="input-group" style="justify-content: center;" >
-                                        <input [disabled]="gestionModelo.adgtmoda" type="month" name="fechaEdicion" required 
-                                           value="{{gestionModelo.adgtdiam}}" [(ngModel)]="gestionModelo.adgtdiam"
-                                           data-date="" max="{{fechaMaxima}}" >                                        
+                                        <input *ngIf="gestionModelo.adgtmoda == true " [disabled]="gestionModelo.adgtmoda" type="text" name="fechaEdicion" required 
+                                           [value]="gestionModelo.adgtdiam" [(ngModel)]="gestionModelo.adgtdiam"
+                                           data-date="" data-date-format="yyyy-MM-dd" min="{{gestionModelo.adgtfegf}}" >    
+                                           <input *ngIf="gestionModelo.adgtmoda == false" [disabled]="gestionModelo.adgtmoda" type="date" name="fechaEdicion" required 
+                                           [value]="gestionModelo.adgtdiam" [(ngModel)]="gestionModelo.adgtdiam"
+                                           data-date="" data-date-format="yyyy-MM-dd" min="{{gestionModelo.adgtfegf}}" >                                     
                                      </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <pre>{{gestionModelo|json}}</pre>
+                    <pre> mes Inicial: {{ mesInicial}}</pre>
+                    <pre> mes Final: {{ mesFinal}}</pre>
+                    <pre> mes Final: {{ gestionModelo.adgtmoda}}</pre>
+                    <pre> mes Final: {{ gestionModelo.adgtdiam}}</pre>
                 </div>
             </div>
         </div>
