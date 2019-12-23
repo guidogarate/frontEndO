@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { DeviceDetectorService } from "ngx-device-detector";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
 import { Adm003Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 
 declare function init_table();
 declare function init_check();
@@ -12,11 +12,12 @@ declare function init_check();
   templateUrl: "./adm003.component.html",
   styleUrls: ["./adm003.component.css"]
 })
-export class Adm003Component implements OnInit {
+export class Adm003Component implements OnInit, OnDestroy {
   isMobile = this.deviceService.isMobile();
   tabla = false;
   buscar = true;
   auxma: any[];
+  sus: Subscription;
   constructor(
     private deviceService: DeviceDetectorService,
     private adm003S: Adm003Service,
@@ -36,7 +37,7 @@ export class Adm003Component implements OnInit {
     } else {
       peticion = this.adm003S.buscarAdm003(texto);
     }
-    peticion.subscribe(resp => {
+    this.sus = peticion.subscribe(resp => {
       if (resp["ok"]) {
         this.auxma = resp["auxma"];
       } else {
@@ -48,5 +49,9 @@ export class Adm003Component implements OnInit {
         init_table();
       }, 3);
     });
+  }
+
+  ngOnDestroy() {
+    this.sus.unsubscribe();
   }
 }
