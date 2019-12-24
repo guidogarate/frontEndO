@@ -20,22 +20,8 @@
 
           <div class="card-body">
             <div class="row">
-              <div class="col-md-1"></div>
-              <div class="col-md-5">
-                <select
-                  *ngIf="!isMobile"
-                  title="Modulos"
-                  class="form-control selectpicker show-tick"
-                  name="databaseid"
-                >
-                  <option value="as">asas</option>
-                </select>
-                <select *ngIf="isMobile" name="databaseid" class="form-control">
-                  <option disabled selected value="">Modulo</option>
-                  <option value="sdsd">asasa</option>
-                </select>
-              </div>
-              <div class="col-md-5">
+              <div class="col-md-3 col-lg-4"></div>
+              <div class="col-md-6 col-lg-4">
                 <div
                   class="form-group form-group-feedback form-group-feedback-right"
                 >
@@ -54,7 +40,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-1"></div>
+              <div class="col-md-3 col-lg-4"></div>
             </div>
           </div>
           <div class="table-responsive">
@@ -73,39 +59,98 @@
                 </tr>
               </thead>
               <tbody *ngIf="tabla">
-                <tr *ngFor="let adm003 of auxma">
-                  <td>{{ adm003.adamtipa }}</td>
-                  <td class="table-content-center">
-                    {{ adm003.adamdesc }}
-                  </td>
-                  <td>
-                    <input
+                <ng-container *ngFor="let adm003 of auxma; let i = index"
+                  ><tr>
+                    <td>{{ adm003.adamtipa }}</td>
+                    <td class="table-content-center">
+                      {{ adm003.adamdesc }}
+                    </td>
+                    <td>
+                      <!-- <input
                       *ngIf="adm003.adamesta"
                       type="checkbox"
                       class="form-check-input-switchery"
-                      [checked]="true"
-                      [disabled]="false"
+                      [checked]="false"
+                      [disabled]="true"
                       data-fouc
-                    />
-                  </td>
-                  <td class="text-center">
-                    <div class="list-icons">
-                      <a
-                        href="#"
-                        data-toggle="modal"
-                        data-target="#modal_theme_info"
-                        class="list-icons-item text-primary-600"
-                        ><i class="icon-pencil7"></i
-                      ></a>
-                      <a href="#" class="list-icons-item text-danger-600"
-                        ><i class="icon-trash"></i
-                      ></a>
-                      <a href="#" class="list-icons-item text-teal-600"
-                        ><i class="icon-cog6"></i
-                      ></a>
-                    </div>
-                  </td>
-                </tr>
+                    /> -->
+                      <span
+                        *ngIf="adm003.adamesta === '1'"
+                        class="switchery switchery-default"
+                        style="background-color: rgb(100, 189, 99); border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 10px inset; transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;"
+                        ><small
+                          style="left: 18px; background-color: rgb(255, 255, 255); transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
+                        ></small
+                      ></span>
+                      <span
+                        *ngIf="adm003.adamesta === '0'"
+                        class="switchery switchery-default"
+                        style="box-shadow: rgb(201, 26, 26) 0px 0px 0px 0px inset; border-color: rgb(238, 63, 63); background-color: rgb(185, 11, 11); transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s; opacity: 0.5;"
+                        ><small
+                          style="left: 0px; transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
+                        ></small
+                      ></span>
+                    </td>
+                    <td class="text-center">
+                      <div class="list-icons">
+                        <a
+                          href="#"
+                          data-toggle="modal"
+                          data-target="#modal_theme_info"
+                          class="list-icons-item text-primary-600"
+                          ><i class="icon-pencil7"></i
+                        ></a>
+                        <a href="#" class="list-icons-item text-danger-600"
+                          ><i class="icon-trash"></i
+                        ></a>
+                        <a href="#" class="list-icons-item text-teal-600"
+                          ><i class="icon-cog6"></i
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- <tr *ngIf="i % 2 === 1" class="table-info">
+                    <td>{{ adm003.adamtipa }}</td>
+                    <td class="table-content-center">
+                      {{ adm003.adamdesc }}
+                    </td>
+                    <td>
+                      <span
+                        *ngIf="adm003.adamesta === '1'"
+                        class="switchery switchery-default"
+                        style="background-color: rgb(100, 189, 99); border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 10px inset; transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;"
+                        ><small
+                          style="left: 18px; background-color: rgb(255, 255, 255); transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
+                        ></small
+                      ></span>
+                      <span
+                        *ngIf="adm003.adamesta === '0'"
+                        class="switchery switchery-default"
+                        style="box-shadow: rgb(201, 26, 26) 0px 0px 0px 0px inset; border-color: rgb(238, 63, 63); background-color: rgb(185, 11, 11); transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s; opacity: 0.5;"
+                        ><small
+                          style="left: 0px; transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
+                        ></small
+                      ></span>
+                    </td>
+                    <td class="text-center">
+                      <div class="list-icons">
+                        <a
+                          href="#"
+                          data-toggle="modal"
+                          data-target="#modal_theme_info"
+                          class="list-icons-item text-primary-600"
+                          ><i class="icon-pencil7"></i
+                        ></a>
+                        <a href="#" class="list-icons-item text-danger-600"
+                          ><i class="icon-trash"></i
+                        ></a>
+                        <a href="#" class="list-icons-item text-teal-600"
+                          ><i class="icon-cog6"></i
+                        ></a>
+                      </div>
+                    </td>
+                  </tr> -->
+                </ng-container>
               </tbody>
             </table>
           </div>

@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { DeviceDetectorService } from "ngx-device-detector";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
 import { Adm003Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { Observable, Subscription } from "rxjs";
@@ -13,16 +12,11 @@ declare function init_check();
   styleUrls: ["./adm003.component.css"]
 })
 export class Adm003Component implements OnInit, OnDestroy {
-  isMobile = this.deviceService.isMobile();
   tabla = false;
   buscar = true;
   auxma: any[];
   sus: Subscription;
-  constructor(
-    private deviceService: DeviceDetectorService,
-    private adm003S: Adm003Service,
-    private notyG: NotyGlobal
-  ) {
+  constructor(private adm003S: Adm003Service, private notyG: NotyGlobal) {
     this.buscarAdm003("all_auxma");
     this.tabla = true;
   }
