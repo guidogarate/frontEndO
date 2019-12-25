@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { CommonModule, DatePipe } from "@angular/common";
+import { IndexAdm000Module } from "src/app/master/utils/service/main/modules/adm_000/index.adm000.module";
 
 import { ADM_000_MODULES_ROUTES } from "./adm_000.routes";
 import { Adm001Component } from "./adm001/adm001.component";
@@ -11,6 +12,15 @@ import { Adm003Component } from "./adm003/adm003.component";
 @NgModule({
   declarations: [Adm001Component, Adm002Component, Adm003Component],
   providers: [Adm001Service, DatePipe],
+<<<<<<< HEAD
   imports: [CommonModule, ADM_000_MODULES_ROUTES, FormsModule]
+=======
+  imports: [
+    CommonModule,
+    ADM_000_MODULES_ROUTES,
+    FormsModule,
+    IndexAdm000Module
+  ]
+>>>>>>> d6c47db642f367dea952a28dd429ddc0433a2286
 })
 export class ADM00Module {}

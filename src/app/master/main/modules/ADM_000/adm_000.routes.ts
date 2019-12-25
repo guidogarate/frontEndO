@@ -7,17 +7,25 @@ const adm000_Routes: Routes = [
   {
     path: "adm_001",
     component: Adm001Component,
-    data: { titulo: "perfil" }
+    data: { titulo: "adm_001" }
   },
   {
     path: "adm_002",
     component: Adm002Component,
+<<<<<<< HEAD
     data: { titulo: "fechadia" }
+=======
+    data: { titulo: "adm_002" }
+>>>>>>> d6c47db642f367dea952a28dd429ddc0433a2286
   },
   {
     path: "adm_003",
     component: Adm003Component,
+<<<<<<< HEAD
     data: { titulo: "fechadia" }
+=======
+    data: { titulo: "adm_003" }
+>>>>>>> d6c47db642f367dea952a28dd429ddc0433a2286
   }
 ];
 
