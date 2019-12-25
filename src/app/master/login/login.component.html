@@ -32,6 +32,9 @@
                   [(ngModel)]="usuario.databaseid"
                   name="databaseid"
                 >
+                  <option disabled selected value=""
+                    >Seleccione una base de datos</option
+                  >
                   <option *ngFor="let db of databases" [value]="db.id"
                     >{{ db.id }} - {{ db.nombre }}</option
                   >
