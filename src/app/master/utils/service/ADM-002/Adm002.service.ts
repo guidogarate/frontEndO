@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import url from "src/app/master/config/url.config";
-import { TipoCambio } from "../../models/TipoCambio";
 import { from } from "rxjs";
 import { Gestion } from '../../models/Gestion';
 
@@ -50,21 +49,21 @@ export class Adm002Service {
       );
   }
 
-  AgregarGestion(gestion: Gestion) {
+  AgregarGestion(item: any) {
     const json = JSON.stringify({
-      gestion: gestion.gestion,
-      descripcion: gestion.descripcion,
-      actEmpresa: gestion.actEmpresa,
-      cantPeridos: gestion.cantPeridos,
-      estPeriodo: gestion.estPeriodo,
-      fechaInicio: gestion.fechaInicio,
-      fechaFin: gestion.fechaFin,
-      gtionDefec: gestion.gtionDefec,
-      modAutomatica: gestion.modAutomatica,
-      fechaModAutomatica: gestion.fechaModAutomatica,
+      gestion: +item.adgtideg ,
+      descripcion: item.adgtdesc,
+      actEmpresa: +item.adgtacte,
+      cantPeridos: +item.adgtcanp,
+      estPeriodo: +item.adgtesta,
+      fechaInicio: item.adgtfegi,
+      fechaFin: item.adgtfegf,
+      gtionDefec: item.adgtgesd == true ? "1" : "0",
+      modAutomatica: item.adgtmoda == true ? "1" : "0",
+      fechaModAutomatica: item.adgtdiam,
     });
     console.log("service Agregar: ", json);
-    const url1 = `${url.prod}${url.agregar}`;
+    const url1 = `${url.prod}${url.agregar_gestion}`;
     return this.httpClient
       .post(url1, json, {
         headers: new HttpHeaders({
@@ -96,20 +95,22 @@ export class Adm002Service {
       );
   }
 
-  ActualizarGestion(gestion: Gestion) {
+  ActualizarGestion(item: any) {
     const json = JSON.stringify({
-      descripcion: gestion.descripcion,
-      actEmpresa: gestion.actEmpresa,
-      cantPeridos: gestion.cantPeridos,
-      estPeriodo: gestion.estPeriodo,
-      fechaInicio: gestion.fechaInicio,
-      fechaFin: gestion.fechaFin,
-      gtionDefec: gestion.gtionDefec,
-      modAutomatica: gestion.modAutomatica,
-      fechaModAutomatica: gestion.fechaModAutomatica,
+      descripcion: item.adgtdesc,
+      actEmpresa: +item.adgtacte,
+      cantPeridos: +item.adgtcanp,
+      estPeriodo: +item.adgtesta,
+      fechaInicio: item.adgtfegi,
+      fechaFin: item.adgtfegf,
+      gtionDefec: item.adgtgesd == true ? "1" : "0",
+      modAutomatica: item.adgtmoda == true ? "1" : "0",
+      fechaModAutomatica: item.adgtdiam,
     });
     console.log("service Actualizar Gestion: ", json);
-    const url1 = `${url.prod}${url.actualizar_gestion}${gestion.gestion}`;
+
+    const url1 = `${url.prod}${url.actualizar_gestion}${item.adgtideg}`;
+    console.log(url1);
     return this.httpClient
       .put(url1, json, {
         headers: new HttpHeaders({
