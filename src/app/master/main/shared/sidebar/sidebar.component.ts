@@ -49,6 +49,8 @@ export class SidebarComponent implements OnInit {
     const favo: string = sessionStorage.getItem("favo");
     if (menu) {
       this.datos = JSON.parse(menu);
+      console.log(this.datos);
+
       this.favoritos = JSON.parse(favo);
       this.cargandoMenu = false;
     } else {
@@ -125,5 +127,9 @@ export class SidebarComponent implements OnInit {
     // } else {
     //   console.log("la palabra no existe dentro de la cadena");
     // }
+  }
+
+  menuComponent(menu: string) {
+    console.log(menu);
   }
 }

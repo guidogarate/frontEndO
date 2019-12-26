@@ -24,6 +24,6 @@ export class MainComponent implements OnInit {
     init_scroll();
     setTimeout(() => {
       init_plugins();
-    }, 3000);
+    }, 1000);
   }
 }

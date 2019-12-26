@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-import { Component, OnInit } from '@angular/core';
-
-@Component({
-  selector: 'app-adm003',
-  templateUrl: './adm003.component.html',
-  styleUrls: ['./adm003.component.css']
-})
-export class Adm003Component implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-=======
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
 import { Adm003Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
@@ -28,13 +12,12 @@ declare function init_check();
   styleUrls: ["./adm003.component.css"]
 })
 export class Adm003Component implements OnInit, OnDestroy {
-  tabla = false;
   buscar = true;
+  loading = true;
   auxma: any[];
   sus: Subscription;
   constructor(private adm003S: Adm003Service, private notyG: NotyGlobal) {
     this.buscarAdm003("all_auxma");
-    this.tabla = true;
   }
 
   ngOnInit() {}
@@ -54,6 +37,7 @@ export class Adm003Component implements OnInit, OnDestroy {
         // this.notyG.noty("error", resp["messagge"], 5000);
       }
       this.buscar = false;
+      this.loading = false;
       setTimeout(() => {
         init_check();
         init_table();
@@ -64,5 +48,4 @@ export class Adm003Component implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.sus.unsubscribe();
   }
->>>>>>> d6c47db642f367dea952a28dd429ddc0433a2286
 }

@@ -12,15 +12,11 @@ import { Adm003Component } from "./adm003/adm003.component";
 @NgModule({
   declarations: [Adm001Component, Adm002Component, Adm003Component],
   providers: [Adm001Service, DatePipe],
-<<<<<<< HEAD
-  imports: [CommonModule, ADM_000_MODULES_ROUTES, FormsModule]
-=======
   imports: [
     CommonModule,
     ADM_000_MODULES_ROUTES,
     FormsModule,
     IndexAdm000Module
   ]
->>>>>>> d6c47db642f367dea952a28dd429ddc0433a2286
 })
 export class ADM00Module {}
