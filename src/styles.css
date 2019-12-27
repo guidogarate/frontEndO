@@ -20,6 +20,13 @@ body {
   animation-fill-mode: both;
 }
 
+.animacionmodal {
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
 @keyframes haciadentroa {
   from {
     opacity: 0;

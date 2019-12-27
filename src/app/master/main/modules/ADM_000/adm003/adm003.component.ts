@@ -16,10 +16,11 @@ export class Adm003Component implements OnInit, OnDestroy {
   loading = true;
   auxma: any[];
   sus: Subscription;
-  pagi = [{ num: 1 }, { num: 2 }, { num: 3 }];
+  pagi: any[];
+  numeroPag = 1;
+  texto = "all_auxma";
   constructor(private adm003S: Adm003Service, private notyG: NotyGlobal) {
-    this.buscarAdm003("all_auxma");
-    console.log(this.pagi);
+    this.buscarAdm003(this.texto);
   }
 
   ngOnInit() {}
@@ -28,13 +29,17 @@ export class Adm003Component implements OnInit, OnDestroy {
     this.buscar = true;
     let peticion: Observable<any>;
     if (texto.length === 0 || texto === "all_auxma") {
-      peticion = this.adm003S.buscarAdm003("all_auxma");
+      this.texto = "all_auxma";
+      peticion = this.adm003S.buscarAdm003("90", "1", this.texto);
     } else {
-      peticion = this.adm003S.buscarAdm003(texto);
+      this.texto = texto;
+      peticion = this.adm003S.buscarAdm003("90", "1", this.texto);
     }
     this.sus = peticion.subscribe(resp => {
+      this.numeroPag = 1;
       if (resp["ok"]) {
         this.auxma = resp["auxma"];
+        this.pagi = resp["cant"];
       } else {
         // this.notyG.noty("error", resp["messagge"], 5000);
       }
@@ -51,7 +56,62 @@ export class Adm003Component implements OnInit, OnDestroy {
     this.sus.unsubscribe();
   }
 
-  siguiente() {
-    console.log("siguiente");
+  paginacion(numero: string) {
+    const nume = Number(numero);
+    if (this.numeroPag === nume) {
+      return;
+    }
+    const total = this.pagi.length;
+    let peticion: Observable<any>;
+    if (nume > 0 && nume <= total) {
+      this.numeroPag = nume;
+      peticion = this.adm003S.buscarAdm003(
+        "90",
+        this.numeroPag.toString(),
+        this.texto
+      );
+    } else {
+      if (numero === "000") {
+        if (this.numeroPag === 1) {
+          return;
+        }
+        if (this.numeroPag === 1) {
+          this.numeroPag = 1;
+        } else {
+          this.numeroPag--;
+        }
+        peticion = this.adm003S.buscarAdm003(
+          "90",
+          this.numeroPag.toString(),
+          this.texto
+        );
+      } else if (numero === "999") {
+        if (this.numeroPag === total) {
+          return;
+        }
+        if (this.numeroPag === total) {
+          this.numeroPag = total;
+        } else {
+          this.numeroPag++;
+        }
+        peticion = this.adm003S.buscarAdm003(
+          "90",
+          this.numeroPag.toString(),
+          this.texto
+        );
+      }
+    }
+    this.sus = peticion.subscribe(resp => {
+      if (resp["ok"]) {
+        this.auxma = resp["auxma"];
+        this.pagi = resp["cant"];
+      } else {
+        // this.notyG.noty("error", resp["messagge"], 5000);
+      }
+    });
+  }
+
+  actualizar() {
+    console.log("actualizar");
   }
 }

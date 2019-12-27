@@ -1,3 +1,9 @@
 .card-body {
   padding-bottom: 0em;
 }
+.separador {
+  border: none;
+  height: 5px;
+  color: #333;
+  background-color: #333;
+}

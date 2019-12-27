@@ -9,8 +9,8 @@ export class Adm003Service {
   token = sessionStorage.getItem("id");
   constructor(private httpClient: HttpClient) {}
 
-  buscarAdm003(texto: string) {
-    const url1 = `${url.prod}${adm0003.cargarDato}${texto}`;
+  buscarAdm003(modulo: string, indice: string, texto: string) {
+    const url1 = `${url.prod}${adm0003.cargarDato}${modulo}/${indice}/${texto}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({

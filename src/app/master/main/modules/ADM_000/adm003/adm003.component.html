@@ -96,6 +96,7 @@
                       <div class="list-icons">
                         <a
                           href="#"
+                          (click)="actualizar()"
                           data-toggle="modal"
                           data-target="#modal_theme_info"
                           class="list-icons-item text-primary-600"
@@ -164,18 +165,27 @@
           <div *ngIf="!loading" class="row justify-content-center">
             <ul class="pagination pagination-flat align-self-center">
               <li class="page-item puntero">
-                <a (click)="atras()" class="page-link">&larr; &nbsp; Atras</a>
+                <a (click)="paginacion('000')" class="page-link"
+                  >&larr; &nbsp; Atras</a
+                >
               </li>
-              <ng-container *ngFor="let pg of pagi">
-                <li class="page-item">
-                  <a href="#" class="page-link">{{ pg.num }}</a>
+              <ng-container *ngFor="let pg of pagi; let i = index">
+                <li
+                  [ngClass]="{
+                    'page-item': true,
+                    puntero: true,
+                    active: numeroPag === i + 1
+                  }"
+                >
+                  <a (click)="paginacion(pg.pag)" class="page-link">{{
+                    pg.pag
+                  }}</a>
                 </li>
-                <!-- <li class="page-item disabled">
-                  <a href="#" class="page-link">3</a>
-                </li> -->
               </ng-container>
               <li class="page-item puntero">
-                <a (click)="siguiente()" class="page-link">Sig &nbsp; &rarr;</a>
+                <a (click)="paginacion('999')" class="page-link"
+                  >Sig &nbsp; &rarr;</a
+                >
               </li>
             </ul>
           </div>
@@ -188,39 +198,108 @@
 </div>
 
 <!-- modal -->
-<div id="modal_theme_info" class="modal" tabindex="-1">
+<div
+  id="modal_theme_info"
+  class="modal animacionmodal haciadentro"
+  tabindex="-1"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-info">
-        <h6 class="modal-title">Info header</h6>
+        <h6 class="modal-title">ACTUALIZAR</h6>
         <button type="button" class="close" data-dismiss="modal">
           &times;
         </button>
       </div>
-
       <div class="modal-body">
-        <h6 class="font-weight-semibold">Text in a modal</h6>
-        <p>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget
-          lacinia odio sem. Praesent commodo cursus magna, vel scelerisque nisl
-          consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum
-          faucibus dolor auctor.
-        </p>
-
-        <hr />
-
-        <h6 class="font-weight-semibold">Another paragraph</h6>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
-        <p>
-          Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-          Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-        </p>
+        <h6 class="font-weight-semibold">GRUPO</h6>
+        <div class="row">
+          <div class="col-3">
+            <div class="form-group form-group-float">
+              <label class="form-group-float-label">Codigo</label>
+              <input type="text" class="form-control" placeholder="Codigo" />
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group form-group-float">
+              <label class="form-group-float-label">Descripcion</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Descripcion"
+              />
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group form-group-float">
+              <label class="form-group-float-label">Sigla</label>
+              <input type="text" class="form-control" placeholder="Sigla" />
+            </div>
+          </div>
+          <div class="col-2">
+            <label class="form-group-float-label">Estado</label>
+            <input
+              type="checkbox"
+              class="form-check-input-switchery"
+              [checked]="true"
+              [disabled]="false"
+              data-fouc
+            />
+          </div>
+        </div>
+        <hr class="separador" />
+        <h6 class="font-weight-semibold">SUB-GRUPO</h6>
+        <div class="row">
+          <div class="col-2">
+            <div class="form-group form-group-float">
+              <label class="form-group-float-label">Codigo</label>
+              <input type="text" class="form-control" placeholder="Codigo" />
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group form-group-float">
+              <label class="form-group-float-label">Descripcion</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Descripcion"
+              />
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="form-group form-group-float">
+              <label class="form-group-float-label">Sigla</label>
+              <input type="text" class="form-control" placeholder="Sigla" />
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="form-group form-group-float">
+              <label class="form-group-float-label">Sec</label>
+              <input type="text" class="form-control" placeholder="Sec" />
+            </div>
+          </div>
+          <div class="col-1">
+            <label class="form-group">Estado</label>
+            <input
+              type="checkbox"
+              class="form-check-input-switchery"
+              [checked]="true"
+              [disabled]="false"
+              data-fouc
+            />
+          </div>
+          <div class="col-1">
+            <label class="form-group">Prede</label>
+            <input
+              type="checkbox"
+              class="form-check-input-switchery"
+              [checked]="true"
+              [disabled]="false"
+              data-fouc
+            />
+          </div>
+        </div>
       </div>
-
       <div class="modal-footer">
         <button type="button" class="btn btn-link" data-dismiss="modal">
           Cerrar
