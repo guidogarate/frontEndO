@@ -33,16 +33,31 @@
                                         <th scope="col">Gestion</th>
                                         <th scope="col">Descripcion</th>
                                         <th scope="col">Estado</th>
+                                        <th scope="col">Acciones</th>
                                     </thead>
                                     <tbody>
-                                        <tr class="table-border-double" *ngFor="let gestion of ListaGestiones" (click)="editarGestion(gestion)">
-                                            <td class="puntero">{{gestion.adgtideg}}</td>
-                                            <td class="puntero">{{gestion.adgtdesc}}</td>
-                                            <td class="puntero">{{gestion.adamdesc}}</td>
-                                            <!-- <td *ngIf="gestion.adgtesta == 1" class="puntero"></td>
-                                            <td *ngIf="gestion.adgtesta == 0" class="puntero">Desloqueado</td> -->
+                                        <tr class="table-border-double PRL0" *ngFor="let gestion of ListaGestiones" (click)="editarGestion(gestion)">
+                                            <td class="puntero PRL0">{{gestion.adgtideg}}</td>
+                                            <td class="puntero PRL0">{{gestion.adgtdesc}}</td>
+                                            <td class="puntero PRL0">{{gestion.adgtesta | estado}}</td>
+                                            <td class="puntero PRL0"> 
+                                                <!-- <a class="list-icons-item" (click)="editarGestion(gestion)"
+                                                [routerLink]="nada()" routerLinkActive="router-link-active">
+                                                <i class="icon-file-eye xxl" data-toggle="tooltip" data-placement="top" title="Ver Gestion"> </i>
+                                                </a>
+                                                <a class="list-icons-item"  (click)="editarGestion(gestion)"
+                                                [routerLink]="nada()" routerLinkActive="router-link-active"  >
+                                                    <i class="icon-pencil7 xxl" data-toggle="tooltip" data-placement="top" title="Editar Gestion"> </i>
+                                                </a>
+                                                <a class="list-icons-item" (click)="EliminarGestion(gestion)"
+                                                [routerLink]="nada()" routerLinkActive="router-link-active"  >
+                                                    <i class="icon-trash xxl" data-toggle="tooltip" data-placement="top" title="Eliminar Gestion"> </i>
+                                                </a> -->
+                                            <!-- <i class="icon-file-eye xxl" data-toggle="tooltip" data-placement="top" title="editar Gestion"> </i>
+                                            <i class="icon-pencil7 xxl" data-toggle="tooltip" data-placement="top" title="editar Gestion"> </i>
+                                            <i class="icon-trash xxl" data-toggle="tooltip" data-placement="top" title="Eliminar Gestion"> </i> -->
+                                            </td>
                                         </tr>
-                                                                              
                                     </tbody>
                                 </table>
                             </div>
@@ -78,8 +93,8 @@
                                             <td class="puntero">{{periodo.adprmesp | nombremes}}</td>
                                             <td class="puntero">{{periodo.adprdesc}}</td>
                                             <td class="puntero">{{periodo.adprideg}}</td>
-                                            <td *ngIf="periodo.adpresta == 1" class="puntero">Bloqueado</td>
-                                            <td *ngIf="periodo.adpresta == 0" class="puntero">Desbloqueado</td>
+                                            <td class="puntero">{{periodo.adpresta | estado}}</td>
+                                            <!-- <td *ngIf="periodo.adpresta == 0" class="puntero">Desbloqueado</td> -->
                                         </tr>                                                  
                                     </tbody>
                                 </table>
@@ -334,8 +349,8 @@
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Estado</label>
                                 <select class="form-control" [(ngModel)]="periodoModelo.adpresta">
-                                 <option *ngFor="let item of listaMeses"   [value]="periodoModelo.adpresta"
-                                 (change)="ActualizarLista()">{{item.name}}</option>
+                                 <option *ngFor="let item of ListaEstadosGestionPeriodos"   [value]="item.adamidea"
+                                 (change)="ActualizarLista()">{{item.adamdesc }}</option>
                                 </select>
                             </div>
                         </div>

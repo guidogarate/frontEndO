@@ -8,6 +8,7 @@
 
   .xxl{
     font-size: 2em;
+    padding-right: 0.5em;
   }
 
   .table td, .table th{
@@ -49,7 +50,7 @@
       font-size: 30px;
     }
     .xxl{
-      font-size: 1em;
+      font-size: 1.5em;
     }
     .titulo{
       font-size: larger;
@@ -62,5 +63,8 @@
     }
   }
 
-  
+.PRL0{
+  padding-left: 0;
+  padding-right: 0;
+}
     

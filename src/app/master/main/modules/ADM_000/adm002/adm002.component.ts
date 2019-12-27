@@ -59,7 +59,7 @@ export class Adm002Component implements OnInit {
     private adm002Service : Adm002Service,
     private datePipe: DatePipe
   ) {
-    
+
    }
 
   ngOnInit() {
@@ -67,9 +67,8 @@ export class Adm002Component implements OnInit {
     setTimeout(() => {
       initLabels();
       init_date();
-   //   initModal();
     }, 1000);
-   
+
   }
   /* Peticiones */
   obtenerGestionesPeriodos(){
@@ -80,9 +79,7 @@ export class Adm002Component implements OnInit {
         this.ListaGestiones = resp["gestion"];
         this.ListaPeriodos = resp["periodos"];
         this.ListaEstadosGestionPeriodos = resp ["EstGestion"];
-        // console.log("listaestados: ", this.ListaEstadosGestionPeriodos);
         this.ListaTiposEmpresa = resp ["ActiEmpres"];
-        // console.log("Listas: ", resp);
       }
       else{
         console.log("No se cargo gestiones ni periodos");
@@ -163,13 +160,16 @@ this.nuevo= true;
 
 
   EliminarGestion() {
-   // this.loading= true;
+    // if(item != undefined){
+    //   this.gestionModelo = item;
+    // }
+    console.log("eliminando: ", this.gestionModelo);
     this.adm002Service.EliminarGestion(this.gestionModelo.adgtideg).subscribe(resp => {
       if (resp["ok"]) {
         /**
          * primera opcion  haciendo la llamada al backend
          */
-        
+
         this.limpiarGestion();
         this.cerrarModal();
         this.obtenerGestionesPeriodos();
@@ -181,8 +181,8 @@ this.nuevo= true;
         * Segunda opcion de eliminar para evitar la llamada al backend
         */
         // this.ListaGestiones= this.ListaGestiones.filter( function(gestion){
-        //   return gestion.gestion != this.gestionModelo.adgtideg; 
-        // }); 
+        //   return gestion.gestion != this.gestionModelo.adgtideg;
+        // });
         new Noty({
           text: "Eliminando",
           theme: "nest",
@@ -196,12 +196,10 @@ this.nuevo= true;
         return resp;
       }
     });
-    // this.loading= false;
+
   }
 
-  // verGestion(){
 
-  // }
   editar(){
     this.editGestion= false;
     this.nuevo = false;
@@ -217,9 +215,6 @@ this.nuevo= true;
 
   }
 
-  borrarGestion(){
-
-  }
 
   AgregarGestion(){
     this.editGestion = false;
@@ -249,7 +244,7 @@ this.nuevo= true;
     this.editGestion = false;
     this.editPeriodo = false;
     this.nuevo = false;
-    
+
   }
 
   cerrarModal(){
@@ -275,7 +270,7 @@ this.nuevo= true;
     }
     if(this.gestionModelo.adgtfegi!= null){
       this.mesInicial = (new Date(this.gestionModelo.adgtfegi).getUTCMonth()+1).toString();
-      this.mesFinal = (new Date(this.gestionModelo.adgtfegf).getUTCMonth()+1).toString();   
+      this.mesFinal = (new Date(this.gestionModelo.adgtfegf).getUTCMonth()+1).toString();
     }
   }
 
@@ -287,9 +282,9 @@ this.nuevo= true;
       "adgtdiam": null,
       "adgtgesd": false
     };
-  
+
   }
-  
+
 
   /**
    * para el Modal del Periodo
@@ -323,7 +318,7 @@ this.nuevo= true;
 
   armarFecha(year: any , month :  any){
     let fechaAux1 : string;
-    fechaAux1 = year+"-"+month;    
+    fechaAux1 = year+"-"+month;
     console.log(" fecha : ",fechaAux1);
     this.fechainicial = new Date(year,month-1);
     console.log(" this.fechainicial : ",this.fechainicial);
@@ -362,7 +357,7 @@ this.nuevo= true;
       }else{
         this.gestionModelo.adgtdiam = null;
       }
-      
+
   }
 
   nada(){}
