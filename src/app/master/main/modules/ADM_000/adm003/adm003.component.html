@@ -1,393 +1,234 @@
-<div class="content-wrapper">
-    <!-- Page header -->
-    <!-- Content area -->
-    <div class="content">
-        <!-- contenido posts -->
-            <!-- <p>adm003 works!</p> -->
-            <div class="card pb0">
-                <div class="row card-header header-elements-inline">  
-                    <div class="col-md-12 col-12">
-                        <h2 class="card-title text-center">Registro de Gestiones
-                            <i class="icon-diff-added xxl float-right" (click)="AgregarGestion()"
-                            data-toggle="tooltip" data-placement="top" title="Agregar Gestion"> </i>
-                        </h2>
-                    </div>
-                </div>
-                <div class="card-body pb0">
-                    <div class="row">
-                        <div class="col-md-12 col-12">
-                            <h3 class="text-left">
-                                <i class="icon-calendar22 xxl float-left"></i>
-                                <span class="font-weight-semibold"></span>
-                                Gestion
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1 d-none d-sm-none d-md-block" >
-                        </div>
-                        <div class="col-md-10">
-                            <div class="table-responsive text-center">
-                                <table class="table table-sm table-hover table-bordered">
-                                    <thead class="thead-dark">
-                                        <th scope="col">Gestion</th>
-                                        <th scope="col">Descripcion</th>
-                                        <th scope="col">Estado</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="table-border-double" *ngFor="let gestion of ListaGestiones" (click)="editarGestion(gestion)">
-                                            <td class="puntero">{{gestion.adgtideg}}</td>
-                                            <td class="puntero">{{gestion.adgtdesc}}</td>
-                                            <td class="puntero">{{gestion.adamdesc}}</td>
-                                            <!-- <td *ngIf="gestion.adgtesta == 1" class="puntero"></td>
-                                            <td *ngIf="gestion.adgtesta == 0" class="puntero">Desloqueado</td> -->
-                                        </tr>
-                                                                              
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-md-1"></div>
-                    </div>
-
-                    <!-- TODO:  segunda tabla -->
-                    <div class="row">
-                        <div class="col-md-12 col-12">
-                            <h3 class="text-left">
-                                <i class="icon-calendar22 float-left xxl"></i>
-                                Periodos de Gestion
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1 d-none d-sm-none d-md-block" >
-                        </div>
-                        <div class="col-md-10">
-                            <div class="table-responsive text-center">
-                                <table class="table table-sm table-hover table-bordered">
-                                    <thead class="thead-dark">
-                                        <th scope="col">Periodo</th>
-                                        <th scope="col">Mes</th>
-                                        <th scope="col">Descripcion</th>
-                                        <th scope="col">Gestion</th>
-                                        <th scope="col">Estado</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="table-border-double" *ngFor="let periodo of ListaPeriodos" (click)="editarPeriodo(periodo)">
-                                            <td class="puntero">{{periodo.adpridep | formatonumeroperiodo}}</td>
-                                            <td class="puntero">{{periodo.adprmesp | nombremes}}</td>
-                                            <td class="puntero">{{periodo.adprdesc}}</td>
-                                            <td class="puntero">{{periodo.adprideg}}</td>
-                                            <td *ngIf="periodo.adpresta == 1" class="puntero">Bloqueado</td>
-                                            <td *ngIf="periodo.adpresta == 0" class="puntero">Desbloqueado</td>
-                                        </tr>                                                  
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-md-1 d-none d-sm-none d-md-block">
-                            <div class="form-group form-group-float" style="display: none;">
-                                <label class="form-group-float-label">Text input</label>
-                                <input type="text" class="form-control" placeholder="Text input">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- <div class="row">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_gestion">
-                            mostrar gestion
-                        </button>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_periodo_gestion">
-                            mostrar PERIDODOS de gestion
-                        </button>
-                    </div> -->
-                </div>
+<div class="content-wrapper animaciones haciadentro">
+  <!-- Content area -->
+  <div class="content pt-0">
+    <!-- Dashboard content -->
+    <div class="row">
+      <div class="col-xl-12">
+        <!-- Table with togglable columns -->
+        <br />
+        <div class="card">
+          <div class="card-header header-elements-inline">
+            <h5 class="card-title">DATOS COMPLEMENTARIOS</h5>
+            <div class="header-elements">
+              <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+                <a class="list-icons-item" data-action="reload"></a>
+                <a class="list-icons-item" data-action="remove"></a>
+              </div>
             </div>
-          <!-- /contenido posts -->
-        </div>
-        <!-- modal -->
-        <div *ngIf="gestionModelo!= undefined" id="modal_gestion" class="modal fade" tabindex="-1" data-backdrop="false">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header bg-info">
-                        <h6 class="card-title"><i class="icon-calendar22 xl" style="margin-right: 2em;"></i> 
-                            GESTION
-                        </h6>
-                        <div class="modal-title">
-                            <div class="list-icons float-right">
-                                 <a class="list-icons-item" *ngIf="nuevo" (click)="GuardarGestion()"
-                                [routerLink]="nada()" routerLinkActive="router-link-active" >
-                                    <i class="icon-floppy-disk xxl" data-toggle="tooltip" data-placement="top" title="Guardar Gestion"> </i>
-                                </a>
-                                <a class="list-icons-item" *ngIf="!editGestion === !nuevo" (click)="ActualizarGestion()"
-                                [routerLink]="nada()" routerLinkActive="router-link-active" >
-                                    <i class="icon-floppy-disk xxl" data-toggle="tooltip" data-placement="top" title="Actualizar Gestion"> </i>
-                                </a>
-                               <a class="list-icons-item" (click)="Nuevo()"
-                                [routerLink]="nada()" routerLinkActive="router-link-active">
-                                    <i class="icon-file-plus xxl" data-toggle="tooltip" data-placement="top" title="Nuevo"> </i>
-                                </a>
-                                <a class="list-icons-item" *ngIf="editGestion" (click)="editar()"
-                                [routerLink]="nada()" routerLinkActive="router-link-active"  >
-                                    <i class="icon-pencil7 xxl" data-toggle="tooltip" data-placement="top" title="editar Gestion"> </i>
-                                </a>
-                                <a class="list-icons-item" *ngIf="editGestion" (click)="EliminarGestion()"
-                                [routerLink]="nada()" routerLinkActive="router-link-active"  >
-                                    <i class="icon-trash xxl" data-toggle="tooltip" data-placement="top" title="Eliminar Gestion"> </i>
-                                </a>
-                                <a class="list-icons-item" (click)="Cancelar()" data-dismiss="modal"
-                                [routerLink]="nada()" routerLinkActive="router-link-active"  >
-                                    <i class="icon-exit xxl" data-toggle="tooltip" data-placement="top" title="Salir"> </i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row text-center" style="margin-left: 15px; margin-right:15px;margin-top: 15px;" >
-                        <div class="col-md-2 col-12">
-                            <div class="form-group form-group-float">
-                                <label class="form-group-float-label">Gestion</label>
-                                <input type="text" class="form-control text-center" name="Gestion" placeholder="Gestion" 
-                                  value="{{gestionModelo.adgtideg}}" required [(ngModel)]="gestionModelo.adgtideg" [disabled]="editGestion">
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-12">
-                            <div class="form-group form-group-float">
-                                <label class="form-group-float-label">Descripcion</label>
-                                <input type="text" class="form-control text-center" name="Descripcion" 
-                                placeholder="Descripcion" value="{{gestionModelo.adgtdesc}}" [(ngModel)]="gestionModelo.adgtdesc" [disabled]="editGestion">
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-12">
-                            <div class="form-group form-group-float">
-                                <label class="form-group-float-label">Estado</label>
-                                <select class="form-control" [(ngModel)]="gestionModelo.adgtesta" [disabled]="editGestion">
-                                    <option *ngFor="let item of ListaEstadosGestionPeriodos"
-                                    [value]="item.adamidea"> {{item.adamdesc}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-12" style="padding-top: 2em;">
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="gestion" name="gpd"
-                                [(ngModel)]="gestionModelo.adgtgesd" [checked]="gestionModelo.adgtgesd" [disabled]="editGestion">
-                                <label class="custom-control-label" for="gestion">Gestion por defecto</label>
-                            </div>
-                        </div>
-                    </div>
+          </div>
 
-                    <div class="row text-center" style="margin-left: 15px; margin-right:15px" >
-                        <div class="col-md-4 col-12">
-                            <div class="form-group form-group-float">
-                                <label class="form-group-float-label">Tipo de Empresa</label>
-                                <select class="form-control" [(ngModel)]="gestionModelo.adgtacte" [disabled]="editGestion">
-                                    <option *ngFor="let item of ListaTiposEmpresa" placeholder="Tipo de Empresa"
-                                    [value]=item.adamidea >{{item.adamdesc}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 offset-md-1 col-12">
-                            <div class="form-group form-group-float form-control">
-                                <label class="form-group-float-label">Periodos</label>
-                                <input type="text" class="form-control text-center" style="background-color: #dcdcdc;" 
-                                disabled value="MES" placeholder="Periodos">
-                            </div>
-                            
-                        </div>
-                        <div class="col-md-3 offset-md-1 col-12">
-                            <div class="form-group form-group-float">
-                                <label class="form-group-float-label">Cant. de Periodos</label>
-                                <input type="text" class="form-control text-center" placeholder="Cantidad de periodos"
-                                value="{{gestionModelo.adgtcanp}}" required [(ngModel)]="gestionModelo.adgtcanp" [disabled]="editGestion">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row text-center" style="margin-left: 15px; margin-right:15px" >
-                        <div class="col-md-6 col-12" style="padding-top: 2em;">
-                            <div class="form-group row">
-                                <label class="col-form-label col-lg-7">Mes Inicial de Gestion</label>
-                                <div class="col-lg-5">
-                                    <select class="form-control text-center" [(ngModel)]="mesInicial"[disabled]="editGestion" (change)="armarFecha(gestionModelo.adgtideg,mesInicial)" >
-                                        <option *ngFor="let item of listaMeses" [value]="item.id"  >{{item.name}} </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-12" style="padding-top: 2em;">
-                            <div class="form-group row">
-                                <label class="col-form-label col-lg-7">Hasta</label>
-                                <div class="col-lg-5">
-                                    <select class="form-control" [(ngModel)]="mesFinal" disabled>
-                                        <option *ngFor="let item of listaMeses" [value]="item.id" >{{item.name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row text-center" style="margin-left: 15px; margin-right:15px" >
-                        <div class="col-md-10 col-12">
-                            <div class="form-group row">
-                                <label class="col-form-label col-lg-6">Fecha de Inicio de Gestion</label>
-                                <div class="col-lg-6">
-                                    <div class="input-group" style="justify-content: center;" >
-                                        <input [disabled]="editar" type="date" name="fechaEdicion" disabled
-                                        [value]="fechaInicioGestion | date:'short'" [(ngModel)]="fechaInicioGestion"
-                                        >   
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" style="margin-left: 15px; margin-right:15px" >
-                        <div class="col-md-12 col-12 alert alert-primary">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="checkboxGestionCerrada" (click) = "IniciarfechaModificacionAutomatica()"
-                                            [checked]="gestionModelo.adgtmoda" [(ngModel)]="gestionModelo.adgtmoda" [disabled]="editGestion">
-                                <label class="form-check-label" for="exampleCheck1">
-                                    Modificar Automaticamente el Estado de la Gestion a “Gestion Cerrada”
-                                </label>
-                              </div>
-                        </div>
-                    </div>
-
-                    <div class="row" style="margin-left: 15px; margin-right:15px" >
-                        <div class="col-md-12 col-12">
-                            <div class="form-group row">
-                                <label class="col-form-label col-lg-8">Fecha de Modificacion Automatica</label>
-                                <div class="col-lg-4">
-                                    <div class="input-group" style="justify-content: center;" >
-                                        <input *ngIf="gestionModelo.adgtmoda == true " [disabled]="gestionModelo.adgtmoda" type="text" name="fechaEdicion" required 
-                                           [value]="gestionModelo.adgtdiam" [(ngModel)]="gestionModelo.adgtdiam"
-                                           data-date="" data-date-format="yyyy-MM-dd" min="{{gestionModelo.adgtfegf}}" >    
-                                           <input *ngIf="gestionModelo.adgtmoda != true" [disabled]="gestionModelo.adgtmoda" type="date" name="fechaEdicion" required 
-                                           [value]="gestionModelo.adgtdiam" [(ngModel)]="gestionModelo.adgtdiam"
-                                           data-date="" data-date-format="yyyy-MM-dd" min="{{gestionModelo.adgtfegf}}" >                                     
-                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <pre>{{gestionModelo|json}}</pre>
-                    <pre> Editar: {{ editGestion}}</pre>
-                    <pre> Nuevo: {{ nuevo}}</pre>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3 col-lg-4"></div>
+              <div class="col-md-6 col-lg-4">
+                <div
+                  class="form-group form-group-feedback form-group-feedback-right"
+                >
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Buscar"
+                    #texto
+                    (keyup)="buscarAdm003(texto.value)"
+                  />
+                  <div *ngIf="buscar" class="form-control-feedback">
+                    <i class="icon-spinner2 spinner"></i>
+                  </div>
+                  <div *ngIf="!buscar" class="form-control-feedback">
+                    <i class="icon-search4"></i>
+                  </div>
                 </div>
+              </div>
+              <div class="col-md-3 col-lg-4"></div>
             </div>
-        </div>
+          </div>
+          <div class="table-responsive">
+            <!-- <table class="table table-togglable table-xs table-hover"> -->
+            <table class="table table-xs table-hover">
+              <thead>
+                <tr class="bg-blue">
+                  <th data-hide="phone">Codigo</th>
+                  <th data-toggle="true" class="table-content-center">
+                    Descripcion
+                  </th>
+                  <th data-hide="phone,tablet">Estado</th>
+                  <th class="text-center" style="width: 30px;">
+                    Opciones
+                  </th>
+                </tr>
+              </thead>
 
-
-
-        <!-- Segundo Modal : Periodos de Gestion -->
-        <div *ngIf="periodoModelo!= undefined" id="modal_periodo_gestion" class="modal fade" tabindex="-1" data-backdrop="false">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header bg-info">
-                        <h6 class="card-title"><i class="icon-calendar22 xl" style="margin-right: 2em;"></i> 
-                            PERIODOS DE GESTION
-                        </h6>
-                        <div class="modal-title">
-                            <div class="list-icons float-right">
-                                <a class="list-icons-item" *ngIf="editar" (click)="Guardar()"
-                                [routerLink]="" routerLinkActive="router-link-active"  >
-                                    <i class="icon-floppy-disk xxl"> </i>
-                                </a>
-                                <a class="list-icons-item" *ngIf="!editar" (click)="Nuevo()"
-                                [routerLink]="" routerLinkActive="router-link-active"  >
-                                    <i class="icon-file-plus xxl"> </i>
-                                </a>
-                                <a class="list-icons-item" *ngIf="!editar" (click)="Editar()"
-                                [routerLink]="" routerLinkActive="router-link-active"  >
-                                    <i class="icon-pencil7 xxl"> </i>
-                                </a>
-                                <a class="list-icons-item" *ngIf="!editar" (click)="Eliminar()"
-                                [routerLink]="" routerLinkActive="router-link-active"  >
-                                    <i class="icon-trash xxl"> </i>
-                                </a>
-                                <a class="list-icons-item" (click)="Cancelar" data-dismiss="modal"
-                                [routerLink]="" routerLinkActive="router-link-active"  >
-                                    <i class="icon-exit xxl"> </i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row text-center" style="margin-left: 15px; margin-right:15px;margin-top: 15px;" >
-                        <div class="col-md-2 col-12">
-                            <div class="form-group form-group-float">
-                                <label class="form-group-float-label">Periodos</label>
-                                <input type="text" class="form-control text-center" [(ngModel)]="periodoModelo.adpridep" 
-                                [value]="periodoModelo.adprmesp | formatonumeroperiodo" placeholder="Periodo">
-                            </div>
-                        </div>
-                        <div class="col-md-7 col-12">
-                            <div class="form-group form-group-float">
-                                <label class="form-group-float-label">Descripcion</label>
-                                <input type="text" class="form-control text-center" [(ngModel)]="periodoModelo.adprdesc"
-                                [value]="periodoModelo.adprdesc" placeholder="Descripcion">
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-12">
-                            <div class="form-group form-group-float">
-                                <label class="form-group-float-label">Estado</label>
-                                <select class="form-control" [(ngModel)]="periodoModelo.adpresta">
-                                 <option *ngFor="let item of listaMeses"   [value]="periodoModelo.adpresta"
-                                 (change)="ActualizarLista()">{{item.name}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row text-center" style="margin-left: 15px; margin-right:15px" >
-                        <div class="col-md-4 col-12">
-                            <div class="form-group form-group-float">
-                                <label class="form-group-float-label">Mes</label>
-                                <input type="text" [value]="periodoModelo.adprmesp | nombremes" class="form-control text-center" placeholder="Mes">
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-12">
-                            <div class="form-group form-group-float">
-                                <label class="form-group-float-label">Gestion</label>
-                                <input type="text" class="form-control text-center" [value]="periodoModelo.adprideg" placeholder="Gestion">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" style="margin-left: 15px; margin-right:15px" >
-                        <div class="col-md-12 col-12 alert alert-primary">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="checkboxPeriodoCerrado" (click) = "IniciarfechaModificacionAutomatica()"
-                                [checked]="periodoModelo.adprmoda" [(ngModel)]="periodoModelo.adprmoda">
-                                <label class="form-check-label" for="exampleCheck1">
-                                    Modificar Automaticamente el Estado del Periodo a “Periodo Cerrado”
-                                </label>
-                              </div>
-                        </div>
-                    </div>
-
-                    <div class="row" style="margin-left: 15px; margin-right:15px" >
-                        <div class="col-md-12 col-12">
-                            <div class="form-group row">
-                                <label class="col-form-label col-lg-8">Fecha de Modificacion Automatica</label>
-                                <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <!-- <input type="text" class="form-control text-center" placeholder="Fecha"> -->
-                                            <input *ngIf="periodoModelo.adprmoda == true" type="text" name="fechaEdicion" required 
-                                            [value]="periodoModelo.adprdiam" [(ngModel)]="periodoModelo.adprdiam"
-                                            data-date="" data-date-format="yyyy-MM-dd" min="{{periodoModelo.adprdiam}}" >    
-                                            <input *ngIf="periodoModelo.adprdiam != true"   type="date" name="fechaEdicion" required 
-                                            [value]="periodoModelo.adprdiam" [(ngModel)]="periodoModelo.adprdiam"
-                                            data-date="" data-date-format="yyyy-MM-dd" min="{{periodoModelo.adprdiam}}" >                                     
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              <tbody>
+                <ng-container *ngFor="let adm003 of auxma; let i = index"
+                  ><tr>
+                    <td>{{ adm003.adamtipa }}</td>
+                    <td class="table-content-center">
+                      {{ adm003.adamdesc }}
+                    </td>
+                    <td>
+                      <!-- <input
+                      *ngIf="adm003.adamesta"
+                      type="checkbox"
+                      class="form-check-input-switchery"
+                      [checked]="false"
+                      [disabled]="true"
+                      data-fouc
+                    /> -->
+                      <span
+                        *ngIf="adm003.adamesta === '1'"
+                        class="switchery switchery-default"
+                        style="background-color: rgb(100, 189, 99); border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 10px inset; transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;"
+                        ><small
+                          style="left: 18px; background-color: rgb(255, 255, 255); transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
+                        ></small
+                      ></span>
+                      <span
+                        *ngIf="adm003.adamesta === '0'"
+                        class="switchery switchery-default"
+                        style="box-shadow: rgb(201, 26, 26) 0px 0px 0px 0px inset; border-color: rgb(238, 63, 63); background-color: rgb(185, 11, 11); transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s; opacity: 0.5;"
+                        ><small
+                          style="left: 0px; transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
+                        ></small
+                      ></span>
+                    </td>
+                    <td class="text-center">
+                      <div class="list-icons">
+                        <a
+                          href="#"
+                          data-toggle="modal"
+                          data-target="#modal_theme_info"
+                          class="list-icons-item text-primary-600"
+                          ><i class="icon-pencil7"></i
+                        ></a>
+                        <a href="#" class="list-icons-item text-danger-600"
+                          ><i class="icon-trash"></i
+                        ></a>
+                        <a href="#" class="list-icons-item text-teal-600"
+                          ><i class="icon-cog6"></i
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- <tr *ngIf="i % 2 === 1" class="table-info">
+                    <td>{{ adm003.adamtipa }}</td>
+                    <td class="table-content-center">
+                      {{ adm003.adamdesc }}
+                    </td>
+                    <td>
+                      <span
+                        *ngIf="adm003.adamesta === '1'"
+                        class="switchery switchery-default"
+                        style="background-color: rgb(100, 189, 99); border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 10px inset; transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;"
+                        ><small
+                          style="left: 18px; background-color: rgb(255, 255, 255); transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
+                        ></small
+                      ></span>
+                      <span
+                        *ngIf="adm003.adamesta === '0'"
+                        class="switchery switchery-default"
+                        style="box-shadow: rgb(201, 26, 26) 0px 0px 0px 0px inset; border-color: rgb(238, 63, 63); background-color: rgb(185, 11, 11); transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s; opacity: 0.5;"
+                        ><small
+                          style="left: 0px; transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
+                        ></small
+                      ></span>
+                    </td>
+                    <td class="text-center">
+                      <div class="list-icons">
+                        <a
+                          href="#"
+                          data-toggle="modal"
+                          data-target="#modal_theme_info"
+                          class="list-icons-item text-primary-600"
+                          ><i class="icon-pencil7"></i
+                        ></a>
+                        <a href="#" class="list-icons-item text-danger-600"
+                          ><i class="icon-trash"></i
+                        ></a>
+                        <a href="#" class="list-icons-item text-teal-600"
+                          ><i class="icon-cog6"></i
+                        ></a>
+                      </div>
+                    </td>
+                  </tr> -->
+                </ng-container>
+              </tbody>
+            </table>
+            <br />
+            <div *ngIf="loading" class="d-flex justify-content-center">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
             </div>
+          </div>
+          <div *ngIf="!loading" class="row justify-content-center">
+            <ul class="pagination pagination-flat align-self-center">
+              <li class="page-item puntero">
+                <a (click)="atras()" class="page-link">&larr; &nbsp; Atras</a>
+              </li>
+              <ng-container *ngFor="let pg of pagi">
+                <li class="page-item">
+                  <a href="#" class="page-link">{{ pg.num }}</a>
+                </li>
+                <!-- <li class="page-item disabled">
+                  <a href="#" class="page-link">3</a>
+                </li> -->
+              </ng-container>
+              <li class="page-item puntero">
+                <a (click)="siguiente()" class="page-link">Sig &nbsp; &rarr;</a>
+              </li>
+            </ul>
+          </div>
+          <br />
         </div>
+        <!-- /table with togglable columns -->
       </div>
-      <!-- /dashboard content -->
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<div id="modal_theme_info" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-info">
+        <h6 class="modal-title">Info header</h6>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <h6 class="font-weight-semibold">Text in a modal</h6>
+        <p>
+          Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget
+          lacinia odio sem. Praesent commodo cursus magna, vel scelerisque nisl
+          consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum
+          faucibus dolor auctor.
+        </p>
+
+        <hr />
+
+        <h6 class="font-weight-semibold">Another paragraph</h6>
+        <p>
+          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+          consectetur ac, vestibulum at eros.
+        </p>
+        <p>
+          Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+          Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" data-dismiss="modal">
+          Cerrar
+        </button>
+        <button type="button" class="btn bg-info">
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

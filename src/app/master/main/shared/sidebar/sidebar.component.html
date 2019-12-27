@@ -92,7 +92,9 @@
               <ul class="nav nav-group-sub">
                 <ng-container *ngFor="let component of submenu.componentes">
                   <li class="nav-item">
-                    <a href="#" class="nav-link"
+                    <a
+                      (click)="menuComponent(menu.titulo)"
+                      class="nav-link puntero"
                       >{{ component.titulo }}
                       <span
                         class="badge bg-blue-400 align-self-center ml-auto"

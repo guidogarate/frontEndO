@@ -19,6 +19,10 @@ export class SidebarService {
       })
       .pipe(
         map(resp => {
+          if (resp["ok"]) {
+            sessionStorage.setItem("menu", JSON.stringify(resp["menu"]));
+            sessionStorage.setItem("favo", JSON.stringify(resp["favoritos"]));
+          }
           return resp;
         })
       );
@@ -34,6 +38,7 @@ export class SidebarService {
       })
       .pipe(
         map(resp => {
+          sessionStorage.setItem("favo", JSON.stringify(resp["favoritos"]));
           return resp;
         })
       );

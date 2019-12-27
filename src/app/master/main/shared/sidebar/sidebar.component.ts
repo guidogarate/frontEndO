@@ -45,21 +45,31 @@ export class SidebarComponent implements OnInit {
   }
 
   cargarMenuFavo() {
-    this.sidebarS.cargarMenuFavo().subscribe(resp => {
-      if (resp["ok"]) {
-        this.datos = resp["menu"];
-        this.favoritos = resp["favoritos"];
-        this.cargandoMenu = false;
-      } else {
-        console.log("NO SE CARGARON LOS DATOS MENU FAVORITOS");
-      }
-    });
+    const menu: string = sessionStorage.getItem("menu");
+    const favo: string = sessionStorage.getItem("favo");
+    if (menu) {
+      this.datos = JSON.parse(menu);
+      console.log(this.datos);
+
+      this.favoritos = JSON.parse(favo);
+      this.cargandoMenu = false;
+    } else {
+      this.sidebarS.cargarMenuFavo().subscribe(resp => {
+        if (resp["ok"]) {
+          this.datos = resp["menu"];
+          this.favoritos = resp["favoritos"];
+          this.cargandoMenu = false;
+        } else {
+          console.log("NO SE CARGARON LOS DATOS MENU FAVORITOS");
+        }
+      });
+    }
   }
 
   cargarFto() {
     this.sidebarS.CargarFavoritos().subscribe(resp => {
       if (resp["ok"]) {
-        this.favoritos = resp["favoritos"];
+        this.favoritos = JSON.parse(sessionStorage.getItem("favo"));
       } else {
         console.log("no se cargaron los datos");
       }
@@ -117,5 +127,9 @@ export class SidebarComponent implements OnInit {
     // } else {
     //   console.log("la palabra no existe dentro de la cadena");
     // }
+  }
+
+  menuComponent(menu: string) {
+    console.log(menu);
   }
 }
