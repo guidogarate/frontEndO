@@ -74,8 +74,8 @@
                                     </thead>
                                     <tbody>
                                         <tr class="table-border-double" *ngFor="let periodo of ListaPeriodos" (click)="editarPeriodo(periodo)">
-                                            <td class="puntero">{{periodo.adpridep}}</td>
-                                            <td class="puntero">{{periodo.adprmesp}}</td>
+                                            <td class="puntero">{{periodo.adpridep | formatonumeroperiodo }}</td>
+                                            <td class="puntero">{{periodo.adprmesp | nombremes}}</td>
                                             <td class="puntero">{{periodo.adprdesc}}</td>
                                             <td class="puntero">{{periodo.adprideg}}</td>
                                             <td *ngIf="periodo.adpresta == 1" class="puntero">Bloqueado</td>
