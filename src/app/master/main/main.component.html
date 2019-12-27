@@ -1,4 +1,11 @@
-<body class="navbar-top haciadentro animaciones">
+<!-- <body class="navbar-top haciadentro animaciones"> -->
+<body
+  [ngClass]="{
+    'navbar-top': true,
+    haciadentro: animacion,
+    animaciones: animacion
+  }"
+>
   <div class="navbar navbar-expand-md navbar-light navbar-static fixed-top">
     <app-header></app-header>
     <app-control></app-control>

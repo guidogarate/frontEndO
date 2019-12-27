@@ -1,4 +1,4 @@
-<div class="content-wrapper">
+<div class="content-wrapper animaciones haciadentro">
   <!-- Content area -->
   <div class="content pt-0">
     <!-- Dashboard content -->
@@ -45,7 +45,7 @@
           </div>
           <div class="table-responsive">
             <!-- <table class="table table-togglable table-xs table-hover"> -->
-            <table class="table  table-xs table-hover">
+            <table class="table table-xs table-hover">
               <thead>
                 <tr class="bg-blue">
                   <th data-hide="phone">Codigo</th>
@@ -154,12 +154,32 @@
                 </ng-container>
               </tbody>
             </table>
+            <br />
             <div *ngIf="loading" class="d-flex justify-content-center">
               <div class="spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
               </div>
             </div>
           </div>
+          <div *ngIf="!loading" class="row justify-content-center">
+            <ul class="pagination pagination-flat align-self-center">
+              <li class="page-item puntero">
+                <a (click)="atras()" class="page-link">&larr; &nbsp; Atras</a>
+              </li>
+              <ng-container *ngFor="let pg of pagi">
+                <li class="page-item">
+                  <a href="#" class="page-link">{{ pg.num }}</a>
+                </li>
+                <!-- <li class="page-item disabled">
+                  <a href="#" class="page-link">3</a>
+                </li> -->
+              </ng-container>
+              <li class="page-item puntero">
+                <a (click)="siguiente()" class="page-link">Sig &nbsp; &rarr;</a>
+              </li>
+            </ul>
+          </div>
+          <br />
         </div>
         <!-- /table with togglable columns -->
       </div>
@@ -167,7 +187,7 @@
   </div>
 </div>
 
-<!-- borar modal -->
+<!-- modal -->
 <div id="modal_theme_info" class="modal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">

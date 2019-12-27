@@ -16,8 +16,10 @@ export class Adm003Component implements OnInit, OnDestroy {
   loading = true;
   auxma: any[];
   sus: Subscription;
+  pagi = [{ num: 1 }, { num: 2 }, { num: 3 }];
   constructor(private adm003S: Adm003Service, private notyG: NotyGlobal) {
     this.buscarAdm003("all_auxma");
+    console.log(this.pagi);
   }
 
   ngOnInit() {}
@@ -47,5 +49,9 @@ export class Adm003Component implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sus.unsubscribe();
+  }
+
+  siguiente() {
+    console.log("siguiente");
   }
 }
