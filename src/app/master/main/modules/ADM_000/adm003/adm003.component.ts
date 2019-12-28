@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
 import { Adm003Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { Observable, Subscription } from "rxjs";
+import { Adm003Models } from "src/app/master/utils/models/main/adm_000/adm_003.models";
 
 declare function init_table();
 declare function init_check();
@@ -19,6 +20,7 @@ export class Adm003Component implements OnInit, OnDestroy {
   pagi: any[];
   numeroPag = 1;
   texto = "all_auxma";
+  amd003: Adm003Models = new Adm003Models("", "", true, "");
   constructor(private adm003S: Adm003Service, private notyG: NotyGlobal) {
     this.buscarAdm003(this.texto);
   }
@@ -111,7 +113,8 @@ export class Adm003Component implements OnInit, OnDestroy {
     });
   }
 
-  actualizar() {
-    console.log("actualizar");
+  actualizar(adm_003: Adm003Models) {
+    this.amd003 = adm_003;
+    console.log(this.amd003);
   }
 }

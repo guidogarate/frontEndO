@@ -76,7 +76,9 @@
                       data-fouc
                     /> -->
                       <span
-                        *ngIf="adm003.adamesta === '1'"
+                        *ngIf="
+                          adm003.adamesta === '1' || adm003.adamesta === true
+                        "
                         class="switchery switchery-default"
                         style="background-color: rgb(100, 189, 99); border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 10px inset; transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;"
                         ><small
@@ -84,7 +86,9 @@
                         ></small
                       ></span>
                       <span
-                        *ngIf="adm003.adamesta === '0'"
+                        *ngIf="
+                          adm003.adamesta === '0' || adm003.adamesta === false
+                        "
                         class="switchery switchery-default"
                         style="box-shadow: rgb(201, 26, 26) 0px 0px 0px 0px inset; border-color: rgb(238, 63, 63); background-color: rgb(185, 11, 11); transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s; opacity: 0.5;"
                         ><small
@@ -96,7 +100,7 @@
                       <div class="list-icons">
                         <a
                           href="#"
-                          (click)="actualizar()"
+                          (click)="actualizar(adm003)"
                           data-toggle="modal"
                           data-target="#modal_theme_info"
                           class="list-icons-item text-primary-600"
@@ -214,49 +218,72 @@
       <div class="modal-body">
         <h6 class="font-weight-semibold">GRUPO</h6>
         <div class="row">
-          <div class="col-3">
+          <div class="col-2">
             <div class="form-group form-group-float">
               <label class="form-group-float-label">Codigo</label>
-              <input type="text" class="form-control" placeholder="Codigo" />
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Codigo"
+                [(ngModel)]="amd003.adamtipa"
+                required
+              />
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-5">
             <div class="form-group form-group-float">
               <label class="form-group-float-label">Descripcion</label>
               <input
                 type="text"
                 class="form-control"
                 placeholder="Descripcion"
+                [(ngModel)]="amd003.adamdesc"
+                required
               />
             </div>
           </div>
           <div class="col-3">
             <div class="form-group form-group-float">
               <label class="form-group-float-label">Sigla</label>
-              <input type="text" class="form-control" placeholder="Sigla" />
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Sigla"
+                [(ngModel)]="amd003.adamsigl"
+              />
             </div>
           </div>
           <div class="col-2">
-            <label class="form-group-float-label">Estado</label>
-            <input
+            <!-- <label class="form-group-float-label">Estado</label>
+            <input              
               type="checkbox"
               class="form-check-input-switchery"
-              [checked]="true"
+              [(ngModel)]="amd003.adamesta"
               [disabled]="false"
               data-fouc
-            />
+            /> -->
+
+            <div class="custom-control custom-switch">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                [(ngModel)]="amd003.adamesta"
+                id="customSwitch1"
+              />
+              <label class="custom-control-label" for="customSwitch1"></label>
+            </div>
           </div>
         </div>
         <hr class="separador" />
         <h6 class="font-weight-semibold">SUB-GRUPO</h6>
-        <div class="row">
-          <div class="col-2">
+        <div class="row justify-content-center">
+          <div class="col-3 col-sm-2 col-md-2 col-lg-2">
             <div class="form-group form-group-float">
               <label class="form-group-float-label">Codigo</label>
               <input type="text" class="form-control" placeholder="Codigo" />
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-4 col-sm-4 col-md-4 col-lg-4">
             <div class="form-group form-group-float">
               <label class="form-group-float-label">Descripcion</label>
               <input
@@ -266,19 +293,19 @@
               />
             </div>
           </div>
-          <div class="col-2">
+          <div class="col-3 col-sm-2 col-md-2 col-lg-2">
             <div class="form-group form-group-float">
               <label class="form-group-float-label">Sigla</label>
               <input type="text" class="form-control" placeholder="Sigla" />
             </div>
           </div>
-          <div class="col-2">
+          <div class="col-2 col-sm-2 col-md-2 col-lg-2">
             <div class="form-group form-group-float">
               <label class="form-group-float-label">Sec</label>
               <input type="text" class="form-control" placeholder="Sec" />
             </div>
           </div>
-          <div class="col-1">
+          <div class="col-3 col-sm-1 col-md-1 col-lg-1">
             <label class="form-group">Estado</label>
             <input
               type="checkbox"
@@ -288,7 +315,7 @@
               data-fouc
             />
           </div>
-          <div class="col-1">
+          <div class="col-3 col-sm-1 col-md-1 col-lg-1">
             <label class="form-group">Prede</label>
             <input
               type="checkbox"
@@ -299,6 +326,7 @@
             />
           </div>
         </div>
+        <hr />
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-link" data-dismiss="modal">
