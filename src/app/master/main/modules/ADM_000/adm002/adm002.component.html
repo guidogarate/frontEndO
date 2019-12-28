@@ -33,14 +33,14 @@
                                         <th scope="col">Gestion</th>
                                         <th scope="col">Descripcion</th>
                                         <th scope="col">Estado</th>
-                                        <th scope="col">Acciones</th>
+                                        <!-- <th scope="col">Acciones</th> -->
                                     </thead>
                                     <tbody>
                                         <tr class="table-border-double PRL0" *ngFor="let gestion of ListaGestiones" (click)="editarGestion(gestion)">
                                             <td class="puntero PRL0">{{gestion.adgtideg}}</td>
                                             <td class="puntero PRL0">{{gestion.adgtdesc}}</td>
                                             <td class="puntero PRL0">{{gestion.adgtesta | estado}}</td>
-                                            <td class="puntero PRL0"> 
+                                            <!-- <td class="puntero PRL0">  -->
                                                 <!-- <a class="list-icons-item" (click)="editarGestion(gestion)"
                                                 [routerLink]="nada()" routerLinkActive="router-link-active">
                                                 <i class="icon-file-eye xxl" data-toggle="tooltip" data-placement="top" title="Ver Gestion"> </i>
@@ -56,7 +56,7 @@
                                             <!-- <i class="icon-file-eye xxl" data-toggle="tooltip" data-placement="top" title="editar Gestion"> </i>
                                             <i class="icon-pencil7 xxl" data-toggle="tooltip" data-placement="top" title="editar Gestion"> </i>
                                             <i class="icon-trash xxl" data-toggle="tooltip" data-placement="top" title="Eliminar Gestion"> </i> -->
-                                            </td>
+                                            <!-- </td> -->
                                         </tr>
                                     </tbody>
                                 </table>
@@ -161,7 +161,7 @@
                         <div class="col-md-2 col-12">
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Gestion</label>
-                                <input type="text" class="form-control text-center" name="Gestion" placeholder="Gestion" 
+                                <input type="text" class="form-control text-center" name="Gestion" placeholder="Gestion" required
                                   value="{{gestionModelo.adgtideg}}" required [(ngModel)]="gestionModelo.adgtideg" [disabled]="editGestion">
                             </div>
                         </div>
@@ -225,7 +225,8 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-lg-7">Mes Inicial de Gestion</label>
                                 <div class="col-lg-5">
-                                    <select class="form-control text-center" [(ngModel)]="mesInicial"[disabled]="editGestion" (change)="armarFecha(gestionModelo.adgtideg,mesInicial)" >
+                                    <select class="form-control text-center" [(ngModel)]="mesInicial"[disabled]="editGestion" 
+                                    (change)="armarFecha(gestionModelo.adgtideg,mesInicial)" required>
                                         <option *ngFor="let item of listaMeses" [value]="item.id"  >{{item.name}} </option>
                                     </select>
                                 </div>
@@ -250,7 +251,7 @@
                                 <label class="col-form-label col-lg-6">Fecha de Inicio de Gestion</label>
                                 <div class="col-lg-6">
                                     <div class="input-group" style="justify-content: center;" >
-                                        <input [disabled]="editar" type="date" name="fechaEdicion" disabled
+                                        <input [disabled]="editar" type="date" name="fechaInicioGestion" disabled
                                         [value]="fechaInicioGestion | date:'short'" [(ngModel)]="fechaInicioGestion"
                                         >   
                                     </div>
@@ -277,12 +278,12 @@
                                 <label class="col-form-label col-lg-8">Fecha de Modificacion Automatica</label>
                                 <div class="col-lg-4">
                                     <div class="input-group" style="justify-content: center;" >
-                                        <input *ngIf="gestionModelo.adgtmoda == true " [disabled]="gestionModelo.adgtmoda" type="text" name="fechaEdicion" required 
+                                        <input *ngIf="gestionModelo.adgtmoda == true"  [disabled]="gestionModelo.adgtmoda" type="text" name="fechaEdicion1" required 
                                            [value]="gestionModelo.adgtdiam" [(ngModel)]="gestionModelo.adgtdiam"
-                                           data-date="" data-date-format="yyyy-MM-dd" min="{{gestionModelo.adgtfegf}}" >    
-                                           <input *ngIf="gestionModelo.adgtmoda != true" [disabled]="gestionModelo.adgtmoda" type="date" name="fechaEdicion" required 
+                                            min="{{gestionModelo.adgtfegf }}" >    
+                                        <input *ngIf="gestionModelo.adgtmoda != true"  [disabled]="gestionModelo.adgtmoda" type="month" name="fechaEdicion2" required 
                                            [value]="gestionModelo.adgtdiam" [(ngModel)]="gestionModelo.adgtdiam"
-                                           data-date="" data-date-format="yyyy-MM-dd" min="{{gestionModelo.adgtfegf}}" >                                     
+                                           min="{{gestionModelo.adgtfegf }}"  >                                     
                                      </div>
                                 </div>
                             </div>
@@ -290,7 +291,7 @@
                     </div>
                     <pre>{{gestionModelo|json}}</pre>
                     <pre> Editar: {{ editGestion}}</pre>
-                    <pre> Nuevo: {{ nuevo}}</pre>
+                    <pre> fechaInicioGestion: {{ DiaInicioGestion }}</pre>
                 </div>
             </div>
         </div>
@@ -334,14 +335,14 @@
                         <div class="col-md-2 col-12">
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Periodos</label>
-                                <input type="text" class="form-control text-center" [(ngModel)]="periodoModelo.adpridep" 
-                                [value]="periodoModelo.adprmesp " placeholder="Periodo">
+                                <input type="number" class="form-control text-center" [(ngModel)]="periodoModelo.adpridep" disabled
+                                value="{{periodoModelo.adpridep | formatonumeroperiodo}}" placeholder="Periodo">
                             </div>
                         </div>
                         <div class="col-md-7 col-12">
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Descripcion</label>
-                                <input type="text" class="form-control text-center" [(ngModel)]="periodoModelo.adprdesc"
+                                <input type="text" class="form-control text-center" [(ngModel)]="periodoModelo.adprdesc" disabled
                                 [value]="periodoModelo.adprdesc" placeholder="Descripcion">
                             </div>
                         </div>
@@ -360,13 +361,15 @@
                         <div class="col-md-4 col-12">
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Mes</label>
-                                <input type="text" [value]="periodoModelo.adprmesp" class="form-control text-center" placeholder="Mes">
+                                <input type="number" value="{{periodoModelo.adprmesp | nombremes}}" disabled
+                                [(ngModel)]="periodoModelo.adprmesp" class="form-control text-center" placeholder="Mes">
                             </div>
                         </div>
                         <div class="col-md-4 col-12">
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Gestion</label>
-                                <input type="text" class="form-control text-center" [value]="periodoModelo.adprideg" placeholder="Gestion">
+                                <input type="text" class="form-control text-center" [value]="periodoModelo.adprideg" disabled
+                                placeholder="Gestion">
                             </div>
                         </div>
                     </div>
@@ -374,7 +377,7 @@
                     <div class="row" style="margin-left: 15px; margin-right:15px" >
                         <div class="col-md-12 col-12 alert alert-primary">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="checkboxPeriodoCerrado" (click) = "IniciarfechaModificacionAutomatica()"
+                                <input type="checkbox" class="form-check-input" id="checkboxPeriodoCerrado" 
                                 [checked]="periodoModelo.adprmoda" [(ngModel)]="periodoModelo.adprmoda">
                                 <label class="form-check-label" for="exampleCheck1">
                                     Modificar Automaticamente el Estado del Periodo a “Periodo Cerrado”
@@ -386,21 +389,22 @@
                     <div class="row" style="margin-left: 15px; margin-right:15px" >
                         <div class="col-md-12 col-12">
                             <div class="form-group row">
-                                <label class="col-form-label col-lg-8">Fecha de Modificacion Automatica</label>
-                                <div class="col-lg-4">
+                                <label class="col-form-label col-lg-6">Fecha de Modificacion Automatica</label>
+                                <div class="col-lg-6">
                                         <div class="form-group">
                                             <!-- <input type="text" class="form-control text-center" placeholder="Fecha"> -->
-                                            <input *ngIf="periodoModelo.adprmoda == true" type="text" name="fechaEdicion" required 
+                                            <input *ngIf="periodoModelo.adprmoda == true" type="text" name="fechaPeriodo1" required 
                                             [value]="periodoModelo.adprdiam" [(ngModel)]="periodoModelo.adprdiam"
-                                            data-date="" data-date-format="yyyy-MM-dd" min="{{periodoModelo.adprdiam}}" >    
-                                            <input *ngIf="periodoModelo.adprdiam != true"   type="date" name="fechaEdicion" required 
+                                            min="{{periodoModelo.adprdiam}}" data- ="" >    
+                                            <input *ngIf="periodoModelo.adprdiam != true" type="date" name="fechaPeriodo2" required 
                                             [value]="periodoModelo.adprdiam" [(ngModel)]="periodoModelo.adprdiam"
-                                            data-date="" data-date-format="yyyy-MM-dd" min="{{periodoModelo.adprdiam}}" >                                     
+                                           min="{{periodoModelo.adprdiam}}" >                                     
                                         </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <pre>{{periodoModelo|json}}</pre>
                 </div>
             </div>
         </div>

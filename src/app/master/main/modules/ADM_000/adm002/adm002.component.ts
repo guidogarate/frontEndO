@@ -55,6 +55,8 @@ export class Adm002Component implements OnInit {
   gestionModelo : any;
   periodoModelo : any;
 
+  /* Periodo*/
+  DiaInicioGestion : string;
   constructor(
     private adm002Service : Adm002Service,
     private datePipe: DatePipe
@@ -72,9 +74,7 @@ export class Adm002Component implements OnInit {
   }
   /* Peticiones */
   obtenerGestionesPeriodos(){
-    this.adm002Service
-    .ObtenerGestionesPeriodos()
-    .subscribe( resp => {
+    this.adm002Service.ObtenerGestionesPeriodos().subscribe( resp => {
       if( resp["ok"]){
         this.ListaGestiones = resp["gestion"];
         this.ListaPeriodos = resp["periodos"];
@@ -269,8 +269,12 @@ this.nuevo= true;
       adgtgesd : item.adgtgesd == 1 ? true : false,
     }
     if(this.gestionModelo.adgtfegi!= null){
+      console.log("cargando data fechas: ");
       this.mesInicial = (new Date(this.gestionModelo.adgtfegi).getUTCMonth()+1).toString();
       this.mesFinal = (new Date(this.gestionModelo.adgtfegf).getUTCMonth()+1).toString();
+      this.fechaInicioGestion =  this.datePipe.transform(
+        this.gestionModelo.adgtfegi,
+        "yyyy-MM-dd",'+0430');
     }
   }
 
@@ -282,6 +286,7 @@ this.nuevo= true;
       "adgtdiam": null,
       "adgtgesd": false
     };
+    this.fechaInicioGestion = null;
 
   }
 
@@ -303,16 +308,20 @@ this.nuevo= true;
   CargarPeriodo(item : any){
     console.log("periodo : ", item);
     this.periodoModelo = {
-      adprideg: item.adprideg,
-      adpridep : item.adpridep,
-      adprmesp : item.adprmesp,
-      adprdesc : item.adprdesc,
+      adprideg : item.adgtfegi,
+      adpridep :  1,
+      adprmesp : 1,
+      adprdesc : "Gestion 2019",
       adpresta : item.adpresta,
       adprfepi : item.adprfepi,
       adprfepf : item.adprfepf,
       adprmoda : item.adprmoda == "1" ? true : false,
-      adprdiam : item.adprdiam
+      adprdiam : new Date()
     }
+    this.DiaInicioGestion =  this.datePipe.transform(
+      this.periodoModelo.adprdiam,
+      "dd" );
+      console.info("numero: ", this.periodoModelo.adprdiam);
 
   }
 

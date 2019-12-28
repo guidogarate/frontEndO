@@ -18,7 +18,7 @@ export class Estado implements PipeTransform {
         case 2: 
           return 'Bloqueado';
         default:
-          return 'N/S';
+          return 'S/E';
       }
     }
 }

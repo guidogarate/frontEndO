@@ -35,6 +35,7 @@ export class Adm002Service {
   ObtenerGestionesPeriodos() {
     const url1 = `${url.prod}${url.get_gestion_periodos}`;
     console.log("token", this.token);
+    console.log("url", url1);
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
