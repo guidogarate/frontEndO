@@ -1,73 +1,70 @@
-<div class="content-wrapper animaciones haciadentro">
-  <!-- Content area -->
-  <div class="content pt-0">
-    <!-- Dashboard content -->
-    <div class="row">
-      <div class="col-xl-12">
-        <!-- Table with togglable columns -->
-        <br />
-        <div class="card">
-          <div class="card-header header-elements-inline">
-            <h5 class="card-title">DATOS COMPLEMENTARIOS</h5>
-            <div class="header-elements">
-              <div class="list-icons">
-                <a class="list-icons-item" data-action="collapse"></a>
-                <a class="list-icons-item" data-action="reload"></a>
-                <a class="list-icons-item" data-action="remove"></a>
+<!-- Dashboard content -->
+<div class="row haciadentro animaciones">
+  <div class="col-xl-12">
+    <!-- Table with togglable columns -->
+    <br />
+    <div class="card">
+      <div class="card-header header-elements-inline">
+        <h5 class="card-title">DATOS COMPLEMENTARIOS</h5>
+        <div class="header-elements">
+          <div class="list-icons">
+            <a class="list-icons-item" data-action="collapse"></a>
+            <a class="list-icons-item" data-action="reload"></a>
+            <a class="list-icons-item" data-action="remove"></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3 col-lg-4"></div>
+          <div class="col-md-6 col-lg-4">
+            <div
+              class="form-group form-group-feedback form-group-feedback-right"
+            >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Buscar"
+                #texto
+                (keyup)="buscarAdm003(texto.value)"
+              />
+              <div *ngIf="buscar" class="form-control-feedback">
+                <i class="icon-spinner2 spinner"></i>
+              </div>
+              <div *ngIf="!buscar" class="form-control-feedback">
+                <i class="icon-search4"></i>
               </div>
             </div>
           </div>
+          <div class="col-md-3 col-lg-4"></div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <!-- <table class="table table-togglable table-xs table-hover"> -->
+        <table class="table table-xs table-hover">
+          <thead>
+            <tr class="bg-blue">
+              <th data-hide="phone">Codigo</th>
+              <th data-toggle="true" class="table-content-center">
+                Descripcion
+              </th>
+              <th data-hide="phone,tablet">Estado</th>
+              <th class="text-center" style="width: 30px;">
+                Opciones
+              </th>
+            </tr>
+          </thead>
 
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-3 col-lg-4"></div>
-              <div class="col-md-6 col-lg-4">
-                <div
-                  class="form-group form-group-feedback form-group-feedback-right"
-                >
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Buscar"
-                    #texto
-                    (keyup)="buscarAdm003(texto.value)"
-                  />
-                  <div *ngIf="buscar" class="form-control-feedback">
-                    <i class="icon-spinner2 spinner"></i>
-                  </div>
-                  <div *ngIf="!buscar" class="form-control-feedback">
-                    <i class="icon-search4"></i>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3 col-lg-4"></div>
-            </div>
-          </div>
-          <div class="table-responsive">
-            <!-- <table class="table table-togglable table-xs table-hover"> -->
-            <table class="table table-xs table-hover">
-              <thead>
-                <tr class="bg-blue">
-                  <th data-hide="phone">Codigo</th>
-                  <th data-toggle="true" class="table-content-center">
-                    Descripcion
-                  </th>
-                  <th data-hide="phone,tablet">Estado</th>
-                  <th class="text-center" style="width: 30px;">
-                    Opciones
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <ng-container *ngFor="let adm003 of auxma; let i = index"
-                  ><tr>
-                    <td>{{ adm003.adamtipa }}</td>
-                    <td class="table-content-center">
-                      {{ adm003.adamdesc }}
-                    </td>
-                    <td>
-                      <!-- <input
+          <tbody>
+            <ng-container *ngFor="let adm003 of auxma; let i = index"
+              ><tr (dblclick)="myFunction()" class="puntero">
+                <td>{{ adm003.adamtipa }}</td>
+                <td class="table-content-center">
+                  {{ adm003.adamdesc }}
+                </td>
+                <td>
+                  <!-- <input
                       *ngIf="adm003.adamesta"
                       type="checkbox"
                       class="form-check-input-switchery"
@@ -75,47 +72,43 @@
                       [disabled]="true"
                       data-fouc
                     /> -->
-                      <span
-                        *ngIf="
-                          adm003.adamesta === '1' || adm003.adamesta === true
-                        "
-                        class="switchery switchery-default"
-                        style="background-color: rgb(100, 189, 99); border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 10px inset; transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;"
-                        ><small
-                          style="left: 18px; background-color: rgb(255, 255, 255); transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
-                        ></small
-                      ></span>
-                      <span
-                        *ngIf="
-                          adm003.adamesta === '0' || adm003.adamesta === false
-                        "
-                        class="switchery switchery-default"
-                        style="box-shadow: rgb(201, 26, 26) 0px 0px 0px 0px inset; border-color: rgb(238, 63, 63); background-color: rgb(185, 11, 11); transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s; opacity: 0.5;"
-                        ><small
-                          style="left: 0px; transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
-                        ></small
-                      ></span>
-                    </td>
-                    <td class="text-center">
-                      <div class="list-icons">
-                        <a
-                          href="#"
-                          (click)="actualizar(adm003)"
-                          data-toggle="modal"
-                          data-target="#modal_theme_info"
-                          class="list-icons-item text-primary-600"
-                          ><i class="icon-pencil7"></i
-                        ></a>
-                        <a href="#" class="list-icons-item text-danger-600"
-                          ><i class="icon-trash"></i
-                        ></a>
-                        <a href="#" class="list-icons-item text-teal-600"
-                          ><i class="icon-cog6"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <!-- <tr *ngIf="i % 2 === 1" class="table-info">
+                  <span
+                    *ngIf="adm003.adamesta === '1' || adm003.adamesta === true"
+                    class="switchery switchery-default"
+                    style="background-color: rgb(100, 189, 99); border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 10px inset; transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;"
+                    ><small
+                      style="left: 18px; background-color: rgb(255, 255, 255); transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
+                    ></small
+                  ></span>
+                  <span
+                    *ngIf="adm003.adamesta === '0' || adm003.adamesta === false"
+                    class="switchery switchery-default"
+                    style="box-shadow: rgb(201, 26, 26) 0px 0px 0px 0px inset; border-color: rgb(238, 63, 63); background-color: rgb(185, 11, 11); transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s; opacity: 0.5;"
+                    ><small
+                      style="left: 0px; transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
+                    ></small
+                  ></span>
+                </td>
+                <td class="text-center">
+                  <div class="list-icons">
+                    <a
+                      href="#"
+                      (click)="actualizar(adm003)"
+                      data-toggle="modal"
+                      data-target="#modal_theme_info"
+                      class="list-icons-item text-primary-600"
+                      ><i class="icon-pencil7"></i
+                    ></a>
+                    <a href="#" class="list-icons-item text-danger-600"
+                      ><i class="icon-trash"></i
+                    ></a>
+                    <a href="#" class="list-icons-item text-teal-600"
+                      ><i class="icon-cog6"></i
+                    ></a>
+                  </div>
+                </td>
+              </tr>
+              <!-- <tr *ngIf="i % 2 === 1" class="table-info">
                     <td>{{ adm003.adamtipa }}</td>
                     <td class="table-content-center">
                       {{ adm003.adamdesc }}
@@ -156,48 +149,44 @@
                       </div>
                     </td>
                   </tr> -->
-                </ng-container>
-              </tbody>
-            </table>
-            <br />
-            <div *ngIf="loading" class="d-flex justify-content-center">
-              <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="!loading" class="row justify-content-center">
-            <ul class="pagination pagination-flat align-self-center">
-              <li class="page-item puntero">
-                <a (click)="paginacion('000')" class="page-link"
-                  >&larr; &nbsp; Atras</a
-                >
-              </li>
-              <ng-container *ngFor="let pg of pagi; let i = index">
-                <li
-                  [ngClass]="{
-                    'page-item': true,
-                    puntero: true,
-                    active: numeroPag === i + 1
-                  }"
-                >
-                  <a (click)="paginacion(pg.pag)" class="page-link">{{
-                    pg.pag
-                  }}</a>
-                </li>
-              </ng-container>
-              <li class="page-item puntero">
-                <a (click)="paginacion('999')" class="page-link"
-                  >Sig &nbsp; &rarr;</a
-                >
-              </li>
-            </ul>
-          </div>
-          <br />
-        </div>
-        <!-- /table with togglable columns -->
+            </ng-container>
+          </tbody>
+        </table>
+        <br />
       </div>
+      <div *ngIf="loading" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div *ngIf="!loading" class="row justify-content-center">
+        <ul class="pagination pagination-flat align-self-center">
+          <li class="page-item puntero">
+            <a (click)="paginacion('000')" class="page-link"
+              >&larr; &nbsp; Atras</a
+            >
+          </li>
+          <ng-container *ngFor="let pg of pagi; let i = index">
+            <li
+              [ngClass]="{
+                'page-item': true,
+                puntero: true,
+                active: numeroPag === i + 1
+              }"
+            >
+              <a (click)="paginacion(pg.pag)" class="page-link">{{ pg.pag }}</a>
+            </li>
+          </ng-container>
+          <li class="page-item puntero">
+            <a (click)="paginacion('999')" class="page-link"
+              >Sig &nbsp; &rarr;</a
+            >
+          </li>
+        </ul>
+      </div>
+      <br />
     </div>
+    <!-- /table with togglable columns -->
   </div>
 </div>
 

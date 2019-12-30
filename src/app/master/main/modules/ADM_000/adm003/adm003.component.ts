@@ -117,4 +117,8 @@ export class Adm003Component implements OnInit, OnDestroy {
     this.amd003 = adm_003;
     console.log(this.amd003);
   }
+
+  myFunction() {
+    console.log("doble click");
+  }
 }
