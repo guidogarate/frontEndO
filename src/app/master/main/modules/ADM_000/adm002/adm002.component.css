@@ -6,9 +6,18 @@
     padding-right: 2rem;
   }
 
+  .xxl-title{
+    font-size: 2em;
+    padding-right: 0.5em;
+  }
   .xxl{
     font-size: 2em;
     padding-right: 0.5em;
+  }
+
+  .xxl-modal{
+    font-size: 2em;
+    
   }
 
   .table td, .table th{
@@ -51,6 +60,13 @@
     }
     .xxl{
       font-size: 1.5em;
+    }
+    .xxl-modal{
+      font-size: 1.8em;
+      
+    }
+    .xxl-title{
+      font-size: 1.0em;
     }
     .titulo{
       font-size: larger;

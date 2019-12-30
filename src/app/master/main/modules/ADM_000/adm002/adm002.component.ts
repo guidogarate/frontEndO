@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Adm002Service } from '../../../../utils/service/ADM-002/Adm002.service';
-import {Gestion} from '../../../../utils/models/Gestion';
 import { DatePipe } from "@angular/common";
 import { from } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import * as Noty from "noty";
+import { NotyGlobal } from "src/app/master/utils/global/index.global";
 
 declare function initLabels ();
-// declare function initModal();
 declare function init_date();
 declare var $: any;
 
@@ -59,7 +57,8 @@ export class Adm002Component implements OnInit {
   DiaInicioGestion : string;
   constructor(
     private adm002Service : Adm002Service,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private notyG: NotyGlobal
   ) {
 
    }
@@ -89,7 +88,7 @@ export class Adm002Component implements OnInit {
   }
 
   GuardarGestion(){
-this.nuevo= true;
+    this.nuevo= true;
     console.log(this.gestionModelo);
     this.adm002Service.AgregarGestion(this.gestionModelo).subscribe( resp => {
       if (resp ["ok"]){
@@ -97,30 +96,13 @@ this.nuevo= true;
         this.limpiarGestion();
         this.cerrarModal();
         this.obtenerGestionesPeriodos();
-
-        new Noty({
-          text: "Agregando",
-          theme: "nest",
-          progressBar: false,
-          timeout: 3500,
-          type: "success",
-          layout: "bottomRight"
-        }).show();
+        this.notyG.noty("success", resp["Agregando"], 3500);
       }
       else {
         console.log("no se ha podido registrar: ",  resp);
-        new Noty({
-          text: "No se ha podido Agregar",
-          theme: "nest",
-          progressBar: false,
-          timeout: 3500,
-          type: "error",
-          layout: "bottomRight"
-        }).show();
+        this.notyG.noty("error", resp["No se ha podido Agregar"], 3500);
       }
-
     });
-
   }
 
   ActualizarGestion(){
@@ -132,37 +114,20 @@ this.nuevo= true;
         this.limpiarGestion();
         this.cerrarModal();
         this.obtenerGestionesPeriodos();
-
-        new Noty({
-          text: "Actualizando",
-          theme: "nest",
-          progressBar: false,
-          timeout: 3500,
-          type: "success",
-          layout: "bottomRight"
-        }).show();
+        this.notyG.noty("success", "Actualizando", 3500);
       }
       else {
         console.log("no se ha podido Actualizar: ",  resp);
-        new Noty({
-          text: "No se ha podido Actualizar",
-          theme: "nest",
-          progressBar: false,
-          timeout: 3500,
-          type: "error",
-          layout: "bottomRight"
-        }).show();
+        this.notyG.noty("error", "No se ha podido Actualizar", 3500);
       }
-
     });
-
   }
 
 
-  EliminarGestion() {
-    // if(item != undefined){
-    //   this.gestionModelo = item;
-    // }
+  EliminarGestion(item : any) {
+    if(item != undefined || item !=null){
+      this.gestionModelo = item;
+    }
     console.log("eliminando: ", this.gestionModelo);
     this.adm002Service.EliminarGestion(this.gestionModelo.adgtideg).subscribe(resp => {
       if (resp["ok"]) {
@@ -183,16 +148,10 @@ this.nuevo= true;
         // this.ListaGestiones= this.ListaGestiones.filter( function(gestion){
         //   return gestion.gestion != this.gestionModelo.adgtideg;
         // });
-        new Noty({
-          text: "Eliminando",
-          theme: "nest",
-          progressBar: false,
-          timeout: 3500,
-          type: "error",
-          layout: "bottomRight"
-        }).show();
+        this.notyG.noty("info", resp["message"], 3500);
       } else {
         console.log("no se pudo eliminar", resp);
+        this.notyG.noty("error", "No se puede eliminar la Gestion", 3500);
         return resp;
       }
     });
@@ -203,18 +162,27 @@ this.nuevo= true;
   editar(){
     this.editGestion= false;
     this.nuevo = false;
-  }
-
-  editarGestion( item : any){
-  this.editGestion = true;
-  this.cargarGestion(item);
-  $('#modal_gestion').modal();
-  setTimeout(() => {
-    initLabels();
-  }, 1000);
 
   }
 
+  VerGestion( item : any){
+    this.editGestion = true;
+    this.cargarGestion(item);
+    $('#modal_gestion').modal();
+    setTimeout(() => {
+      initLabels();
+    }, 1000);
+
+  }
+  EditarGestion( item : any){
+    this.editGestion= false;
+    this.nuevo = false;
+    this.cargarGestion(item);
+    $('#modal_gestion').modal();
+    setTimeout(() => {
+      initLabels();
+    }, 1000);
+  }
 
   AgregarGestion(){
     this.editGestion = false;
@@ -272,9 +240,13 @@ this.nuevo= true;
       console.log("cargando data fechas: ");
       this.mesInicial = (new Date(this.gestionModelo.adgtfegi).getUTCMonth()+1).toString();
       this.mesFinal = (new Date(this.gestionModelo.adgtfegf).getUTCMonth()+1).toString();
-      this.fechaInicioGestion =  this.datePipe.transform(
-        this.gestionModelo.adgtfegi,
-        "yyyy-MM-dd",'+0430');
+      this.gestionModelo.adgtdiam =  this.datePipe.transform(
+        this.gestionModelo.adgtdiam,
+        "yyyy-MM",'+0430');
+        this.fechaInicioGestion =  this.datePipe.transform(
+          this.gestionModelo.adgtfegi,
+          "yyyy-MM-dd",'+0430');
+
     }
   }
 
@@ -309,18 +281,19 @@ this.nuevo= true;
     console.log("periodo : ", item);
     this.periodoModelo = {
       adprideg : item.adgtfegi,
-      adpridep :  1,
-      adprmesp : 1,
+      adpridep : 1,// item.adpridep, //== null  ? (('1').padStart(2,'0')) : item.adpridep,
+      adprmesp : 1,//item.adprmesp,
       adprdesc : "Gestion 2019",
       adpresta : item.adpresta,
       adprfepi : item.adprfepi,
       adprfepf : item.adprfepf,
       adprmoda : item.adprmoda == "1" ? true : false,
-      adprdiam : new Date()
+      adprdiam : item.adprdiam
     }
-    this.DiaInicioGestion =  this.datePipe.transform(
-      this.periodoModelo.adprdiam,
-      "dd" );
+    
+    if(item.adprdiam!=null){
+      this.dia = item.adprdiam.getUTCDate().getDate();
+    }
       console.info("numero: ", this.periodoModelo.adprdiam);
 
   }
@@ -352,22 +325,53 @@ this.nuevo= true;
 
   IniciarfechaModificacionAutomatica(){
     if (this.gestionModelo.adgtmoda == false){
-
-      if(this.gestionModelo.adgtfegf!= null){
-        this.gestionModelo.adgtdiam = new Date(this.gestionModelo.adgtfegf);
-        this.gestionModelo.adgtdiam.setMonth(this.gestionModelo.adgtdiam.getMonth() + 2);
-        this.gestionModelo.adgtdiam =  this.datePipe.transform(
-          this.gestionModelo.adgtdiam,
-          "y-MMM" );
-      }
-      else{
-        this.gestionModelo.adgtdiam = null;
-      }
-      }else{
-        this.gestionModelo.adgtdiam = null;
+      this.gestionModelo.adgtdiam = null;
       }
 
   }
+ dia : number = 0;
+ mostrarFecha = false;
+  onChange(fecha : any) {
+    console.log(fecha);
+    this.mostrarFecha= true;
+    let fechita = new Date(fecha);
+    this.dia =  fechita.getUTCDate();
+    this.periodoModelo.adprdiam = fechita.getUTCDate();
+}
+limpiarPeriodo(){
+  // this.periodoModelo =   {
+  //   adprideg : item.adgtfegi,
+  //     adpridep : 1,// item.adpridep, //== null  ? (('1').padStart(2,'0')) : item.adpridep,
+  //     adprmesp : 1,//item.adprmesp,
+  //     adprdesc : "Gestion 2019",
+  //     adpresta : item.adpresta,
+  //     adprfepi : item.adprfepi,
+  //     adprfepf : item.adprfepf,
+  //     adprmoda : item.adprmoda == "1" ? true : false,
+  //     adprdiam : item.adprdiam
+  // };
+  // this.fechaInicioGestion = null;
+
+}
+ActualizarPeriodo(){
+  console.log(this.periodoModelo);
+  let anhoDia : string = "";
+  this.periodoModelo.adprdiam = this.periodoModelo.adprdiam.setDate(this.dia);
+  anhoDia = this.periodoModelo.adprdiam.getUTCFullYear()+"/"+this.periodoModelo.adprdiam.getUTCDate;
+  this.adm002Service.ActualizarPeriodo(this.periodoModelo,anhoDia).subscribe( resp => {
+    if (resp ["ok"]){
+      console.log("Periodo actualizado correctamente");
+      this.limpiarPeriodo();
+      this.cerrarModal();
+      this.obtenerGestionesPeriodos();
+      this.notyG.noty("success", resp["message"], 3500);
+    }
+    else {
+      console.log("no se ha podido Actualizar: ",  resp);
+      this.notyG.noty("error", resp["message"], 3500);
+    }
+  });
+}
 
   nada(){}
 

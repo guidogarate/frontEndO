@@ -106,7 +106,7 @@ export class Adm002Service {
       fechaFin: item.adgtfegf,
       gtionDefec: item.adgtgesd == true ? "1" : "0",
       modAutomatica: item.adgtmoda == true ? "1" : "0",
-      fechaModAutomatica: item.adgtdiam,
+      fechaModAutomatica: new Date(item.adgtdiam+"-01"),
     });
     console.log("service Actualizar Gestion: ", json);
 
@@ -126,11 +126,11 @@ export class Adm002Service {
       );
   }
 
-  ActualizarPeriodo(Periodo: any, fechaAnhoDia : any) {
+  ActualizarPeriodo(Periodo: any, fechaAnhoDia : string) {
     const json = JSON.stringify({
-      estPeriodo: Periodo.estadoPeriodo,
-      modAutomatica : Periodo.modAutomatica,
-      fechaModAutomatica : Periodo.fechaModAutomatica
+      estPeriodo: Periodo.adpresta,
+      modAutomatica : Periodo.adprmoda == true ? "1" : "0",
+      fechaModAutomatica : Periodo.adprdiam
     });
     console.log("service Actualizar Periodo: ", json);
     const url1 = `${url.prod}${url.actualizar_periodo}${fechaAnhoDia}}`;
