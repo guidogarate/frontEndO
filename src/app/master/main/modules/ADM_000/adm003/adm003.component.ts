@@ -3,9 +3,8 @@ import { NotyGlobal } from "src/app/master/utils/global/index.global";
 import { Adm003Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { Observable, Subscription } from "rxjs";
 import { Adm003Models } from "src/app/master/utils/models/main/adm_000/adm_003.models";
-
-declare function init_table();
-declare function init_check();
+import { Adm003SubModels } from "src/app/master/utils/models/main/adm_000/adm_003sub.models";
+declare function initLabels();
 
 @Component({
   selector: "app-adm003",
@@ -15,17 +14,32 @@ declare function init_check();
 export class Adm003Component implements OnInit, OnDestroy {
   buscar = true;
   loading = true;
+  loadingSub = false;
   auxma: any[];
+  auxmaSub: any[];
   sus: Subscription;
   pagi: any[];
   numeroPag = 1;
   texto = "all_auxma";
-  amd003: Adm003Models = new Adm003Models("", "", true, "");
+  amd003: Adm003Models = new Adm003Models("1", "1", true, "1");
+  amd003Sub: Adm003SubModels = new Adm003SubModels(
+    "1",
+    "1",
+    "1",
+    "1",
+    true,
+    true
+  );
+
   constructor(private adm003S: Adm003Service, private notyG: NotyGlobal) {
     this.buscarAdm003(this.texto);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    setTimeout(() => {
+      initLabels();
+    }, 1000);
+  }
 
   buscarAdm003(texto: string) {
     this.buscar = true;
@@ -47,10 +61,6 @@ export class Adm003Component implements OnInit, OnDestroy {
       }
       this.buscar = false;
       this.loading = false;
-      setTimeout(() => {
-        init_check();
-        init_table();
-      }, 3);
     });
   }
 
@@ -115,10 +125,33 @@ export class Adm003Component implements OnInit, OnDestroy {
 
   actualizar(adm_003: Adm003Models) {
     this.amd003 = adm_003;
-    console.log(this.amd003);
+    let peticion: Observable<any>;
+    if (this.auxmaSub === undefined) {
+      this.loadingSub = true;
+      peticion = this.adm003S.buscarAdm003Sub(adm_003.adamtipa);
+    } else if (adm_003.adamtipa === this.auxmaSub[0].adamtipa) {
+      return;
+    } else {
+      this.auxmaSub = [];
+      this.loadingSub = true;
+      peticion = this.adm003S.buscarAdm003Sub(adm_003.adamtipa);
+    }
+    peticion.subscribe(resp => {
+      this.loadingSub = false;
+      if (resp["ok"]) {
+        this.auxmaSub = resp["auxma"];
+      } else {
+        // this.notyG.noty("error", resp["messagge"], 5000);
+      }
+      setTimeout(() => {
+        initLabels();
+      }, 5);
+    });
   }
 
   myFunction() {
     console.log("doble click");
   }
+
+  nada() {}
 }

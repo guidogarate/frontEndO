@@ -23,6 +23,21 @@ export class Adm003Service {
         })
       );
   }
+
+  buscarAdm003Sub(adamtipa: string) {
+    const url1 = `${url.prod}${adm0003.cargarDatoSub}${adamtipa}`;
+    return this.httpClient
+      .get(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
 }
 
 interface Ajustes {

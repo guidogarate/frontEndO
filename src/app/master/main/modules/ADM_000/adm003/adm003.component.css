@@ -1,9 +1,43 @@
 .card-body {
   padding-bottom: 0em;
 }
+/* separado de hr */
 .separador {
   border: none;
   height: 5px;
   color: #333;
   background-color: #333;
+}
+
+.separadorh {
+  border: none;
+  height: 1px;
+  color: #333;
+  background-color: rgb(146, 144, 144);
+  margin-bottom: 10px;
+}
+/**label flotanbte*/
+
+.form-group-float-label.is-visible {
+  /* top: 0; */
+  opacity: 0.5;
+}
+
+/**--------------------YIMI---------------------------------*/
+.xxl {
+  font-size: 2em;
+  padding-right: 0.5em;
+}
+
+.xxl:hover {
+  color: rgba(131, 133, 133, 0.918);
+}
+@media screen and (max-width: 600px) {
+  .xxl {
+    font-size: 1.5em;
+  }
+}
+
+.router-link-active {
+  color: rgba(131, 133, 133, 0.918);
 }
