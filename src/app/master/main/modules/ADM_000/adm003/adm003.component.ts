@@ -17,12 +17,26 @@ export class Adm003Component implements OnInit, OnDestroy {
   loadingSub = false;
   auxma: any[];
   auxmaSub: any[];
-  auxmaSubLeng = 0;
   sus: Subscription;
   pagi: any[];
   numeroPag = 1;
   texto = "all_auxma";
-  GrupHab = false;
+  habiCampo = {
+    GrupHab: false,
+    SubGrupHab: false
+  };
+  btnGrupo = {
+    BtnGuard: false,
+    BtnEdita: true,
+    BtnElimi: true,
+    BtnAgreg: true
+  };
+  btnSubGrupo = {
+    BtnSubGuard: false,
+    BtnSubEdita: true,
+    BtnSubElimi: true,
+    BtnSubAgreg: true
+  };
   amd003: Adm003Models = new Adm003Models("1", "1", true, "1");
   amd003Sub: Adm003SubModels = new Adm003SubModels(
     "1",
@@ -143,7 +157,6 @@ export class Adm003Component implements OnInit, OnDestroy {
       if (resp["ok"]) {
         this.auxmaSub = resp["auxma"];
         console.log(this.auxmaSub.length);
-        this.auxmaSubLeng = this.auxmaSub.length;
       } else {
         // this.notyG.noty("error", resp["messagge"], 5000);
       }
@@ -157,10 +170,81 @@ export class Adm003Component implements OnInit, OnDestroy {
     console.log("doble click");
   }
 
-  nada() {}
-
   edtGr() {
-    this.GrupHab = true;
-    console.log(this.amd003);
+    this.habiCampo.GrupHab = true;
+
+    this.btnGrupo.BtnGuard = true;
+    this.btnGrupo.BtnEdita = false;
+    this.btnGrupo.BtnElimi = false;
+    this.btnGrupo.BtnAgreg = false;
+    this.btnSubGrupo.BtnSubEdita = false;
+    this.btnSubGrupo.BtnSubElimi = false;
+    this.btnSubGrupo.BtnSubAgreg = false;
+  }
+  guardGr() {
+    this.habiCampo.GrupHab = false;
+
+    this.btnGrupo.BtnGuard = false;
+    this.btnGrupo.BtnEdita = true;
+    this.btnGrupo.BtnElimi = true;
+    this.btnGrupo.BtnAgreg = true;
+    this.btnSubGrupo.BtnSubEdita = true;
+    this.btnSubGrupo.BtnSubElimi = true;
+    this.btnSubGrupo.BtnSubAgreg = true;
+    // console.log(this.amd003);
+  }
+
+  nuevoSubGr() {
+    const data = {
+      adamidea: "",
+      adamdesc: "",
+      adamsigl: "",
+      adamsecu: "",
+      adamesta: false,
+      adampred: false
+    };
+    this.auxmaSub.push(data);
+    this.habiCampo.SubGrupHab = true;
+    setTimeout(() => {
+      initLabels();
+    }, 5);
+    console.log(this.auxmaSub);
+  }
+
+  edtSubGr() {
+    this.habiCampo.SubGrupHab = true;
+    this.btnSubGrupo.BtnSubGuard = true;
+
+    this.btnGrupo.BtnEdita = false;
+    this.btnGrupo.BtnElimi = false;
+    this.btnGrupo.BtnAgreg = false;
+    this.btnSubGrupo.BtnSubEdita = false;
+    this.btnSubGrupo.BtnSubElimi = false;
+    this.btnSubGrupo.BtnSubAgreg = false;
+  }
+
+  guardSubGr() {
+    this.habiCampo.SubGrupHab = false;
+    this.btnSubGrupo.BtnSubGuard = false;
+
+    this.btnGrupo.BtnEdita = true;
+    this.btnGrupo.BtnElimi = true;
+    this.btnGrupo.BtnAgreg = true;
+    this.btnSubGrupo.BtnSubEdita = true;
+    this.btnSubGrupo.BtnSubElimi = true;
+    this.btnSubGrupo.BtnSubAgreg = true;
+    console.log(this.auxmaSub);
+  }
+  salir() {
+    this.btnGrupo.BtnGuard = false;
+    this.btnGrupo.BtnEdita = true;
+    this.btnGrupo.BtnElimi = true;
+    this.btnGrupo.BtnAgreg = true;
+    this.btnSubGrupo.BtnSubGuard = false;
+    this.btnSubGrupo.BtnSubEdita = true;
+    this.btnSubGrupo.BtnSubElimi = true;
+    this.btnSubGrupo.BtnSubAgreg = true;
+    this.habiCampo.SubGrupHab = false;
+    this.habiCampo.SubGrupHab = false;
   }
 }

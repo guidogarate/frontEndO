@@ -14,19 +14,24 @@
 .modal-body {
   padding-bottom: 0px;
 }
+
 /*separador h*/
 .separadorh {
   border: none;
   height: 1px;
   color: #333;
   background-color: rgb(144, 145, 146);
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 /**label flotanbte*/
 
 .form-group-float-label.is-visible {
-  /* top: 0; */
+  top: 0;
   opacity: 0.5;
+}
+
+label {
+  margin-bottom: 0rem;
 }
 
 /**--------------------YIMI---------------------------------*/
@@ -42,8 +47,4 @@
   .xxl {
     font-size: 1.5em;
   }
-}
-
-.router-link-active {
-  color: rgba(131, 133, 133, 0.918);
 }
