@@ -1,0 +1,53 @@
+.progress [role="progressbar"][aria-busy="true"]::before,
+.progress [role="progressbar"][aria-busy="true"]::after {
+  display: block;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  width: 0;
+  height: 5px;
+  background: #afa;
+  -webkit-animation: preloader-front linear 2s;
+  animation: preloader-front linear 2s;
+  content: "";
+}
+.progress [role="progressbar"][aria-busy="true"]::after {
+  left: 0%;
+}
+
+@-webkit-keyframes preloader-front {
+  24.9% {
+    width: 25%;
+  }
+  49.9% {
+    width: 50%;
+    background-color: #3b78e7;
+  }
+  50% {
+    width: 60;
+  }
+  74.9% {
+    width: 80%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@keyframes preloader-front {
+  24.9% {
+    width: 25%;
+  }
+  49.9% {
+    width: 50%;
+    background-color: #3b78e7;
+  }
+  50% {
+    width: 60;
+  }
+  74.9% {
+    width: 80%;
+  }
+  100% {
+    width: 100%;
+  }
+}

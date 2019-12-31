@@ -49,8 +49,6 @@ export class SidebarComponent implements OnInit {
     const favo: string = sessionStorage.getItem("favo");
     if (menu) {
       this.datos = JSON.parse(menu);
-      console.log(this.datos);
-
       this.favoritos = JSON.parse(favo);
       this.cargandoMenu = false;
     } else {
@@ -99,9 +97,7 @@ export class SidebarComponent implements OnInit {
   }
 
   buscarComponente(component: string) {
-    console.log(component);
     this.buscar = this.datos;
-    console.log(this.buscar);
 
     // const buscarLeng = this.buscar.length;
     // for (let i = 0; i < buscarLeng; i++) {

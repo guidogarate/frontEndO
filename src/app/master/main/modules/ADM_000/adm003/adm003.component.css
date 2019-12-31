@@ -1,3 +1,49 @@
 .card-body {
   padding-bottom: 0em;
 }
+/* modal */
+.modal-header {
+  padding: 0.5rem;
+}
+.modal-header {
+  position: relative;
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem;
+}
+
+.modal-body {
+  padding-bottom: 0px;
+}
+/*separador h*/
+.separadorh {
+  border: none;
+  height: 1px;
+  color: #333;
+  background-color: rgb(144, 145, 146);
+  margin-bottom: 10px;
+}
+/**label flotanbte*/
+
+.form-group-float-label.is-visible {
+  /* top: 0; */
+  opacity: 0.5;
+}
+
+/**--------------------YIMI---------------------------------*/
+.xxl {
+  font-size: 2em;
+  padding-right: 0.5em;
+}
+
+.xxl:hover {
+  color: rgba(178, 203, 211, 0.918);
+}
+@media screen and (max-width: 600px) {
+  .xxl {
+    font-size: 1.5em;
+  }
+}
+
+.router-link-active {
+  color: rgba(131, 133, 133, 0.918);
+}

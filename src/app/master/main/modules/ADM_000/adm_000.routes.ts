@@ -18,6 +18,16 @@ const adm000_Routes: Routes = [
     path: "adm_003",
     component: Adm003Component,
     data: { titulo: "adm_003" }
+  },
+  {
+    path: "adm_003/editar",
+    component: Adm003Component,
+    data: { titulo: "adm_003" }
+  },
+  {
+    path: "adm_003/agregar",
+    component: Adm003Component,
+    data: { titulo: "adm_003" }
   }
 ];
 
