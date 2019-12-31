@@ -1,6 +1,14 @@
   .xl {
     font-size: 1.5em; /* de esta manera modificas el tamaño de tus iconos.*/
   }
+  .xl-Icon{
+    margin-right: 2em;
+    font-size: 1.5em;
+  }
+
+  .pTop{
+    padding-top: 0;
+  }
 
   .pr2rem{
     padding-right: 2rem;
@@ -8,7 +16,7 @@
 
   .xxl-title{
     font-size: 2em;
-    padding-right: 0.5em;
+    padding-right: 1.5em;
   }
   .xxl{
     font-size: 2em;
@@ -67,10 +75,19 @@
     }
     .xxl-title{
       font-size: 1.0em;
+      padding-right: 0.5em;
     }
+    
     .titulo{
       font-size: larger;
     }
+    .xl-Icon{
+      margin-right: 1em;
+    }
+    .pTop{
+      padding-top: 2em;
+    }
+  
   }
 
   @media screen and (min-width: 601px) {

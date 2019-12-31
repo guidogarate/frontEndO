@@ -8,6 +8,11 @@
                 <div class="row card-header header-elements-inline">  
                     <div class="col-md-12 col-12">
                         <h2 class="card-title text-center">Registro de Gestiones
+                            <!-- <div class="list-icons"> 
+                                <a class="list-icons-item text-primary-600" (click)="AgregarGestion()"
+                                [routerLink]="nada()" routerLinkActive="router-link-active">
+                                <i class="icon-file-eye xl " data-toggle="tooltip" data-placement="top" title="Agregar Gestion"> </i>
+                            </div> -->
                             <i class="icon-diff-added xxl-title float-right" (click)="AgregarGestion()"
                             data-toggle="tooltip" data-placement="top" title="Agregar Gestion"> </i>
                         </h2>
@@ -89,15 +94,27 @@
                                         <th scope="col">Descripcion</th>
                                         <th scope="col">Gestion</th>
                                         <th scope="col">Estado</th>
+                                        <th scope="col">Acciones</th>
                                     </thead>
                                     <tbody>
-                                        <tr class="table-border-double" *ngFor="let periodo of ListaPeriodos" (click)="editarPeriodo(periodo)">
+                                        <tr class="table-border-double" *ngFor="let periodo of ListaPeriodos" >
                                             <td class="puntero">{{periodo.adpridep | formatonumeroperiodo }}</td>
                                             <td class="puntero">{{periodo.adprmesp | nombremes}}</td>
                                             <td class="puntero">{{periodo.adprdesc}}</td>
                                             <td class="puntero">{{periodo.adprideg}}</td>
                                             <td class="puntero">{{periodo.adpresta | estado}}</td>
-                                            <!-- <td *ngIf="periodo.adpresta == 0" class="puntero">Desbloqueado</td> -->
+                                            <td class="puntero PRL0"> 
+                                                <div class="list-icons"> 
+                                                    <a class="list-icons-item text-primary-600" (click)="VerPeriodo(periodo)"
+                                                    [routerLink]="nada()" routerLinkActive="router-link-active">
+                                                    <i class="icon-file-eye xl " data-toggle="tooltip" data-placement="top" title="Ver Periodo"> </i>
+                                                    </a>
+                                                    <a class="list-icons-item text-teal-600"  (click)="EditarPeriodo(periodo)"
+                                                    [routerLink]="nada()" routerLinkActive="router-link-active"  >
+                                                        <i class="icon-pencil7 xl" data-toggle="tooltip" data-placement="top" title="Editar Periodo"> </i>
+                                                    </a>
+                                                </div>
+                                            </td>
                                         </tr>                                                  
                                     </tbody>
                                 </table>
@@ -128,7 +145,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header bg-info">
-                        <h6 class="card-title"><i class="icon-calendar22 xl" style="margin-right: 2em;"></i> 
+                        <h6 class="card-title"><i class="icon-calendar22 xl-Icon"></i> 
                             GESTION
                         </h6>
                         <div class="modal-title">
@@ -196,7 +213,7 @@
 
                     <div class="row text-center" style="margin-left: 15px; margin-right:15px" >
                         <div class="col-md-4 col-12">
-                            <div class="form-group form-group-float">
+                            <div class="form-group form-group-float pTop">
                                 <label class="form-group-float-label">Tipo de Empresa</label>
                                 <select class="form-control" [(ngModel)]="gestionModelo.adgtacte" [disabled]="editGestion">
                                     <option *ngFor="let item of ListaTiposEmpresa" placeholder="Tipo de Empresa"
@@ -215,10 +232,10 @@
                             
                         </div>
                         <div class="col-md-3 offset-md-1 col-12">
-                            <div class="form-group form-group-float">
+                            <div class="form-group form-group-float pTop">
                                 <label class="form-group-float-label">Cant. de Periodos</label>
                                 <input type="text" class="form-control text-center" placeholder="Cantidad de periodos"
-                                value="{{gestionModelo.adgtcanp}}" required [(ngModel)]="gestionModelo.adgtcanp" [disabled]="editGestion">
+                                value="{{gestionModelo.adgtcanp}}" required [(ngModel)]="gestionModelo.adgtcanp" disabled>
                             </div>
                         </div>
                     </div>
@@ -292,9 +309,9 @@
                             </div>
                         </div>
                     </div>
-                    <pre>{{gestionModelo|json}}</pre>
+                    <!-- <pre>{{gestionModelo|json}}</pre>
                     <pre> Editar: {{ editGestion}}</pre>
-                    <pre> auto: {{ gestionModelo.adgtmoda }}</pre>
+                    <pre> auto: {{ gestionModelo.adgtmoda }}</pre> -->
                 </div>
             </div>
         </div>
@@ -306,30 +323,22 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header bg-info">
-                        <h6 class="card-title"><i class="icon-calendar22 xl" style="margin-right: 2em;"></i> 
+                        <h6 class="card-title"><i class="icon-calendar22 xl-Icon"></i> 
                             PERIODOS DE GESTION
                         </h6>
                         <div class="modal-title">
                             <div class="list-icons float-right">
-                                <a class="list-icons-item" *ngIf="editar" 
-                                [routerLink]="" routerLinkActive="router-link-active">
+                                <a class="list-icons-item" *ngIf="editPeriodo" (click)="ActualizarPeriodo()"
+                                [routerLink]="nada()" routerLinkActive="router-link-active">
                                 <i class="icon-floppy-disk xxl"> </i>
                             </a>
                             <!-- (click)="Guardar()" -->
-                                <a class="list-icons-item" *ngIf="!editar"  
-                                [routerLink]="" routerLinkActive="router-link-active">
-                                    <i class="icon-file-plus xxl"> </i>
-                                </a>
-                                <a class="list-icons-item" *ngIf="!editar"  
-                                [routerLink]="" routerLinkActive="router-link-active">
+                                <a class="list-icons-item" *ngIf="!editPeriodo" (click)="editarPeriodoModal()"  
+                                [routerLink]="nada()" routerLinkActive="router-link-active">
                                     <i class="icon-pencil7 xxl"> </i>
                                 </a>
-                                <a class="list-icons-item" *ngIf="!editar"  
-                                [routerLink]="" routerLinkActive="router-link-active">
-                                    <i class="icon-trash xxl"> </i>
-                                </a>
-                                <a class="list-icons-item" (click)="Cancelar" data-dismiss="modal"
-                                [routerLink]="" routerLinkActive="router-link-active">
+                                <a class="list-icons-item" (click)="Cancelar()" data-dismiss="modal"
+                                [routerLink]="nada()" routerLinkActive="router-link-active">
                                     <i class="icon-exit xxl"> </i>
                                 </a>
                             </div>
@@ -353,8 +362,8 @@
                         <div class="col-md-3 col-12">
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Estado</label>
-                                <select class="form-control" [(ngModel)]="periodoModelo.adpresta">
-                                 <option *ngFor="let item of ListaEstadosGestionPeriodos"   [value]="item.adamidea"
+                                <select class="form-control" [(ngModel)]="periodoModelo.adpresta" [disabled] = "!editPeriodo" >
+                                 <option *ngFor="let item of ListaEstadosGestionPeriodos" [value]="item.adamidea"
                                   >{{item.adamdesc }}</option>
                                 </select>
                             </div>
@@ -381,8 +390,8 @@
                     <div class="row" style="margin-left: 15px; margin-right:15px" >
                         <div class="col-md-12 col-12 alert alert-primary">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="checkboxPeriodoCerrado" 
-                                [checked]="periodoModelo.adprmoda" [(ngModel)]="periodoModelo.adprmoda">
+                                <input type="checkbox" class="form-check-input" id="checkboxPeriodoCerrado"  [disabled] = "!editPeriodo"
+                                [checked]="periodoModelo.adprmoda" [(ngModel)]="periodoModelo.adprmoda" (click) = "IniciarfechaModificacionAutomaticaPeriodo()">
                                 <label class="form-check-label" for="exampleCheck1">
                                     Modificar Automaticamente el Estado del Periodo a “Periodo Cerrado”
                                 </label>
@@ -393,18 +402,20 @@
                     <div class="row" style="margin-left: 15px; margin-right:15px" >
                         <div class="col-md-12 col-12">
                             <div class="form-group row">
-                                <label class="col-form-label col-lg-6">Fecha de Modificacion Automatica</label>
-                                <div class="col-lg-6">
+                                <label class="col-form-label col-lg-6 col-6">Fecha de Modificacion Automatica</label>
+                                <div class="col-lg-6 col-4">
                                         <div class="form-group">
-                                            <input type="text" name="fechaPeriodo1" required [disabled]="!periodoModelo.adprmoda"
+                                            <input type="text" name="fechaPeriodo1" class="form-control text-center" required [disabled]="!(periodoModelo.adprmoda && editPeriodo)"
                                             [value]="dia" [(ngModel)]="dia">                                  
                                         </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <pre>{{periodoModelo|json}}</pre>
-                    <pre>{{dia|json}}</pre>
+                    <!-- <pre>{{periodoModelo|json}}</pre>
+                    <pre> dia : {{dia|json}}</pre>
+                    <pre> editar P : {{editPeriodo|json}}</pre>
+                    <pre> adprmoda P : {{periodoModelo.adprmoda|json}}</pre> -->
                 </div>
             </div>
         </div>
