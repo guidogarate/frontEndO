@@ -196,7 +196,7 @@
   <div class="modal-dialog ">
     <div class="modal-content animacionmodal haciadentro">
       <div class="modal-header bg-info">
-        <h6 class="modal-title">EDITAR</h6>
+        <h6 class="modal-title">GRUPO</h6>
         <div class="list-icons float-right">
           <!-- <a class="puntero"
             ><i
@@ -209,17 +209,9 @@
           ></a> -->
           <a
             class="puntero"
-            [routerLink]="nada()"
+            (click)="edtGr()"
             routerLinkActive="router-link-active"
-            ><i
-              class="icon-file-plus xxl"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Nuevo"
-            >
-            </i
-          ></a>
-          <a routerLink="agregar" routerLinkActive="router-link-active">
+          >
             <i
               class="icon-pencil7 xxl"
               data-toggle="tooltip"
@@ -228,15 +220,7 @@
             >
             </i
           ></a>
-          <a class="puntero"
-            ><i
-              class="icon-trash xxl"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Eliminar Gestion"
-            >
-            </i
-          ></a>
+
           <a class="puntero"
             ><i
               class="icon-exit xxl"
@@ -250,7 +234,6 @@
         </div>
       </div>
       <div class="modal-body ">
-        <h6 class="font-weight-semibold">GRUPO</h6>
         <div class="row">
           <div class="col-3 col-sm-2 col-md-2 col-lg-2">
             <div class="form-group form-group-float">
@@ -260,6 +243,7 @@
                 class="form-control"
                 placeholder="Codigo"
                 [(ngModel)]="amd003.adamtipa"
+                [disabled]="!GrupHab"
                 required
               />
             </div>
@@ -272,6 +256,7 @@
                 class="form-control"
                 placeholder="Descripcion"
                 [(ngModel)]="amd003.adamdesc"
+                [disabled]="!GrupHab"
                 required
               />
             </div>
@@ -284,6 +269,8 @@
                 class="form-control"
                 placeholder="Sigla"
                 [(ngModel)]="amd003.adamsigl"
+                [disabled]="!GrupHab"
+                required
               />
             </div>
           </div>
@@ -293,6 +280,7 @@
                 type="checkbox"
                 class="custom-control-input"
                 [(ngModel)]="amd003.adamesta"
+                [disabled]="!GrupHab"
                 id="customSwitch1"
               />
               <label class="custom-control-label" for="customSwitch1"
@@ -301,86 +289,123 @@
             </div>
           </div>
         </div>
-        <hr class="separador" />
-        <h6 class="font-weight-semibold">SUB-GRUPO</h6>
-        <ng-container *ngFor="let auxSub of auxmaSub">
-          <div class="row justify-content-center">
-            <div class="col-3 col-sm-1 col-md-1 col-lg-1">
-              <div class="form-group form-group-float">
-                <label class="form-group-float-label">Cod</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="auxSub.adamtipa"
-                  [value]="1"
-                  required
-                  placeholder="Codigo"
-                />
-              </div>
-            </div>
-            <div class="col-9 col-sm-4 col-md-4 col-lg-4">
-              <div class="form-group form-group-float">
-                <label class="form-group-float-label">Descripcion</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Descripcion"
-                  [(ngModel)]="auxSub.adamdesc"
-                />
-              </div>
-            </div>
-            <div class="col-5 col-sm-3 col-md-3 col-lg-3">
-              <div class="form-group form-group-float">
-                <label class="form-group-float-label">Sigla</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="auxSub.adamsigl"
-                  placeholder="Sigla"
-                />
-              </div>
-            </div>
-            <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-              <div class="form-group form-group-float">
-                <label class="form-group-float-label">Sec</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="auxSub.adamsecu"
-                  placeholder="Sec"
-                />
-              </div>
-            </div>
-            <div class="col-5 col-sm-2 col-md-2 col-lg-2">
-              <div class="custom-control custom-switch">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  [(ngModel)]="auxSub.adamesta"
-                  id="customSwitch3"
-                />
-                <label class="custom-control-label" for="customSwitch3"
-                  >Estado</label
-                >
-              </div>
-              <div class="custom-control custom-switch">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  [(ngModel)]="auxSub.adampred"
-                  id="customSwitch2"
-                />
-                <label class="custom-control-label" for="customSwitch2"
-                  >Pred</label
-                >
-              </div>
-            </div>
+      </div>
+      <div class="modal-content animacionmodal haciadentro">
+        <div class="modal-header bg-info">
+          <h6 class="modal-title">SUB-GRUPO</h6>
+          <div class="list-icons float-right">
+            <a
+              class="puntero"
+              [routerLink]="nada()"
+              routerLinkActive="router-link-active"
+              ><i
+                class="icon-file-plus xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Nuevo"
+              >
+              </i
+            ></a>
+            <a class="punter" routerLinkActive="router-link-active">
+              <i
+                class="icon-pencil7 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="editar Gestion"
+              >
+              </i
+            ></a>
+            <a class="puntero"
+              ><i
+                class="icon-trash xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Eliminar Gestion"
+              >
+              </i
+            ></a>
           </div>
-          <div class="separadorh"></div>
-        </ng-container>
-        <div *ngIf="loadingSub" class="d-flex justify-content-center">
-          <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="modal-body ">
+          <ng-container *ngFor="let auxSub of auxmaSub; let i = index">
+            <div class="row justify-content-center">
+              <div class="col-3 col-sm-1 col-md-1 col-lg-1">
+                <div class="form-group form-group-float">
+                  <label class="form-group-float-label">Cod</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="auxSub.adamtipa"
+                    [value]="1"
+                    required
+                    placeholder="Codigo"
+                  />
+                </div>
+              </div>
+              <div class="col-9 col-sm-4 col-md-4 col-lg-4">
+                <div class="form-group form-group-float">
+                  <label class="form-group-float-label">Descripcion</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Descripcion"
+                    [(ngModel)]="auxSub.adamdesc"
+                  />
+                </div>
+              </div>
+              <div class="col-5 col-sm-3 col-md-3 col-lg-3">
+                <div class="form-group form-group-float">
+                  <label class="form-group-float-label">Sigla</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="auxSub.adamsigl"
+                    placeholder="Sigla"
+                  />
+                </div>
+              </div>
+              <div class="col-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="form-group form-group-float">
+                  <label class="form-group-float-label">Sec</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="auxSub.adamsecu"
+                    placeholder="Sec"
+                  />
+                </div>
+              </div>
+              <div class="col-5 col-sm-2 col-md-2 col-lg-2">
+                <div class="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    [(ngModel)]="auxSub.adamesta"
+                    id="customSwitch3"
+                  />
+                  <label class="custom-control-label" for="customSwitch3"
+                    >Estado</label
+                  >
+                </div>
+                <div class="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    [(ngModel)]="auxSub.adampred"
+                    id="customSwitch2"
+                  />
+                  <label class="custom-control-label" for="customSwitch2"
+                    >Pred</label
+                  >
+                </div>
+              </div>
+            </div>
+            <div *ngIf="i + 1 !== auxmaSubLeng" class="separadorh"></div>
+          </ng-container>
+          <div *ngIf="loadingSub" class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
           </div>
         </div>
       </div>

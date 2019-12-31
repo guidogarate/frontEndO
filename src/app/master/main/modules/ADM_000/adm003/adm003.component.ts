@@ -17,10 +17,12 @@ export class Adm003Component implements OnInit, OnDestroy {
   loadingSub = false;
   auxma: any[];
   auxmaSub: any[];
+  auxmaSubLeng = 0;
   sus: Subscription;
   pagi: any[];
   numeroPag = 1;
   texto = "all_auxma";
+  GrupHab = false;
   amd003: Adm003Models = new Adm003Models("1", "1", true, "1");
   amd003Sub: Adm003SubModels = new Adm003SubModels(
     "1",
@@ -140,6 +142,8 @@ export class Adm003Component implements OnInit, OnDestroy {
       this.loadingSub = false;
       if (resp["ok"]) {
         this.auxmaSub = resp["auxma"];
+        console.log(this.auxmaSub.length);
+        this.auxmaSubLeng = this.auxmaSub.length;
       } else {
         // this.notyG.noty("error", resp["messagge"], 5000);
       }
@@ -154,4 +158,9 @@ export class Adm003Component implements OnInit, OnDestroy {
   }
 
   nada() {}
+
+  edtGr() {
+    this.GrupHab = true;
+    console.log(this.amd003);
+  }
 }

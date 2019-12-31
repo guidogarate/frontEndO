@@ -1,19 +1,25 @@
 .card-body {
   padding-bottom: 0em;
 }
-/* separado de hr */
-.separador {
-  border: none;
-  height: 5px;
-  color: #333;
-  background-color: #333;
+/* modal */
+.modal-header {
+  padding: 0.5rem;
+}
+.modal-header {
+  position: relative;
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem;
 }
 
+.modal-body {
+  padding-bottom: 0px;
+}
+/*separador h*/
 .separadorh {
   border: none;
   height: 1px;
   color: #333;
-  background-color: rgb(146, 144, 144);
+  background-color: rgb(144, 145, 146);
   margin-bottom: 10px;
 }
 /**label flotanbte*/
@@ -30,7 +36,7 @@
 }
 
 .xxl:hover {
-  color: rgba(131, 133, 133, 0.918);
+  color: rgba(178, 203, 211, 0.918);
 }
 @media screen and (max-width: 600px) {
   .xxl {
