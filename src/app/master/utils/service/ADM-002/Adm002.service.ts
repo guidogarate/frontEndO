@@ -35,6 +35,7 @@ export class Adm002Service {
   ObtenerGestionesPeriodos() {
     const url1 = `${url.prod}${url.get_gestion_periodos}`;
     console.log("token", this.token);
+    console.log("url", url1);
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -105,7 +106,7 @@ export class Adm002Service {
       fechaFin: item.adgtfegf,
       gtionDefec: item.adgtgesd == true ? "1" : "0",
       modAutomatica: item.adgtmoda == true ? "1" : "0",
-      fechaModAutomatica: item.adgtdiam,
+      fechaModAutomatica: new Date(item.adgtdiam+"-01"),
     });
     console.log("service Actualizar Gestion: ", json);
 
@@ -125,14 +126,15 @@ export class Adm002Service {
       );
   }
 
-  ActualizarPeriodo(Periodo: any, fechaAnhoDia : any) {
+  ActualizarPeriodo(Periodo: any, fechaAnhoDia : string) {
     const json = JSON.stringify({
-      estPeriodo: Periodo.estadoPeriodo,
-      modAutomatica : Periodo.modAutomatica,
-      fechaModAutomatica : Periodo.fechaModAutomatica
+      estPeriodo: Periodo.adpresta,
+      modAutomatica : Periodo.adprmoda == true ? "1" : "2",
+      fechaModAutomatica : Periodo.adprdiam
     });
     console.log("service Actualizar Periodo: ", json);
-    const url1 = `${url.prod}${url.actualizar_periodo}${fechaAnhoDia}}`;
+    const url1 = `${url.prod}${url.actualizar_periodo}${fechaAnhoDia}`;
+    console.log(" fecha url para actualizar: ",url1);
     return this.httpClient
       .put(url1, json, {
         headers: new HttpHeaders({
@@ -146,113 +148,4 @@ export class Adm002Service {
         })
       );
   }
-
-
-
-
-  // CargarListaTipoCambio(indice: string, mes: string, anho: string) {
-  //   const json = JSON.stringify({
-  //     indice,
-  //     mes,
-  //     anho
-  //   });
-  //   const url1 = `${url.prod}${url.busqPagi}`;
-  //   return this.httpClient
-  //     .post(url1, json, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token,
-  //         "Content-Type": "application/json"
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         // console.log("mostrar Lista", resp);
-  //         return resp;
-  //       })
-  //     );
-  // }
-
-  /* metodos para llamada al service*/
-  // paginado(mes: string, anho: string) {
-  //   const json = JSON.stringify({
-  //     mes,
-  //     anho
-  //   });
-  //   const url1 = `${url.prod}${url.paginado}`;
-  //   return this.httpClient
-  //     .post(url1, json, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token,
-  //         "Content-Type": "application/json"
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         return resp;
-  //       })
-  //     );
-  // }
-
- 
-
-  
-
-  // actualizar(tipoCambio: TipoCambio) {
-  //   const json = JSON.stringify({
-  //     adtctipo: tipoCambio.adtctipo,
-  //     adtctipc: tipoCambio.adtctipc,
-  //     adtctipv: tipoCambio.adtctipv,
-  //     adtccufv: tipoCambio.adtccufv,
-  //     adtcesta: tipoCambio.adtcesta,
-  //     adtcpred: tipoCambio.adtcpred
-  //   });
-  //   const url1 = `${url.prod}${url.actualizar}${tipoCambio.adtcfecd}`;
-  //   console.log("actualizando a: ", tipoCambio.adtcfecd);
-  //   console.log("actualizando a: ", json);
-  //   return this.httpClient
-  //     .put(url1, json, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token,
-  //         "Content-Type": "application/json"
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         return resp;
-  //       })
-  //     );
-  // }
-
-  // obtenerGestiones() {
-  //   const url1 = `${url.prod}${url.gestionesDisponibles}`;
-  //   console.log("Obteniendo Gestiones Disponibles: ", url1);
-  //   return this.httpClient
-  //     .get(url1, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token,
-  //         "Content-Type": "application/json"
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         return resp;
-  //       })
-  //     );
-  // }
-  // obtenerGestionesDisponiblesPredeterminado() {
-  //   const url1 = `${url.prod}${url.gest_dispo_y_predet}`;
-  //   console.log("Obteniendo Gestiones Disponibles y Predeterminado: ", url1);
-  //   return this.httpClient
-  //     .get(url1, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token,
-  //         "Content-Type": "application/json"
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         return resp;
-  //       })
-  //     );
-  // }
 }

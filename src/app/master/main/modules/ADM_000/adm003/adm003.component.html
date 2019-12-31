@@ -150,6 +150,7 @@
                       </div>
                     </td>
                   </tr> -->
+<<<<<<< HEAD
             </ng-container>
           </tbody>
         </table>
@@ -158,6 +159,37 @@
       <div *ngIf="loading" class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
           <span class="sr-only">Loading...</span>
+=======
+                </ng-container>
+              </tbody>
+            </table>
+            <br />
+            <div *ngIf="loading" class="d-flex justify-content-center">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!loading" class="row justify-content-center">
+            <ul class="pagination pagination-flat align-self-center">
+              <li class="page-item puntero">
+                <a   class="page-link">&larr; &nbsp; Atras</a>
+              </li>
+              <ng-container *ngFor="let pg of pagi">
+                <li class="page-item">
+                  <a href="#" class="page-link">{{ pg.num }}</a>
+                </li>
+                <!-- <li class="page-item disabled">
+                  <a href="#" class="page-link">3</a>
+                </li> -->
+              </ng-container>
+              <li class="page-item puntero">
+                <a (click)="siguiente()" class="page-link">Sig &nbsp; &rarr;</a>
+              </li>
+            </ul>
+          </div>
+          <br />
+>>>>>>> 713b36abd25a0720b1d5023ac9c5d8119cce09ab
         </div>
       </div>
       <div *ngIf="!loading" class="row justify-content-center">

@@ -10,6 +10,7 @@ export class NombreMes implements PipeTransform {
   */
 
   transform(numeromes: number): string {
+    console.log("numero mes :" ,  numeromes);
     switch(numeromes){
         case 0: 
           return 'Elige Mes';
@@ -38,7 +39,7 @@ export class NombreMes implements PipeTransform {
         case 12: 
           return 'Diciembre';
         default:
-          return 'N/S';
+          return 'S/M';
       }
     }
 }
