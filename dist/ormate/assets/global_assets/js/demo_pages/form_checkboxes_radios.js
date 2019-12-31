@@ -18,6 +18,7 @@ function init_check() {
     console.warn("Warning - switchery.min.js is not loaded.");
     return;
   }
+
   // // Initialize multiple switches
   var elems = Array.prototype.slice.call(
     document.querySelectorAll(".form-check-input-switchery")
