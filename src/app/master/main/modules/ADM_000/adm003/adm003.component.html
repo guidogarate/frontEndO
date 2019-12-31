@@ -65,14 +65,6 @@
                   {{ adm003.adamdesc }}
                 </td>
                 <td>
-                  <!-- <input
-                      *ngIf="adm003.adamesta"
-                      type="checkbox"
-                      class="form-check-input-switchery"
-                      [checked]="false"
-                      [disabled]="true"
-                      data-fouc
-                    /> -->
                   <span
                     *ngIf="adm003.adamesta === '1' || adm003.adamesta === true"
                     class="switchery switchery-default"
@@ -109,47 +101,6 @@
                   </div>
                 </td>
               </tr>
-              <!-- <tr *ngIf="i % 2 === 1" class="table-info">
-                    <td>{{ adm003.adamtipa }}</td>
-                    <td class="table-content-center">
-                      {{ adm003.adamdesc }}
-                    </td>
-                    <td>
-                      <span
-                        *ngIf="adm003.adamesta === '1'"
-                        class="switchery switchery-default"
-                        style="background-color: rgb(100, 189, 99); border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 10px inset; transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;"
-                        ><small
-                          style="left: 18px; background-color: rgb(255, 255, 255); transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
-                        ></small
-                      ></span>
-                      <span
-                        *ngIf="adm003.adamesta === '0'"
-                        class="switchery switchery-default"
-                        style="box-shadow: rgb(201, 26, 26) 0px 0px 0px 0px inset; border-color: rgb(238, 63, 63); background-color: rgb(185, 11, 11); transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s; opacity: 0.5;"
-                        ><small
-                          style="left: 0px; transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
-                        ></small
-                      ></span>
-                    </td>
-                    <td class="text-center">
-                      <div class="list-icons">
-                        <a
-                          href="#"
-                          data-toggle="modal"
-                          data-target="#modal_theme_info"
-                          class="list-icons-item text-primary-600"
-                          ><i class="icon-pencil7"></i
-                        ></a>
-                        <a href="#" class="list-icons-item text-danger-600"
-                          ><i class="icon-trash"></i
-                        ></a>
-                        <a href="#" class="list-icons-item text-teal-600"
-                          ><i class="icon-cog6"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr> -->
             </ng-container>
           </tbody>
         </table>
