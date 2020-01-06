@@ -10,7 +10,7 @@ export class NombreMes implements PipeTransform {
   */
 
   transform(numeromes: number): string {
-    console.log("numero mes :" ,  numeromes);
+    
     switch(numeromes){
         case 0: 
           return 'Elige Mes';

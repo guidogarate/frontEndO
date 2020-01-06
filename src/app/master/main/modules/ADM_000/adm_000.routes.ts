@@ -2,6 +2,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { Adm001Component } from "./adm001/adm001.component";
 import { Adm002Component } from "./adm002/adm002.component";
 import { Adm003Component } from "./adm003/adm003.component";
+import { Adm004Component } from './adm004/adm004.component';
 
 const adm000_Routes: Routes = [
   {
@@ -28,6 +29,11 @@ const adm000_Routes: Routes = [
     path: "adm_003/agregar",
     component: Adm003Component,
     data: { titulo: "adm_003" }
+  },
+  {
+    path: "adm_004",
+    component: Adm004Component,
+    data: { titulo: "adm_004" }
   }
 ];
 

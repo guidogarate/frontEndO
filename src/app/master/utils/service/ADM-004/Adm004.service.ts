@@ -3,13 +3,13 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import url from "src/app/master/config/url.config";
 import { from } from "rxjs";
+ 
 
 @Injectable()
-export class Adm002Service {
-  token = sessionStorage.getItem("id");
-
+export class Adm004Service {
+  token = sessionStorage.getItem("id");  
   constructor(private httpClient: HttpClient) {
-    console.log("cargando predeterminados adm002service: ");
+    console.log("cargando predeterminados adm004service: ");
   }
 
   ObtenerPeriodos(fecha: any) {
@@ -30,7 +30,6 @@ export class Adm002Service {
   }
   ObtenerGestionesPeriodos() {
     const url1 = `${url.prod}${url.get_gestion_periodos}`;
-  
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -58,7 +57,7 @@ export class Adm002Service {
       modAutomatica: item.adgtmoda == true ? "1" : "0",
       fechaModAutomatica: item.adgtdiam,
     });
-    
+    console.log("service Agregar: ", json);
     const url1 = `${url.prod}${url.agregar_gestion}`;
     return this.httpClient
       .post(url1, json, {
@@ -103,7 +102,7 @@ export class Adm002Service {
       modAutomatica: item.adgtmoda == true ? "1" : "0",
       fechaModAutomatica: new Date(item.adgtdiam+"-01"),
     });
-  
+    console.log("service Actualizar Gestion: ", json);
 
     const url1 = `${url.prod}${url.actualizar_gestion}${item.adgtideg}`;
     console.log(url1);
@@ -127,9 +126,9 @@ export class Adm002Service {
       modAutomatica : Periodo.adprmoda == true ? "1" : "2",
       fechaModAutomatica : Periodo.adprdiam
     });
-    
+    console.log("service Actualizar Periodo: ", json);
     const url1 = `${url.prod}${url.actualizar_periodo}${fechaAnhoDia}`;
-     
+    console.log(" fecha url para actualizar: ",url1);
     return this.httpClient
       .put(url1, json, {
         headers: new HttpHeaders({

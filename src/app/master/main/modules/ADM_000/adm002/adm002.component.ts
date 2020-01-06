@@ -76,6 +76,7 @@ export class Adm002Component implements OnInit {
     this.adm002Service.ObtenerGestionesPeriodos().subscribe( resp => {
       if( resp["ok"]){
         this.ListaGestiones = resp["gestion"];
+        var removed = this.ListaGestiones.splice(3);
         this.ListaPeriodos = resp["periodos"];
         this.ListaEstadosGestionPeriodos = resp ["EstGestion"];
         this.ListaTiposEmpresa = resp ["ActiEmpres"];
@@ -96,11 +97,11 @@ export class Adm002Component implements OnInit {
         this.limpiarGestion();
         this.cerrarModal();
         this.obtenerGestionesPeriodos();
-        this.notyG.noty("success", resp["Agregando"], 3500);
+        this.notyG.noty("success","Agregando", 3500);
       }
       else {
         console.log("no se ha podido registrar: ",  resp);
-        this.notyG.noty("error", resp["No se ha podido Agregar"], 3500);
+        this.notyG.noty("error","No se ha podido Agregar", 3500);
       }
     });
   }
@@ -264,8 +265,6 @@ export class Adm002Component implements OnInit {
    */
 
    VerPeriodo(item : any){
-
-    // this.editPeriodo = true;
     this.CargarPeriodo(item);
     $('#modal_periodo_gestion').modal();
     setTimeout(() => {
@@ -289,11 +288,11 @@ export class Adm002Component implements OnInit {
   CargarPeriodo(item : any){
     console.log("periodo : ", item);
     this.periodoModelo = {
-      adprideg : 2018,
-      adpridep : 1,// item.adpridep, //== null  ? (('1').padStart(2,'0')) : item.adpridep,
-      adprmesp : 1,//item.adprmesp,
-      adprdesc : "Gestion 2018",
-      adpresta : 2,
+      adprideg : item.adprideg,
+      adpridep : item.adpridep, //== null  ? (('1').padStart(2,'0')) : item.adpridep,
+      adprmesp : item.adprmesp,
+      adprdesc : item.adprdesc,
+      adpresta : item.adpresta,
       adprfepi : item.adprfepi,
       adprfepf : item.adprfepf,
       adprmoda : item.adprmoda == "1" ? true : false,
@@ -301,29 +300,27 @@ export class Adm002Component implements OnInit {
     }
     
     if(item.adprdiam!=null){
-      this.dia = item.adprdiam.getUTCDate().getDate();
+      let fechita = this.datePipe.transform(
+        item.adprdiam,
+        "yyyy-MM-dd",'+0430');
+      this.dia =  new Date(fechita).getUTCDate();
+      console.info("Fechita: ", fechita);
     }
-      console.info("numero: ", this.periodoModelo.adprdiam);
-
+    else{
+      this.dia = 0
+    }
+    console.info("dia: ", this.dia);
   }
 
   armarFecha(year: any , month :  any){
     let fechaAux1 : string;
     fechaAux1 = year+"-"+month;
-    console.log(" fecha : ",fechaAux1);
     this.fechainicial = new Date(year,month-1);
-    console.log(" this.fechainicial : ",this.fechainicial);
     this.gestionModelo.adgtfegi= this.fechainicial;
-    console.log(" this.fechainicial : ",this.gestionModelo.adgtfegi);
     let fechafin  = new Date(this.gestionModelo.adgtfegi);
-    console.log("fecha fin new :",fechafin);
     fechafin.setMonth( fechafin.getMonth() + 12);
-    console.log("fecha fin set month 12 :",fechafin);
-    // fechafin.setDate(1); // poniendo a fin de dia de mes
     fechafin.setDate(0); // poniendo a fin de dia de mes
-    console.log("fecha fin set 0 :",fechafin);
     this.gestionModelo.adgtfegf = fechafin;
-
     this.mesFinal = (fechafin.getMonth()+1).toString();
     this.fechaInicioGestion =  this.datePipe.transform(
       this.fechainicial,
@@ -337,7 +334,7 @@ export class Adm002Component implements OnInit {
       }
   }
 
-  IniciarfechaModificacionAutomaticaPeriodo(){
+IniciarfechaModificacionAutomaticaPeriodo(){
     if (this.periodoModelo.adprmoda != false){
       this.periodoModelo.adprdiam = null;
       this.dia = 0; 
@@ -345,49 +342,33 @@ export class Adm002Component implements OnInit {
   }
  dia : number = 0;
  mostrarFecha = false;
-  onChange(fecha : any) {
-    console.log(fecha);
-    this.mostrarFecha= true;
-    let fechita = new Date(fecha);
-    this.dia =  fechita.getUTCDate();
-    this.periodoModelo.adprdiam = fechita.getUTCDate();
-}
-limpiarPeriodo(){
-  this.periodoModelo =   {
-      adprideg : 2018,
-      adpridep : 1,// item.adpridep, //== null  ? (('1').padStart(2,'0')) : item.adpridep,
-      adprmesp : 1,//item.adprmesp,
-      adprdesc : "Gestion 2019",
-      adpresta : 1,
-      adprmoda : false,
-    
-  };
-  this.fechaInicioGestion = null;
 
-}
 ActualizarPeriodo( ){
-  console.log(this.periodoModelo);
   let anhoDia : string = "";
   if(this.periodoModelo.adprdiam != null){
-    this.periodoModelo.adprdiam.setDate(this.dia);
+    let FechaAux = new Date((this.periodoModelo.adprdiam).toString());
+    FechaAux.setDate(this.dia);
+    this.periodoModelo.adprdiam = FechaAux;
+    this.periodoModelo.adprdiam = this.datePipe.transform(
+      FechaAux,
+      "yyyy-MM-dd" );
+    
+    console.log("periodo modelo para enviar: ", this.periodoModelo.adprdiam);
   }else{
     let fechaDiaAux : string ="";
     fechaDiaAux = ""+this.periodoModelo.adprideg+"-"+ this.periodoModelo.adprmesp+"-"+this.dia;
     this.periodoModelo.adprdiam = new Date(fechaDiaAux);
   }
   anhoDia = ""+this.periodoModelo.adprideg+"/"+this.periodoModelo.adprmesp;
-  console.log("anhoDia : ", anhoDia);
   this.adm002Service.ActualizarPeriodo(this.periodoModelo,anhoDia).subscribe( resp => {
     if (resp ["ok"]){
-      console.log("Periodo actualizado correctamente");
-      this.limpiarPeriodo();
       this.cerrarModal();
       this.obtenerGestionesPeriodos();
-      this.notyG.noty("success", resp["message"], 3500);
+      this.notyG.noty("success", "Periodo actualizado", 3500);
     }
     else {
       console.log("no se ha podido Actualizar: ",  resp);
-      this.notyG.noty("error", resp["message"], 3500);
+      this.notyG.noty("error", "No se pudo actualizar", 3500);
     }
   });
 }

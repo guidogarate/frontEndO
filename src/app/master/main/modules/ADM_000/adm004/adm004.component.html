@@ -1,0 +1,110 @@
+<!-- Dashboard content -->
+<div class="row haciadentro animaciones">
+    <div class="col-xl-12">
+      <!-- Table with togglable columns -->
+      <br />
+      <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">
+                <i class="icon-clipboard5" style="font-size: 1em;"></i>
+                PARAMETROS INICIALES</h5>
+          <div class="header-elements">
+            <div class="list-icons">
+              <a class="list-icons-item"  
+              routerLink="" routerLinkActive="router-link-active">
+                  <i class="icon-pencil7" data-toggle="tooltip" data-placement="top" title="Editar"> </i>
+              </a>
+              <a class="list-icons-item"  
+              routerLink="" routerLinkActive="router-link-active" >
+                  <i class="icon-floppy-disk " data-toggle="tooltip" data-placement="top" title="Guardar"> </i>
+              </a>
+              <a class="list-icons-item"  
+                routerLink="" routerLinkActive="router-link-active" >
+                  <i class="icon-floppy-disk " data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
+              </a>
+              <a class="list-icons-item"   data-dismiss="modal"
+              routerLink="" routerLinkActive="router-link-active"  >
+                  <i class="icon-exit  " data-toggle="tooltip" data-placement="top" title="Salir"> </i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <hr class="p0 m0">
+        <div class="card-body">
+          <div class="row text">
+            <div class="col-md-2 col-lg-2"></div>
+            <div class="col-md-8 col-lg-8">
+              <div class="form-group form-group-feedback form-group-feedback-right">
+                   <div class="row text-center">
+                       <div class="col-md-4 col-lg-6 form-group form-group-float">
+                           <label class="form-group-float-label">Razon Social</label>
+                           <input type="text" class="form-control text-center" placeholder="Razon Social">
+                       </div>
+                       <div class="col-md-4 col-lg-6 form-group form-group-float">
+                           <label class="form-group-float-label">Sigla</label>
+                           <input type="text" class="form-control text-center" placeholder="Sigla">
+                       </div>
+                   </div>
+              </div>
+            </div>
+            <div class="col-md-2 col-lg-2"></div>
+          </div>
+          <div class="row text-center">
+            <div class="col-md-2 col-lg-2"></div>
+            <div class="col-md-8 col-lg-8">
+              <div class="form-group form-group-feedback form-group-feedback-right">
+                   <div class="row text-center">
+                       <div class="col-md-4 col-lg-6 form-group form-group-float">
+                           <label class="form-group-float-label">Actividad de la Empresa</label>
+                           <input type="text" class="form-control text-center" placeholder="Razon Social">
+                       </div>
+                       <div class="col-md-4 col-lg-6 form-group form-group-float">
+                           <label class="form-group-float-label">Sigla</label>
+                           <input type="text" class="form-control text-center" placeholder="Sigla">
+                       </div>
+                   </div>
+              </div>
+            </div>
+            <div class="col-md-2 col-lg-2"></div>
+          </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="gestion" name="gpd"
+                            >
+                            <!-- [(ngModel)]="gestionModelo.adgtgesd" [checked]="gestionModelo.adgtgesd" [disabled]="editGestion" -->
+                            <label class="custom-control-label" for="gestion">Gestion por defecto</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class=" col-md-6 form-group form-group-float pTop">
+                            <label class="form-group-float-label">Tipo de Empresa</label>
+                            <select class="form-control"  >
+                                <option *ngFor="let item of ListaTiposEmpresa" placeholder="Tipo de Empresa"
+                                [value]=item.adamidea >{{item.adamdesc}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-group form-group-float pTop">
+                            <label class="form-group-float-label">Tipo de Empresa</label>
+                            <select class="form-control" >
+                                <option *ngFor="let item of ListaTiposEmpresa" placeholder="Tipo de Empresa"
+                                [value]=item.adamidea >{{item.adamdesc}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+      </div>
+      <!-- /table with togglable columns -->
+    </div>
+  </div>
+  
+ 
+  
