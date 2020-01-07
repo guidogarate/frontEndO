@@ -23,7 +23,8 @@ export class Adm003Component implements OnInit, OnDestroy {
   texto = "all_auxma";
   habiCampo = {
     GrupHab: false,
-    SubGrupHab: false
+    SubGrupHab: false,
+    ElimSubGru: false
   };
   btnGrupo = {
     BtnGuard: false,
@@ -223,7 +224,15 @@ export class Adm003Component implements OnInit, OnDestroy {
     this.btnSubGrupo.BtnSubAgreg = false;
   }
 
+  elimSubGrup() {
+    console.log("eliminar");
+
+    this.habiCampo.ElimSubGru = true;
+  }
+
   guardSubGr() {
+    this.habiCampo.ElimSubGru = false;
+
     this.habiCampo.SubGrupHab = false;
     this.btnSubGrupo.BtnSubGuard = false;
 
