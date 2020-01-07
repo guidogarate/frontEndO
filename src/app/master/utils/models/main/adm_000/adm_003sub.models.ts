@@ -1,6 +1,6 @@
 export class Adm003SubModels {
   constructor(
-    public adamtipa: string,
+    public adamidea: string,
     public adamdesc: string,
     public adamsigl: string,
     public adamsecu: string,

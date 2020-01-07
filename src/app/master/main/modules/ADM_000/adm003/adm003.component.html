@@ -65,28 +65,20 @@
                   {{ adm003.adamdesc }}
                 </td>
                 <td>
-                  <!-- <input
-                      *ngIf="adm003.adamesta"
-                      type="checkbox"
-                      class="form-check-input-switchery"
-                      [checked]="false"
-                      [disabled]="true"
-                      data-fouc
-                    /> -->
                   <span
                     *ngIf="adm003.adamesta === '1' || adm003.adamesta === true"
-                    class="switchery switchery-default"
-                    style="background-color: rgb(100, 189, 99); border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 10px inset; transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;"
+                    class="switchery"
+                    style="background-color: rgb(13, 148, 11); border-color: rgb(13, 148, 11); box-shadow: rgb(13, 148, 11) 0px 0px 0px 10px inset;"
                     ><small
-                      style="left: 18px; background-color: rgb(255, 255, 255); transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
+                      style="left: 18px; background-color: rgb(255, 255, 255);"
                     ></small
                   ></span>
                   <span
                     *ngIf="adm003.adamesta === '0' || adm003.adamesta === false"
-                    class="switchery switchery-default"
-                    style="box-shadow: rgb(201, 26, 26) 0px 0px 0px 0px inset; border-color: rgb(238, 63, 63); background-color: rgb(185, 11, 11); transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s; opacity: 0.5;"
+                    class="switchery"
+                    style="box-shadow: rgb(173, 3, 3) 0px 0px 0px 0px inset; border-color: rgb(173, 3, 3); background-color: rgb(173, 3, 3);"
                     ><small
-                      style="left: 0px; transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
+                      style="left: 0px;  background-color: rgb(255, 255, 255);"
                     ></small
                   ></span>
                 </td>
@@ -109,47 +101,6 @@
                   </div>
                 </td>
               </tr>
-              <!-- <tr *ngIf="i % 2 === 1" class="table-info">
-                    <td>{{ adm003.adamtipa }}</td>
-                    <td class="table-content-center">
-                      {{ adm003.adamdesc }}
-                    </td>
-                    <td>
-                      <span
-                        *ngIf="adm003.adamesta === '1'"
-                        class="switchery switchery-default"
-                        style="background-color: rgb(100, 189, 99); border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 10px inset; transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;"
-                        ><small
-                          style="left: 18px; background-color: rgb(255, 255, 255); transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
-                        ></small
-                      ></span>
-                      <span
-                        *ngIf="adm003.adamesta === '0'"
-                        class="switchery switchery-default"
-                        style="box-shadow: rgb(201, 26, 26) 0px 0px 0px 0px inset; border-color: rgb(238, 63, 63); background-color: rgb(185, 11, 11); transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s; opacity: 0.5;"
-                        ><small
-                          style="left: 0px; transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"
-                        ></small
-                      ></span>
-                    </td>
-                    <td class="text-center">
-                      <div class="list-icons">
-                        <a
-                          href="#"
-                          data-toggle="modal"
-                          data-target="#modal_theme_info"
-                          class="list-icons-item text-primary-600"
-                          ><i class="icon-pencil7"></i
-                        ></a>
-                        <a href="#" class="list-icons-item text-danger-600"
-                          ><i class="icon-trash"></i
-                        ></a>
-                        <a href="#" class="list-icons-item text-teal-600"
-                          ><i class="icon-cog6"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr> -->
             </ng-container>
           </tbody>
         </table>
@@ -195,38 +146,53 @@
 <div id="modal_theme_info" class="modal" tabindex="-1">
   <div class="modal-dialog ">
     <div class="modal-content animacionmodal haciadentro">
-      <div class="modal-header bg-info">
+      <div class="modal-header bg-blue">
         <h6 class="modal-title">GRUPO</h6>
         <div class="list-icons float-right">
-          <!-- <a class="puntero"
+          <a class="puntero" *ngIf="btnGrupo.BtnAgreg"
+            ><i
+              class="icon-file-plus xxl"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Nuevo"
+            >
+            </i
+          ></a>
+          <a class="puntero" *ngIf="btnGrupo.BtnGuard"
             ><i
               class="icon-floppy-disk xxl"
               data-toggle="tooltip"
+              (click)="guardGr()"
               data-placement="top"
-              title="Guardar Gestion"
+              title="Guardar Grupo"
             >
             </i
-          ></a> -->
-          <a
-            class="puntero"
-            (click)="edtGr()"
-            routerLinkActive="router-link-active"
-          >
+          ></a>
+          <a *ngIf="btnGrupo.BtnEdita" class="puntero" (click)="edtGr()">
             <i
               class="icon-pencil7 xxl"
               data-toggle="tooltip"
               data-placement="top"
-              title="editar Gestion"
+              title="editar Grupo"
             >
             </i
           ></a>
-
+          <a class="puntero" *ngIf="btnGrupo.BtnElimi"
+            ><i
+              class="icon-trash xxl"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Eliminar Gestion"
+            >
+            </i
+          ></a>
           <a class="puntero"
             ><i
               class="icon-exit xxl"
               data-toggle="tooltip"
               data-placement="top"
               data-dismiss="modal"
+              (click)="salir()"
               title="Salir"
             >
             </i
@@ -243,7 +209,8 @@
                 class="form-control"
                 placeholder="Codigo"
                 [(ngModel)]="amd003.adamtipa"
-                [disabled]="!GrupHab"
+                [disabled]="true"
+                title="{{ amd003.adamtipa }}"
                 required
               />
             </div>
@@ -256,7 +223,8 @@
                 class="form-control"
                 placeholder="Descripcion"
                 [(ngModel)]="amd003.adamdesc"
-                [disabled]="!GrupHab"
+                [disabled]="!habiCampo.GrupHab"
+                title="{{ amd003.adamdesc }}"
                 required
               />
             </div>
@@ -269,7 +237,8 @@
                 class="form-control"
                 placeholder="Sigla"
                 [(ngModel)]="amd003.adamsigl"
-                [disabled]="!GrupHab"
+                [disabled]="!habiCampo.GrupHab"
+                title="{{ amd003.adamsigl }}"
                 required
               />
             </div>
@@ -280,7 +249,8 @@
                 type="checkbox"
                 class="custom-control-input"
                 [(ngModel)]="amd003.adamesta"
-                [disabled]="!GrupHab"
+                [disabled]="!habiCampo.GrupHab"
+                title="{{ amd003.adamesta }}"
                 id="customSwitch1"
               />
               <label class="custom-control-label" for="customSwitch1"
@@ -291,36 +261,57 @@
         </div>
       </div>
       <div class="modal-content animacionmodal haciadentro">
-        <div class="modal-header bg-info">
+        <div class="modal-header bg-blue">
           <h6 class="modal-title">SUB-GRUPO</h6>
           <div class="list-icons float-right">
-            <a
-              class="puntero"
-              [routerLink]="nada()"
-              routerLinkActive="router-link-active"
+            <a class="puntero" *ngIf="btnSubGrupo.BtnSubAgreg"
               ><i
                 class="icon-file-plus xxl"
                 data-toggle="tooltip"
                 data-placement="top"
+                (click)="nuevoSubGr()"
                 title="Nuevo"
               >
               </i
             ></a>
-            <a class="punter" routerLinkActive="router-link-active">
+            <a class="puntero" *ngIf="btnSubGrupo.BtnSubGuard"
+              ><i
+                class="icon-floppy-disk xxl"
+                data-toggle="tooltip"
+                (click)="guardSubGr()"
+                data-placement="top"
+                title="Guardar Grupo"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnSubGrupo.BtnSubEdita">
               <i
                 class="icon-pencil7 xxl"
                 data-toggle="tooltip"
                 data-placement="top"
+                (click)="edtSubGr()"
                 title="editar Gestion"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnSubGrupo.BtnSubElimi"
+              ><i
+                class="icon-trash xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="elimSubGrup()"
+                title="Eliminar Gestion"
               >
               </i
             ></a>
             <a class="puntero"
               ><i
-                class="icon-trash xxl"
+                class="icon-exit xxl"
                 data-toggle="tooltip"
                 data-placement="top"
-                title="Eliminar Gestion"
+                data-dismiss="modal"
+                (click)="salir()"
+                title="Salir"
               >
               </i
             ></a>
@@ -329,14 +320,27 @@
         <div class="modal-body ">
           <ng-container *ngFor="let auxSub of auxmaSub; let i = index">
             <div class="row justify-content-center">
+              <div
+                *ngIf="habiCampo.ElimSubGru"
+                class="col-1 col-sm-1 col-md-1 col-lg-1"
+              >
+                <div class="form-check ">
+                  <input
+                    class="form-check-input puntero checkmacc"
+                    type="checkbox"
+                    value=""
+                  />
+                </div>
+              </div>
               <div class="col-3 col-sm-1 col-md-1 col-lg-1">
                 <div class="form-group form-group-float">
                   <label class="form-group-float-label">Cod</label>
                   <input
                     type="text"
                     class="form-control"
-                    [(ngModel)]="auxSub.adamtipa"
-                    [value]="1"
+                    [(ngModel)]="auxSub.adamidea"
+                    title="{{ auxSub.adamidea }}"
+                    [disabled]="true"
                     required
                     placeholder="Codigo"
                   />
@@ -350,6 +354,8 @@
                     class="form-control"
                     placeholder="Descripcion"
                     [(ngModel)]="auxSub.adamdesc"
+                    title="{{ auxSub.adamdesc }}"
+                    [disabled]="!habiCampo.SubGrupHab"
                   />
                 </div>
               </div>
@@ -360,17 +366,21 @@
                     type="text"
                     class="form-control"
                     [(ngModel)]="auxSub.adamsigl"
+                    [disabled]="!habiCampo.SubGrupHab"
+                    title="{{ auxSub.adamsigl }}"
                     placeholder="Sigla"
                   />
                 </div>
               </div>
-              <div class="col-2 col-sm-2 col-md-2 col-lg-2">
+              <div class="col-2 col-sm-1 col-md-1 col-lg-1">
                 <div class="form-group form-group-float">
                   <label class="form-group-float-label">Sec</label>
                   <input
                     type="text"
                     class="form-control"
                     [(ngModel)]="auxSub.adamsecu"
+                    [disabled]="!habiCampo.SubGrupHab"
+                    title="{{ auxSub.adamsecu }}"
                     placeholder="Sec"
                   />
                 </div>
@@ -381,9 +391,11 @@
                     type="checkbox"
                     class="custom-control-input"
                     [(ngModel)]="auxSub.adamesta"
-                    id="customSwitch3"
+                    [disabled]="!habiCampo.SubGrupHab"
+                    title="{{ auxSub.adamesta }}"
+                    id="subGrEst{{ i }}"
                   />
-                  <label class="custom-control-label" for="customSwitch3"
+                  <label class="custom-control-label" for="subGrEst{{ i }}"
                     >Estado</label
                   >
                 </div>
@@ -392,15 +404,17 @@
                     type="checkbox"
                     class="custom-control-input"
                     [(ngModel)]="auxSub.adampred"
-                    id="customSwitch2"
+                    [disabled]="!habiCampo.SubGrupHab"
+                    title="{{ auxSub.adampred }}"
+                    id="subGrPred{{ i }}"
                   />
-                  <label class="custom-control-label" for="customSwitch2"
+                  <label class="custom-control-label" for="subGrPred{{ i }}"
                     >Pred</label
                   >
                 </div>
               </div>
             </div>
-            <div *ngIf="i + 1 !== auxmaSubLeng" class="separadorh"></div>
+            <div class="separadorh"></div>
           </ng-container>
           <div *ngIf="loadingSub" class="d-flex justify-content-center">
             <div class="spinner-border" role="status">
