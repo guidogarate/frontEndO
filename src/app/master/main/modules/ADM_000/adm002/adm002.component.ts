@@ -313,6 +313,7 @@ export class Adm002Component implements OnInit {
   }
 
   armarFecha(year: any , month :  any){
+    console.log("armando Fecha: ", year + "-" + month);
     let fechaAux1 : string;
     fechaAux1 = year+"-"+month;
     this.fechainicial = new Date(year,month-1);
@@ -329,7 +330,7 @@ export class Adm002Component implements OnInit {
   }
 
   IniciarfechaModificacionAutomatica(){
-    if (this.gestionModelo.adgtmoda == false){
+    if (this.gestionModelo.adgtmoda != false){
       this.gestionModelo.adgtdiam = null;
       }
   }
@@ -342,6 +343,31 @@ IniciarfechaModificacionAutomaticaPeriodo(){
   }
  dia : number = 0;
  mostrarFecha = false;
+
+ CalcularGestion(idGestion : string){
+   console.log("gestion : ", idGestion);
+   switch(idGestion) { 
+    case "1": { 
+      this.mesInicial = "1";
+       break; 
+    } 
+    case "2": { 
+      this.mesInicial = "4";
+       break; 
+    } 
+    case "3": {
+      this.mesInicial = "4";
+      break; 
+    }
+    default: { 
+       console.log("sin Match: ", idGestion); 
+       break; 
+    } 
+ } 
+    
+  this.armarFecha( this.gestionModelo.adgtideg,this.mesInicial);
+
+ }
 
 ActualizarPeriodo( ){
   let anhoDia : string = "";
