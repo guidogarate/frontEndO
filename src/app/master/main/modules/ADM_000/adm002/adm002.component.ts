@@ -23,7 +23,7 @@ export class Adm002Component implements OnInit {
   estado : number ;
   ListaTiposEmpresa : any;
   idEmpresa : number;
-
+  cargando : boolean = false;
   /*Acciones*/
   editGestion : boolean = true;
   nuevo : boolean = false;
@@ -73,6 +73,7 @@ export class Adm002Component implements OnInit {
   }
   /* Peticiones */
   obtenerGestionesPeriodos(){
+    this.cargando = true;
     this.adm002Service.ObtenerGestionesPeriodos().subscribe( resp => {
       if( resp["ok"]){
         this.ListaGestiones = resp["gestion"];
@@ -86,6 +87,7 @@ export class Adm002Component implements OnInit {
         resp;
       }
     });
+    this.cargando = false;
   }
 
   GuardarGestion(){
@@ -305,6 +307,7 @@ export class Adm002Component implements OnInit {
         "yyyy-MM-dd",'+0430');
       this.dia =  new Date(fechita).getUTCDate();
       console.info("Fechita: ", fechita);
+      // this.periodoModelo.adprdiam = fechita;
     }
     else{
       this.dia = 0

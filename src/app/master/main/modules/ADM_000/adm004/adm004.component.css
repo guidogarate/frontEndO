@@ -6,3 +6,17 @@
     margin-top: 0px;
     margin-bottom: 0px;
 }
+
+.title-icon{
+    font-size: 2em;
+}
+.align-vertical-icon-0{
+    vertical-align: 0em;
+}
+
+@media screen and (max-width: 600px) {
+    .title-icon{
+        font-size: 1.8em;
+    }
+  
+  }

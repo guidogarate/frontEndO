@@ -60,7 +60,14 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div *ngIf="cargando == true" class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                              <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        <div *ngIf="cargando == true"> <pre>Holoooo</pre></div>
                     </div>
+
                     <div class="col-md-1"></div>
                 </div>
 
@@ -282,7 +289,7 @@
                                 <div class="col-lg-4">
                                     <div class="input-group" style="justify-content: center;" >
                                         <input  [disabled]="!gestionModelo.adgtmoda || editGestion " type="month" name="fechaEdicion2" required 
-                                           [value]="gestionModelo.adgtdiam" [(ngModel)]="gestionModelo.adgtdiam"
+                                           [value]="gestionModelo.adgtdiam" [(ngModel)]="gestionModelo.adgtdiam" style="width: 13em;"
                                            min="{{gestionModelo.adgtfegf }}">                                     
                                      </div>
                                 </div>
@@ -384,10 +391,16 @@
                                             <input type="text" name="fechaPeriodo1" class="form-control text-center" required [disabled]="!(periodoModelo.adprmoda && editPeriodo)"
                                             [value]="dia" [(ngModel)]="dia">                                  
                                         </div>
+                                        <!-- <div class="form-group">
+                                            <input type="date" name="fechaPeriodo2" class="form-control text-center" required [disabled]="!(periodoModelo.adprmoda && editPeriodo)"
+                                            [value]="periodoModelo.adprdiam | date: 'short'" data-date="format" [(ngModel)]="periodoModelo.adprdiam">                                  
+                                        </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- <pre> {{periodoModelo.adprdiam | date: "dd-MM-yyyy" }}</pre>
+                    <pre> {{periodoModelo.adprdiam }}</pre> -->
                 </div>
             </div>
         </div>
