@@ -9,7 +9,7 @@ export class FormatoNumeroPeriodo implements PipeTransform {
   */
 
   transform(formatonumeroperiodo: number): string {
-    console.log("formato periodo: ", formatonumeroperiodo)
+
     switch(formatonumeroperiodo){
         case 0: 
           return 'Elige Mes';

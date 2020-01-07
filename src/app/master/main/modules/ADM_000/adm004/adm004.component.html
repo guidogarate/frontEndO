@@ -1,0 +1,260 @@
+<!-- Dashboard content -->
+<div class="row haciadentro animaciones">
+    <div class="col-xl-12">
+      <!-- Table with togglable columns -->
+      <br />
+      <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">
+                <i class="icon-clipboard5 title-icon align-vertical-icon-0"></i>
+                PARAMETROS INICIALES</h5>
+          <div class="header-elements">
+            <div class="list-icons">
+              <a class="list-icons-item"  
+              routerLink="" routerLinkActive="router-link-active">
+                  <i class="icon-pencil7 title-icon" data-toggle="tooltip" data-placement="top" title="Editar"> </i>
+              </a>
+              <a class="list-icons-item"  
+              routerLink="" routerLinkActive="router-link-active" >
+                  <i class="icon-floppy-disk title-icon" data-toggle="tooltip" data-placement="top" title="Guardar"> </i>
+              </a>
+              <a class="list-icons-item"  
+                routerLink="" routerLinkActive="router-link-active" >
+                  <i class="icon-floppy-disk title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
+              </a>
+              <a class="list-icons-item"   data-dismiss="modal"
+              routerLink="" routerLinkActive="router-link-active"  >
+                  <i class="icon-exit title-icon " data-toggle="tooltip" data-placement="top" title="Salir"> </i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <hr class="p0 m0">
+        <div class="card-body">
+          <div class="row text-center">
+            <div class="col-md-2 col-lg-2">
+
+            </div>
+            <div class="col-md-8 col-lg-8">
+              <div class="form-group form-group-feedback form-group-feedback-right">
+                   <div class="row text-center">
+                       <div class="col-md-4 col-lg-6 form-group form-group-float">
+                           <label class="form-group-float-label">Razon Social</label>
+                           <input type="text" class="form-control text-center" placeholder="Razon Social">
+                       </div>
+                       <div class="col-md-4 col-lg-6 form-group form-group-float">
+                           <label class="form-group-float-label">Sigla</label>
+                           <input type="text" class="form-control text-center" placeholder="Sigla">
+                       </div>
+                   </div>
+              </div>
+            </div>
+            <div class="col-md-2 col-lg-2"></div>
+          </div>
+          <div class="row text-center">
+            <div class="col-md-2 col-lg-2"></div>
+            <div class="col-md-8 col-lg-8">
+              <div class="form-group form-group-feedback form-group-feedback-right">
+                   <div class="row text-center">
+                       <div class="col-md-4 col-lg-6 form-group form-group-float">
+                           <label class="form-group-float-label">Actividad de la Empresa</label>
+                           <input type="text" class="form-control text-center" placeholder="Actividad de la Empresa">
+                       </div>
+                       <div class="col-md-4 col-lg-6 form-group form-group-float">
+                           <label class="form-group-float-label">Gestion</label>
+                           <input type="text" class="form-control text-center" placeholder="Gestion">
+                       </div>
+                   </div>
+              </div>
+            </div>
+            <div class="col-md-2 col-lg-2"></div>
+          </div>
+        </div>
+        <div class="card" style="margin: 10px;">
+          <div class="card" style="margin: 5px;">
+            <div class="card-body">
+              <div class="row text-center" style="padding: 10px;" >
+                <div class="col-md-4 col-12">
+                   <div class="form-check form-check-inline form-check-right">
+                        <label class="form-check-label">
+                          Imputacion De la Moneda
+                          <input type="checkbox" class="form-check-input" checked>
+                        </label>
+                      </div>
+                </div>
+
+                <div class="col-md-3 offset-md-1 col-12">
+                  <label class="form-group-float-label">Imputacion</label>
+                  <select class="form-control"  >
+                      <option *ngFor="let item of ListaTiposEmpresa" placeholder="Imputacion"
+                      [value]=item.adamidea >{{item.adamdesc}}
+                      </option>
+                  </select>
+                </div>
+                <div class="col-md-3 offset-md-1 col-12">
+                    <label class="form-group-float-label">Conversion</label>
+                    <select class="form-control"  >
+                        <option *ngFor="let item of ListaTiposEmpresa" placeholder="Conversion"
+                        [value]=item.adamidea >{{item.adamdesc}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+                
+            </div>
+          </div> 
+          <div class="card" style="margin: 5px;">
+            <div class="card-header header-elements-inline">
+              <h5 class="card-title">
+                  FOLIACION
+                </h5>
+            </div>
+            <div class="card-body">
+              <div class="row text-center" style="padding: 10px;" >
+                <div class="col-md-4 col-12">
+                   <div class="form-check form-check-inline form-check-right">
+                        <label class="form-check-label">
+                          Imputacion De la Moneda
+                          <input type="checkbox" class="form-check-input" checked>
+                        </label>
+                      </div>
+                </div>
+
+                <div class="col-md-3 offset-md-1 col-12">
+                  <label class="form-group-float-label">Imputacion</label>
+                  <select class="form-control"  >
+                      <option *ngFor="let item of ListaTiposEmpresa" placeholder="Imputacion"
+                      [value]=item.adamidea >{{item.adamdesc}}
+                      </option>
+                  </select>
+                </div>
+                <div class="col-md-3 offset-md-1 col-12">
+                    <label class="form-group-float-label">Conversion</label>
+                    <select class="form-control"  >
+                        <option *ngFor="let item of ListaTiposEmpresa" placeholder="Conversion"
+                        [value]=item.adamidea >{{item.adamdesc}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+                
+            </div>
+          </div>   
+          <div class="card" style="margin: 5px;">
+            <div class="card-header header-elements-inline">
+              <h5 class="card-title">
+                  PARAMETROS ESPECIALES
+                </h5>
+            </div>
+            <div class="card-body">
+              <div class="row text-center" style="padding: 10px;" >
+                <div class="col-md-4 col-12">
+                   <div class="form-check form-check-inline form-check-right">
+                        <label class="form-check-label">
+                          Imputacion De la Moneda
+                          <input type="checkbox" class="form-check-input" checked>
+                        </label>
+                      </div>
+                </div>
+
+                <div class="col-md-3 offset-md-1 col-12">
+                  <label class="form-group-float-label">Imputacion</label>
+                  <select class="form-control"  >
+                      <option *ngFor="let item of ListaTiposEmpresa" placeholder="Imputacion"
+                      [value]=item.adamidea >{{item.adamdesc}}
+                      </option>
+                  </select>
+                </div>
+                <div class="col-md-3 offset-md-1 col-12">
+                    <label class="form-group-float-label">Conversion</label>
+                    <select class="form-control"  >
+                        <option *ngFor="let item of ListaTiposEmpresa" placeholder="Conversion"
+                        [value]=item.adamidea >{{item.adamdesc}}
+                        </option>
+                    </select>
+                </div>
+            </div>      
+            </div>
+          </div> 
+          <div class="card" style="margin: 5px;">
+            <div class="card-header header-elements-inline">
+              <h5 class="card-title">
+                  UNIDAD DE NEGOCIO
+                </h5>
+            </div>
+            <div class="card-body">
+              <div class="row text-center" style="padding: 10px;" >
+                <div class="col-md-4 col-12">
+                   <div class="form-check form-check-inline form-check-right">
+                        <label class="form-check-label">
+                          Imputacion De la Moneda
+                          <input type="checkbox" class="form-check-input" checked>
+                        </label>
+                      </div>
+                </div>
+
+                <div class="col-md-3 offset-md-1 col-12">
+                  <label class="form-group-float-label">Imputacion</label>
+                  <select class="form-control"  >
+                      <option *ngFor="let item of ListaTiposEmpresa" placeholder="Imputacion"
+                      [value]=item.adamidea >{{item.adamdesc}}
+                      </option>
+                  </select>
+                </div>
+                <div class="col-md-3 offset-md-1 col-12">
+                    <label class="form-group-float-label">Conversion</label>
+                    <select class="form-control"  >
+                        <option *ngFor="let item of ListaTiposEmpresa" placeholder="Conversion"
+                        [value]=item.adamidea >{{item.adamdesc}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+                
+            </div>
+          </div>  
+          <div class="card" style="margin: 5px;">
+            <div class="card-header header-elements-inline">
+              <h5 class="card-title">
+                  REGISTRO DE MAESTRO PERSONAS
+                </h5>
+            </div>
+            <div class="card-body">
+              <div class="row text-center" style="padding: 10px;" >
+                <div class="col-md-4 col-12">
+                   <div class="form-check form-check-inline form-check-right">
+                        <label class="form-check-label">
+                          Imputacion De la Moneda
+                          <input type="checkbox" class="form-check-input" checked>
+                        </label>
+                      </div>
+                </div>
+
+                <div class="col-md-3 offset-md-1 col-12">
+                  <label class="form-group-float-label">Imputacion</label>
+                  <select class="form-control"  >
+                      <option *ngFor="let item of ListaTiposEmpresa" placeholder="Imputacion"
+                      [value]=item.adamidea >{{item.adamdesc}}
+                      </option>
+                  </select>
+                </div>
+                <div class="col-md-3 offset-md-1 col-12">
+                    <label class="form-group-float-label">Conversion</label>
+                    <select class="form-control"  >
+                        <option *ngFor="let item of ListaTiposEmpresa" placeholder="Conversion"
+                        [value]=item.adamidea >{{item.adamdesc}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+                
+            </div>
+          </div>   
+        </div>
+      </div>
+      <!-- /table with togglable columns -->
+    </div>
+  </div>
+  
+ 
+  
