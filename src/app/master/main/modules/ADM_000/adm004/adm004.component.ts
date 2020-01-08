@@ -8,6 +8,7 @@ declare function initLabels ();
 })
 export class Adm004Component implements OnInit {
 
+  ListaTiposEmpresa : any = [];
   constructor() { }
 
   ngOnInit() {
