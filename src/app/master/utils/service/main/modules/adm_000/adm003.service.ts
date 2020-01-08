@@ -38,6 +38,38 @@ export class Adm003Service {
         })
       );
   }
+
+  editarAdm003Sub(adamcodm: string, adamtipa: string, datos: any) {
+    const url1 = `${url.prod}${adm0003.editarDatoSub}${adamcodm}/${adamtipa}`;
+    return this.httpClient
+      .put(url1, datos, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
+
+  eliminarAdm003Sub(adamcodm: string, adamtipa: string, adamidea: string) {
+    const url1 = `${url.prod}${adm0003.eliminDatoSub}${adamcodm}/${adamtipa}/${adamidea}`;
+    return this.httpClient
+      .delete(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
 }
 
 interface Ajustes {

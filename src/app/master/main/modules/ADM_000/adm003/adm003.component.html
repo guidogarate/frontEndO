@@ -269,7 +269,7 @@
                 class="icon-file-plus xxl"
                 data-toggle="tooltip"
                 data-placement="top"
-                (click)="nuevoSubGr()"
+                (click)="SubGrup('nuevo')"
                 title="Nuevo"
               >
               </i
@@ -278,7 +278,7 @@
               ><i
                 class="icon-floppy-disk xxl"
                 data-toggle="tooltip"
-                (click)="guardSubGr()"
+                (click)="SubGrup('guardar')"
                 data-placement="top"
                 title="Guardar Grupo"
               >
@@ -289,7 +289,7 @@
                 class="icon-pencil7 xxl"
                 data-toggle="tooltip"
                 data-placement="top"
-                (click)="edtSubGr()"
+                (click)="SubGrup('editar')"
                 title="editar Gestion"
               >
               </i
@@ -299,7 +299,7 @@
                 class="icon-trash xxl"
                 data-toggle="tooltip"
                 data-placement="top"
-                (click)="elimSubGrup()"
+                (click)="SubGrup('eliminar')"
                 title="Eliminar Gestion"
               >
               </i
@@ -324,13 +324,10 @@
                 *ngIf="habiCampo.ElimSubGru"
                 class="col-1 col-sm-1 col-md-1 col-lg-1"
               >
-                <div class="form-check ">
-                  <input
-                    class="form-check-input puntero checkmacc"
-                    type="checkbox"
-                    value=""
-                  />
-                </div>
+              <!-- javascript:void 0  ||  javascript:; -->
+                <a  (click)="elimElemSub(auxSub.adamidea)" href="javascript:void 0" class="list-icons-item text-danger-600"
+                  ><i class="icon-trash"></i
+                ></a>
               </div>
               <div class="col-3 col-sm-1 col-md-1 col-lg-1">
                 <div class="form-group form-group-float">
@@ -340,7 +337,7 @@
                     class="form-control"
                     [(ngModel)]="auxSub.adamidea"
                     title="{{ auxSub.adamidea }}"
-                    [disabled]="true"
+                    [disabled]="!habiCampo.SubGrupHab"
                     required
                     placeholder="Codigo"
                   />

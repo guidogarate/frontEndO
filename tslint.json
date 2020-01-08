@@ -53,6 +53,7 @@
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
     "no-string-literal": false,
+    "no-shadowed-variable": false,
     "variable-name": [false, "check-format", "allow-leading-underscore"]
   },
   "rulesDirectory": ["codelyzer"]
