@@ -199,27 +199,30 @@ export class Adm001Component implements OnInit {
   }
 
   Eliminar() {
-    this.loading= true;
-    this.adm001Service.eliminar(this.tipoCambio.fecha).subscribe(resp => {
-      if (resp["ok"]) {
-        this.Limpiar();
-        this.cargarLista();
-        this.Cancelar();
-        this.cargarPredeterminado();
-        new Noty({
-          text: "Eliminando",
-          theme: "nest",
-          progressBar: false,
-          timeout: 3500,
-          type: "error",
-          layout: "bottomRight"
-        }).show();
-      } else {
-        console.log("no se pudo eliminar", resp);
-        return resp;
-      }
-    });
-    this.loading= false;
+    let confirmar = confirm("desea eliminar");
+    if(confirmar){
+      this.loading= true;
+      this.adm001Service.eliminar(this.tipoCambio.fecha).subscribe(resp => {
+        if (resp["ok"]) {
+          this.Limpiar();
+          this.cargarLista();
+          this.Cancelar();
+          this.cargarPredeterminado();
+          new Noty({
+            text: "Eliminando",
+            theme: "nest",
+            progressBar: false,
+            timeout: 3500,
+            type: "error",
+            layout: "bottomRight"
+          }).show();
+        } else {
+          console.log("no se pudo eliminar", resp);
+          return resp;
+        }
+      });
+      this.loading= false;
+    }
   }
 
   Cancelar() {

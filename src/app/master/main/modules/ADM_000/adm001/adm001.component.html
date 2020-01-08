@@ -184,10 +184,10 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <div class="table-responsive-md" *ngIf="ListTipoCambio!= undefined">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
+              <div class="table-responsive text-center" *ngIf="ListTipoCambio!= undefined">
+                  <table class="table table-sm table-hover table-bordered table-striped">
+                    <thead  class="bg-blue">
+                      <tr class="table-border-double">
                         <th>Fecha</th>
                         <th>T/C Oficial</th>
                         <th>T/C Compra</th>
@@ -198,17 +198,17 @@
                     </thead>
                     <tbody >
                       <tr *ngFor="let item of ListTipoCambio" (click)="cargarEdicion(item)" class="puntero">
-                        <td>{{item.fecha | date:'mediumDate':'+0400'}} </td>
-                        <td>{{item.tc_oficial}}</td>
-                        <td>{{item.tc_compra}}</td>
-                        <td>{{item.tc_venta}}</td>
-                        <td>{{ item.tc_ufv }} </td>
-                        <td *ngIf="item.estado == '1'"> 
-                          <span  class="badge badge-success">
+                        <td class="pTB0">{{item.fecha | date:'mediumDate':'+0400'}} </td>
+                        <td class="pTB0">{{item.tc_oficial}}</td>
+                        <td class="pTB0">{{item.tc_compra}}</td>
+                        <td class="pTB0">{{item.tc_venta}}</td>
+                        <td class="pTB0">{{ item.tc_ufv }} </td>
+                        <td *ngIf="item.estado == '1'" class="pTB0"> 
+                          <span  class="badge badge-success ">
                             Activo 
                           </span>
                         </td>
-                        <td *ngIf="item.estado == '0'"> 
+                        <td *ngIf="item.estado == '0'" class="pTB0"> 
                             <span  class="badge badge-danger">
                               Inactivo 
                             </span>

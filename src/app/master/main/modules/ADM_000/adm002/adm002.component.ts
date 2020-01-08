@@ -128,7 +128,7 @@ export class Adm002Component implements OnInit {
 
 
   EliminarGestion(item : any) {
-    let result = confirm("Want to delete?"); 
+    let result = confirm("Esta Seguro que desea Eliminar?"); 
     if (result) 
     { 
       //Logic to delete the item 
@@ -308,6 +308,7 @@ export class Adm002Component implements OnInit {
         item.adprdiam,
         "yyyy-MM-dd",'+0430');
       this.dia =  new Date(fechita).getUTCDate();
+      this.periodoModelo.adprdiam = fechita;
       //console.info("Fechita: ", fechita);
       // this.periodoModelo.adprdiam = fechita;
     }
@@ -377,18 +378,18 @@ IniciarfechaModificacionAutomaticaPeriodo(){
 ActualizarPeriodo( ){
   let anhoDia : string = "";
   if(this.periodoModelo.adprdiam != null){
-    let FechaAux = new Date((this.periodoModelo.adprdiam).toString());
-    FechaAux.setDate(this.dia);
-    this.periodoModelo.adprdiam = FechaAux;
-    this.periodoModelo.adprdiam = this.datePipe.transform(
-      FechaAux,
-      "yyyy-MM-dd" );
+   // let FechaAux = new Date((this.periodoModelo.adprdiam).toString());
+   // FechaAux.setDate(this.dia);
+   // this.periodoModelo.adprdiam = FechaAux;
+    // this.periodoModelo.adprdiam = this.datePipe.transform(
+    //   FechaAux,
+    //   "yyyy-MM-dd" );
     
     //console.log("periodo modelo para enviar: ", this.periodoModelo.adprdiam);
   }else{
-    let fechaDiaAux : string ="";
-    fechaDiaAux = ""+this.periodoModelo.adprideg+"-"+ this.periodoModelo.adprmesp+"-"+this.dia;
-    this.periodoModelo.adprdiam = new Date(fechaDiaAux);
+    // let fechaDiaAux : string ="";
+    // fechaDiaAux = ""+this.periodoModelo.adprideg+"-"+ this.periodoModelo.adprmesp+"-"+this.dia;
+    // this.periodoModelo.adprdiam = new Date(fechaDiaAux);
   }
   anhoDia = ""+this.periodoModelo.adprideg+"/"+this.periodoModelo.adprmesp;
   this.adm002Service.ActualizarPeriodo(this.periodoModelo,anhoDia).subscribe( resp => {

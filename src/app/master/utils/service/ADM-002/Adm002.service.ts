@@ -127,7 +127,7 @@ export class Adm002Service {
       modAutomatica : Periodo.adprmoda == true ? "1" : "2",
       fechaModAutomatica : Periodo.adprdiam
     });
-    
+    console.info("Actualizando en service: ", json);
     const url1 = `${url.prod}${url.actualizar_periodo}${fechaAnhoDia}`;
      
     return this.httpClient

@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-md-10">
                         <div class="table-responsive text-center">
-                            <table class="table table-sm table-hover table-bordered">
+                            <table class="table table-sm table-hover table-striped table-bordered">
                                 <thead class="bg-blue">
                                     <th scope="col">Gestion</th>
                                     <th scope="col">Descripcion</th>
@@ -169,6 +169,7 @@
                     <div class="row text-center" style="margin-left: 15px; margin-right:15px;margin-top: 15px;" >
                         <div class="col-md-2 col-12">
                             <div class="form-group form-group-float">
+                                <!-- <p class="alert alert-danger" *ngIf="gestionModelo.adgtideg == null">required</p> -->
                                 <label class="form-group-float-label">Gestion</label>
                                 <input type="text" class="form-control text-center" name="Gestion" placeholder="Gestion" required
                                   value="{{gestionModelo.adgtideg}}" required [(ngModel)]="gestionModelo.adgtideg" [disabled]="editGestion">
@@ -387,14 +388,14 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-lg-6 col-6">Fecha de Modificacion Automatica</label>
                                 <div class="col-lg-6 col-4">
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <input type="text" name="fechaPeriodo1" class="form-control text-center" required [disabled]="!(periodoModelo.adprmoda && editPeriodo)"
                                             [value]="dia" [(ngModel)]="dia">                                  
-                                        </div>
-                                        <!-- <div class="form-group">
-                                            <input type="date" name="fechaPeriodo2" class="form-control text-center" required [disabled]="!(periodoModelo.adprmoda && editPeriodo)"
-                                            [value]="periodoModelo.adprdiam | date: 'short'" data-date="format" [(ngModel)]="periodoModelo.adprdiam">                                  
                                         </div> -->
+                                        <div class="form-group">
+                                            <input type="date" name="fechaPeriodo2" class="form-control text-center" required [disabled]="!(periodoModelo.adprmoda && editPeriodo)"
+                                            [value]="periodoModelo.adprdiam" data-date="format" [(ngModel)]="periodoModelo.adprdiam">                                  
+                                        </div>
                                 </div>
                             </div>
                         </div>
