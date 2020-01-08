@@ -92,10 +92,10 @@ export class Adm002Component implements OnInit {
 
   GuardarGestion(){
     this.nuevo= true;
-    console.log(this.gestionModelo);
+    //console.log(this.gestionModelo);
     this.adm002Service.AgregarGestion(this.gestionModelo).subscribe( resp => {
       if (resp ["ok"]){
-        console.log("registrado correctamente");
+      //  console.log("registrado correctamente");
         this.limpiarGestion();
         this.cerrarModal();
         this.obtenerGestionesPeriodos();
@@ -128,6 +128,10 @@ export class Adm002Component implements OnInit {
 
 
   EliminarGestion(item : any) {
+    let result = confirm("Want to delete?"); 
+    if (result) 
+    { 
+      //Logic to delete the item 
     if(item != undefined || item !=null){
       this.gestionModelo = item;
     }
@@ -142,9 +146,6 @@ export class Adm002Component implements OnInit {
         this.cerrarModal();
         this.obtenerGestionesPeriodos();
 
-      //   this.cargarLista();
-      //  this.obtenerGestionesPeriodos();
-
        /**
         * Segunda opcion de eliminar para evitar la llamada al backend
         */
@@ -158,6 +159,7 @@ export class Adm002Component implements OnInit {
         return resp;
       }
     });
+  }
   }
 
   editar(){
@@ -190,7 +192,7 @@ export class Adm002Component implements OnInit {
     this.editPeriodo = false;
     this.nuevo = true;
     this.limpiarGestion();
-    console.log("abrir modal");
+    //console.log("abrir modal");
     $('#modal_gestion').modal();
     setTimeout(() => {
       initLabels();
@@ -203,7 +205,7 @@ export class Adm002Component implements OnInit {
     if(this.gestionModelo!= undefined){
       this.limpiarGestion();
     }else{
-      console.log("abrir modal");
+     // console.log("abrir modal");
       $('#modal_gestion').modal();
     }
   }
@@ -237,7 +239,7 @@ export class Adm002Component implements OnInit {
       adgtgesd : item.adgtgesd == 1 ? true : false,
     }
     if(this.gestionModelo.adgtfegi!= null){
-      console.log("cargando data fechas: ");
+     // console.log("cargando data fechas: ");
       this.mesInicial = (new Date(this.gestionModelo.adgtfegi).getUTCMonth()+1).toString();
       this.mesFinal = (new Date(this.gestionModelo.adgtfegf).getUTCMonth()+1).toString();
       this.gestionModelo.adgtdiam =  this.datePipe.transform(
@@ -288,7 +290,7 @@ export class Adm002Component implements OnInit {
    }
 
   CargarPeriodo(item : any){
-    console.log("periodo : ", item);
+    //console.log("periodo : ", item);
     this.periodoModelo = {
       adprideg : item.adprideg,
       adpridep : item.adpridep, //== null  ? (('1').padStart(2,'0')) : item.adpridep,
@@ -306,17 +308,17 @@ export class Adm002Component implements OnInit {
         item.adprdiam,
         "yyyy-MM-dd",'+0430');
       this.dia =  new Date(fechita).getUTCDate();
-      console.info("Fechita: ", fechita);
+      //console.info("Fechita: ", fechita);
       // this.periodoModelo.adprdiam = fechita;
     }
     else{
       this.dia = 0
     }
-    console.info("dia: ", this.dia);
+   // console.info("dia: ", this.dia);
   }
 
   armarFecha(year: any , month :  any){
-    console.log("armando Fecha: ", year + "-" + month);
+    // console.log("armando Fecha: ", year + "-" + month);
     let fechaAux1 : string;
     fechaAux1 = year+"-"+month;
     this.fechainicial = new Date(year,month-1);
@@ -348,7 +350,7 @@ IniciarfechaModificacionAutomaticaPeriodo(){
  mostrarFecha = false;
 
  CalcularGestion(idGestion : string){
-   console.log("gestion : ", idGestion);
+  // console.log("gestion : ", idGestion);
    switch(idGestion) { 
     case "1": { 
       this.mesInicial = "1";
@@ -363,7 +365,7 @@ IniciarfechaModificacionAutomaticaPeriodo(){
       break; 
     }
     default: { 
-       console.log("sin Match: ", idGestion); 
+     //  console.log("sin Match: ", idGestion); 
        break; 
     } 
  } 
@@ -382,7 +384,7 @@ ActualizarPeriodo( ){
       FechaAux,
       "yyyy-MM-dd" );
     
-    console.log("periodo modelo para enviar: ", this.periodoModelo.adprdiam);
+    //console.log("periodo modelo para enviar: ", this.periodoModelo.adprdiam);
   }else{
     let fechaDiaAux : string ="";
     fechaDiaAux = ""+this.periodoModelo.adprideg+"-"+ this.periodoModelo.adprmesp+"-"+this.dia;
@@ -396,7 +398,7 @@ ActualizarPeriodo( ){
       this.notyG.noty("success", "Periodo actualizado", 3500);
     }
     else {
-      console.log("no se ha podido Actualizar: ",  resp);
+      //console.log("no se ha podido Actualizar: ",  resp);
       this.notyG.noty("error", "No se pudo actualizar", 3500);
     }
   });
