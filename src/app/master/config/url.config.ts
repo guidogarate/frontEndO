@@ -1,5 +1,5 @@
-// "http://localhost:3000/"
-// "https://colegio-si2-js.herokuapp.com/"
+// "http://localhost:5000/"
+// "https://sage-back.herokuapp.com/"
 const url = {
   prod: "https://sage-back.herokuapp.com/",
   database: "sys_000/sys_001/database",

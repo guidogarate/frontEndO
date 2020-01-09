@@ -21,19 +21,23 @@ export class Adm003Component implements OnInit, OnDestroy {
   pagi: any[];
   numeroPag = 1;
   texto = "all_auxma";
+  accionSubGrupo = "";
   habiCampo = {
     GrupHab: false,
     SubGrupHab: false,
-    ElimSubGru: false
+    ElimSubGru: false,
+    codigo: false
   };
   btnGrupo = {
     BtnGuard: false,
+    BtnCance: false,
     BtnEdita: true,
     BtnElimi: true,
     BtnAgreg: true
   };
   btnSubGrupo = {
     BtnSubGuard: false,
+    BtnSubCance: false,
     BtnSubEdita: true,
     BtnSubElimi: true,
     BtnSubAgreg: true
@@ -140,6 +144,7 @@ export class Adm003Component implements OnInit, OnDestroy {
     });
   }
 
+  // mostrar datos subGrupo
   actualizar(adm_003: Adm003Models) {
     this.amd003 = adm_003;
     let peticion: Observable<any>;
@@ -157,7 +162,29 @@ export class Adm003Component implements OnInit, OnDestroy {
       this.loadingSub = false;
       if (resp["ok"]) {
         this.auxmaSub = resp["auxma"];
-        console.log(this.auxmaSub.length);
+      } else {
+        // this.notyG.noty("error", resp["messagge"], 5000);
+      }
+      setTimeout(() => {
+        initLabels();
+      }, 5);
+    });
+  }
+
+  actualizarSubGrupo(adm_003: Adm003Models) {
+    this.amd003 = adm_003;
+    let peticion: Observable<any>;
+    if (this.auxmaSub === undefined) {
+      peticion = this.adm003S.buscarAdm003Sub(adm_003.adamtipa);
+    } else if (adm_003.adamtipa === this.auxmaSub[0].adamtipa) {
+      return;
+    } else {
+      // this.auxmaSub = [];
+      peticion = this.adm003S.buscarAdm003Sub(adm_003.adamtipa);
+    }
+    peticion.subscribe(resp => {
+      if (resp["ok"]) {
+        this.auxmaSub = resp["auxma"];
       } else {
         // this.notyG.noty("error", resp["messagge"], 5000);
       }
@@ -195,55 +222,166 @@ export class Adm003Component implements OnInit, OnDestroy {
     // console.log(this.amd003);
   }
 
-  nuevoSubGr() {
-    const data = {
-      adamidea: "",
-      adamdesc: "",
-      adamsigl: "",
-      adamsecu: "",
-      adamesta: false,
-      adampred: false
-    };
-    this.auxmaSub.push(data);
-    this.habiCampo.SubGrupHab = true;
-    setTimeout(() => {
-      initLabels();
-    }, 5);
-    console.log(this.auxmaSub);
+  SubGrup(accion: string) {
+    switch (accion) {
+      case "nuevo":
+        const data = {
+          adamidea: "",
+          adamdesc: "",
+          adamsigl: "",
+          adamsecu: "",
+          adamesta: false,
+          adampred: false
+        };
+        this.auxmaSub.push(data);
+        this.habiCampo.SubGrupHab = true;
+        setTimeout(() => {
+          initLabels();
+        }, 5);
+        this.habiCampo.ElimSubGru = false;
+        this.habiCampo.codigo = true;
+
+        this.habiCampo.SubGrupHab = true;
+        this.btnSubGrupo.BtnSubGuard = true;
+
+        this.btnGrupo.BtnEdita = false;
+        this.btnGrupo.BtnElimi = false;
+        this.btnGrupo.BtnAgreg = false;
+        this.btnSubGrupo.BtnSubEdita = false;
+        this.btnSubGrupo.BtnSubElimi = false;
+        this.btnSubGrupo.BtnSubAgreg = false;
+
+        this.accionSubGrupo = accion;
+        break;
+      case "cancelar":
+        this.habiCampo.ElimSubGru = false;
+        this.habiCampo.codigo = false;
+
+        this.habiCampo.SubGrupHab = false;
+        this.btnSubGrupo.BtnSubGuard = false;
+
+        this.btnGrupo.BtnEdita = true;
+        this.btnGrupo.BtnElimi = true;
+        this.btnGrupo.BtnAgreg = true;
+        this.btnSubGrupo.BtnSubEdita = true;
+        this.btnSubGrupo.BtnSubElimi = true;
+        this.btnSubGrupo.BtnSubAgreg = true;
+        this.btnSubGrupo.BtnSubCance = false;
+
+        this.accionSubGrupo = "";
+
+        break;
+      case "guardar":
+        this.habiCampo.ElimSubGru = false;
+        this.habiCampo.codigo = false;
+
+        this.habiCampo.SubGrupHab = false;
+        this.btnSubGrupo.BtnSubGuard = false;
+
+        this.btnGrupo.BtnEdita = true;
+        this.btnGrupo.BtnElimi = true;
+        this.btnGrupo.BtnAgreg = true;
+        this.btnSubGrupo.BtnSubEdita = true;
+        this.btnSubGrupo.BtnSubElimi = true;
+        this.btnSubGrupo.BtnSubAgreg = true;
+        this.btnSubGrupo.BtnSubCance = false;
+
+        this.AccionSubGrup(this.accionSubGrupo, this.auxmaSub);
+        // console.log(this.auxmaSub);
+        break;
+      case "editar":
+        this.habiCampo.SubGrupHab = true;
+        this.btnSubGrupo.BtnSubGuard = true;
+
+        this.btnGrupo.BtnEdita = false;
+        this.btnGrupo.BtnElimi = false;
+        this.btnGrupo.BtnAgreg = false;
+        this.btnSubGrupo.BtnSubEdita = false;
+        this.btnSubGrupo.BtnSubElimi = false;
+        this.btnSubGrupo.BtnSubAgreg = false;
+        this.btnSubGrupo.BtnSubCance = true;
+
+        this.accionSubGrupo = accion;
+        break;
+      case "eliminar":
+        this.btnSubGrupo.BtnSubGuard = true;
+
+        this.habiCampo.ElimSubGru = true;
+        this.btnGrupo.BtnEdita = false;
+        this.btnGrupo.BtnElimi = false;
+        this.btnGrupo.BtnAgreg = false;
+        this.btnSubGrupo.BtnSubEdita = false;
+        this.btnSubGrupo.BtnSubElimi = false;
+        this.btnSubGrupo.BtnSubAgreg = false;
+
+        this.accionSubGrupo = accion;
+        break;
+      default:
+      // console.log("accion incorrecta");
+    }
   }
 
-  edtSubGr() {
-    this.habiCampo.SubGrupHab = true;
-    this.btnSubGrupo.BtnSubGuard = true;
-
-    this.btnGrupo.BtnEdita = false;
-    this.btnGrupo.BtnElimi = false;
-    this.btnGrupo.BtnAgreg = false;
-    this.btnSubGrupo.BtnSubEdita = false;
-    this.btnSubGrupo.BtnSubElimi = false;
-    this.btnSubGrupo.BtnSubAgreg = false;
+  AccionSubGrup(accion: string, datos: any) {
+    switch (accion) {
+      case "nuevo":
+        this.nuevElemSub(datos);
+        this.accionSubGrupo = "";
+        break;
+      case "editar":
+        this.editElemSub(datos);
+        this.accionSubGrupo = "";
+        break;
+      default:
+      // code block
+    }
   }
 
-  elimSubGrup() {
-    console.log("eliminar");
-
-    this.habiCampo.ElimSubGru = true;
+  nuevElemSub(datos: any) {
+    this.adm003S
+      .nuevoAdm003Sub("90", this.amd003.adamtipa, datos)
+      .subscribe(resp => {
+        this.actualizarSubGrupo(this.amd003);
+        if (resp["ok"]) {
+          this.notyG.noty("success", resp["mensaje"], 3000);
+        } else {
+          this.notyG.noty("info", resp["mensaje"], 5000);
+        }
+      });
   }
 
-  guardSubGr() {
-    this.habiCampo.ElimSubGru = false;
-
-    this.habiCampo.SubGrupHab = false;
-    this.btnSubGrupo.BtnSubGuard = false;
-
-    this.btnGrupo.BtnEdita = true;
-    this.btnGrupo.BtnElimi = true;
-    this.btnGrupo.BtnAgreg = true;
-    this.btnSubGrupo.BtnSubEdita = true;
-    this.btnSubGrupo.BtnSubElimi = true;
-    this.btnSubGrupo.BtnSubAgreg = true;
-    console.log(this.auxmaSub);
+  editElemSub(datos: any) {
+    this.adm003S
+      .editarAdm003Sub("90", this.amd003.adamtipa, datos)
+      .subscribe(resp => {
+        if (resp["ok"]) {
+          this.notyG.noty("success", resp["mensaje"], 3000);
+          this.actualizarSubGrupo(this.amd003);
+        } else {
+          // this.notyG.noty("info", resp["mensaje"], 3000);
+        }
+      });
   }
+
+  elimElemSub(idelmen: string) {
+    const resp = confirm(
+      "Desea eliminar elemento seleccionado? \n codigo: " + idelmen
+    );
+    if (resp) {
+      this.adm003S
+        .eliminarAdm003Sub("90", this.amd003.adamtipa, idelmen)
+        .subscribe(resp => {
+          if (resp["ok"]) {
+            this.notyG.noty("success", resp["mensaje"], 3000);
+            this.actualizarSubGrupo(this.amd003);
+          } else {
+            // this.notyG.noty("info", resp["mensaje"], 3000);
+          }
+        });
+    } else {
+      return;
+    }
+  }
+
   salir() {
     this.btnGrupo.BtnGuard = false;
     this.btnGrupo.BtnEdita = true;

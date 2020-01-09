@@ -2,8 +2,8 @@
 <div class="row haciadentro animaciones">
   <div class="col-xl-12">
     <!-- Table with togglable columns -->
-    <br />
-    <div class="card">
+
+    <div class="card pb0">
       <div class="card-header header-elements-inline">
         <h5 class="card-title">DATOS COMPLEMENTARIOS</h5>
         <div class="header-elements">
@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div class="card-body">
+      <div class="card-body pb0">
         <div class="row">
           <div class="col-md-3 col-lg-4"></div>
           <div class="col-md-6 col-lg-4">
@@ -41,70 +41,78 @@
         </div>
       </div>
 
-      <div class="table-responsive">
-        <!-- <table class="table table-togglable table-xs table-hover"> -->
-        <table class="table table-xs table-hover">
-          <thead>
-            <tr class="bg-blue">
-              <th data-hide="phone">Codigo</th>
-              <th data-toggle="true" class="table-content-center">
-                Descripcion
-              </th>
-              <th data-hide="phone,tablet">Estado</th>
-              <th class="text-center" style="width: 30px;">
-                Opciones
-              </th>
-            </tr>
-          </thead>
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+          <div class="table-responsive text-center">
+            <!-- <table class="table table-togglable table-xs table-hover"> -->
+            <table
+              class="table table-sm table-hover table-striped table-bordered"
+            >
+              <thead>
+                <tr class="bg-blue">
+                  <th data-hide="phone">Codigo</th>
+                  <th data-toggle="true" class="table-content-center">
+                    Descripcion
+                  </th>
+                  <th data-hide="phone,tablet">Estado</th>
+                  <th class="text-center" style="width: 30px;">
+                    Opciones
+                  </th>
+                </tr>
+              </thead>
 
-          <tbody>
-            <ng-container *ngFor="let adm003 of auxma; let i = index"
-              ><tr (dblclick)="myFunction()" class="puntero">
-                <td>{{ adm003.adamtipa }}</td>
-                <td class="table-content-center">
-                  {{ adm003.adamdesc }}
-                </td>
-                <td>
-                  <span
-                    *ngIf="adm003.adamesta === '1' || adm003.adamesta === true"
-                    class="switchery"
-                    style="background-color: rgb(13, 148, 11); border-color: rgb(13, 148, 11); box-shadow: rgb(13, 148, 11) 0px 0px 0px 10px inset;"
-                    ><small
-                      style="left: 18px; background-color: rgb(255, 255, 255);"
-                    ></small
-                  ></span>
-                  <span
-                    *ngIf="adm003.adamesta === '0' || adm003.adamesta === false"
-                    class="switchery"
-                    style="box-shadow: rgb(173, 3, 3) 0px 0px 0px 0px inset; border-color: rgb(173, 3, 3); background-color: rgb(173, 3, 3);"
-                    ><small
-                      style="left: 0px;  background-color: rgb(255, 255, 255);"
-                    ></small
-                  ></span>
-                </td>
-                <td class="text-center">
-                  <div class="list-icons">
-                    <a
-                      href="#"
-                      (click)="actualizar(adm003)"
-                      data-toggle="modal"
-                      data-target="#modal_theme_info"
-                      class="list-icons-item text-primary-600"
-                      ><i class="icon-pencil7"></i
-                    ></a>
-                    <a href="#" class="list-icons-item text-danger-600"
-                      ><i class="icon-trash"></i
-                    ></a>
-                    <a href="#" class="list-icons-item text-teal-600"
-                      ><i class="icon-cog6"></i
-                    ></a>
-                  </div>
-                </td>
-              </tr>
-            </ng-container>
-          </tbody>
-        </table>
-        <br />
+              <tbody>
+                <ng-container *ngFor="let adm003 of auxma; let i = index"
+                  ><tr
+                    (dblclick)="myFunction()"
+                    class="puntero PRL0"
+                  >
+                    <td>{{ adm003.adamtipa }}</td>
+                    <td class="table-content-center">
+                      {{ adm003.adamdesc }}
+                    </td>
+                    <td>
+                      <div class="custom-control custom-switch">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input" 
+                          [(ngModel)]="adm003.adamesta"                        
+                          [disabled]="true"
+                          title="{{ adm003.adamesta }}"
+                          id="GrupEst{{ i }}"
+                        />
+                        <label class="custom-control-label" for="GrupEst{{ i }}"
+                          ></label
+                        >
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="list-icons">
+                        <a
+                          href="#"
+                          (click)="actualizar(adm003)"
+                          data-toggle="modal"
+                          data-target="#modal_theme_info"
+                          class="list-icons-item text-primary-600"
+                          ><i class="icon-file-eye"></i
+                        ></a>
+                        <a href="#" class="list-icons-item text-teal-600"
+                          ><i class="icon-pencil7"></i
+                        ></a>
+                        <a href="#" class="list-icons-item text-danger-600"
+                          ><i class="icon-trash"></i
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+            <br />
+          </div>
+        </div>
+        <div class="col-md-1"></div>
       </div>
       <div *ngIf="loading" class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
@@ -269,18 +277,29 @@
                 class="icon-file-plus xxl"
                 data-toggle="tooltip"
                 data-placement="top"
-                (click)="nuevoSubGr()"
+                (click)="SubGrup('nuevo')"
                 title="Nuevo"
               >
               </i
             ></a>
+            <a class="puntero" *ngIf="btnSubGrupo.BtnSubCance"
+            ><i
+              class="icon-cancel-circle2 xxl"
+              data-toggle="tooltip"
+              (click)="SubGrup('cancelar')"
+              data-placement="top"
+              data-dismiss="modal"          
+              title="Cancelar"
+            >
+            </i
+          ></a>
             <a class="puntero" *ngIf="btnSubGrupo.BtnSubGuard"
               ><i
                 class="icon-floppy-disk xxl"
                 data-toggle="tooltip"
-                (click)="guardSubGr()"
+                (click)="SubGrup('guardar')"
                 data-placement="top"
-                title="Guardar Grupo"
+                title="Guardar"
               >
               </i
             ></a>
@@ -289,8 +308,8 @@
                 class="icon-pencil7 xxl"
                 data-toggle="tooltip"
                 data-placement="top"
-                (click)="edtSubGr()"
-                title="editar Gestion"
+                (click)="SubGrup('editar')"
+                title="editar"
               >
               </i
             ></a>
@@ -299,8 +318,8 @@
                 class="icon-trash xxl"
                 data-toggle="tooltip"
                 data-placement="top"
-                (click)="elimSubGrup()"
-                title="Eliminar Gestion"
+                (click)="SubGrup('eliminar')"
+                title="Eliminar"
               >
               </i
             ></a>
@@ -314,7 +333,7 @@
                 title="Salir"
               >
               </i
-            ></a>
+            ></a>           
           </div>
         </div>
         <div class="modal-body ">
@@ -324,13 +343,13 @@
                 *ngIf="habiCampo.ElimSubGru"
                 class="col-1 col-sm-1 col-md-1 col-lg-1"
               >
-                <div class="form-check ">
-                  <input
-                    class="form-check-input puntero checkmacc"
-                    type="checkbox"
-                    value=""
-                  />
-                </div>
+                <!-- javascript:void 0  ||  javascript:; -->
+                <a
+                  (click)="elimElemSub(auxSub.adamidea)"
+                  href="javascript:void 0"
+                  class="list-icons-item text-danger-600"
+                  ><i class="icon-trash"></i
+                ></a>
               </div>
               <div class="col-3 col-sm-1 col-md-1 col-lg-1">
                 <div class="form-group form-group-float">
@@ -340,7 +359,7 @@
                     class="form-control"
                     [(ngModel)]="auxSub.adamidea"
                     title="{{ auxSub.adamidea }}"
-                    [disabled]="true"
+                    [disabled]="!habiCampo.codigo"
                     required
                     placeholder="Codigo"
                   />
