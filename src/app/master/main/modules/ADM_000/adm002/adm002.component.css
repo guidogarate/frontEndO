@@ -1,6 +1,9 @@
   .xl {
     font-size: 1.5em; /* de esta manera modificas el tamaño de tus iconos.*/
   }
+  .plIcon{
+    padding-left: 1em;;
+  }
   .xl-Icon{
     margin-right: 2em;
     font-size: 1.5em;
@@ -34,12 +37,9 @@
     padding-bottom: 0%;
   }
   .content{
-    /* padding-left: 2rem;
-    padding-right: 2rem; */
     margin-left: 10px;
     margin-right: 10px;
-    padding-bottom: 0.5rem;
-    padding-top: 0.5rem;
+   padding: 0;
   }
   .card{
     padding-bottom: 0.5rem;
@@ -54,7 +54,7 @@
     margin-top: 0.5rem;
   }
   .pb0{ 
-    padding-bottom: 0.5em;
+   padding: 0;
    
   }
 
@@ -106,5 +106,9 @@
 .PRL0{
   padding-left: 0;
   padding-right: 0;
+}
+.scroll-Table-Gestion{
+  height: 92px;
+  overflow-y: scroll;
 }
     

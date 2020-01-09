@@ -67,7 +67,7 @@ export class Adm002Component implements OnInit {
     this.obtenerGestionesPeriodos();
     setTimeout(() => {
       initLabels();
-      init_date();
+      // init_date();
     }, 1000);
 
   }
@@ -77,7 +77,7 @@ export class Adm002Component implements OnInit {
     this.adm002Service.ObtenerGestionesPeriodos().subscribe( resp => {
       if( resp["ok"]){
         this.ListaGestiones = resp["gestion"];
-        var removed = this.ListaGestiones.splice(3);
+       // var removed = this.ListaGestiones.splice(3);
         this.ListaPeriodos = resp["periodos"];
         this.ListaEstadosGestionPeriodos = resp ["EstGestion"];
         this.ListaTiposEmpresa = resp ["ActiEmpres"];
@@ -126,40 +126,56 @@ export class Adm002Component implements OnInit {
     });
   }
 
+  VerPeriodos(gestion : any){
+    this.cargando = true;
+    this.adm002Service.ObtenerPeriodos(gestion.adgtideg).subscribe( resp => {
+      if( resp["ok"]){
+        this.ListaPeriodos = resp["periodos"];
+        this.notyG.noty("success", "Cargando Periodos "+gestion.adgtideg , 3500);
+      }
+      else{
+        console.log("No se cargo gestiones ni periodos");
+        this.notyG.noty("error", "No se ha podido recuperar los periodos " + gestion.adgtideg, 3500);
+        resp;
+      }
+    });
+    this.cargando = false;
+
+  }
 
   EliminarGestion(item : any) {
     let result = confirm("Esta Seguro que desea Eliminar?"); 
-    if (result) 
-    { 
-      //Logic to delete the item 
-    if(item != undefined || item !=null){
-      this.gestionModelo = item;
+      if (result) 
+      { 
+          //Logic to delete the item 
+        if(item != undefined || item !=null){
+          this.gestionModelo = item;
+        }
+        console.log("eliminando: ", this.gestionModelo);
+        this.adm002Service.EliminarGestion(this.gestionModelo.adgtideg).subscribe(resp => {
+          if (resp["ok"]) {
+            /**
+             * primera opcion  haciendo la llamada al backend
+             */
+
+            this.limpiarGestion();
+            this.cerrarModal();
+            this.obtenerGestionesPeriodos();
+
+          /**
+            * Segunda opcion de eliminar para evitar la llamada al backend
+            */
+            // this.ListaGestiones= this.ListaGestiones.filter( function(gestion){
+            //   return gestion.gestion != this.gestionModelo.adgtideg;
+            // });
+            this.notyG.noty("info", resp["message"], 3500);
+          } else {
+            console.log("no se pudo eliminar", resp);
+            this.notyG.noty("error", "No se puede eliminar la Gestion", 3500);
+            return resp;
+          }
+      });
     }
-    console.log("eliminando: ", this.gestionModelo);
-    this.adm002Service.EliminarGestion(this.gestionModelo.adgtideg).subscribe(resp => {
-      if (resp["ok"]) {
-        /**
-         * primera opcion  haciendo la llamada al backend
-         */
-
-        this.limpiarGestion();
-        this.cerrarModal();
-        this.obtenerGestionesPeriodos();
-
-       /**
-        * Segunda opcion de eliminar para evitar la llamada al backend
-        */
-        // this.ListaGestiones= this.ListaGestiones.filter( function(gestion){
-        //   return gestion.gestion != this.gestionModelo.adgtideg;
-        // });
-        this.notyG.noty("info", resp["message"], 3500);
-      } else {
-        console.log("no se pudo eliminar", resp);
-        this.notyG.noty("error", "No se puede eliminar la Gestion", 3500);
-        return resp;
-      }
-    });
-  }
   }
 
   editar(){
@@ -170,21 +186,12 @@ export class Adm002Component implements OnInit {
   VerGestion( item : any){
     this.editGestion = true;
     this.cargarGestion(item);
-    $('#modal_gestion').modal();
-    setTimeout(() => {
-      initLabels();
-    }, 1000);
-
   }
 
   EditarGestion( item : any){
     this.editGestion= false;
     this.nuevo = false;
     this.cargarGestion(item);
-    $('#modal_gestion').modal();
-    setTimeout(() => {
-      initLabels();
-    }, 1000);
   }
 
   AgregarGestion(){
@@ -192,11 +199,6 @@ export class Adm002Component implements OnInit {
     this.editPeriodo = false;
     this.nuevo = true;
     this.limpiarGestion();
-    //console.log("abrir modal");
-    $('#modal_gestion').modal();
-    setTimeout(() => {
-      initLabels();
-    }, 1000);
   }
 
   Nuevo(){
@@ -205,8 +207,8 @@ export class Adm002Component implements OnInit {
     if(this.gestionModelo!= undefined){
       this.limpiarGestion();
     }else{
-     // console.log("abrir modal");
-      $('#modal_gestion').modal();
+     console.log("abrir modal");
+  
     }
   }
 
@@ -219,7 +221,7 @@ export class Adm002Component implements OnInit {
 
   cerrarModal(){
     $('#modal_gestion').modal("hide");
-    $('#modal_periodo').modal("hide");
+    $('#modal_periodo_gestion').modal("hide");
     this.editGestion = true;
     this.editPeriodo = true;
     this.nuevo = false;
@@ -231,7 +233,7 @@ export class Adm002Component implements OnInit {
       adgtdesc : item.adgtdesc,
       adgtacte : item.adgtacte,
       adgtcanp : item.adgtcanp,
-      adgtesta : item.adgtesta,
+      adgtesta : item.adgtesta == 1 ? "1" : "2",
       adgtfegi : item.adgtfegi,
       adgtfegf : item.adgtfegf,
       adgtmoda : item.adgtmoda == "1" ? true : false,
@@ -270,7 +272,6 @@ export class Adm002Component implements OnInit {
 
    VerPeriodo(item : any){
     this.CargarPeriodo(item);
-    $('#modal_periodo_gestion').modal();
     setTimeout(() => {
       initLabels();
     }, 1000);
@@ -283,20 +284,18 @@ export class Adm002Component implements OnInit {
 
     this.editPeriodo = true;
     this.CargarPeriodo(item);
-    $('#modal_periodo_gestion').modal();
     setTimeout(() => {
       initLabels();
     }, 1000);
    }
 
   CargarPeriodo(item : any){
-    //console.log("periodo : ", item);
     this.periodoModelo = {
       adprideg : item.adprideg,
       adpridep : item.adpridep, //== null  ? (('1').padStart(2,'0')) : item.adpridep,
       adprmesp : item.adprmesp,
       adprdesc : item.adprdesc,
-      adpresta : item.adpresta,
+      adpresta : item.adpresta == 1 ? "1" : "2",
       adprfepi : item.adprfepi,
       adprfepf : item.adprfepf,
       adprmoda : item.adprmoda == "1" ? true : false,
@@ -309,13 +308,10 @@ export class Adm002Component implements OnInit {
         "yyyy-MM-dd",'+0430');
       this.dia =  new Date(fechita).getUTCDate();
       this.periodoModelo.adprdiam = fechita;
-      //console.info("Fechita: ", fechita);
-      // this.periodoModelo.adprdiam = fechita;
     }
     else{
       this.dia = 0
     }
-   // console.info("dia: ", this.dia);
   }
 
   armarFecha(year: any , month :  any){
@@ -351,7 +347,6 @@ IniciarfechaModificacionAutomaticaPeriodo(){
  mostrarFecha = false;
 
  CalcularGestion(idGestion : string){
-  // console.log("gestion : ", idGestion);
    switch(idGestion) { 
     case "1": { 
       this.mesInicial = "1";
@@ -366,7 +361,6 @@ IniciarfechaModificacionAutomaticaPeriodo(){
       break; 
     }
     default: { 
-     //  console.log("sin Match: ", idGestion); 
        break; 
     } 
  } 
@@ -392,6 +386,7 @@ ActualizarPeriodo( ){
     // this.periodoModelo.adprdiam = new Date(fechaDiaAux);
   }
   anhoDia = ""+this.periodoModelo.adprideg+"/"+this.periodoModelo.adprmesp;
+  console.log("Actualizar Periodo: ",this.periodoModelo);
   this.adm002Service.ActualizarPeriodo(this.periodoModelo,anhoDia).subscribe( resp => {
     if (resp ["ok"]){
       this.cerrarModal();
