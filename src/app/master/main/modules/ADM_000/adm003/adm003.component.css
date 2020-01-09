@@ -79,3 +79,18 @@ label {
     font-size: 1.5em;
   }
 }
+
+/** ESTILOS PARA TABLA, COLOCAL DE MANERA GLOBAL*/
+.table td,
+.table th {
+  padding-top: 0%;
+  padding-bottom: 0%;
+}
+.PRL0 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.pb0 {
+  padding-bottom: 0.5em;
+}

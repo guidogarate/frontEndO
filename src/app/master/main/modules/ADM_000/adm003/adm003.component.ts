@@ -25,16 +25,19 @@ export class Adm003Component implements OnInit, OnDestroy {
   habiCampo = {
     GrupHab: false,
     SubGrupHab: false,
-    ElimSubGru: false
+    ElimSubGru: false,
+    codigo: false
   };
   btnGrupo = {
     BtnGuard: false,
+    BtnCance: false,
     BtnEdita: true,
     BtnElimi: true,
     BtnAgreg: true
   };
   btnSubGrupo = {
     BtnSubGuard: false,
+    BtnSubCance: false,
     BtnSubEdita: true,
     BtnSubElimi: true,
     BtnSubAgreg: true
@@ -231,13 +234,12 @@ export class Adm003Component implements OnInit, OnDestroy {
           adampred: false
         };
         this.auxmaSub.push(data);
-        const control = this.auxmaSub.length;
-        console.log(this.auxmaSub);
         this.habiCampo.SubGrupHab = true;
         setTimeout(() => {
           initLabels();
         }, 5);
         this.habiCampo.ElimSubGru = false;
+        this.habiCampo.codigo = true;
 
         this.habiCampo.SubGrupHab = true;
         this.btnSubGrupo.BtnSubGuard = true;
@@ -251,8 +253,9 @@ export class Adm003Component implements OnInit, OnDestroy {
 
         this.accionSubGrupo = accion;
         break;
-      case "guardar":
+      case "cancelar":
         this.habiCampo.ElimSubGru = false;
+        this.habiCampo.codigo = false;
 
         this.habiCampo.SubGrupHab = false;
         this.btnSubGrupo.BtnSubGuard = false;
@@ -263,6 +266,25 @@ export class Adm003Component implements OnInit, OnDestroy {
         this.btnSubGrupo.BtnSubEdita = true;
         this.btnSubGrupo.BtnSubElimi = true;
         this.btnSubGrupo.BtnSubAgreg = true;
+        this.btnSubGrupo.BtnSubCance = false;
+
+        this.accionSubGrupo = "";
+
+        break;
+      case "guardar":
+        this.habiCampo.ElimSubGru = false;
+        this.habiCampo.codigo = false;
+
+        this.habiCampo.SubGrupHab = false;
+        this.btnSubGrupo.BtnSubGuard = false;
+
+        this.btnGrupo.BtnEdita = true;
+        this.btnGrupo.BtnElimi = true;
+        this.btnGrupo.BtnAgreg = true;
+        this.btnSubGrupo.BtnSubEdita = true;
+        this.btnSubGrupo.BtnSubElimi = true;
+        this.btnSubGrupo.BtnSubAgreg = true;
+        this.btnSubGrupo.BtnSubCance = false;
 
         this.AccionSubGrup(this.accionSubGrupo, this.auxmaSub);
         // console.log(this.auxmaSub);
@@ -277,11 +299,11 @@ export class Adm003Component implements OnInit, OnDestroy {
         this.btnSubGrupo.BtnSubEdita = false;
         this.btnSubGrupo.BtnSubElimi = false;
         this.btnSubGrupo.BtnSubAgreg = false;
+        this.btnSubGrupo.BtnSubCance = true;
 
         this.accionSubGrupo = accion;
         break;
       case "eliminar":
-        this.habiCampo.SubGrupHab = true;
         this.btnSubGrupo.BtnSubGuard = true;
 
         this.habiCampo.ElimSubGru = true;
@@ -302,6 +324,7 @@ export class Adm003Component implements OnInit, OnDestroy {
   AccionSubGrup(accion: string, datos: any) {
     switch (accion) {
       case "nuevo":
+        this.nuevElemSub(datos);
         this.accionSubGrupo = "";
         break;
       case "editar":
@@ -313,15 +336,30 @@ export class Adm003Component implements OnInit, OnDestroy {
     }
   }
 
-  editElemSub(datos: any) {
-    this.adm003S.editarAdm003Sub("90", "1", datos).subscribe(resp => {
-      if (resp["ok"]) {
-        this.notyG.noty("success", resp["mensaje"], 3000);
+  nuevElemSub(datos: any) {
+    this.adm003S
+      .nuevoAdm003Sub("90", this.amd003.adamtipa, datos)
+      .subscribe(resp => {
         this.actualizarSubGrupo(this.amd003);
-      } else {
-        // this.notyG.noty("info", resp["mensaje"], 3000);
-      }
-    });
+        if (resp["ok"]) {
+          this.notyG.noty("success", resp["mensaje"], 3000);
+        } else {
+          this.notyG.noty("info", resp["mensaje"], 5000);
+        }
+      });
+  }
+
+  editElemSub(datos: any) {
+    this.adm003S
+      .editarAdm003Sub("90", this.amd003.adamtipa, datos)
+      .subscribe(resp => {
+        if (resp["ok"]) {
+          this.notyG.noty("success", resp["mensaje"], 3000);
+          this.actualizarSubGrupo(this.amd003);
+        } else {
+          // this.notyG.noty("info", resp["mensaje"], 3000);
+        }
+      });
   }
 
   elimElemSub(idelmen: string) {
@@ -334,7 +372,7 @@ export class Adm003Component implements OnInit, OnDestroy {
         .subscribe(resp => {
           if (resp["ok"]) {
             this.notyG.noty("success", resp["mensaje"], 3000);
-            this.actualizar(this.amd003);
+            this.actualizarSubGrupo(this.amd003);
           } else {
             // this.notyG.noty("info", resp["mensaje"], 3000);
           }
@@ -356,14 +394,4 @@ export class Adm003Component implements OnInit, OnDestroy {
     this.habiCampo.SubGrupHab = false;
     this.habiCampo.SubGrupHab = false;
   }
-}
-
-interface Adm003subI {
-  adamtipa: string;
-  adamidea: string;
-  adamdesc: string;
-  adamsigl: string;
-  adamesta: string;
-  adamsecu: string;
-  adampred: string;
 }

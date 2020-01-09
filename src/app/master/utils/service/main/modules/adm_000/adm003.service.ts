@@ -39,6 +39,28 @@ export class Adm003Service {
       );
   }
 
+  nuevoAdm003Sub(adamcodm: string, adamtipa: string, dato: any) {
+    const datos = [dato[dato.length - 1]];
+    const json = JSON.stringify({
+      adamcodm,
+      adamtipa,
+      datos
+    });
+    const url1 = `${url.prod}${adm0003.nuevoDatoSub}`;
+    return this.httpClient
+      .post(url1, json, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
+
   editarAdm003Sub(adamcodm: string, adamtipa: string, datos: any) {
     const url1 = `${url.prod}${adm0003.editarDatoSub}${adamcodm}/${adamtipa}`;
     return this.httpClient
@@ -70,9 +92,4 @@ export class Adm003Service {
         })
       );
   }
-}
-
-interface Ajustes {
-  temaUrl: string;
-  tema: string;
 }
