@@ -14,7 +14,6 @@ export class Adm002Service {
 
   ObtenerPeriodos(fecha: any) {
     const url1 = `${url.prod}${url.get_periodos}${fecha}`;
-    console.log("obteniendo Periodo: ", url1);
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -96,7 +95,7 @@ export class Adm002Service {
       descripcion: item.adgtdesc,
       actEmpresa: +item.adgtacte,
       cantPeridos: +item.adgtcanp,
-      estPeriodo: +item.adgtesta,
+      estPeriodo: +item.adgtesta == 1 ? "1":"0",
       fechaInicio: item.adgtfegi,
       fechaFin: item.adgtfegf,
       gtionDefec: item.adgtgesd == true ? "1" : "0",
@@ -124,10 +123,10 @@ export class Adm002Service {
   ActualizarPeriodo(Periodo: any, fechaAnhoDia : string) {
     const json = JSON.stringify({
       estPeriodo: Periodo.adpresta == 1 ? "1":"0",
-      modAutomatica : Periodo.adprmoda == true ? "1" : "2",
+      modAutomatica : Periodo.adprmoda == true ? "1" : "0",
       fechaModAutomatica : Periodo.adprdiam
     });
-    
+    console.info("Actualizando en service: ", json);
     const url1 = `${url.prod}${url.actualizar_periodo}${fechaAnhoDia}`;
      
     return this.httpClient

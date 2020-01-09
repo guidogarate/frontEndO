@@ -80,13 +80,13 @@
                           Imputacion De la Moneda
                           <input type="checkbox" class="form-check-input" checked>
                         </label>
-                      </div>
+                    </div>
                 </div>
 
                 <div class="col-md-3 offset-md-1 col-12">
                   <label class="form-group-float-label">Imputacion</label>
                   <select class="form-control"  >
-                      <option *ngFor="let item of ListaTiposEmpresa" placeholder="Imputacion"
+                      <option *ngFor="let item of Lista" placeholder="Imputacion"
                       [value]=item.adamidea >{{item.adamdesc}}
                       </option>
                   </select>
@@ -94,14 +94,14 @@
                 <div class="col-md-3 offset-md-1 col-12">
                     <label class="form-group-float-label">Conversion</label>
                     <select class="form-control"  >
-                        <option *ngFor="let item of ListaTiposEmpresa" placeholder="Conversion"
+                        <option *ngFor="let item of Lista" placeholder="Conversion"
                         [value]=item.adamidea >{{item.adamdesc}}
                         </option>
                     </select>
                 </div>
             </div>
                 
-            </div>
+          </div>
           </div> 
           <div class="card" style="margin: 5px;">
             <div class="card-header header-elements-inline">
@@ -109,32 +109,49 @@
                   FOLIACION
                 </h5>
             </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Tipo de Folio</label>
+              <div class="col-md-3">
+                  <select class="form-control">
+                      <option value="opt1">Folio</option>
+                      <option value="opt1">Periodo-Folio</option>
+                      <option value="opt1">Gestion-Periodo-Folio</option>
+                  </select>
+              </div>
+              <div class="col-md-6 col-12 form-check form-check-inline form-check-right">
+                <label class="form-check-label">
+                  Adicionar pefijo de Dcto.
+                </label>
+                <input type="checkbox" class="form-check-input float-right" checked>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-form-label col-lg-6"></label>
+              <div class="col-lg-6">
+                <input class="form-group" disabled value="IN VING-2019-01-000001">
+                </div>
+            </div>
+            
+
+
+
             <div class="card-body">
               <div class="row text-center" style="padding: 10px;" >
-                <div class="col-md-4 col-12">
-                   <div class="form-check form-check-inline form-check-right">
-                        <label class="form-check-label">
-                          Imputacion De la Moneda
-                          <input type="checkbox" class="form-check-input" checked>
-                        </label>
+                <div class="col-md-6 col-12">
+                  <div class="col-md-6 col-12">
+                    <span>Gestion-Periodo-Folio</span>
+                  </div>
+                      <div class="col-md-6">
+                        <select class="form-control"  >
+                            <option *ngFor="let item of Lista" placeholder="Tipo de Folio"
+                            [value]="1" >Gestion-Periodo-Folio
+                            </option>
+                        </select>
                       </div>
                 </div>
-
-                <div class="col-md-3 offset-md-1 col-12">
-                  <label class="form-group-float-label">Imputacion</label>
-                  <select class="form-control"  >
-                      <option *ngFor="let item of ListaTiposEmpresa" placeholder="Imputacion"
-                      [value]=item.adamidea >{{item.adamdesc}}
-                      </option>
-                  </select>
-                </div>
-                <div class="col-md-3 offset-md-1 col-12">
-                    <label class="form-group-float-label">Conversion</label>
-                    <select class="form-control"  >
-                        <option *ngFor="let item of ListaTiposEmpresa" placeholder="Conversion"
-                        [value]=item.adamidea >{{item.adamdesc}}
-                        </option>
-                    </select>
+                <div class="col-md-6 col-12">
+                    <input class="form-group" disabled value="IN VING-2019-01-000001">
                 </div>
             </div>
                 
@@ -160,7 +177,7 @@
                 <div class="col-md-3 offset-md-1 col-12">
                   <label class="form-group-float-label">Imputacion</label>
                   <select class="form-control"  >
-                      <option *ngFor="let item of ListaTiposEmpresa" placeholder="Imputacion"
+                      <option *ngFor="let item of Lista" placeholder="Imputacion"
                       [value]=item.adamidea >{{item.adamdesc}}
                       </option>
                   </select>
@@ -168,7 +185,7 @@
                 <div class="col-md-3 offset-md-1 col-12">
                     <label class="form-group-float-label">Conversion</label>
                     <select class="form-control"  >
-                        <option *ngFor="let item of ListaTiposEmpresa" placeholder="Conversion"
+                        <option *ngFor="let item of Lista" placeholder="Conversion"
                         [value]=item.adamidea >{{item.adamdesc}}
                         </option>
                     </select>
@@ -196,7 +213,7 @@
                 <div class="col-md-3 offset-md-1 col-12">
                   <label class="form-group-float-label">Imputacion</label>
                   <select class="form-control"  >
-                      <option *ngFor="let item of ListaTiposEmpresa" placeholder="Imputacion"
+                      <option *ngFor="let item of Lista" placeholder="Imputacion"
                       [value]=item.adamidea >{{item.adamdesc}}
                       </option>
                   </select>
@@ -204,7 +221,7 @@
                 <div class="col-md-3 offset-md-1 col-12">
                     <label class="form-group-float-label">Conversion</label>
                     <select class="form-control"  >
-                        <option *ngFor="let item of ListaTiposEmpresa" placeholder="Conversion"
+                        <option *ngFor="let item of Lista" placeholder="Conversion"
                         [value]=item.adamidea >{{item.adamdesc}}
                         </option>
                     </select>
@@ -233,7 +250,7 @@
                 <div class="col-md-3 offset-md-1 col-12">
                   <label class="form-group-float-label">Imputacion</label>
                   <select class="form-control"  >
-                      <option *ngFor="let item of ListaTiposEmpresa" placeholder="Imputacion"
+                      <option *ngFor="let item of Lista" placeholder="Imputacion"
                       [value]=item.adamidea >{{item.adamdesc}}
                       </option>
                   </select>
@@ -241,7 +258,7 @@
                 <div class="col-md-3 offset-md-1 col-12">
                     <label class="form-group-float-label">Conversion</label>
                     <select class="form-control"  >
-                        <option *ngFor="let item of ListaTiposEmpresa" placeholder="Conversion"
+                        <option *ngFor="let item of Lista" placeholder="Conversion"
                         [value]=item.adamidea >{{item.adamdesc}}
                         </option>
                     </select>

@@ -7,8 +7,11 @@
             <div class="row card-header header-elements-inline">  
                 <div class="col-md-12 col-12">
                     <h2 class="card-title xxl-mobileH2 text-center">Registro de Gestiones
-                        <i class="icon-diff-added xxl-title float-right" (click)="AgregarGestion()"
-                        data-toggle="tooltip" data-placement="top" title="Agregar Gestion"> </i>
+                        <a class="list-icons-item text-primary-600 float-right" (click)="AgregarGestion()"
+                        [routerLink]="nada()" routerLinkActive="router-link-active"
+                        data-toggle="modal" data-target="#modal_gestion">
+                        <i class="icon-diff-added xxl-title" data-toggle="tooltip" data-placement="top" title="Ver Gestion"> </i>
+                        </a>
                     </h2>
                 </div>
             </div>
@@ -16,7 +19,7 @@
                 <div class="row">
                     <div class="col-md-12 col-12">
                         <h3 class="text-left">
-                            <i class="icon-calendar22 xxl-title float-left"></i>
+                            <i class="icon-calendar22 xxl-title float-left plIcon"></i>
                             <span class="font-weight-semibold"></span>
                             Gestion
                         </h3>
@@ -26,8 +29,8 @@
                     <div class="col-md-1 d-none d-sm-none d-md-block" >
                     </div>
                     <div class="col-md-10">
-                        <div class="table-responsive text-center">
-                            <table class="table table-sm table-hover table-bordered">
+                        <div class="table-responsive text-center scroll-Table-Gestion">
+                            <table class="table table-sm table-hover table-striped table-bordered">
                                 <thead class="bg-blue">
                                     <th scope="col">Gestion</th>
                                     <th scope="col">Descripcion</th>
@@ -36,18 +39,19 @@
                                 </thead>
                                 <tbody>
                                     <tr class="table-border-double PRL0" *ngFor="let gestion of ListaGestiones">
-                                        <td class="puntero PRL0">{{gestion.adgtideg}}</td>
-                                        <td class="puntero PRL0">{{gestion.adgtdesc}}</td>
-                                        <td class="puntero PRL0">{{gestion.adgtesta | estado}}</td>
-                                        
+                                        <td class="puntero PRL0" (click) = "VerPeriodos(gestion)">{{gestion.adgtideg}}</td>
+                                        <td class="puntero PRL0" (click) = "VerPeriodos(gestion)">{{gestion.adgtdesc}}</td>
+                                        <td class="puntero PRL0" (click) = "VerPeriodos(gestion)">{{gestion.adgtesta | estado}}</td>
                                         <td class="puntero PRL0"> 
                                             <div class="list-icons"> 
                                                 <a class="list-icons-item text-primary-600" (click)="VerGestion(gestion)"
-                                                [routerLink]="nada()" routerLinkActive="router-link-active">
+                                                [routerLink]="nada()" routerLinkActive="router-link-active"
+                                                data-toggle="modal" data-target="#modal_gestion">
                                                 <i class="icon-file-eye xl " data-toggle="tooltip" data-placement="top" title="Ver Gestion"> </i>
                                                 </a>
                                                 <a class="list-icons-item text-teal-600"  (click)="EditarGestion(gestion)"
-                                                [routerLink]="nada()" routerLinkActive="router-link-active"  >
+                                                [routerLink]="nada()" routerLinkActive="router-link-active" 
+                                                data-toggle="modal" data-target="#modal_gestion" >
                                                     <i class="icon-pencil7 xl" data-toggle="tooltip" data-placement="top" title="Editar Gestion"> </i>
                                                 </a>
                                                 <a class="list-icons-item text-danger-600" (click)="EliminarGestion(gestion)"
@@ -65,17 +69,16 @@
                               <span class="sr-only">Loading...</span>
                             </div>
                         </div>
-                        <div *ngIf="cargando == true"> <pre>Holoooo</pre></div>
                     </div>
 
-                    <div class="col-md-1"></div>
+                    <div class="col-md-1 d-none d-sm-none d-md-block"></div>
                 </div>
 
                 <!-- TODO:  segunda tabla -->
                 <div class="row">
                     <div class="col-md-12 col-12">
-                        <h3 class="text-left xxl-mobileH2">
-                            <i class="icon-calendar22 float-left xxl-title"></i>
+                        <h3 class="text-left">
+                            <i class="icon-calendar22 xxl-title float-left plIcon"></i>
                             Periodos de Gestion
                         </h3>
                     </div>
@@ -104,11 +107,13 @@
                                         <td class="puntero PRL0"> 
                                             <div class="list-icons"> 
                                                 <a class="list-icons-item text-primary-600" (click)="VerPeriodo(periodo)"
-                                                [routerLink]="nada()" routerLinkActive="router-link-active">
+                                                [routerLink]="nada()" routerLinkActive="router-link-active"
+                                                data-toggle="modal" data-target="#modal_periodo_gestion">
                                                 <i class="icon-file-eye xl " data-toggle="tooltip" data-placement="top" title="Ver Periodo"> </i>
                                                 </a>
                                                 <a class="list-icons-item text-teal-600"  (click)="EditarPeriodo(periodo)"
-                                                [routerLink]="nada()" routerLinkActive="router-link-active"  >
+                                                [routerLink]="nada()" routerLinkActive="router-link-active"
+                                                data-toggle="modal" data-target="#modal_periodo_gestion">
                                                     <i class="icon-pencil7 xl" data-toggle="tooltip" data-placement="top" title="Editar Periodo"> </i>
                                                 </a>
                                             </div>
@@ -119,10 +124,6 @@
                         </div>
                     </div>
                     <div class="col-md-1 d-none d-sm-none d-md-block">
-                        <div class="form-group form-group-float" style="display: none;">
-                            <label class="form-group-float-label">Text input</label>
-                            <input type="text" class="form-control" placeholder="Text input">
-                        </div>
                     </div>
                 </div>
             </div>
@@ -130,7 +131,7 @@
           <!-- /contenido posts -->
         </div>
         <!-- modal -->
-        <div *ngIf="gestionModelo!= undefined" id="modal_gestion" class="modal fade" tabindex="-1" data-backdrop="false">
+        <div *ngIf="gestionModelo!= undefined" id="modal_gestion" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header bg-blue">
@@ -169,6 +170,7 @@
                     <div class="row text-center" style="margin-left: 15px; margin-right:15px;margin-top: 15px;" >
                         <div class="col-md-2 col-12">
                             <div class="form-group form-group-float">
+                                <!-- <p class="alert alert-danger" *ngIf="gestionModelo.adgtideg == null">required</p> -->
                                 <label class="form-group-float-label">Gestion</label>
                                 <input type="text" class="form-control text-center" name="Gestion" placeholder="Gestion" required
                                   value="{{gestionModelo.adgtideg}}" required [(ngModel)]="gestionModelo.adgtideg" [disabled]="editGestion">
@@ -303,7 +305,7 @@
 
 
         <!-- Segundo Modal : Periodos de Gestion -->
-        <div *ngIf="periodoModelo!= undefined" id="modal_periodo_gestion" class="modal fade" tabindex="-1" data-backdrop="false">
+        <div *ngIf="periodoModelo!= undefined" id="modal_periodo_gestion" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header bg-blue">
@@ -387,20 +389,18 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-lg-6 col-6">Fecha de Modificacion Automatica</label>
                                 <div class="col-lg-6 col-4">
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <input type="text" name="fechaPeriodo1" class="form-control text-center" required [disabled]="!(periodoModelo.adprmoda && editPeriodo)"
                                             [value]="dia" [(ngModel)]="dia">                                  
-                                        </div>
-                                        <!-- <div class="form-group">
-                                            <input type="date" name="fechaPeriodo2" class="form-control text-center" required [disabled]="!(periodoModelo.adprmoda && editPeriodo)"
-                                            [value]="periodoModelo.adprdiam | date: 'short'" data-date="format" [(ngModel)]="periodoModelo.adprdiam">                                  
                                         </div> -->
+                                        <div class="form-group">
+                                            <input type="date" name="fechaPeriodo2" class="form-control text-center" required [disabled]="!(periodoModelo.adprmoda && editPeriodo)"
+                                            [value]="periodoModelo.adprdiam" data-date="format" [(ngModel)]="periodoModelo.adprdiam">                                  
+                                        </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <pre> {{periodoModelo.adprdiam | date: "dd-MM-yyyy" }}</pre>
-                    <pre> {{periodoModelo.adprdiam }}</pre> -->
                 </div>
             </div>
         </div>
