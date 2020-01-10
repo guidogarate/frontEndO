@@ -6,7 +6,7 @@
         <div class="card pb0">
             <div class="row card-header header-elements-inline">  
                 <div class="col-md-12 col-12">
-                    <h2 class="card-title xxl-mobileH2 text-center">Registro de Gestiones
+                    <h2 class="card-title font-weight-bold xxl-mobileH2 text-center">REGISTRO DE GESTIONES
                         <a class="list-icons-item text-primary-600 float-right" (click)="AgregarGestion()"
                         [routerLink]="nada()" routerLinkActive="router-link-active"
                         data-toggle="modal" data-target="#modal_gestion">
@@ -20,8 +20,9 @@
                     <div class="col-md-12 col-12">
                         <h3 class="text-left">
                             <i class="icon-calendar22 xxl-title float-left plIcon"></i>
-                            <span class="font-weight-semibold"></span>
-                            Gestion
+                            <span class="font-weight-semibold"> 
+                                Gestion
+                            </span>
                         </h3>
                     </div>
                 </div>
@@ -30,7 +31,7 @@
                     </div>
                     <div class="col-md-10">
                         <div class="table-responsive text-center scroll-Table-Gestion">
-                            <table class="table table-sm table-hover table-striped table-bordered">
+                            <table class="table table-sm table-hover table-bordered">
                                 <thead class="bg-blue">
                                     <th scope="col">Gestion</th>
                                     <th scope="col">Descripcion</th>
@@ -38,7 +39,9 @@
                                     <th scope="col">Acciones</th>
                                 </thead>
                                 <tbody>
-                                    <tr class="table-border-double PRL0" *ngFor="let gestion of ListaGestiones">
+                                    <tr class="table-border-double PRL0" 
+                                    *ngFor="let gestion of ListaGestiones;let impar = odd;let par = even;" 
+                                    [ngClass]="{ tablaCebradoPar : par , tablaCebradoImpar : impar}">
                                         <td class="puntero PRL0" (click) = "VerPeriodos(gestion)">{{gestion.adgtideg}}</td>
                                         <td class="puntero PRL0" (click) = "VerPeriodos(gestion)">{{gestion.adgtdesc}}</td>
                                         <td class="puntero PRL0" (click) = "VerPeriodos(gestion)">{{gestion.adgtesta | estado}}</td>
@@ -79,7 +82,9 @@
                     <div class="col-md-12 col-12">
                         <h3 class="text-left">
                             <i class="icon-calendar22 xxl-title float-left plIcon"></i>
-                            Periodos de Gestion
+                            <span class="font-weight-semibold">
+                                Periodos de Gestion
+                            </span>
                         </h3>
                     </div>
                 </div>
@@ -98,12 +103,14 @@
                                     <th scope="col">Acciones</th>
                                 </thead>
                                 <tbody>
-                                    <tr class="table-border-double" *ngFor="let periodo of ListaPeriodos" >
+                                    <tr class="table-border-double" 
+                                    *ngFor="let periodo of ListaPeriodos;let impar = odd;let par = even;" 
+                                    [ngClass]="{ tablaCebradoPar:par , tablaCebradoImpar:impar}">
                                         <td class="puntero">{{periodo.adpridep | formatonumeroperiodo }}</td>
                                         <td class="puntero">{{periodo.adprmesp | nombremes}}</td>
                                         <td class="puntero">{{periodo.adprdesc}}</td>
                                         <td class="puntero">{{periodo.adprideg}}</td>
-                                        <td class="puntero">{{periodo.adpresta | estado}}</td>
+                                        <td class="puntero">{{periodo.adpresta| estadoperiodo}}</td>
                                         <td class="puntero PRL0"> 
                                             <div class="list-icons"> 
                                                 <a class="list-icons-item text-primary-600" (click)="VerPeriodo(periodo)"
@@ -172,7 +179,7 @@
                             <div class="form-group form-group-float">
                                 <!-- <p class="alert alert-danger" *ngIf="gestionModelo.adgtideg == null">required</p> -->
                                 <label class="form-group-float-label">Gestion</label>
-                                <input type="text" class="form-control text-center" name="Gestion" placeholder="Gestion" required
+                                <input type="text" class="form-control text-center" name="Gestion" placeholder="Gestion" required (change)="CalcularGestion(gestionModelo.adgtacte)"
                                   value="{{gestionModelo.adgtideg}}" required [(ngModel)]="gestionModelo.adgtideg" [disabled]="editGestion">
                             </div>
                         </div>
@@ -187,8 +194,8 @@
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Estado</label>
                                 <select class="form-control" [(ngModel)]="gestionModelo.adgtesta" [disabled]="editGestion">
-                                    <option *ngFor="let item of ListaEstadosGestionPeriodos"
-                                    [value]="item.adamidea"> {{item.adamdesc}}
+                                    <option *ngFor="let item of ListaEstadosGestionPeriodos; let i = index"
+                                    [value]="i+1"> {{item.adamdesc}}
                                     </option>
                                 </select>
                             </div>
@@ -298,6 +305,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- <pre> {{ gestionModelo | json }} </pre> -->
                 </div>
             </div>
         </div>
@@ -348,8 +356,8 @@
                             <div class="form-group form-group-float">
                                 <label class="form-group-float-label">Estado</label>
                                 <select class="form-control" [(ngModel)]="periodoModelo.adpresta" [disabled] = "!editPeriodo" >
-                                 <option *ngFor="let item of ListaEstadosGestionPeriodos" [value]="item.adamidea"
-                                  >{{item.adamdesc }}</option>
+                                 <option *ngFor="let item of ListaEstadosGestionPeriodos; let i = index" 
+                                 [value]="i" >{{item.adamdesc }}</option>
                                 </select>
                             </div>
                         </div>
@@ -401,6 +409,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- <PRE> {{periodoModelo | json  }}</PRE> -->
                 </div>
             </div>
         </div>
