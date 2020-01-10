@@ -95,7 +95,7 @@ export class Adm002Service {
       descripcion: item.adgtdesc,
       actEmpresa: +item.adgtacte,
       cantPeridos: +item.adgtcanp,
-      estPeriodo: +item.adgtesta == 1 ? "1":"0",
+      estPeriodo: +item.adgtesta == 1 ? "1":"2",
       fechaInicio: item.adgtfegi,
       fechaFin: item.adgtfegf,
       gtionDefec: item.adgtgesd == true ? "1" : "0",
@@ -105,6 +105,7 @@ export class Adm002Service {
   
 
     const url1 = `${url.prod}${url.actualizar_gestion}${item.adgtideg}`;
+    console.error("datos service: ", json);
     console.log(url1);
     return this.httpClient
       .put(url1, json, {
@@ -122,7 +123,7 @@ export class Adm002Service {
 
   ActualizarPeriodo(Periodo: any, fechaAnhoDia : string) {
     const json = JSON.stringify({
-      estPeriodo: Periodo.adpresta == 1 ? "1":"0",
+      estPeriodo: +Periodo.adpresta == 1 ? "1":"0",
       modAutomatica : Periodo.adprmoda == true ? "1" : "0",
       fechaModAutomatica : Periodo.adprdiam
     });

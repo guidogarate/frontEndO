@@ -1,5 +1,6 @@
   .xl {
     font-size: 1.5em; /* de esta manera modificas el tamaño de tus iconos.*/
+    background-color: white;
   }
   .plIcon{
     padding-left: 1em;;
@@ -111,4 +112,10 @@
   height: 92px;
   overflow-y: scroll;
 }
+/* .tablaCebradoPar{
+   background-color: aliceblue ;
+  }
+.tablaCebradoImpar{
+  background-color:white;
+  } */
     

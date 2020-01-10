@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Adm002Service } from '../../../../utils/service/ADM-002/Adm002.service';
 import { DatePipe } from "@angular/common";
-import { from } from 'rxjs';
+import { from, empty } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
 
@@ -22,7 +22,7 @@ export class Adm002Component implements OnInit {
   ListaEstadosGestionPeriodos : any;
   estado : number ;
   ListaTiposEmpresa : any;
-  idEmpresa : number;
+  idEmpresa : number = 0;
   cargando : boolean = false;
   /*Acciones*/
   editGestion : boolean = true;
@@ -31,11 +31,15 @@ export class Adm002Component implements OnInit {
   // editModifAutoGestion : boolean = false;
 
   fechainicial : Date ;
-  mesInicial: string = "1";
-  mesFinal: string = "1";
+  mesInicial: string = "0";
+  mesFinal: string = "0";
   fechaInicioGestion : string;
+/* valores predeterminados de Gestion*/
+  estadoPredeterminado : string = "";
+  tipoEmpresaPredeterminado : string = "";
 
   listaMeses = [
+    { id: 0, name: "Seleccione Mes" },
     { id: 1, name: "Enero" },
     { id: 2, name: "Febrero" },
     { id: 3, name: "Marzo" },
@@ -65,12 +69,14 @@ export class Adm002Component implements OnInit {
 
   ngOnInit() {
     this.obtenerGestionesPeriodos();
+    
     setTimeout(() => {
       initLabels();
       // init_date();
     }, 1000);
 
   }
+   
   /* Peticiones */
   obtenerGestionesPeriodos(){
     this.cargando = true;
@@ -81,10 +87,13 @@ export class Adm002Component implements OnInit {
         this.ListaPeriodos = resp["periodos"];
         this.ListaEstadosGestionPeriodos = resp ["EstGestion"];
         this.ListaTiposEmpresa = resp ["ActiEmpres"];
+        this.estadoPredeterminado = this.ListaEstadosGestionPeriodos[0].adampred; 
+        console.warn("predeterminados : ", this.estadoPredeterminado);
+        this.tipoEmpresaPredeterminado = this.ListaTiposEmpresa[0].adampred;
       }
       else{
         console.log("No se cargo gestiones ni periodos");
-        resp;
+        console.error(resp);
       }
     });
     this.cargando = false;
@@ -168,7 +177,7 @@ export class Adm002Component implements OnInit {
             // this.ListaGestiones= this.ListaGestiones.filter( function(gestion){
             //   return gestion.gestion != this.gestionModelo.adgtideg;
             // });
-            this.notyG.noty("info", resp["message"], 3500);
+            this.notyG.noty("info", "Eliminando Gestion"+this.gestionModelo.adgtideg , 3500);
           } else {
             console.log("no se pudo eliminar", resp);
             this.notyG.noty("error", "No se puede eliminar la Gestion", 3500);
@@ -255,15 +264,20 @@ export class Adm002Component implements OnInit {
   }
 
   limpiarGestion(){
+    setTimeout(() => {
+      initLabels();
+    }, 1000);
     this.gestionModelo =   {
-      "adgtacte": 1,
-      "adgtesta": "1",
+      "adgtacte": this.tipoEmpresaPredeterminado,
+      "adgtesta": this.estadoPredeterminado,
       "adgtmoda": false,
       "adgtdiam": null,
       "adgtgesd": false,
       "adgtcanp" : 12
     };
     this.fechaInicioGestion = null;
+    this.mesInicial = "1";
+    this.mesFinal = "1"
   }
 
   /**
@@ -295,7 +309,7 @@ export class Adm002Component implements OnInit {
       adpridep : item.adpridep, //== null  ? (('1').padStart(2,'0')) : item.adpridep,
       adprmesp : item.adprmesp,
       adprdesc : item.adprdesc,
-      adpresta : item.adpresta == 1 ? "1" : "2",
+      adpresta : item.adpresta,
       adprfepi : item.adprfepi,
       adprfepf : item.adprfepf,
       adprmoda : item.adprmoda == "1" ? true : false,
@@ -316,19 +330,25 @@ export class Adm002Component implements OnInit {
 
   armarFecha(year: any , month :  any){
     // console.log("armando Fecha: ", year + "-" + month);
-    let fechaAux1 : string;
-    fechaAux1 = year+"-"+month;
-    this.fechainicial = new Date(year,month-1);
-    this.gestionModelo.adgtfegi= this.fechainicial;
-    let fechafin  = new Date(this.gestionModelo.adgtfegi);
-    fechafin.setMonth( fechafin.getMonth() + 12);
-    fechafin.setDate(0); // poniendo a fin de dia de mes
-    this.gestionModelo.adgtfegf = fechafin;
-    this.mesFinal = (fechafin.getMonth()+1).toString();
-    this.fechaInicioGestion =  this.datePipe.transform(
-      this.fechainicial,
-      "yyyy-MM-dd" );
-      this.IniciarfechaModificacionAutomatica();
+    if(year == null || month == null || year.length == 0 || month.length == 0){
+      this.notyG.noty("warning", "debe LLenar la Gestion", 1500);
+      this.mesInicial = "0";
+    }
+    else {
+      let fechaAux1 : string;
+      fechaAux1 = year+"-"+month;
+      this.fechainicial = new Date(year,month-1);
+      this.gestionModelo.adgtfegi= this.fechainicial;
+      let fechafin  = new Date(this.gestionModelo.adgtfegi);
+      fechafin.setMonth( fechafin.getMonth() + 12);
+      fechafin.setDate(0); // poniendo a fin de dia de mes
+      this.gestionModelo.adgtfegf = fechafin;
+      this.mesFinal = (fechafin.getMonth()+1).toString();
+      this.fechaInicioGestion =  this.datePipe.transform(
+        this.fechainicial,
+        "yyyy-MM-dd" );
+        this.IniciarfechaModificacionAutomatica();
+    }
   }
 
   IniciarfechaModificacionAutomatica(){
@@ -361,11 +381,15 @@ IniciarfechaModificacionAutomaticaPeriodo(){
       break; 
     }
     default: { 
+      this.mesInicial = "0"
        break; 
     } 
  } 
-    
-  this.armarFecha( this.gestionModelo.adgtideg,this.mesInicial);
+  if(this.gestionModelo.adgtideg == null || this.gestionModelo.adgtideg.length == 0 ){
+    this.notyG.noty("warning", "debe colocar una gestion válida", 1500);
+  }  else {
+    this.armarFecha( this.gestionModelo.adgtideg,this.mesInicial);
+  }
 
  }
 
@@ -386,7 +410,7 @@ ActualizarPeriodo( ){
     // this.periodoModelo.adprdiam = new Date(fechaDiaAux);
   }
   anhoDia = ""+this.periodoModelo.adprideg+"/"+this.periodoModelo.adprmesp;
-  console.log("Actualizar Periodo: ",this.periodoModelo);
+  console.warn("Actualizar Periodo: ",this.periodoModelo);
   this.adm002Service.ActualizarPeriodo(this.periodoModelo,anhoDia).subscribe( resp => {
     if (resp ["ok"]){
       this.cerrarModal();
@@ -394,7 +418,7 @@ ActualizarPeriodo( ){
       this.notyG.noty("success", "Periodo actualizado", 3500);
     }
     else {
-      //console.log("no se ha podido Actualizar: ",  resp);
+      console.error(resp);
       this.notyG.noty("error", "No se pudo actualizar", 3500);
     }
   });
