@@ -1,0 +1,121 @@
+  .xl {
+    font-size: 1.5em; /* de esta manera modificas el tamaño de tus iconos.*/
+    background-color: white;
+  }
+  .plIcon{
+    padding-left: 1em;;
+  }
+  .xl-Icon{
+    margin-right: 2em;
+    font-size: 1.5em;
+  }
+
+  .pTop{
+    padding-top: 0;
+  }
+
+  .pr2rem{
+    padding-right: 2rem;
+  }
+
+  .xxl-title{
+    font-size: 1.5em;
+    padding-right: 1.5em;
+    color: #03a9f4;
+  }
+  .xxl{
+    font-size: 2em;
+    padding-right: 0.5em;
+  }
+
+  .xxl-modal{
+    font-size: 2em;
+    
+  }
+
+  .table td, .table th{
+    padding-top: 0%;
+    padding-bottom: 0%;
+  }
+  .content{
+    margin-left: 10px;
+    margin-right: 10px;
+   padding: 0;
+  }
+  .card{
+    padding-bottom: 0.5rem;
+  }
+  .card-header:not([class*=bg-]):not([class*=alpha-]){
+
+    padding-bottom: 0;
+    padding-top: 0.5rem;
+  }
+  .h1, h2, h3, h4, h5, h6{
+    margin-bottom: 0rem;
+    margin-top: 0.5rem;
+  }
+  .pb0{ 
+   padding: 0;
+   
+  }
+
+  @media screen and (max-width: 380px) {
+    .h2 h3{
+      font-size: large;
+      background-color: red;
+    }
+   
+  }
+  @media screen and (max-width: 600px) {
+    .h2 h3{
+      font-size: 30px;
+    }
+    .xxl{
+      font-size: 1.5em;
+    }
+    .xxl-modal{
+      font-size: 1.8em;
+      
+    }
+    .xxl-title{
+      font-size: 1.0em;
+      padding-right: 0.5em;
+    }
+
+    .xxl-mobileH2{
+      font-size: large;
+    }
+    
+    .titulo{
+      font-size: larger;
+    }
+    .xl-Icon{
+      margin-right: 1em;
+    }
+    .pTop{
+      padding-top: 2em;
+    }
+  
+  }
+
+  @media screen and (min-width: 601px) {
+    div.example {
+      font-size: 80px;
+    }
+  }
+
+.PRL0{
+  padding-left: 0;
+  padding-right: 0;
+}
+.scroll-Table-Gestion{
+  height: 92px;
+  overflow-y: scroll;
+}
+/* .tablaCebradoPar{
+   background-color: aliceblue ;
+  }
+.tablaCebradoImpar{
+  background-color:white;
+  } */
+    

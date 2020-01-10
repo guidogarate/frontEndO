@@ -11,7 +11,7 @@ const mainRoutes: Routes = [
   },
   {
     path: "",
-    redirectTo: "/md/adm_000/adm_002",
+    redirectTo: "/md/adm_000/adm_003",
     pathMatch: "full"
   }
 ];

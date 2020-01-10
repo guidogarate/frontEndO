@@ -1,9 +1,17 @@
-<body class="navbar-top animaciones haciadentro">
+<!-- <body class="navbar-top haciadentro animaciones"> -->
+<body
+  [ngClass]="{
+    'navbar-top': true,
+    haciadentro: animacion,
+    animaciones: animacion
+  }"
+>
   <div class="navbar navbar-expand-md navbar-light navbar-static fixed-top">
     <app-header></app-header>
     <app-control></app-control>
     <app-navbar></app-navbar>
   </div>
+
   <!-- Page content -->
   <div class="page-content">
     <div
@@ -25,8 +33,12 @@
         <app-sidebar></app-sidebar>
       </div>
     </div>
-    <div style="width: 100%;">
-    <router-outlet></router-outlet>
+    <div class="content-wrapper">
+      <!-- Content area -->
+      <!-- <div class="content pt-0"> -->
+      <div class="bordee pt-0">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
 </body>
