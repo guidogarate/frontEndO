@@ -40,3 +40,10 @@ body {
 .haciadentro {
   animation-name: haciadentroa;
 }
+
+.tablaCebradoPar{
+  background-color: aliceblue ;
+ }
+.tablaCebradoImpar{
+ background-color:white;
+ }

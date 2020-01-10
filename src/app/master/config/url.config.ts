@@ -4,7 +4,7 @@ const url = {
   prod: "https://sage-back.herokuapp.com/",
   database: "sys_000/sys_001/database",
   ingresar: "sys_000/sys_001/ingresar",
-  principal: "/#/md/adm_000/adm_003", // pantalla inicio
+  principal: "/#/md/adm_000/adm_002", // pantalla inicio
   cerrarSesion: "sys_000/sys_001/salir",
   regContra: "sys_000/sys_001/registrar-contra",
   salir: "/#/login",
@@ -23,7 +23,14 @@ const url = {
   agregar: "adm_000/adm_001/agregar",
   actualizar: "adm_000/adm_001/actualizar/",
   gestionesDisponibles: "adm_000/adm_001/gest-dispo",
-  gest_dispo_y_predet: "adm_000/adm_001/gest-dispo_y_predet"
+  gest_dispo_y_predet: "adm_000/adm_001/gest-dispo_y_predet",
+  get_gestion_periodos: "adm_000/adm_002/get-gestion-periodos",
+  get_periodos:"adm_000/adm_002/get-periodos/",
+  agregar_gestion : "adm_000/adm_002/agregar-gestion",
+  eliminar_Gestion : "adm_000/adm_002/eliminar/",
+  actualizar_gestion : "adm_000/adm_002/actualizar-gestion/",
+  actualizar_periodo : "adm_000/adm_002/actualizar-perido/",
+
 };
 
 export default url;
