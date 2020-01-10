@@ -70,13 +70,27 @@
                       {{ adm003.adamdesc }}
                     </td>
                     <td>
-                      <div class="custom-control custom-switch">
+                      <div  *ngIf="adm003.adamesta === '1' || adm003.adamesta === true" class="custom-control custom-switch">
                         <input
                           type="checkbox"
                           class="custom-control-input"
-                          [(ngModel)]="adm003.adamesta"
                           [disabled]="true"
-                          title="{{ adm003.adamesta }}"
+                          [checked]="true"
+                          title="adm003.adamesta"
+                          id="GrupEst{{ i }}"
+                        />
+                        <label
+                          class="custom-control-label"
+                          for="GrupEst{{ i }}"
+                        ></label>
+                      </div>
+                      <div  *ngIf="adm003.adamesta === '0' || adm003.adamesta === false" class="custom-control custom-switch">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          [disabled]="true"
+                          [checked]="false"
+                          title="adm003.adamesta"
                           id="GrupEst{{ i }}"
                         />
                         <label
