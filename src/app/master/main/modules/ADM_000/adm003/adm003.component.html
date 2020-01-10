@@ -6,19 +6,12 @@
     <div class="card pb0">
       <div class="card-header header-elements-inline">
         <h5 class="card-title">DATOS COMPLEMENTARIOS</h5>
-        <div class="header-elements">
-          <div class="list-icons">
-            <a class="list-icons-item" data-action="collapse"></a>
-            <a class="list-icons-item" data-action="reload"></a>
-            <a class="list-icons-item" data-action="remove"></a>
-          </div>
-        </div>
       </div>
 
       <div class="card-body pb0">
         <div class="row">
-          <div class="col-md-3 col-lg-4"></div>
-          <div class="col-md-6 col-lg-4">
+          <div class="col-1 col-sm-1 col-md-3 col-lg-4"></div>
+          <div class="col-9 col-sm-9 col-md-6 col-lg-4">
             <div
               class="form-group form-group-feedback form-group-feedback-right"
             >
@@ -26,6 +19,7 @@
                 type="text"
                 class="form-control"
                 placeholder="Buscar"
+                id="buscarGrupoLupa"
                 #texto
                 (keyup)="buscarAdm003(texto.value)"
               />
@@ -33,11 +27,17 @@
                 <i class="icon-spinner2 spinner"></i>
               </div>
               <div *ngIf="!buscar" class="form-control-feedback">
-                <i class="icon-search4"></i>
+                <label for="buscarGrupoLupa">
+                  <i class="icon-search4 puntero" title="buscar"></i
+                ></label>
               </div>
             </div>
           </div>
-          <div class="col-md-3 col-lg-4"></div>
+          <div class="col-2 col-sm-2 col-md-3 col-lg-4">
+            <div class="form-control-feedback">
+              <i class="icon-diff-added puntero" (click)="nuevElemGrup()" title="agregar"></i>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -64,10 +64,7 @@
 
               <tbody>
                 <ng-container *ngFor="let adm003 of auxma; let i = index"
-                  ><tr
-                    (dblclick)="myFunction()"
-                    class="puntero PRL0"
-                  >
+                  ><tr (dblclick)="myFunction()" class="puntero PRL0">
                     <td>{{ adm003.adamtipa }}</td>
                     <td class="table-content-center">
                       {{ adm003.adamdesc }}
@@ -76,15 +73,16 @@
                       <div class="custom-control custom-switch">
                         <input
                           type="checkbox"
-                          class="custom-control-input" 
-                          [(ngModel)]="adm003.adamesta"                        
+                          class="custom-control-input"
+                          [(ngModel)]="adm003.adamesta"
                           [disabled]="true"
                           title="{{ adm003.adamesta }}"
                           id="GrupEst{{ i }}"
                         />
-                        <label class="custom-control-label" for="GrupEst{{ i }}"
-                          ></label
-                        >
+                        <label
+                          class="custom-control-label"
+                          for="GrupEst{{ i }}"
+                        ></label>
                       </div>
                     </td>
                     <td class="text-center">
@@ -95,13 +93,13 @@
                           data-toggle="modal"
                           data-target="#modal_theme_info"
                           class="list-icons-item text-primary-600"
-                          ><i class="icon-file-eye"></i
+                          ><i class="icon-file-eye" title="visualizar"></i
                         ></a>
                         <a href="#" class="list-icons-item text-teal-600"
-                          ><i class="icon-pencil7"></i
+                          ><i class="icon-pencil7" title="editar"></i
                         ></a>
                         <a href="#" class="list-icons-item text-danger-600"
-                          ><i class="icon-trash"></i
+                          ><i class="icon-trash" title="eliminar"></i
                         ></a>
                       </div>
                     </td>
@@ -170,18 +168,18 @@
             ><i
               class="icon-floppy-disk xxl"
               data-toggle="tooltip"
-              (click)="guardGr()"
+              (click)="Grup('guardar')"
               data-placement="top"
-              title="Guardar Grupo"
+              title="Guardar"
             >
             </i
           ></a>
-          <a *ngIf="btnGrupo.BtnEdita" class="puntero" (click)="edtGr()">
+          <a *ngIf="btnGrupo.BtnEdita" class="puntero" (click)="Grup('editar')">
             <i
               class="icon-pencil7 xxl"
               data-toggle="tooltip"
               data-placement="top"
-              title="editar Grupo"
+              title="editar"
             >
             </i
           ></a>
@@ -190,7 +188,8 @@
               class="icon-trash xxl"
               data-toggle="tooltip"
               data-placement="top"
-              title="Eliminar Gestion"
+              (click)="elimElemGrup()"
+              title="Eliminar"
             >
             </i
           ></a>
@@ -283,16 +282,16 @@
               </i
             ></a>
             <a class="puntero" *ngIf="btnSubGrupo.BtnSubCance"
-            ><i
-              class="icon-cancel-circle2 xxl"
-              data-toggle="tooltip"
-              (click)="SubGrup('cancelar')"
-              data-placement="top"
-              data-dismiss="modal"          
-              title="Cancelar"
-            >
-            </i
-          ></a>
+              ><i
+                class="icon-cancel-circle2 xxl"
+                data-toggle="tooltip"
+                (click)="SubGrup('cancelar')"
+                data-placement="top"
+                data-dismiss="modal"
+                title="Cancelar"
+              >
+              </i
+            ></a>
             <a class="puntero" *ngIf="btnSubGrupo.BtnSubGuard"
               ><i
                 class="icon-floppy-disk xxl"
@@ -333,7 +332,7 @@
                 title="Salir"
               >
               </i
-            ></a>           
+            ></a>
           </div>
         </div>
         <div class="modal-body ">
