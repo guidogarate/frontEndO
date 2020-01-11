@@ -29,14 +29,14 @@ export class Adm003Component implements OnInit, OnDestroy {
     GrupHab: false,
     SubGrupHab: false,
     ElimSubGru: false,
-    codigo: false
+    codigo: false,
+    codigoGrup: false
   };
   btnGrupo = {
     BtnGuard: false,
     BtnCance: false,
     BtnEdita: true,
-    BtnElimi: true,
-    BtnAgreg: true
+    BtnElimi: true
   };
   btnSubGrupo = {
     BtnSubGuard: false,
@@ -76,7 +76,7 @@ export class Adm003Component implements OnInit, OnDestroy {
         this.auxma = resp["auxma"];
         this.pagi = resp["cant"];
       } else {
-        // this.notyG.noty("error", resp["messagge"], 5000);
+        // this.notyG.noty("error", resp["mensaje"], 5000);
       }
       this.buscar = false;
       this.loading = false;
@@ -133,7 +133,7 @@ export class Adm003Component implements OnInit, OnDestroy {
         this.auxma = resp["auxma"];
         this.pagi = resp["cant"];
       } else {
-        // this.notyG.noty("error", resp["messagge"], 5000);
+        // this.notyG.noty("error", resp["mensaje"], 5000);
       }
     });
   }
@@ -145,8 +145,6 @@ export class Adm003Component implements OnInit, OnDestroy {
     if (this.auxmaSub === undefined) {
       this.loadingSub = true;
       peticion = this.adm003S.buscarAdm003Sub(adm_003.adamtipa);
-    } else if (adm_003.adamtipa === this.auxmaSub[0].adamtipa) {
-      return;
     } else {
       this.auxmaSub = [];
       this.loadingSub = true;
@@ -158,7 +156,7 @@ export class Adm003Component implements OnInit, OnDestroy {
         this.auxmaSub = resp["auxma"];
       } else {
         this.auxmaSub = [];
-        // this.notyG.noty("error", resp["messagge"], 5000);
+        // this.notyG.noty("error", resp["mensaje"], 5000);
       }
       setTimeout(() => {
         initLabels();
@@ -166,13 +164,21 @@ export class Adm003Component implements OnInit, OnDestroy {
     });
   }
 
+  editar(adm_003: Adm003Models, accion: string) {
+    this.actualizar(adm_003);
+    this.SubGrup(accion);
+  }
+
+  eliminar(adm_003: Adm003Models, accion: string) {
+    this.actualizar(adm_003);
+    this.SubGrup(accion);
+  }
+
   actualizarSubGrupo(adm_003: Adm003Models) {
     this.amd003 = adm_003;
     let peticion: Observable<any>;
     if (this.auxmaSub === undefined) {
       peticion = this.adm003S.buscarAdm003Sub(adm_003.adamtipa);
-    } else if (adm_003.adamtipa === this.auxmaSub[0].adamtipa) {
-      return;
     } else {
       // this.auxmaSub = [];
       peticion = this.adm003S.buscarAdm003Sub(adm_003.adamtipa);
@@ -182,7 +188,7 @@ export class Adm003Component implements OnInit, OnDestroy {
         this.auxmaSub = resp["auxma"];
       } else {
         this.auxmaSub = [];
-        // this.notyG.noty("error", resp["messagge"], 5000);
+        // this.notyG.noty("error", resp["mensaje"], 5000);
       }
       setTimeout(() => {
         initLabels();
@@ -210,7 +216,6 @@ export class Adm003Component implements OnInit, OnDestroy {
 
         this.btnGrupo.BtnEdita = true;
         this.btnGrupo.BtnElimi = true;
-        this.btnGrupo.BtnAgreg = true;
         this.btnSubGrupo.BtnSubEdita = true;
         this.btnSubGrupo.BtnSubElimi = true;
         this.btnSubGrupo.BtnSubAgreg = true;
@@ -224,10 +229,10 @@ export class Adm003Component implements OnInit, OnDestroy {
         this.btnGrupo.BtnGuard = false;
         this.btnGrupo.BtnEdita = true;
         this.btnGrupo.BtnElimi = true;
-        this.btnGrupo.BtnAgreg = true;
         this.btnSubGrupo.BtnSubEdita = true;
         this.btnSubGrupo.BtnSubElimi = true;
         this.btnSubGrupo.BtnSubAgreg = true;
+        this.habiCampo.codigoGrup = true;
 
         this.AccionGrup(this.accionGrupo, this.amd003);
         // console.log(this.amd003);
@@ -238,10 +243,10 @@ export class Adm003Component implements OnInit, OnDestroy {
         this.btnGrupo.BtnGuard = true;
         this.btnGrupo.BtnEdita = false;
         this.btnGrupo.BtnElimi = false;
-        this.btnGrupo.BtnAgreg = false;
         this.btnSubGrupo.BtnSubEdita = false;
         this.btnSubGrupo.BtnSubElimi = false;
         this.btnSubGrupo.BtnSubAgreg = false;
+        this.habiCampo.codigoGrup = false;
 
         this.accionGrupo = accion;
         break;
@@ -256,6 +261,9 @@ export class Adm003Component implements OnInit, OnDestroy {
 
   AccionGrup(accion: string, datos: any) {
     switch (accion) {
+      case "nuevo":
+        this.agregElemGrup(datos);
+        break;
       case "editar":
         this.editElemGrup(datos);
         this.accionSubGrupo = "";
@@ -265,24 +273,34 @@ export class Adm003Component implements OnInit, OnDestroy {
     }
   }
 
-  nuevElemGrup(datos: any) {
-    console.log("nuevo");
+  nuevElemGrup() {
+    this.amd003 = new Adm003Models(" ", " ", true, " ");
+    this.btnGrupo.BtnEdita = false;
+    this.btnGrupo.BtnElimi = false;
+    this.btnGrupo.BtnGuard = true;
+    this.auxmaSub = [];
+    this.btnSubGrupo.BtnSubAgreg = false;
+    this.btnSubGrupo.BtnSubEdita = false;
+    this.btnSubGrupo.BtnSubElimi = false;
+    this.habiCampo.GrupHab = true;
+    this.habiCampo.codigoGrup = false;
+    this.accionGrupo = "nuevo";
+  }
 
-    // this.adm003S
-    //   .nuevoAdm003Sub("90", this.amd003.adamtipa, datos)
-    //   .subscribe(resp => {
-    //     this.actualizarSubGrupo(this.amd003);
-    //     if (resp["ok"]) {
-    //       this.notyG.noty("success", resp["mensaje"], 3000);
-    //     } else {
-    //       this.notyG.noty("info", resp["mensaje"], 5000);
-    //     }
-    //   });
+  agregElemGrup(datos: any) {
+    this.adm003S.nuevoAdm003("90", datos).subscribe(resp => {
+      this.accionSubGrupo = "";
+      if (resp["ok"]) {
+        this.notyG.noty("success", resp["mensaje"], 3000);
+        this.buscarAdm003(this.texto);
+      } else {
+        this.notyG.noty("info", resp["mensaje"], 5000);
+      }
+    });
   }
 
   editElemGrup(datos: any) {
     this.adm003S.editarAdm003("90", datos.adamtipa, datos).subscribe(resp => {
-      console.log(resp);
       if (resp["ok"]) {
         this.notyG.noty("success", resp["mensaje"], 3000);
         this.actualizarSubGrupo(this.amd003);
@@ -347,7 +365,6 @@ export class Adm003Component implements OnInit, OnDestroy {
 
         this.btnGrupo.BtnEdita = false;
         this.btnGrupo.BtnElimi = false;
-        this.btnGrupo.BtnAgreg = false;
         this.btnSubGrupo.BtnSubEdita = false;
         this.btnSubGrupo.BtnSubElimi = false;
         this.btnSubGrupo.BtnSubAgreg = false;
@@ -363,7 +380,6 @@ export class Adm003Component implements OnInit, OnDestroy {
 
         this.btnGrupo.BtnEdita = true;
         this.btnGrupo.BtnElimi = true;
-        this.btnGrupo.BtnAgreg = true;
         this.btnSubGrupo.BtnSubEdita = true;
         this.btnSubGrupo.BtnSubElimi = true;
         this.btnSubGrupo.BtnSubAgreg = true;
@@ -383,7 +399,6 @@ export class Adm003Component implements OnInit, OnDestroy {
 
           this.btnGrupo.BtnEdita = true;
           this.btnGrupo.BtnElimi = true;
-          this.btnGrupo.BtnAgreg = true;
           this.btnSubGrupo.BtnSubEdita = true;
           this.btnSubGrupo.BtnSubElimi = true;
           this.btnSubGrupo.BtnSubAgreg = true;
@@ -400,7 +415,6 @@ export class Adm003Component implements OnInit, OnDestroy {
 
         this.btnGrupo.BtnEdita = false;
         this.btnGrupo.BtnElimi = false;
-        this.btnGrupo.BtnAgreg = false;
         this.btnSubGrupo.BtnSubEdita = false;
         this.btnSubGrupo.BtnSubElimi = false;
         this.btnSubGrupo.BtnSubAgreg = false;
@@ -414,7 +428,6 @@ export class Adm003Component implements OnInit, OnDestroy {
         this.habiCampo.ElimSubGru = true;
         this.btnGrupo.BtnEdita = false;
         this.btnGrupo.BtnElimi = false;
-        this.btnGrupo.BtnAgreg = false;
         this.btnSubGrupo.BtnSubEdita = false;
         this.btnSubGrupo.BtnSubElimi = false;
         this.btnSubGrupo.BtnSubAgreg = false;
@@ -498,15 +511,17 @@ export class Adm003Component implements OnInit, OnDestroy {
   }
 
   salir() {
-    this.btnGrupo.BtnGuard = false;
+    this.habiCampo.ElimSubGru = false;
+    this.habiCampo.codigo = false;
+
+    this.habiCampo.SubGrupHab = false;
+    this.btnSubGrupo.BtnSubGuard = false;
+
     this.btnGrupo.BtnEdita = true;
     this.btnGrupo.BtnElimi = true;
-    this.btnGrupo.BtnAgreg = true;
-    this.btnSubGrupo.BtnSubGuard = false;
     this.btnSubGrupo.BtnSubEdita = true;
     this.btnSubGrupo.BtnSubElimi = true;
     this.btnSubGrupo.BtnSubAgreg = true;
-    this.habiCampo.SubGrupHab = false;
-    this.habiCampo.SubGrupHab = false;
+    this.btnSubGrupo.BtnSubCance = false;
   }
 }
