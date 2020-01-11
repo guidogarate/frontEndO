@@ -24,6 +24,44 @@ export class Adm003Service {
       );
   }
 
+  nuevoAdm003(adamcodm: string, adamtipa: string, dato: any) {
+    const datos = [dato[dato.length - 1]];
+    const json = JSON.stringify({
+      adamcodm,
+      adamtipa,
+      datos
+    });
+    const url1 = `${url.prod}${adm0003.nuevoDato}`;
+    return this.httpClient
+      .post(url1, json, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
+
+  editarAdm003(adamcodm: string, adamtipa: string, datos: any) {
+    const url1 = `${url.prod}${adm0003.editarDato}${adamcodm}/${adamtipa}`;
+    return this.httpClient
+      .put(url1, datos, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
+
   buscarAdm003Sub(adamtipa: string) {
     const url1 = `${url.prod}${adm0003.cargarDatoSub}${adamtipa}`;
     return this.httpClient
@@ -77,8 +115,8 @@ export class Adm003Service {
       );
   }
 
-  eliminarAdm003Sub(adamcodm: string, adamtipa: string, adamidea: string) {
-    const url1 = `${url.prod}${adm0003.eliminDatoSub}${adamcodm}/${adamtipa}/${adamidea}`;
+  eliminarAdm003Ambos(adamcodm: string, adamtipa: string, adamidea: string) {
+    const url1 = `${url.prod}${adm0003.eliminDatoAmbos}${adamcodm}/${adamtipa}/${adamidea}`;
     return this.httpClient
       .delete(url1, {
         headers: new HttpHeaders({

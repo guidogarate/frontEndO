@@ -3,8 +3,6 @@ import { NotyGlobal } from "src/app/master/utils/global/index.global";
 import { Adm003Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { Observable, Subscription } from "rxjs";
 import { Adm003Models } from "src/app/master/utils/models/main/adm_000/adm_003.models";
-import { Adm003SubModels } from "src/app/master/utils/models/main/adm_000/adm_003sub.models";
-import adm0003 from "src/app/master/config/adm000/adm003_config";
 declare function initLabels();
 
 @Component({
@@ -26,6 +24,7 @@ export class Adm003Component implements OnInit, OnDestroy {
   texto = "all_auxma";
   accionSubGrupo = "";
   accionGrupo = "";
+  guardar = true;
   habiCampo = {
     GrupHab: false,
     SubGrupHab: false,
@@ -158,6 +157,7 @@ export class Adm003Component implements OnInit, OnDestroy {
       if (resp["ok"]) {
         this.auxmaSub = resp["auxma"];
       } else {
+        this.auxmaSub = [];
         // this.notyG.noty("error", resp["messagge"], 5000);
       }
       setTimeout(() => {
@@ -178,7 +178,6 @@ export class Adm003Component implements OnInit, OnDestroy {
       peticion = this.adm003S.buscarAdm003Sub(adm_003.adamtipa);
     }
     peticion.subscribe(resp => {
-      console.log(resp);
       if (resp["ok"]) {
         this.auxmaSub = resp["auxma"];
       } else {
@@ -282,46 +281,43 @@ export class Adm003Component implements OnInit, OnDestroy {
   }
 
   editElemGrup(datos: any) {
-    console.log("editar");
-    // this.adm003S
-    //   .editarAdm003Sub("90", this.amd003.adamtipa, datos)
-    //   .subscribe(resp => {
-    //     if (resp["ok"]) {
-    //       this.notyG.noty("success", resp["mensaje"], 3000);
-    //       this.actualizarSubGrupo(this.amd003);
-    //     } else {
-    //       // this.notyG.noty("info", resp["mensaje"], 3000);
-    //     }
-    //   });
+    this.adm003S.editarAdm003("90", datos.adamtipa, datos).subscribe(resp => {
+      console.log(resp);
+      if (resp["ok"]) {
+        this.notyG.noty("success", resp["mensaje"], 3000);
+        this.actualizarSubGrupo(this.amd003);
+      } else {
+        // this.notyG.noty("info", resp["mensaje"], 3000);
+      }
+    });
   }
 
   // this.amd003 ==== Grupo
   // this.auxmaSub==== SubGrupo
   elimElemGrup() {
-    console.log(this.amd003);
-    if (this.auxmaSub !== undefined) {
+    if (this.auxmaSub.length > 0) {
       this.notyG.noty("info", "Primero debe eliminar SubGrupo", 3000);
       return;
     }
-    console.log("eliminar Grupo");
-
-    // const resp = confirm(
-    //   "Desea eliminar elemento seleccionado? \n codigo: " + idelmen
-    // );
-    // if (resp) {
-    //   this.adm003S
-    //     .eliminarAdm003Sub("90", this.amd003.adamtipa, idelmen)
-    //     .subscribe(resp => {
-    //       if (resp["ok"]) {
-    //         this.notyG.noty("success", resp["mensaje"], 3000);
-    //         this.actualizarSubGrupo(this.amd003);
-    //       } else {
-    //         // this.notyG.noty("info", resp["mensaje"], 3000);
-    //       }
-    //     });
-    // } else {
-    //   return;
-    // }
+    const resp = confirm(
+      "Desea eliminar elemento seleccionado? \n Codigo: " + this.amd003.adamtipa
+    );
+    if (resp) {
+      this.adm003S
+        .eliminarAdm003Ambos("90", this.amd003.adamtipa, "0")
+        .subscribe(resp => {
+          if (resp["ok"]) {
+            this.notyG.noty("success", resp["mensaje"], 3000);
+            this.amd003 = new Adm003Models("", "", true, "");
+            this.buscarAdm003("all_auxma");
+            // this.actualizarSubGrupo(this.amd003);
+          } else {
+            // this.notyG.noty("info", resp["mensaje"], 3000);
+          }
+        });
+    } else {
+      return;
+    }
   }
 
   SubGrup(accion: string) {
@@ -377,22 +373,26 @@ export class Adm003Component implements OnInit, OnDestroy {
 
         break;
       case "guardar":
-        this.habiCampo.ElimSubGru = false;
-        this.habiCampo.codigo = false;
-
-        this.habiCampo.SubGrupHab = false;
-        this.btnSubGrupo.BtnSubGuard = false;
-
-        this.btnGrupo.BtnEdita = true;
-        this.btnGrupo.BtnElimi = true;
-        this.btnGrupo.BtnAgreg = true;
-        this.btnSubGrupo.BtnSubEdita = true;
-        this.btnSubGrupo.BtnSubElimi = true;
-        this.btnSubGrupo.BtnSubAgreg = true;
-        this.btnSubGrupo.BtnSubCance = false;
-
         this.AccionSubGrup(this.accionSubGrupo, this.auxmaSub);
-        // console.log(this.auxmaSub);
+        if (this.guardar) {
+          this.habiCampo.ElimSubGru = false;
+          this.habiCampo.codigo = false;
+
+          this.habiCampo.SubGrupHab = false;
+          this.btnSubGrupo.BtnSubGuard = false;
+
+          this.btnGrupo.BtnEdita = true;
+          this.btnGrupo.BtnElimi = true;
+          this.btnGrupo.BtnAgreg = true;
+          this.btnSubGrupo.BtnSubEdita = true;
+          this.btnSubGrupo.BtnSubElimi = true;
+          this.btnSubGrupo.BtnSubAgreg = true;
+          this.btnSubGrupo.BtnSubCance = false;
+
+          // console.log(this.auxmaSub);
+        } else {
+          return;
+        }
         break;
       case "editar":
         this.habiCampo.SubGrupHab = true;
@@ -422,7 +422,6 @@ export class Adm003Component implements OnInit, OnDestroy {
         this.accionSubGrupo = accion;
         break;
       default:
-      // console.log("accion incorrecta");
     }
   }
 
@@ -430,34 +429,45 @@ export class Adm003Component implements OnInit, OnDestroy {
     switch (accion) {
       case "nuevo":
         this.nuevElemSub(datos);
-        this.accionSubGrupo = "";
         break;
       case "editar":
         this.editElemSub(datos);
-        this.accionSubGrupo = "";
         break;
       default:
-      // code block
     }
   }
 
   nuevElemSub(datos: any) {
-    this.adm003S
-      .nuevoAdm003Sub("90", this.amd003.adamtipa, datos)
-      .subscribe(resp => {
-        this.actualizarSubGrupo(this.amd003);
-        if (resp["ok"]) {
-          this.notyG.noty("success", resp["mensaje"], 3000);
-        } else {
-          this.notyG.noty("info", resp["mensaje"], 5000);
-        }
-      });
+    if (
+      datos[datos.length - 1].adamidea === "" ||
+      datos[datos.length - 1].adamdesc === "" ||
+      datos[datos.length - 1].adamsigl === "" ||
+      datos[datos.length - 1].adamsecu === ""
+    ) {
+      this.notyG.noty("info", "Complete datos correctamente", 3000);
+      this.guardar = false;
+      return;
+    } else {
+      this.adm003S
+        .nuevoAdm003Sub("90", this.amd003.adamtipa, datos)
+        .subscribe(resp => {
+          this.actualizarSubGrupo(this.amd003);
+          if (resp["ok"]) {
+            this.notyG.noty("success", resp["mensaje"], 3000);
+            this.guardar = true;
+            this.accionSubGrupo = "";
+          } else {
+            this.notyG.noty("info", resp["mensaje"], 5000);
+          }
+        });
+    }
   }
 
   editElemSub(datos: any) {
     this.adm003S
       .editarAdm003Sub("90", this.amd003.adamtipa, datos)
       .subscribe(resp => {
+        this.accionSubGrupo = "";
         if (resp["ok"]) {
           this.notyG.noty("success", resp["mensaje"], 3000);
           this.actualizarSubGrupo(this.amd003);
@@ -473,7 +483,7 @@ export class Adm003Component implements OnInit, OnDestroy {
     );
     if (resp) {
       this.adm003S
-        .eliminarAdm003Sub("90", this.amd003.adamtipa, idelmen)
+        .eliminarAdm003Ambos("90", this.amd003.adamtipa, idelmen)
         .subscribe(resp => {
           if (resp["ok"]) {
             this.notyG.noty("success", resp["mensaje"], 3000);
