@@ -1,9 +1,36 @@
 <!-- Page content -->
-
-<!-- Main content -->
-<div class="content-wrapper">
-  <!-- Page header -->
-    <div class="card-body" style="background-color: white;padding: 0.5rem;">
+<div class="row haciadentro animaciones">
+  <div class="col-xl-12">
+    <div class="card pb0">
+      <div class="card-header header-elements-inline">  
+          <div class="col-md-12 col-12">
+            <div class="row" style="padding: 0;margin: 0;">
+                <div class="col-md-6 col-5">
+                  <h2 class="card-title font-weight-bold xxl-mobileH2 text-left">
+                    <i class="icon-home mr-2"></i>
+                     Fecha del dia  
+                  </h2>
+                </div>
+                <div class="col-md-6 col-7">
+                    <div class="row" style="margin: 0;padding: 0;">
+                        <div class="col-md-8 col-8">
+                          <select class="form-control float-left" [(ngModel)]="mes" (change)="ActualizarLista()">
+                            <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option>
+                        </select>
+                        </div>
+                        <div class="col-md-4 col-4">
+                          <select  class="form-control float-left"  [(ngModel)]="anho" (change)="ActualizarLista()">
+                            <option *ngFor="let item of listaAnhos" [value]="item.fecha">{{item.fecha}}</option>
+                          </select> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+     <!-- Page header -->
+    <!-- <div class="card-body" style="background-color: white;padding: 0.5rem;">
       <div class="card-body" style="padding: 0.5rem;">
         <div class="col-md-12">
           <div class="row">
@@ -24,13 +51,38 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- /page header -->
   
-    <!-- Content area -->
-    <div class="content">
-      <!-- Dashboard content -->
+      <!-- card content -->
       <div class="card">
+        <div class="row card-header header-elements-inline">  
+          <div class="col-md-12 col-12">
+            <div class="row" style="padding: 0;margin: 0;">
+                <div class="col-md-6 col-6">
+                  <h2 class="card-title font-weight-bold xxl-mobileH2 text-left">
+                    <i class="icon-home mr-2"></i>
+                     Fecha del dia  
+                  </h2>
+                </div>
+                <div class="col-md-6 col-6">
+                    <div class="row" style="margin: 0;padding: 0;">
+                        <div class="col-md-6 col-6">
+                          <select class="form-control float-left" [(ngModel)]="mes" (change)="ActualizarLista()">
+                            <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option>
+                        </select>
+                        </div>
+                        <div class="col-md-6 col-6">
+                          <select  class="form-control float-left"  [(ngModel)]="anho" (change)="ActualizarLista()">
+                            <option *ngFor="let item of listaAnhos" [value]="item.fecha">{{item.fecha}}</option>
+                          </select> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+
         <div class="content">
           <div *ngIf="!editar" class="col-md-12" style="text-align: right; font-size: large;">
               <a  style="padding-left: 15px;"[routerLink]="" routerLinkActive="router-link-active" (click) ="Guardar()" >
@@ -56,6 +108,8 @@
             </a>
            </div>
         </div>
+
+
       </div>
       <div class="card-body" style="background-color: white;">
           <div class="row d-flex justify-content-between">
@@ -254,7 +308,7 @@
       </div>
         <!-- </div> -->
       <!-- </div> -->
-    </div>
+   
     <!-- /content area -->
   
     <!-- Footer -->
@@ -309,6 +363,7 @@
       </div>
     </div>
     <!-- /footer -->
+  </div>
   </div>
   <!-- /main content -->
  
