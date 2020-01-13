@@ -35,7 +35,13 @@
           </div>
           <div class="col-2 col-sm-2 col-md-3 col-lg-4">
             <div class="form-control-feedback">
-              <i class="icon-diff-added puntero" title="agregar"></i>
+              <i
+                data-toggle="modal"
+                data-target="#modal_theme_info"
+                class="icon-diff-added puntero"
+                (click)="nuevElemGrup()"
+                title="agregar"
+              ></i>
             </div>
           </div>
         </div>
@@ -63,14 +69,33 @@
               </thead>
 
               <tbody>
-                <ng-container *ngFor="let adm003 of auxma; let i = index"
-                  ><tr (dblclick)="myFunction()" class="puntero PRL0">
+                <ng-container
+                  *ngFor="
+                    let adm003 of auxma;
+                    let i = index;
+                    let impar = odd;
+                    let par = even
+                  "
+                  ><tr
+                    (dblclick)="myFunction()"
+                    [ngClass]="{
+                      tablaCebradoPar: par,
+                      tablaCebradoImpar: impar,
+                      puntero: true,
+                      PRL0: true
+                    }"
+                  >
                     <td>{{ adm003.adamtipa }}</td>
                     <td class="table-content-center">
                       {{ adm003.adamdesc }}
                     </td>
                     <td>
-                      <div  *ngIf="adm003.adamesta === '1' || adm003.adamesta === true" class="custom-control custom-switch">
+                      <div
+                        *ngIf="
+                          adm003.adamesta === '1' || adm003.adamesta === true
+                        "
+                        class="custom-control custom-switch"
+                      >
                         <input
                           type="checkbox"
                           class="custom-control-input"
@@ -84,7 +109,12 @@
                           for="GrupEst{{ i }}"
                         ></label>
                       </div>
-                      <div  *ngIf="adm003.adamesta === '0' || adm003.adamesta === false" class="custom-control custom-switch">
+                      <div
+                        *ngIf="
+                          adm003.adamesta === '0' || adm003.adamesta === false
+                        "
+                        class="custom-control custom-switch"
+                      >
                         <input
                           type="checkbox"
                           class="custom-control-input"
@@ -109,10 +139,20 @@
                           class="list-icons-item text-primary-600"
                           ><i class="icon-file-eye" title="visualizar"></i
                         ></a>
-                        <a href="#" class="list-icons-item text-teal-600"
+                        <a
+                          href="#"
+                          (click)="editar(adm003, 'editar')"
+                          data-toggle="modal"
+                          data-target="#modal_theme_info"
+                          class="list-icons-item text-teal-600"
                           ><i class="icon-pencil7" title="editar"></i
                         ></a>
-                        <a href="#" class="list-icons-item text-danger-600"
+                        <a
+                          (click)="eliminar(adm003, 'eliminar')"
+                          data-toggle="modal"
+                          data-target="#modal_theme_info"
+                          href="#"
+                          class="list-icons-item text-danger-600"
                           ><i class="icon-trash" title="eliminar"></i
                         ></a>
                       </div>
@@ -169,15 +209,6 @@
       <div class="modal-header bg-blue">
         <h6 class="modal-title">GRUPO</h6>
         <div class="list-icons float-right">
-          <a class="puntero" *ngIf="btnGrupo.BtnAgreg"
-            ><i
-              class="icon-file-plus xxl"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Nuevo"
-            >
-            </i
-          ></a>
           <a class="puntero" *ngIf="btnGrupo.BtnGuard"
             ><i
               class="icon-floppy-disk xxl"
@@ -230,7 +261,7 @@
                 class="form-control"
                 placeholder="Codigo"
                 [(ngModel)]="amd003.adamtipa"
-                [disabled]="true"
+                [disabled]="habiCampo.codigoGrup"
                 title="{{ amd003.adamtipa }}"
                 required
               />

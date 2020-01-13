@@ -24,12 +24,13 @@ export class Adm003Service {
       );
   }
 
-  nuevoAdm003(adamcodm: string, adamtipa: string, dato: any) {
-    const datos = [dato[dato.length - 1]];
+  nuevoAdm003(adamcodm: string, dato: any) {
     const json = JSON.stringify({
       adamcodm,
-      adamtipa,
-      datos
+      adamtipa: dato.adamtipa,
+      adamdesc: dato.adamdesc,
+      adamesta: dato.adamesta,
+      adamsigl: dato.adamsigl
     });
     const url1 = `${url.prod}${adm0003.nuevoDato}`;
     return this.httpClient
