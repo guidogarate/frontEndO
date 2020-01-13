@@ -3,6 +3,8 @@ import { DatePipe } from "@angular/common";
 import { Adm001Service } from "../../../../utils/service/ADM-001/Adm001.service";
 import * as Noty from "noty";
 
+declare function initLabels();
+
 @Component({
   selector: "app-adm001",
   templateUrl: "./adm001.component.html",
@@ -53,6 +55,7 @@ export class Adm001Component implements OnInit {
       setTimeout(() => {
         this.cargarLista();
         this.Paginacion();
+        initLabels();
       }, 1500);
     }, 1500);
 

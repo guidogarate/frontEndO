@@ -47,7 +47,7 @@
   .content{
     margin-left: 10px;
     margin-right: 10px;
-   padding: 0;
+    padding: 0;
   }
   .card{
     padding-bottom: 0.5rem;
@@ -121,10 +121,4 @@
   height: 92px;
   overflow-y: overlay;
 }
-/* .tablaCebradoPar{
-   background-color: aliceblue ;
-  }
-.tablaCebradoImpar{
-  background-color:white;
-  } */
     

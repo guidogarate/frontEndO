@@ -30,33 +30,8 @@
           </div>
       </div>
     </div>
-     <!-- Page header -->
-    <!-- <div class="card-body" style="background-color: white;padding: 0.5rem;">
-      <div class="card-body" style="padding: 0.5rem;">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-6">
-                <i class="icon-home mr-2"></i>
-                <span>Fecha del dia</span>
-            </div>
-            <div class="col-md-3 col-4"> 
-                    <select class="form-control" [(ngModel)]="mes" (change)="ActualizarLista()">
-                        <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option>
-                    </select>
-            </div>
-            <div class="col-md-3 col-4"> 
-                     <select  class="form-control"  [(ngModel)]="anho" (change)="ActualizarLista()">
-                       <option *ngFor="let item of listaAnhos" [value]="item.fecha">{{item.fecha}}</option>
-                     </select>  
-             </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <!-- /page header -->
-  
-      <!-- card content -->
-      <div class="card">
+
+      <div class="card m02">
         <div class="card-header header-elements-inline" 
               style="padding: 1.5em; padding-top: 5px;padding-bottom: 5px;">  
           <div class="col-md-12 col-12" 
@@ -87,70 +62,59 @@
                     <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
                 </a>
                 </div>
-                  <!-- <a class="list-icons-item text-primary-600 float-right" (click)="AgregarGestion()"
-                  [routerLink]="nada()" routerLinkActive="router-link-active"
-                  data-toggle="modal" data-target="#modal_gestion">
-                  <i class="icon-diff-added xxl-title" data-toggle="tooltip" data-placement="top" title="Ver Gestion"> </i>
-                  </a> -->
               </h6>
-          </div>
-     
-     
-      
+          </div>      
         </div>
-        <div class="card-body">
-          <!-- <div class="row d-flex justify-content-between">
-              <div class="col-lg-3">
-                  <legend class="text-uppercase font-size-sm font-weight-bold">Registro de Grupos
-                  </legend>
-              </div>
-          </div> -->
-          <div class="row" >
+        <div class="card-body" 
+        style="padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 0.5em;">
+          <div class="row p0 m0" >
               <div class="col-md-6">
                   <div class="card">
                       <div class="card-header"
                             style="padding: 0; padding-left: 2.3em;">
                           <h6 class="card-title"><b> Fecha Actual</b></h6>
                       </div>
-                      <div class="card-body">
+                      <div class="card-body" style="padding: 0;padding-bottom: 1em;">
                           <div class="text-left">
-                              <div class="col-md-12" style="padding-left: 0px;">
+                              <div class="col-md-12">
                                   <label class="col-form-label col-lg-6 p0 m0" style="padding-left: 0.8em;">Fecha</label>
                                   <div class="col-lg-6 col-12">
-                                    <input  *ngIf="predeterminado!=undefined" type="text" readonly class="form-control"  value="{{predeterminado.fecha |date:'yyyy-MM-dd'}}">
-                                    <input  *ngIf="predeterminado== undefined" type="text" readonly class="form-control"  value="">
+                                    <input  *ngIf="predeterminado!=undefined" type="text" readonly class="form-control h30"  value="{{predeterminado.fecha |date:'yyyy-MM-dd'}}">
+                                    <input  *ngIf="predeterminado== undefined" type="text" readonly class="form-control h30"  value="">
                                   </div>
                               </div>
                          </div>
-                        <div class="row" style="padding-top: 0.3em;">
+                        <div class="row p0 m0" style="padding-top: 0.3em;">
                             <div class="col-md-6 col-6 text-left">
                               <label class="col-lg-12 col-12 m0">T/C Oficial</label>
                               <div class="col-lg-12 col-12">
-                                <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control" value={{predeterminado.tc_oficial}}>
-                                <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control" value="">
+                                <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30" value={{predeterminado.tc_oficial}}>
+                                <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value="">
                               </div>
                             </div>
                             <div class="col-md-6 col-6 text-left">
                               <label class="col-lg-12 m0">T/C Compras</label>
                               <div class="col-lg-12">
-                                <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control" value={{predeterminado.tc_compra}}>
-                                <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control" value="">
+                                <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 " value={{predeterminado.tc_compra}}>
+                                <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value="">
                               </div>
                             </div>
                         </div>
-                        <div class="row" style="padding-top: 15px;">
+                        <div class="row p0 m0">
                             <div class="col-md-6 col-6 text-left">
                                 <label class="col-lg-12 m0">T/C Ventas</label>
                                 <div class="col-lg-12">
-                                  <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control" value={{predeterminado.tc_venta}}>
-                                  <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control" value="">
+                                  <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30" value={{predeterminado.tc_venta}}>
+                                  <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value="">
                                 </div>
                             </div>
                             <div class="col-md-6 col-6 text-left">
                                 <label class="col-lg-12 m0">T/C UFV</label>
                                 <div class="col-lg-12">
-                                  <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control" value= {{predeterminado.tc_ufv}}>
-                                  <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control" value= "">
+                                  <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30" value= {{predeterminado.tc_ufv}}>
+                                  <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value= "">
                                 </div>
                             </div>
                         </div> 
@@ -159,92 +123,110 @@
               </div>
               <div class="col-md-6">
                   <div class="card">
-                      <div class="card-header">
+                      <div class="card-header pTB0">
                             <h6 class="card-title"><b> Ingreso de Fecha</b></h6>
                       </div>
-                      <div class="card-body" style="padding-bottom: 0px;">
-                        <div class="row">
+                      <div class="card-body p0" >
+                        <div class="row p0 m0">
                             <div class="col-md-6 col-6">
-                              <div class="form-group">
-                              <span class="font-weight-semibold">Fecha </span>
-                                  <div class="input-group">
-                                    <input [disabled]="editar" type="date" name="fechaEdicion" required 
-                                    value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}" [(ngModel)]="tipoCambio.fecha"
-                                    data-date="" data-date-format="yyyy-MM-dd" max="{{fechaMaxima}}"
-                                    >
-                                  </div>
-                              </div>
+                              <div class="form-group form-group-float text-left m0">
+                                <label class="form-group-float-label m0">Fecha</label>
+                                <input [disabled]="editar" type="date" name="Fecha" required class="form-control text-center h30"
+                                value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}" [(ngModel)]="tipoCambio.fecha"placeholder="Fecha"
+                                data-date="" data-date-format="yyyy-MM-dd" max="{{fechaMaxima}}"
+                                >
+                            </div>
                             </div>
                             <div class="col-md-6 col-6">
-                                <div class="form-group">
-                                        <div class="custom-control custom-switch">
+                                <div class="form-group" style="margin-bottom: 0.1em;">
+                                        <div class="custom-control custom-switch" style="margin-bottom: 0.2em;">
                                             <input type="checkbox" class="custom-control-input" id="switch1" name="sw1"
                                             [checked]="tipoCambio.estado == 'true'" data-fouc [(ngModel)]="tipoCambio.estado ">
-                                            <label *ngIf="tipoCambio.estado" class="custom-control-label" for="switch1">Abierto</label>
-                                            <label *ngIf="!tipoCambio.estado" class="custom-control-label" for="switch1">Cerrado</label>
+                                            <label *ngIf="tipoCambio.estado" class="custom-control-label h30" for="switch1">Abierto</label>
+                                            <label *ngIf="!tipoCambio.estado" class="custom-control-label h30" for="switch1">Cerrado</label>
                                         </div>
                                         <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" id="switch2" name="sw2"
+                                            <input type="checkbox" class="custom-control-input h30" id="switch2" name="sw2"
                                             [checked]="tipoCambio.pred" [(ngModel)]="tipoCambio.pred">
                                             <label class="custom-control-label" for="switch2">Predeterminado</label>
                                         </div>
                                   </div>
                               </div>
                         </div>
-                        <div class="row" style="padding-top: 15px; padding-bottom: 15px;"> 
-                            <div class="col-md-6 col-12 text-left">
-                              <label class="col-lg-12">T/C Oficial</label>
-                              <div class="col-lg-12">
-                                <input type="text" name="tcOficial" class="form-control" required value="{{tipoCambio.tc_oficial}}" [(ngModel)]="tipoCambio.tc_oficial" >
+                        <div class="row p0 m0"> 
+                            <div class="col-md-6 col-6 text-left">
+                              <div class="form-group form-group-float m02">
+                                  <label class="col-lg-12 form-group-float-label m0">T/C Oficial</label>
+                                  <div class="col-lg-12">
+                                    <input type="text" class="form-control text-center h30" name="tcOficial" 
+                                    placeholder="T/C Oficial" required value="{{tipoCambio.tc_oficial}}" [(ngModel)]="tipoCambio.tc_oficial">
+                                  </div>
                               </div>
                             </div>
-                              <div class="col-md-6 col-12 text-left">
-                                <label class="col-lg-12">T/C Compras</label>
-                                <div class="col-lg-12">
-                                  <input type="text" name="tcCompras" class="form-control" required value="{{tipoCambio.tc_compra}}" [(ngModel)]="tipoCambio.tc_compra">
-                                </div>
+                            <div class="col-md-6 col-6 text-left">
+                              <div class="form-group form-group-float m02">
+                                  <label class="col-lg-12 form-group-float-label m0">T/C Compras</label>
+                                  <div class="col-lg-12">
+                                    <input type="text" class="form-control text-center h30" name="tcCompras" 
+                                    placeholder="T/C Compras" required value="{{tipoCambio.tc_compra}}" [(ngModel)]="tipoCambio.tc_compra">
+                                  </div>
+                              </div>
                             </div>
                         </div>
-                        <div class="row" style="padding-top: 15px; padding-bottom: 15px;">
-                            <div class="col-md-6 col-12 text-left" >
-                                <label class="col-lg-12">T/C Ventas</label>
+                        <div class="row m0 p0">
+                            <div class="col-md-6 col-6 text-left" style="margin-bottom: 0.6em;" >
+                              <div class="form-group form-group-float m02">
+                                <label class="col-lg-12 form-group-float-label m0">T/C Ventas</label>
+                                <div class="col-lg-12">
+                                  <input type="text" class="form-control text-center h30" name="tcVentas" 
+                                  placeholder="T/C Ventas" required value="{{tipoCambio.tc_venta}}" [(ngModel)]="tipoCambio.tc_venta">
+                                </div>
+                             </div>
+                                <!-- <label class="col-lg-12">T/C Ventas</label>
                                 <div class="col-lg-12">
                                   <input type="text" name="tcVenta" class="form-control" required value="{{tipoCambio.tc_venta}}" [(ngModel)]="tipoCambio.tc_venta">
-                                </div>
+                                </div> -->
                             </div>
                           
-                            <div class="col-md-6 col-12 text-left">
-                              <label class="col-lg-12">T/C UFV</label>
+                            <div class="col-md-6 col-6 text-left">
+                              <div class="form-group form-group-float m02">
+                                <label class="col-lg-12 form-group-float-label m0">T/C UFV</label>
+                                <div class="col-lg-12">
+                                  <input type="text" class="form-control text-center h30" name="tcUfv" 
+                                  placeholder="T/C UFV" required value="{{tipoCambio.tc_ufv}}" [(ngModel)]="tipoCambio.tc_ufv">
+                                </div>
+                             </div>
+                              <!-- <label class="col-lg-12">T/C UFV</label>
                               <div class="col-lg-12">
                                 <input type="text" name="tcUfv" class="form-control" required value="{{tipoCambio.tc_ufv}}" [(ngModel)]="tipoCambio.tc_ufv">
-                              </div>
+                              </div> -->
                             </div>
                         </div>
                       </div>
                   </div>
                 </div>
           </div>
-          <div class="row">
+          <div class="row p0 m0">
             <div class="col-md-12">
               <div class="table-responsive text-center" *ngIf="ListTipoCambio!= undefined">
                   <table class="table table-sm table-hover table-bordered table-striped">
                     <thead  class="bg-blue">
                       <tr class="table-border-double">
-                        <th>Fecha</th>
-                        <th>T/C Oficial</th>
-                        <th>T/C Compra</th>
-                        <th>T/C Venta</th>
-                        <th>T/C UFV</th>
-                        <th>Estado</th>
+                        <th class="p0">Fecha</th>
+                        <th class="p0">T/C Oficial</th>
+                        <th class="p0">T/C Compra</th>
+                        <th class="p0">T/C Venta</th>
+                        <th class="p0">T/C UFV</th>
+                        <th class="p0">Estado</th>
                       </tr>
                     </thead>
                     <tbody >
                       <tr *ngFor="let item of ListTipoCambio" (click)="cargarEdicion(item)" class="puntero">
-                        <td class="pTB0">{{item.fecha | date:'mediumDate':'+0400'}} </td>
-                        <td class="pTB0">{{item.tc_oficial}}</td>
-                        <td class="pTB0">{{item.tc_compra}}</td>
-                        <td class="pTB0">{{item.tc_venta}}</td>
-                        <td class="pTB0">{{ item.tc_ufv }} </td>
+                        <td class="p0">{{item.fecha | date:'mediumDate':'+0400'}} </td>
+                        <td class="p0">{{item.tc_oficial}}</td>
+                        <td class="p0">{{item.tc_compra}}</td>
+                        <td class="p0">{{item.tc_venta}}</td>
+                        <td class="p0">{{ item.tc_ufv }} </td>
                         <td *ngIf="item.estado == '1'" class="pTB0"> 
                           <span  class="badge badge-success ">
                             Activo 
@@ -266,7 +248,7 @@
                     </div>
                 </div>
                 
-                <hr>
+                <hr style="display: none;">
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                   <li class="page-item">
@@ -297,7 +279,7 @@
       </div>
 
     <!-- Footer -->
-    <div class="navbar navbar-expand-lg navbar-light">
+    <div class="navbar navbar-expand-lg navbar-light" style="display: none;">
       <div class="text-center d-lg-none w-100">
         <button
           type="button"

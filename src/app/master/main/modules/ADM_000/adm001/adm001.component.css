@@ -5,12 +5,23 @@
 .m0{
     margin: 0;
 }
+.m02{
+    margin-bottom: 0.2em;
+}
+.card-header:not([class*=bg-]):not([class*=alpha-]){
+
+    padding-bottom: 0;
+    padding-top: 0;
+  }
 .p0{
     padding: 0;
 }
+.h30{
+    height: 18px;
+}
 .mLR0{
     margin-left: 0em;
-    margin-left: 0em;
+    margin-right: 0em;
     padding-left: 0em;
     padding-right: 0em;
 }
