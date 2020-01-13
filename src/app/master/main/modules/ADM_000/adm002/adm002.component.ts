@@ -281,7 +281,7 @@ export class Adm002Component implements OnInit {
       adgtesta: this.estadoPredeterminado,
       adgtmoda: false,
       adgtdiam: null,
-      adgtgesd: false,
+      adgtgesd: true,
       adgtcanp: 12
     };
     this.fechaInicioGestion = null;

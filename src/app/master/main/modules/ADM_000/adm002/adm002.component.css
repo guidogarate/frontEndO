@@ -5,6 +5,13 @@
   .plIcon{
     padding-left: 1em;;
   }
+  .mLR0{
+    margin-left: 0em;
+    margin-right: 0em;
+    padding-left: 0em;
+    padding-right: 0em;
+}
+
   .xl-Icon{
     margin-right: 2em;
     font-size: 1.5em;
@@ -56,7 +63,9 @@
   }
   .pb0{ 
    padding: 0;
-   
+  }
+  .pb05{
+    padding-bottom: 0.5em;
   }
 
   @media screen and (max-width: 380px) {
@@ -110,7 +119,7 @@
 }
 .scroll-Table-Gestion{
   height: 92px;
-  overflow-y: scroll;
+  overflow-y: overlay;
 }
 /* .tablaCebradoPar{
    background-color: aliceblue ;

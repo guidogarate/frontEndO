@@ -8,6 +8,12 @@
 .p0{
     padding: 0;
 }
+.mLR0{
+    margin-left: 0em;
+    margin-left: 0em;
+    padding-left: 0em;
+    padding-right: 0em;
+}
 
 .PLR0-1em{
     padding-left: 0.1em;
