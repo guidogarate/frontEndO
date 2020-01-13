@@ -1,4 +1,3 @@
-<<<<<<< HEAD
   .xl {
     font-size: 1.5em; /* de esta manera modificas el tamaño de tus iconos.*/
     background-color: white;
@@ -17,19 +16,6 @@
     margin-right: 2em;
     font-size: 1.5em;
   }
-=======
-.xl {
-  font-size: 1.5em; /* de esta manera modificas el tamaño de tus iconos.*/
-  background-color: white;
-}
-.plIcon {
-  padding-left: 1em;
-}
-.xl-Icon {
-  margin-right: 2em;
-  font-size: 1.5em;
-}
->>>>>>> add5b317660152ce08d564497f5c06399887641a
 
 .pTop {
   padding-top: 0;
@@ -53,16 +39,6 @@
   font-size: 2em;
 }
 
-<<<<<<< HEAD
-  .table td, .table th{
-    padding-top: 0%;
-    padding-bottom: 0%;
-  }
-  .content{
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 0;
-=======
 .table td,
 .table th {
   padding-top: 0%;
@@ -97,7 +73,6 @@ h6 {
   .h2 h3 {
     font-size: large;
     background-color: red;
->>>>>>> add5b317660152ce08d564497f5c06399887641a
   }
 }
 @media screen and (max-width: 600px) {
@@ -110,17 +85,11 @@ h6 {
   .xxl-modal {
     font-size: 1.8em;
   }
-<<<<<<< HEAD
   .pb0{ 
    padding: 0;
   }
   .pb05{
     padding-bottom: 0.5em;
-=======
-  .xxl-title {
-    font-size: 1em;
-    padding-right: 0.5em;
->>>>>>> add5b317660152ce08d564497f5c06399887641a
   }
 
   .xxl-mobileH2 {
@@ -152,7 +121,4 @@ h6 {
   height: 92px;
   overflow-y: overlay;
 }
-<<<<<<< HEAD
     
-=======
->>>>>>> add5b317660152ce08d564497f5c06399887641a
