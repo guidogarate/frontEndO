@@ -112,7 +112,7 @@
                                         <td class="puntero">{{periodo.adprmesp | nombremes}}</td>
                                         <td class="puntero">{{periodo.adprdesc}}</td>
                                         <td class="puntero">{{periodo.adprideg}}</td>
-                                        <td class="puntero">{{periodo.adpresta| estadoperiodo}}</td>
+                                        <td class="puntero">{{periodo.adpresta| estado}}</td>
                                         <td class="puntero PRL0"> 
                                             <div class="list-icons"> 
                                                 <a class="list-icons-item text-primary-600" (click)="VerPeriodo(periodo)"
@@ -311,7 +311,7 @@
                     </div>
                 </div>
             </div>
-            <pre> {{ gestionModelo | json }} </pre>
+            <!-- <pre> {{ gestionModelo | json }} </pre> -->
         </div>
     </div>
 </div>
@@ -361,7 +361,7 @@
                         <label class="form-group-float-label">Estado</label>
                         <select class="form-control" [(ngModel)]="periodoModelo.adpresta" [disabled] = "!editPeriodo" >
                          <option *ngFor="let item of ListaEstadosGestionPeriodos; let i = index" 
-                         [value]="i" >{{item.adamdesc }}</option>
+                         [value]="i+1" >{{item.adamdesc }}</option>
                         </select>
                     </div>
                 </div>

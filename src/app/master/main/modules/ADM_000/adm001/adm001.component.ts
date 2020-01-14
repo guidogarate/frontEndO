@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { DatePipe } from "@angular/common";
 import { Adm001Service } from "../../../../utils/service/ADM-001/Adm001.service";
 import * as Noty from "noty";
+import { NotyGlobal } from "src/app/master/utils/global/index.global";
 
 declare function initLabels();
 
@@ -43,7 +44,8 @@ export class Adm001Component implements OnInit {
 
   constructor(
     private adm001Service: Adm001Service,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private notyG: NotyGlobal
   ) {
     this.indice = "0";
   }
@@ -105,6 +107,9 @@ export class Adm001Component implements OnInit {
       estado: item.estado == 1,
       pred: item.pred == 1
     };
+    setTimeout(() => {
+      initLabels();
+    }, 1000);
     this.editar = true;
     console.log("Pa Edicion a vista: ", this.tipoCambio);
   }
@@ -135,14 +140,15 @@ export class Adm001Component implements OnInit {
     };
     this.adm001Service.agregar(this.tipoCambioSend).subscribe(resp => {
       if (resp["ok"]) {
-        new Noty({
-          text: "Guardando",
-          theme: "nest",
-          progressBar: false,
-          timeout: 3500,
-          type: "error",
-          layout: "bottomRight"
-        }).show();
+        this.notyG.noty("success", "Guardando ", 3500);
+        // new Noty({
+        //   text: "Guardando",
+        //   theme: "nest",
+        //   progressBar: false,
+        //   timeout: 3500,
+        //   type: "error",
+        //   layout: "bottomRight"
+        // }).show();
         console.log("Guardando: ", resp);
         this.Limpiar();
         this.cargarLista();
@@ -170,14 +176,15 @@ export class Adm001Component implements OnInit {
     console.log("para actualizar: ", this.tipoCambioSend);
     this.adm001Service.actualizar(this.tipoCambioSend).subscribe(resp => {
       if (resp["ok"]) {
-        new Noty({
-          text: "actualizado",
-          theme: "nest",
-          progressBar: false,
-          timeout: 3500,
-          type: "error",
-          layout: "bottomRight"
-        }).show();
+        this.notyG.noty("success", "Actualizando ..", 3500);
+        // new Noty({
+        //   text: "actualizado",
+        //   theme: "nest",
+        //   progressBar: false,
+        //   timeout: 3500,
+        //   type: "error",
+        //   layout: "bottomRight"
+        // }).show();
         console.log("Actualizando: ", resp);
         this.cargarLista();
         this.cargarPredeterminado();
@@ -192,10 +199,10 @@ export class Adm001Component implements OnInit {
   Limpiar() {
     this.tipoCambio = {
       fecha: this.datePipe.transform(this.today, "yyyy-MM-dd"),
-      tc_oficial: "0",
-      tc_compra: "0",
-      tc_venta: "0",
-      tc_ufv: "0",
+      tc_oficial: "",
+      tc_compra: "",
+      tc_venta: "",
+      tc_ufv: "",
       estado: false,
       pred: true
     };
@@ -207,18 +214,19 @@ export class Adm001Component implements OnInit {
       this.loading= true;
       this.adm001Service.eliminar(this.tipoCambio.fecha).subscribe(resp => {
         if (resp["ok"]) {
+          this.notyG.noty("success", "Eliminando ..", 3500);
           this.Limpiar();
           this.cargarLista();
           this.Cancelar();
           this.cargarPredeterminado();
-          new Noty({
-            text: "Eliminando",
-            theme: "nest",
-            progressBar: false,
-            timeout: 3500,
-            type: "error",
-            layout: "bottomRight"
-          }).show();
+          // new Noty({
+          //   text: "Eliminando",
+          //   theme: "nest",
+          //   progressBar: false,
+          //   timeout: 3500,
+          //   type: "error",
+          //   layout: "bottomRight"
+          // }).show();
         } else {
           console.log("no se pudo eliminar", resp);
           return resp;

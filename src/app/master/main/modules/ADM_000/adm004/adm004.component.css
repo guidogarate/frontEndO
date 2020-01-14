@@ -1,12 +1,12 @@
 .p0{
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding: 0em;
 }
 .m0{
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin: 0em;
 }
-
+.selectCenter{
+    text-align-last: center;
+}
 .title-icon{
     font-size: 2em;
 }

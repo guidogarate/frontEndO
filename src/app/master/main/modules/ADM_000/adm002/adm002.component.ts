@@ -317,7 +317,7 @@ export class Adm002Component implements OnInit {
       adpridep: item.adpridep, //== null  ? (('1').padStart(2,'0')) : item.adpridep,
       adprmesp: item.adprmesp,
       adprdesc: item.adprdesc,
-      adpresta: item.adpresta,
+      adpresta: item.adpresta == 1 ? "1" : "2",
       adprfepi: item.adprfepi,
       adprfepf: item.adprfepf,
       adprmoda: item.adprmoda == "1" ? true : false,

@@ -22,7 +22,7 @@
                 routerLink="" routerLinkActive="router-link-active" >
                   <i class="icon-floppy-disk title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
               </a>
-              <a class="list-icons-item"   data-dismiss="modal"
+              <a class="list-icons-item" 
               routerLink="" routerLinkActive="router-link-active"  >
                   <i class="icon-exit title-icon " data-toggle="tooltip" data-placement="top" title="Salir"> </i>
               </a>
@@ -30,44 +30,54 @@
           </div>
         </div>
         <hr class="p0 m0">
-        <div class="card-body">
+        <div class="card-body" style="padding: 0.5em;">
           <div class="row text-center">
-            <div class="col-md-2 col-lg-2">
-
+            <div class="col-md-3 d-none d-sm-none d-md-block">
             </div>
-            <div class="col-md-8 col-lg-8">
-              <div class="form-group form-group-feedback form-group-feedback-right">
-                   <div class="row text-center">
-                       <div class="col-md-4 col-lg-6 form-group form-group-float">
-                           <label class="form-group-float-label">Razon Social</label>
-                           <input type="text" class="form-control text-center" placeholder="Razon Social">
+            <div class="col-md-6 col-12">
+              <div class="form-group form-group-feedback form-group-feedback-right m0">
+                   <div class="row text-center m0" *ngIf="razonSocial!= undefined" >
+                       <div class="col-md-4 col-lg-6 form-group form-group-float m0">
+                           <label class="form-group-float-label m0">{{razonSocial.adpidesc}}</label>
+                           <input type="text" class="form-control text-center p0" placeholder="{{razonSocial.adpidesc}}" value="{{razonSocial.content}}">
                        </div>
-                       <div class="col-md-4 col-lg-6 form-group form-group-float">
-                           <label class="form-group-float-label">Sigla</label>
-                           <input type="text" class="form-control text-center" placeholder="Sigla">
+                       <div class="col-md-4 col-lg-6 form-group form-group-float m0">
+                           <label class="form-group-float-label m0">{{sigla.adpidesc}}</label>
+                           <input type="text" class="form-control text-center p0" placeholder="{{sigla.adpidesc}}" value="{{sigla.content}}">
                        </div>
                    </div>
               </div>
             </div>
-            <div class="col-md-2 col-lg-2"></div>
+            <div class="col-md-3 d-none d-sm-none d-md-block"></div>
           </div>
           <div class="row text-center">
-            <div class="col-md-2 col-lg-2"></div>
-            <div class="col-md-8 col-lg-8">
+            <div class="col-md-3 d-none d-sm-none d-md-block"></div>
+            <div class="col-md-6 col-12">
               <div class="form-group form-group-feedback form-group-feedback-right">
-                   <div class="row text-center">
-                       <div class="col-md-4 col-lg-6 form-group form-group-float">
-                           <label class="form-group-float-label">Actividad de la Empresa</label>
-                           <input type="text" class="form-control text-center" placeholder="Actividad de la Empresa">
+                   <div class="row text-center m0" style="padding-top: 0.5em;" *ngIf="actividad!= undefined">
+                       <div class="col-md-4 col-lg-6 form-group form-group-float" >
+                           <label class="form-group-float-label m0">{{actividad.adpidesc}}</label>
+                           <input type="text" class="form-control text-center p0" placeholder="Actividad de la Empresa" value="{{actividad.content}}">
                        </div>
-                       <div class="col-md-4 col-lg-6 form-group form-group-float">
-                           <label class="form-group-float-label">Gestion</label>
-                           <input type="text" class="form-control text-center" placeholder="Gestion">
+                       <div class="col-md-4 col-lg-6 form-group form-group-float" >
+                          <label class="form-group-float-label m0">{{gestion.adpidesc}}</label>
+                         
+                            <select class="form-control p0 selectCenter" [(ngModel)]="idGestion">
+                                <option *ngFor="let item of listaGestion"
+                                [value]="item.adgtideg"> {{item.adgtideg}}
+                              </option>
+                              <pre>{{item | json}}</pre>
+                            </select>                          
                        </div>
                    </div>
               </div>
             </div>
-            <div class="col-md-2 col-lg-2"></div>
+            <!-- <pre>{{razonSocial | json}}</pre>
+            <pre>{{actividad | json}}</pre>
+            <pre>{{sigla | json}}</pre>
+            <pre>{{gestion | json}}</pre>
+            <pre>{{gestion.content | json}}</pre> -->
+            <div class="col-md-3 d-none d-sm-none d-md-block"></div>
           </div>
         </div>
         <div class="card" style="margin: 10px;">

@@ -29,7 +29,8 @@ const url = {
   agregar_gestion: "adm_000/adm_002/agregar-gestion",
   eliminar_Gestion: "adm_000/adm_002/eliminar/",
   actualizar_gestion: "adm_000/adm_002/actualizar-gestion/",
-  actualizar_periodo: "adm_000/adm_002/actualizar-perido/"
+  actualizar_periodo: "adm_000/adm_002/actualizar-perido/",
+  get_paraminicial : "adm_000/adm_004/get-paraminicial1"
 };
 
 export default url;

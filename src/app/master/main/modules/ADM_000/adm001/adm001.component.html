@@ -40,22 +40,22 @@
                 <div class="list-icons float-right"> 
                   <a *ngIf="!editar"  [routerLink]="" routerLinkActive="router-link-active" 
                     (click) ="Guardar()" >
-                      <i style="font-size: 1.2em;" class="icon-file-check" data-toggle="tooltip" data-placement="top" title="Guardar"></i>
+                      <i style="font-size: 1.2em;" class="icon-floppy-disk" data-toggle="tooltip" data-placement="top" title="Guardar"></i>
                   </a>
                   <a  *ngIf="!editar" [routerLink]="" routerLinkActive="router-link-active"
                     (click) ="Limpiar()" >
-                      <i style="font-size: 1.2em;" class="icon-file-empty" data-toggle="tooltip" data-placement="top" title="Nuevo"></i>
+                      <i style="font-size: 1.2em;" class="icon-file-plus" data-toggle="tooltip" data-placement="top" title="Nuevo"></i>
                   </a>
                   <a *ngIf="!editar" [routerLink]="" routerLinkActive="router-link-active"
                     (click) ="Eliminar()" >
                       <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
                   </a>
                   <a *ngIf="editar"  [routerLink]="" routerLinkActive="router-link-active" (click) ="Actualizar()">
-                      <i style="font-size: 1.2em;" class="icon-file-check" data-toggle="tooltip" data-placement="top" title="Actualizar"></i>
+                      <i style="font-size: 1.2em;" class="icon-floppy-disk" data-toggle="tooltip" data-placement="top" title="Actualizar"></i>
                   </a>
                   <a *ngIf="editar" [routerLink]="" routerLinkActive="router-link-active"
                     (click) ="Cancelar()" >
-                      <i style="font-size: 1.2em;" class="icon-cancel-square" data-toggle="tooltip" data-placement="top" title="Cancelar"></i>
+                      <i style="font-size: 1.2em;" class="icon-exit" data-toggle="tooltip" data-placement="top" title="Cancelar"></i>
                   </a>
                   <a *ngIf="editar" [routerLink]="" routerLinkActive="router-link-active"
                     (click) ="Eliminar()" >
