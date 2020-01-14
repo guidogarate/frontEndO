@@ -27,7 +27,7 @@
 
 .xxl-title {
   font-size: 1.5em;
-  padding-right: 1.5em;
+/* padding-right: 1.5em; */
   color: #03a9f4;
 }
 .xxl {
@@ -56,9 +56,7 @@
   padding-bottom: 0;
   padding-top: 0.5rem;
 }
-.h1,
-h2,
-h3,
+.h1,h2,h3,
 h4,
 h5,
 h6 {
@@ -88,6 +86,9 @@ h6 {
   .pb0{ 
    padding: 0;
   }
+  xxl-title{
+    padding-left: 0.5em;
+  }
   .pb05{
     padding-bottom: 0.5em;
   }
@@ -101,6 +102,9 @@ h6 {
   }
   .xl-Icon {
     margin-right: 1em;
+  }
+  .plIcon{
+    padding-left: 0;;
   }
   .pTop {
     padding-top: 2em;
@@ -122,3 +126,6 @@ h6 {
   overflow-y: overlay;
 }
     
+.m0{
+  margin: 0;
+}
