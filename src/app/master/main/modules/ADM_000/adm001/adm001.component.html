@@ -6,20 +6,20 @@
       <div class="card-header header-elements-inline" style="padding: 0.1em;">  
           <div class="col-md-12 col-12" style="padding: 0.1em;">
             <div class="row" style="padding: 0;margin: 0;">
-                <div class="col-md-8 col-5">
-                  <h2 class="card-title font-weight-bold PLR0-1em text-left" style="font-size: large;">
+                <div class="col-md-8 col-5 ptitulo" style="align-self: center;">
+                  <h2 class="card-title font-weight-bold PLR0-1em text-left fuentetitulo" style="font-size: large;">
                     <i class="icon-home mr-2"></i>
                      Fecha del dia  
                   </h2>
                 </div>
-                <div class="col-md-4 col-7">
+                <div class="col-md-4 col-7 ptitulo">
                     <div class="row" style="margin: 0;padding: 0;">
-                        <div class="col-md-8 col-7">
+                        <div class="col-md-8 col-7 ptitulo">
                           <select class="form-control float-left" [(ngModel)]="mes" (change)="ActualizarLista()">
                             <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option>
                         </select>
                         </div>
-                        <div class="col-md-4 col-5">
+                        <div class="col-md-4 col-5 ptitulo">
                           <select  class="form-control float-left"  [(ngModel)]="anho" (change)="ActualizarLista()">
                             <option *ngFor="let item of listaAnhos" [value]="item.fecha">{{item.fecha}}</option>
                           </select> 
