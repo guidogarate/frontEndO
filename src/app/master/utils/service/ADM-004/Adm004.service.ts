@@ -14,24 +14,70 @@ export class Adm004Service {
     console.log("cargando predeterminados adm004service: ");
   }
 
-  // ObtenerPeriodos(fecha: any) {
-  //   const url1 = `${url.prod}${url.get_periodos}${fecha}`;
-  //   console.log("obteniendo Periodo: ", url1);
-  //   return this.httpClient
-  //     .get(url1, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token,
-  //         "Content-Type": "application/json"
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         return resp;
-  //       })
-  //     );
-  // }
   ObtenerParametros() {
     const url1 = `${url.prod}${url.get_paraminicial}`;
+    return this.httpClient
+      .get(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token
+        })
+      })
+      .pipe(
+        map(resp => {
+          console.log(resp);
+          return resp;
+        })
+      );
+  }
+  ObtenerParametrosMoneda(fecha : string) {
+    const url1 = `${url.prod}${url.get_monedas}`+fecha;
+    return this.httpClient
+      .get(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token
+        })
+      })
+      .pipe(
+        map(resp => {
+          console.log(resp);
+          return resp;
+        })
+      );
+  }
+
+  ObtenerParametrosFolio(fecha : string) {
+    const url1 = `${url.prod}${url.get_folio}`+fecha;
+    return this.httpClient
+      .get(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token
+        })
+      })
+      .pipe(
+        map(resp => {
+          console.log(resp);
+          return resp;
+        })
+      );
+  }
+  ObtenerParametrosEspeciales(fecha : string) {
+    const url1 = `${url.prod}${url.parama_espec}`+fecha;
+    return this.httpClient
+      .get(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token
+        })
+      })
+      .pipe(
+        map(resp => {
+          console.log(resp);
+          return resp;
+        })
+      );
+  }
+
+  ObtenerParametrosRegistroMaestro(fecha : string) {
+    const url1 = `${url.prod}${url.reg_maest}`+fecha;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({

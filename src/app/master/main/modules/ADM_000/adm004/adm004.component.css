@@ -14,9 +14,18 @@
     vertical-align: 0em;
 }
 
+.card-padding{
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.mt0{
+    margin-top: 0em;
+}
+
 @media screen and (max-width: 600px) {
     .title-icon{
         font-size: 1.8em;
     }
   
-  }
+}

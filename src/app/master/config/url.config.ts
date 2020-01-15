@@ -30,7 +30,11 @@ const url = {
   eliminar_Gestion: "adm_000/adm_002/eliminar/",
   actualizar_gestion: "adm_000/adm_002/actualizar-gestion/",
   actualizar_periodo: "adm_000/adm_002/actualizar-perido/",
-  get_paraminicial : "adm_000/adm_004/get-paraminicial1"
+  get_paraminicial : "adm_000/adm_004/get-paraminicial1",
+  get_monedas : "adm_000/adm_004/get-monedas/",
+  get_folio : "adm_000/adm_004/get-folio/",
+  parama_espec: "adm_000/adm_004/parama-espec/",
+  reg_maest : "adm_000/adm_004/reg-maest/"
 };
 
 export default url;
