@@ -27,5 +27,8 @@
     .title-icon{
         font-size: 1.8em;
     }
+    .title {
+        font-size: smaller;
+    }
   
 }
