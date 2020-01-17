@@ -26,12 +26,28 @@
 padding-top: 0%;
 padding-bottom: 0%;
 }
+.plr0{
+    padding-left: 0%;
+    padding-right: 0%;
+}
+.centrarCheckdesktop{
+    text-align: center;
+}
+.ocultar {
+    display: none;
+}
+.pb1{
+    padding-bottom: 1em;
+}
 @media screen and (max-width: 600px) {
     .title-icon{
         font-size: 1.8em;
     }
     .title {
         font-size: smaller;
+    }
+    .centrarCheckdesktop{
+        text-align: left;
     }
   
 }

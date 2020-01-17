@@ -99,7 +99,7 @@
                 <div class="col-lg-6 col-12" style="align-self: center;">
                     <div class="form-check form-check-inline form-check-right">
                         <label class="form-check-label">
-                          {{moneda.adpidesc}}
+                          <b>{{moneda.adpidesc}}</b>
                           <input type="checkbox" class="form-check-input" [(ngModel)]="moneda.content" value="{{moneda.content}}">
                         </label>
                     </div>
@@ -107,7 +107,7 @@
                 </div>
                 <div class="col-lg-6 col-12" style="display : inline-flex">
                     <div class="col-lg-4 col-6 form-group form-group-float m0">
-                        <label class="form-group-float-label m0">{{listImputacion.adpidesc}}</label>
+                        <label class="form-group-float-label m0"><b>{{listImputacion.adpidesc}}</b></label>
                         <select class="form-control p0 selectCenter" [(ngModel)]="idImputacion">
                             <option *ngFor="let item of listImputacion.content"
                                   [value]="item.adamidea"> {{item.adamsigl}}
@@ -117,7 +117,7 @@
                         <!-- <pre>{{listImputacion.adpidesc}}</pre> -->
                     </div>
                     <div class="col-lg-4 col-6 form-group form-group-float m0">
-                        <label class="form-group-float-label m0">{{listConversion.adpidesc}}</label>
+                        <label class="form-group-float-label m0"><b>{{listConversion.adpidesc}}</b></label>
                         <select class="form-control p0 selectCenter" [(ngModel)]="idConversion">
                               <option *ngFor="let item of listConversion.content"
                                       [value]="item.adamidea"> {{item.adamsigl}}
@@ -132,14 +132,14 @@
                 
           </div>
           </div> 
-          <div class="card">
-            <div class="header-elements-inline p0" style="align-self: center;" *ngIf="folio!= undefined">
+          <div class="card" *ngIf="|!= undefined">
+            <div class="header-elements-inline p0" style="align-self: center;" >
               <h6 class="card-title m0">{{folio.adpidesc}}</h6>
             </div>
             <div class="form-group row p0 m0" *ngIf="TipoFolio != undefined">
               <div class="col-md-6">
                 <div class="row p0 m0">
-                  <label class="col-sm-4 col-6 col-form-label text-right">{{TipoFolio.adpidesc}}</label>
+                  <label class="col-sm-4 col-6 col-form-label text-right"><b>{{TipoFolio.adpidesc}}</b></label>
                   <div class="col-sm-6 col-6">
                       <select class="form-control p0 selectCenter" [(ngModel)]="idFolio">
                           <option [value]="item.adamidea" *ngFor="let item of TipoFolio.content">
@@ -152,7 +152,7 @@
               <div class="col-sm-6 col-12 text-center" >
                 <div class="col-md-12 form-check form-check-inline form-check-right">
                   <label class="form-check-label">
-                    {{prefijo.adpidesc}}
+                    <b>{{prefijo.adpidesc}}</b>
                   </label>
                   <input type="checkbox" class="form-check-input float-right" [(ngModel)]="prefijo.content" value= "{{prefijo.content}}">
                 </div>
@@ -176,7 +176,7 @@
               <div class="col-sm-6 p0">
                 <div class="row p0 m0">
                   <div class="col-sm-6 col-6 p0" style="align-self: center;">
-                    <label class="col-form-label col-md-12 ptb0">{{sepFolio.adpidesc}} </label>
+                    <label class="col-form-label col-md-12 ptb0"><b>{{sepFolio.adpidesc}}</b></label>
                   </div>
                   <div class="col-sm-6 col-6 text-center">
                     <div class="row p0 m0">
@@ -195,7 +195,7 @@
                 <div class="row p0 m0" style="padding-bottom: 1em;">
                   <div class="col-md-12" style="display: flex;">
                     <div class="col-sm-6 col-8 p0" style="align-self: center;">
-                      <label class="col-form-label">{{digFolio.adpidesc}}</label>
+                      <label class="col-form-label"><b>{{digFolio.adpidesc}}</b></label>
                     </div>
                     <div class="col-sm-6 col-4">
                         <select class="form-control p0 selectCenter" [(ngModel)]="idDigito">
@@ -208,132 +208,102 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="card-body">
-              <div class="row text-center m0" style="padding: 10px;" >
-                <div class="col-md-6 col-12">
-                  <div class="col-md-6 col-12">
-                    <span>Gestion-Periodo-Folio</span>
-                  </div>
-                      <div class="col-md-6">
-                        <select class="form-control"  >
-                            <option *ngFor="let item of Lista" placeholder="Tipo de Folio"
-                            [value]="1" >Gestion-Periodo-Folio
-                            </option>
-                        </select>
-                      </div>
-                </div>
-                <div class="col-md-6 col-12">
-                    <input class="form-group" disabled value="IN VING-2019-01-000001">
-                </div>
-            </div>
-                
-            </div> -->
           </div>   
-          <div class="card">
-            <div class="card-header header-elements-inline">
-              <h5 class="card-title">
-                  PARAMETROS ESPECIALES
-                </h5>
+          <div class="card" *ngIf="parametroEspecial != undefined">
+            <div class="header-elements-inline" style="align-self: center;">
+              <h6 class="card-title text-center">
+                  {{parametroEspecial.adpidesc}}
+                </h6>
             </div>
-            <div class="card-body">
-              <div class="row text-center m0" style="padding: 10px;" >
-                <div class="col-md-4 col-12">
-                   <div class="form-check form-check-inline form-check-right">
-                        <label class="form-check-label">
-                          Imputacion De la Moneda
-                          <input type="checkbox" class="form-check-input" checked>
-                        </label>
-                      </div>
+            <div class="card-body p0">
+              <div class="row m0 p0">
+                <div class="col-md-4 col-12 centrarCheckdesktop" *ngFor="let item of listaParametrosEspeciales">
+                   <div class="form-check form-check-right">
+                          <label class="form-check-label"><b>{{item.adpidesc}}</b>
+                            <input type="checkbox"  style="visibility: visible;" class="form-check-input-styled" data-fouc [(ngModel)]="item.content" [value]="item.content">
+                          </label>
+                    </div>
                 </div>
-
-                <div class="col-md-3 offset-md-1 col-12">
-                  <label class="form-group-float-label">Imputacion</label>
-                  <select class="form-control"  >
-                      <option *ngFor="let item of Lista" placeholder="Imputacion"
-                      [value]=item.adamidea >{{item.adamdesc}}
-                      </option>
-                  </select>
-                </div>
-                <div class="col-md-3 offset-md-1 col-12">
-                    <label class="form-group-float-label">Conversion</label>
-                    <select class="form-control"  >
-                        <option *ngFor="let item of Lista" placeholder="Conversion"
-                        [value]=item.adamidea >{{item.adamdesc}}
-                        </option>
-                    </select>
-                </div>
-            </div>      
+              </div>      
             </div>
           </div> 
-          <div class="card">
-            <div class="card-header header-elements-inline">
+          <div class="card" *ngIf="unidadNegocio != undefined" >
+            <div class="header-elements-inline p0" style="align-self: center;">
               <h5 class="card-title">
-                  UNIDAD DE NEGOCIO
+                  {{unidadNegocio.adpidesc}}
                 </h5>
             </div>
-            <div class="card-body">
-              <div class="row text-center" style="padding: 10px;" >
-                <div class="col-md-4 col-12">
-                   <div class="form-check form-check-inline form-check-right">
-                        <label class="form-check-label">
-                          Imputacion De la Moneda
-                          <input type="checkbox" class="form-check-input" checked>
-                        </label>
-                      </div>
-                </div>
+            <div class="card-body p0">
+                <div class="row text-center p0 m0 pb1">
+                    <div class="col-sm-3 col-6 centrarCheckdesktop">
+                        <div class="form-check form-check-right">
+                              <label class="form-check-label"><b>{{CheckUniNeg.adpidesc}}</b>
+                                <input type="checkbox"  style="visibility: visible;" class="form-check-input-styled" data-fouc [(ngModel)]="CheckUniNeg.content" [value]="CheckUniNeg.content">
+                              </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-6">
+                        <div class="row p0 m0">
+                            <label class="col-sm-4 col-6 col-form-label text-right"><b>{{selectUniNegocio.adpidesc}}</b></label>
+                            <div class="col-sm-8 col-6">
+                              <select class="form-control p0 selectCenter" [(ngModel)]="idUnidadNegocio">
+                                <option [value]="item.nume" *ngFor="let item of selectUniNegocio.content">
+                                  {{item.nume}}
+                                </option>
+                            </select>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 offset-md-1 col-12">
-                  <label class="form-group-float-label">Imputacion</label>
-                  <select class="form-control"  >
-                      <option *ngFor="let item of Lista" placeholder="Imputacion"
-                      [value]=item.adamidea >{{item.adamdesc}}
-                      </option>
-                  </select>
+                    <div class="col-sm-6 col-12">
+                        <div class="row p0 m0" >
+                            <div class="col-sm-6 col-6 p0" *ngFor="let item of ListUnidadNegocio; let i = index" >
+                                <div class="row p0 m0" [ngClass]="{ 'ocultar' : i+1 > idUnidadNegocio }" >
+                                    <label class="col-sm-6 col-6 col-form-label plr0"><b>{{item.adpidesc}}</b></label>
+                                    <div class="col-sm-6 col-6">
+                                        <input class="form-control p0" [(ngModel)]="item.adpiatr2" [value]="item.adpiatr2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-3 offset-md-1 col-12">
-                    <label class="form-group-float-label">Conversion</label>
-                    <select class="form-control"  >
-                        <option *ngFor="let item of Lista" placeholder="Conversion"
-                        [value]=item.adamidea >{{item.adamdesc}}
-                        </option>
-                    </select>
-                </div>
-            </div>
-                
             </div>
           </div>  
-          <div class="card">
-            <div class="card-header header-elements-inline">
-              <h5 class="card-title">
-                  REGISTRO DE MAESTRO PERSONAS
-                </h5>
+          <div class="card p0" *ngIf="registroMaestro != undefined">
+            <div class="header-elements-inline" style="align-self: center;">
+              <h6 class="card-title p0">{{registroMaestro.adpidesc}}</h6>
             </div>
-            <div class="card-body">
-              <div class="row text-center m0" style="padding: 10px;" >
-                <div class="col-md-4 col-12">
-                   <div class="form-check form-check-inline form-check-right">
-                        <label class="form-check-label">
-                          Imputacion De la Moneda
-                          <input type="checkbox" class="form-check-input" checked>
-                        </label>
-                      </div>
-                </div>
-
-                <div class="col-md-3 offset-md-1 col-12">
-                  <label class="form-group-float-label">Imputacion</label>
-                  <select class="form-control"  >
-                      <option *ngFor="let item of Lista" placeholder="Imputacion"
-                      [value]=item.adamidea >{{item.adamdesc}}
+            <div class="card-body p0">
+              <div class="row text-center m0 p0" >
+                <div class="col-md-6 col-12">
+                  <label class="col-sm-6 col-6 col-form-label plr0"><b>{{tipoRegistroMaestro.adpidesc}}</b></label>
+                  <div class="col-sm-6 col-6">
+                    <select class="form-control p0 selectCenter" [(ngModel)]="idTipoRegistro">
+                      <option [value]="item.adamidea" *ngFor="let item of tipoRegistroMaestro.content">
+                        {{item.adamdesc}}
                       </option>
                   </select>
+                  </div>
                 </div>
-                <div class="col-md-3 offset-md-1 col-12">
-                    <label class="form-group-float-label">Conversion</label>
-                    <select class="form-control"  >
-                        <option *ngFor="let item of Lista" placeholder="Conversion"
-                        [value]=item.adamidea >{{item.adamdesc}}
-                        </option>
-                    </select>
+                <div class="col-md-6 col-12">
+                  <label class="col-sm-6 col-6 col-form-label plr0"><b>{{numerador.adpidesc}}</b></label>
+                  <div class="col-sm-6 col-6">
+                    <select class="form-control p0 selectCenter" [(ngModel)]="idNumerador">
+                      <option [value]="item.adamidea" *ngFor="let item of numerador.content">
+                        {{item.adamdesc}}
+                      </option>
+                  </select>
+                  </div>
+                  
+                </div>
+                <div class="row p0 m0">
+                  <div class="col-sm-6 col-6">
+
+                  </div>
+                  <div class="col-sm-6 col-6">
+
+                  </div>
                 </div>
             </div>
                 

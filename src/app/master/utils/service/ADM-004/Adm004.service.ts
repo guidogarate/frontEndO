@@ -76,6 +76,22 @@ export class Adm004Service {
       );
   }
 
+  ObtenerParametrosUnidadNegocio(fecha : string) {
+    const url1 = `${url.prod}${url.unidad_negocio}`+fecha;
+    return this.httpClient
+      .get(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token
+        })
+      })
+      .pipe(
+        map(resp => {
+          console.log(resp);
+          return resp;
+        })
+      );
+  }
+
   ObtenerParametrosRegistroMaestro(fecha : string) {
     const url1 = `${url.prod}${url.reg_maest}`+fecha;
     return this.httpClient
