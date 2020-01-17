@@ -54,6 +54,7 @@
     "use-pipe-transform-interface": true,
     "no-string-literal": false,
     "no-shadowed-variable": false,
+    "prefer-for-of": false,
     "variable-name": [false, "check-format", "allow-leading-underscore"]
   },
   "rulesDirectory": ["codelyzer"]
