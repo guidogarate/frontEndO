@@ -23,6 +23,7 @@
                   >Introduzca sus credenciales</span
                 >
               </div>
+              <!-- oninvalid="setCustomValidity('Debe seleccionar una base de datos');" -->
               <div class="form-group">
                 <select
                   *ngIf="!isMobile"
@@ -142,6 +143,7 @@
                   class="form-control"
                   placeholder="Usuario"
                   required
+                  oninvalid="this.setCustomValidity('your custom message')"
                   [(ngModel)]="usuario.cod_user"
                   name="cod_user"
                   on-focusout="estaRegistrado()"
