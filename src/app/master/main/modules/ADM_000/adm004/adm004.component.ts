@@ -11,14 +11,12 @@ declare function initLabels ();
   styleUrls: ['./adm004.component.css']
 })
 export class Adm004Component implements OnInit {
+
+  /** modificador de estado modo Vista / edicion */
+  editar : boolean = false;
   /* para el encabezado*/
   Lista : any = [];
   parametrosIniciales: any = [];
-  // razonSocial : any = [];
-  // sigla: any = [];
-  // actividad: any = [];
-  // gestion : any = [];
-  // listaGestion: any = [];
   idGestion : string = "2019";
 
   /* Para seccion Moneda*/
@@ -246,7 +244,7 @@ export class Adm004Component implements OnInit {
         }, 1000);
       }
       else{
-          this.notyG.noty("error", "no se pudo Obtener Parametros Iniciales", 3500);
+          this.notyG.noty("error", "no se pudo Obtener Parametros Moneda", 3500);
       }
     });
   }
@@ -288,7 +286,7 @@ export class Adm004Component implements OnInit {
         // console.log("Parametros Especiales shift: ", this.listaParametrosEspeciales);
       }
       else{
-          this.notyG.noty("error", "no se pudo Obtener Parametros Iniciales", 3500);
+          this.notyG.noty("error", "no se pudo Obtener Parametros Especiales", 3500);
       }
     });
   }
@@ -352,7 +350,18 @@ export class Adm004Component implements OnInit {
     });
   }
 
+  ModoEdicion(){
+    this.editar = true;
+  }
 
+  Actualizar(){
+    this.editar = false;
+  }
 
+  ModoVista(){
+    this.editar = false;
+  }
 
+/** Metodo zombie */
+  nada(){}
 }

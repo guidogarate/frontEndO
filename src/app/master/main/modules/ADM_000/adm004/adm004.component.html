@@ -9,16 +9,16 @@
                 PARAMETROS INICIALES</h5>
           <div class="header-elements">
             <div class="list-icons">
-              <a class="list-icons-item"  
-              routerLink="" routerLinkActive="router-link-active">
+              <a class="list-icons-item"  *ngIf="!editar" (click)="ModoEdicion()"
+              [routerLink]="nada()" routerLinkActive="router-link-active">
                   <i class="icon-pencil7 title-icon" data-toggle="tooltip" data-placement="top" title="Editar"> </i>
               </a>
-              <a class="list-icons-item"  
-                routerLink="" routerLinkActive="router-link-active" >
+              <a class="list-icons-item"  *ngIf="editar" (click) = "Actualizar()"
+                [routerLink]="nada()" routerLinkActive="router-link-active" >
                   <i class="icon-floppy-disk title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
               </a>
               <a class="list-icons-item" 
-              routerLink="" routerLinkActive="router-link-active"  >
+              [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "ModoVista()">
                   <i class="icon-exit title-icon " data-toggle="tooltip" data-placement="top" title="Salir"> </i>
               </a>
             </div>
@@ -35,13 +35,13 @@
                 <div class="row text-center m0">
                     <div class="col-sm-6 col-6 form-group form-group-float m0" *ngFor="let item of parametrosIniciales ; let i = index;">
                         <label class="form-group-float-label m0" [ngClass]="{ 'title' : item.adpidesc.length > 12 }" ><b>{{item.adpidesc}}</b></label>
-                        <select *ngIf="i > 2 ; else inputNormal" class="form-control p0 selectCenter" [(ngModel)]="idGestion">
+                        <select *ngIf="i > 2 ; else inputNormal" class="form-control p0 selectCenter" [(ngModel)]="idGestion" [disabled] = "editar" >
                               <option *ngFor="let contents of item.content"
                                       [value]="contents.adgtideg"> {{contents.adgtideg}}
                               </option>
                         </select> 
                         <ng-template #inputNormal>
-                              <input type="text" class="form-control text-center p0" placeholder="{{item.adpidesc}}" value="{{item.content}}">
+                              <input type="text" class="form-control text-center p0" placeholder="{{item.adpidesc}}" value="{{item.content}}" [disabled] = "editar">
                         </ng-template> 
                     </div>
                 </div>
