@@ -41,6 +41,7 @@ export class Adm004Component implements OnInit {
   sepFolioDocumento : any;
   digFolio : any;
   idDigito : string = "1";
+  textoFolio : string ="";
   /** parametros especiales */
   parametroEspecial : any;
   listaParametrosEspeciales : any = [];
@@ -60,6 +61,130 @@ export class Adm004Component implements OnInit {
   separadorRol : any;
   cantDigitos : any;
   idCantDigito : string = "1";
+  textoRegMaestro : string = "1";
+
+  /** para enviar a modificar */
+  ListParametrosSend : any =
+  [ 
+      {
+        "adpicori": "20",
+        "adpiatr1": false
+      },
+      {
+        "adpicori": "21",
+        "adpiatr1": 1
+      },
+      {
+        "adpicori": "22",
+        "adpiatr1": 2
+      },
+      {
+        "adpicori": "31",
+        "adpiatr1": 1
+      },
+      {
+        "adpicori": "32",
+        "adpiatr1": true
+      },
+      {
+        "adpicori": "34",
+        "adpiatr2": "-"
+      },
+      {
+        "adpicori": "35",
+        "adpiatr2": "-"
+      },
+      {
+        "adpicori": "36",
+        "adpiatr2": "-"
+      },
+      {
+        "adpicori": "37",
+        "adpiatr1": "6"
+      },
+      {
+        "adpicori": "41",
+        "adpiatr1": false
+      },
+      {
+        "adpicori": "42",
+        "adpiatr1": false
+      },
+      {
+        "adpicori": "43",
+        "adpiatr1": false
+      },
+      {
+        "adpicori": "44",
+        "adpiatr1": false
+      },
+      {
+        "adpicori": "45",
+        "adpiatr1": false
+      },
+      {
+        "adpicori": "46",
+        "adpiatr1": false
+      },
+      {
+        "adpicori": "61",
+        "adpiatr1": 1
+      },
+      {
+        "adpicori": "62",
+        "adpiatr1": 1
+      },
+      {
+        "adpicori": "63",
+        "adpiatr1": false
+      },
+      {
+        "adpicori": "64",
+        "adpiatr2": "-"
+      },
+      {
+        "adpicori": "65",
+        "adpiatr1": 6
+      },
+      {
+        "adpicori": "71",
+        "adpiatr1": true
+      },
+      {
+        "adpicori": "72",
+        "adpiatr1": 6
+      },
+      {
+        "adpicori": "81",
+        "adpiatr2": "unidad de costo",
+        "adpiatr1": 1
+      },
+      {
+        "adpicori": "82",
+        "adpiatr2": "centro de costo",
+        "adpiatr1": 2
+      },
+      {
+        "adpicori": "83",
+        "adpiatr2": "",
+        "adpiatr1": 3
+      },
+      {
+        "adpicori": "84",
+        "adpiatr2": "",
+        "adpiatr1": 4
+      },
+      {
+        "adpicori": "85",
+        "adpiatr2": "",
+        "adpiatr1": 5
+      },
+      {
+        "adpicori": "86",
+        "adpiatr2": "",
+        "adpiatr1": 6
+      }
+  ];
 
 
 
@@ -71,13 +196,16 @@ export class Adm004Component implements OnInit {
   ngOnInit() {
     this.ObtenerParametrosIniciales();
     setTimeout(() => {
-    // this.ObtenerParametrosMoneda();
-    // this.ObtenerParametrosFoliacion();
-   ///  this.ObtenerParametrosEspeciales();
-      this.ObtenerParametrosUnidadNegocio();
-      this.ObtenerParametrosRegistroMaestro();
+      this.ObtenerParametrosMoneda();
+      this.ObtenerParametrosFoliacion();
+      this.ObtenerParametrosEspeciales();
+      setTimeout(() => {
+        this.ObtenerParametrosUnidadNegocio();
+        this.ObtenerParametrosRegistroMaestro();
+      },500);
       initLabels();
     }, 1000);
+    //console.info("listaParametros: ", this.ListParametrosSend);
   }
 
   ObtenerParametrosIniciales(){
@@ -137,6 +265,8 @@ export class Adm004Component implements OnInit {
         this.sepFolioPeriodo = resp["datos3"][5];
         this.sepFolioDocumento = resp["datos3"][6];
         this.digFolio = resp["datos3"][7];
+        console.log("folio: ", resp["datos3"]);
+        console.log("prefijo: ", this.prefijo);
       }
       else{
           this.notyG.noty("error", "no se pudo Obtener Parametros de Foliacion", 3500);
@@ -151,11 +281,11 @@ export class Adm004Component implements OnInit {
       if(["ok"])
       {
         this.listaParametrosEspeciales = resp["datos4"];
-        console.log("Parametros Especiales total: ", this.listaParametrosEspeciales);
+        // console.log("Parametros Especiales total: ", this.listaParametrosEspeciales);
         this.parametroEspecial = this.listaParametrosEspeciales[0];
-        console.log("Parametros Especial: ", this.parametroEspecial);
+        // console.log("Parametros Especial: ", this.parametroEspecial);
         this.listaParametrosEspeciales.shift();
-        console.log("Parametros Especiales shift: ", this.listaParametrosEspeciales);
+        // console.log("Parametros Especiales shift: ", this.listaParametrosEspeciales);
       }
       else{
           this.notyG.noty("error", "no se pudo Obtener Parametros Iniciales", 3500);
@@ -170,7 +300,7 @@ export class Adm004Component implements OnInit {
       if(["ok"])
       {
         this.ListUnidadNegocio = resp["datos5"]
-        console.log("List U Negocio: ", this.ListUnidadNegocio);
+        // console.log("List U Negocio: ", this.ListUnidadNegocio);
         this.unidadNegocio = resp["datos5"][0];
         this.CheckUniNeg = resp["datos5"][1];
         this.selectUniNegocio = resp["datos5"][2];
@@ -179,10 +309,10 @@ export class Adm004Component implements OnInit {
         this.ListUnidadNegocio.shift();
         this.ListUnidadNegocio.shift();
         // this.idUnidadNegocio = this.ListUnidadNegocio.length();
-        console.log("lista U Negocio shitf: ", this.ListUnidadNegocio);
-        console.log("lista U Negocio shitf length: ", this.ListUnidadNegocio.length);
+        // console.log("lista U Negocio shitf: ", this.ListUnidadNegocio);
+        // console.log("lista U Negocio shitf length: ", this.ListUnidadNegocio.length);
         this.idUnidadNegocio = ""+this.CalcularIdNiveles(this.ListUnidadNegocio);
-        console.log("id : ", this.idUnidadNegocio);
+        // console.log("id : ", this.idUnidadNegocio);
       }
       else{
           this.notyG.noty("error", "no se pudo Obtener Parametros Unidad de negocio", 3500);
@@ -208,12 +338,12 @@ export class Adm004Component implements OnInit {
         this.adicionadorPrefijo = resp["datos6"][3];
         this.separadorRol = resp["datos6"][4];
         this.cantDigitos = resp["datos6"][5];
-        console.log(this.registroMaestro);
-        console.log(this.tipoRegistroMaestro);
-        console.log(this.numerador);
-        console.log(this.adicionadorPrefijo);
-        console.log(this.separadorRol);
-        console.log(this.cantDigitos);
+        // console.log(this.registroMaestro);
+        // console.log(this.tipoRegistroMaestro);
+        // console.log(this.numerador);
+        // console.log(this.adicionadorPrefijo);
+        // console.log(this.separadorRol);
+        // console.log(this.cantDigitos);
         
       }
       else{

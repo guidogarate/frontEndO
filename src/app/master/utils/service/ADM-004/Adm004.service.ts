@@ -24,7 +24,7 @@ export class Adm004Service {
       })
       .pipe(
         map(resp => {
-          console.log(resp);
+          // console.log(resp);
           return resp;
         })
       );
@@ -39,7 +39,7 @@ export class Adm004Service {
       })
       .pipe(
         map(resp => {
-          console.log(resp);
+         // console.log(resp);
           return resp;
         })
       );
@@ -55,7 +55,7 @@ export class Adm004Service {
       })
       .pipe(
         map(resp => {
-          console.log(resp);
+          // console.log(resp);
           return resp;
         })
       );
@@ -70,7 +70,7 @@ export class Adm004Service {
       })
       .pipe(
         map(resp => {
-          console.log(resp);
+          // console.log(resp);
           return resp;
         })
       );
@@ -86,7 +86,7 @@ export class Adm004Service {
       })
       .pipe(
         map(resp => {
-          console.log(resp);
+          // console.log(resp);
           return resp;
         })
       );
@@ -102,7 +102,7 @@ export class Adm004Service {
       })
       .pipe(
         map(resp => {
-          console.log(resp);
+          // console.log(resp);
           return resp;
         })
       );
