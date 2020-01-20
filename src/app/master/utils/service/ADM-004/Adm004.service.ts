@@ -108,102 +108,159 @@ export class Adm004Service {
       );
   }
 
-  // AgregarGestion(item: any) {
-  //   const json = JSON.stringify({
-  //     gestion: +item.adgtideg ,
-  //     descripcion: item.adgtdesc,
-  //     actEmpresa: +item.adgtacte,
-  //     cantPeridos: +item.adgtcanp,
-  //     estPeriodo: +item.adgtesta,
-  //     fechaInicio: item.adgtfegi,
-  //     fechaFin: item.adgtfegf,
-  //     gtionDefec: item.adgtgesd == true ? "1" : "0",
-  //     modAutomatica: item.adgtmoda == true ? "1" : "0",
-  //     fechaModAutomatica: item.adgtdiam,
-  //   });
-  //   console.log("service Agregar: ", json);
-  //   const url1 = `${url.prod}${url.agregar_gestion}`;
-  //   return this.httpClient
-  //     .post(url1, json, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token,
-  //         "Content-Type": "application/json"
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         return resp;
-  //       })
-  //     );
-  // }
+  
 
-  // EliminarGestion(fecha: any) {
-  //   const url1 = `${url.prod}${url.eliminar_Gestion}${fecha}`;
-  //   console.log("eliminando Gestion: ", url1);
-  //   return this.httpClient
-  //     .delete(url1, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token,
-  //         "Content-Type": "application/json"
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         return resp;
-  //       })
-  //     );
-  // }
+  ActualizarParametros(item: any) {
+    const json = JSON.stringify({
+      descripcion: item.adgtdesc,
+      actEmpresa: +item.adgtacte,
+      cantPeridos: +item.adgtcanp,
+      estPeriodo: +item.adgtesta,
+      fechaInicio: item.adgtfegi,
+      fechaFin: item.adgtfegf,
+      gtionDefec: item.adgtgesd == true ? "1" : "0",
+      modAutomatica: item.adgtmoda == true ? "1" : "0",
+      fechaModAutomatica: new Date(item.adgtdiam+"-01"),
+    });
+    const gson = JSON.stringify(
+      [ 
+        {
+            "adpicori": "20",
+            "adpiatr1": false
+          },
+          {
+            "adpicori": "21",
+            "adpiatr1": 1
+          },
+          {
+            "adpicori": "22",
+            "adpiatr1": 2
+          },
+          {
+            "adpicori": "31",
+            "adpiatr1": 1
+          },
+          {
+            "adpicori": "32",
+            "adpiatr1": true
+          },
+          {
+            "adpicori": "34",
+            "adpiatr2": "-"
+          },
+          {
+            "adpicori": "35",
+            "adpiatr2": "-"
+          },
+          {
+            "adpicori": "36",
+            "adpiatr2": "-"
+          },
+          {
+            "adpicori": "37",
+            "adpiatr1": "6"
+          },
+          {
+            "adpicori": "41",
+            "adpiatr1": false
+          },
+          {
+            "adpicori": "42",
+            "adpiatr1": false
+          },
+          {
+            "adpicori": "43",
+            "adpiatr1": false
+          },
+          {
+            "adpicori": "44",
+            "adpiatr1": false
+          },
+          {
+            "adpicori": "45",
+            "adpiatr1": false
+          },
+          {
+            "adpicori": "46",
+            "adpiatr1": false
+          },
+          {
+            "adpicori": "61",
+            "adpiatr1": 1
+          },
+          {
+            "adpicori": "62",
+            "adpiatr1": 1
+          },
+          {
+            "adpicori": "63",
+            "adpiatr1": false
+          },
+          {
+            "adpicori": "64",
+            "adpiatr2": "-"
+          },
+          {
+            "adpicori": "65",
+            "adpiatr1": 6
+          },
+          {
+            "adpicori": "71",
+            "adpiatr1": true
+          },
+          {
+            "adpicori": "72",
+            "adpiatr1": 6
+          },
+          {
+            "adpicori": "81",
+            "adpiatr2": "unidad de costo",
+            "adpiatr1": 1
+          },
+          {
+            "adpicori": "82",
+            "adpiatr2": "centro de costo",
+            "adpiatr1": 2
+          },
+          {
+            "adpicori": "83",
+            "adpiatr2": "",
+            "adpiatr1": 3
+          },
+          {
+            "adpicori": "84",
+            "adpiatr2": "",
+            "adpiatr1": 4
+          },
+          {
+            "adpicori": "85",
+            "adpiatr2": "",
+            "adpiatr1": 5
+          },
+          {
+            "adpicori": "86",
+            "adpiatr2": "",
+            "adpiatr1": 6
+          }
+      ]
+    );
+    console.log("service Actualizar Gestion: ", json);
 
-  // ActualizarGestion(item: any) {
-  //   const json = JSON.stringify({
-  //     descripcion: item.adgtdesc,
-  //     actEmpresa: +item.adgtacte,
-  //     cantPeridos: +item.adgtcanp,
-  //     estPeriodo: +item.adgtesta,
-  //     fechaInicio: item.adgtfegi,
-  //     fechaFin: item.adgtfegf,
-  //     gtionDefec: item.adgtgesd == true ? "1" : "0",
-  //     modAutomatica: item.adgtmoda == true ? "1" : "0",
-  //     fechaModAutomatica: new Date(item.adgtdiam+"-01"),
-  //   });
-  //   console.log("service Actualizar Gestion: ", json);
+    const url1 = `${url.prod}${url.actualizar_gestion}${item.adgtideg}`;
+    console.log(url1);
+    return this.httpClient
+      .put(url1, json, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
 
-  //   const url1 = `${url.prod}${url.actualizar_gestion}${item.adgtideg}`;
-  //   console.log(url1);
-  //   return this.httpClient
-  //     .put(url1, json, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token,
-  //         "Content-Type": "application/json"
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         return resp;
-  //       })
-  //     );
-  // }
-
-  // ActualizarPeriodo(Periodo: any, fechaAnhoDia : string) {
-  //   const json = JSON.stringify({
-  //     estPeriodo: Periodo.adpresta == 1 ? "1":"0",
-  //     modAutomatica : Periodo.adprmoda == true ? "1" : "2",
-  //     fechaModAutomatica : Periodo.adprdiam
-  //   });
-  //   console.log("service Actualizar Periodo: ", json);
-  //   const url1 = `${url.prod}${url.actualizar_periodo}${fechaAnhoDia}`;
-  //   console.log(" fecha url para actualizar: ",url1);
-  //   return this.httpClient
-  //     .put(url1, json, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token,
-  //         "Content-Type": "application/json"
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         return resp;
-  //       })
-  //     );
-  // }
+  
 }

@@ -8,7 +8,7 @@
     text-align-last: center;
 }
 .title-icon{
-    font-size: 2em;
+    font-size: 1.5em;
 }
 .align-vertical-icon-0{
     vertical-align: 0em;
@@ -39,9 +39,16 @@ padding-bottom: 0%;
 .pb1{
     padding-bottom: 1em;
 }
+
+.alturaInputs{
+    height: 20px;
+}
+.cardMb{
+    margin-bottom: 0.5em;
+}
 @media screen and (max-width: 600px) {
     .title-icon{
-        font-size: 1.8em;
+        font-size: 1.3em;
     }
     .title {
         font-size: smaller;
