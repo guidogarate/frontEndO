@@ -10,9 +10,10 @@ const mainRoutes: Routes = [
     loadChildren: "./modules/modules.module#ModulesModule"
   },
   {
-    path: "",
-    redirectTo: "/md/adm_000/adm_003",
-    pathMatch: "full"
+    path: "bienvenido",
+    component: MainComponent,
+    canActivate: [ModulesGuard],
+    loadChildren: "./bienvenido/bienvenido.module#BienvenidoModule"
   }
 ];
 

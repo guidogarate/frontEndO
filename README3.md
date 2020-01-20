@@ -30,3 +30,7 @@
     	[disabled]="true"
     para desabilitar input
     	 [readonly]="true"
+
+# generar compomente desde cli angular
+
+        ng g c master/main/modules/ADM_000/adm000 --spec=false

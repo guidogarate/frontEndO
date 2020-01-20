@@ -12,7 +12,6 @@ export class SocketService {
 
   checkStatus() {
     this.socket.on("connect", () => {
-      console.log("conectado al servidor");
       this.socketStatus = true;
       this.salir("macc");
     });
@@ -24,7 +23,6 @@ export class SocketService {
   }
 
   salir(nombre: string) {
-    console.log("salir llamdo");
     this.socket.emit("salir", { nombre }, resp => {
       console.log("saliendo-angular");
     });

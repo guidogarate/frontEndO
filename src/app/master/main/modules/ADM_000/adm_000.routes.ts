@@ -26,19 +26,14 @@ const adm000_Routes: Routes = [
     data: { titulo: "adm_003" }
   },
   {
-    path: "adm_003/editar",
-    component: Adm003Component,
-    data: { titulo: "adm_003" }
-  },
-  {
-    path: "adm_003/agregar",
-    component: Adm003Component,
-    data: { titulo: "adm_003" }
-  },
-  {
     path: "adm_004",
     component: Adm004Component,
     data: { titulo: "adm_004" }
+  },
+  {
+    path: "",
+    redirectTo: "/md/adm_000/adm_003",
+    pathMatch: "full"
   }
 ];
 
