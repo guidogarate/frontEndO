@@ -17,7 +17,7 @@ export class Adm004Component implements OnInit {
   /* para el encabezado*/
   Lista : any = [];
   parametrosIniciales: any = [];
-  idGestion : string = "2019";
+  idGestion : string ="2019";
 
   /* Para seccion Moneda*/
   parametroMoneda : any = [];
@@ -74,16 +74,34 @@ export class Adm004Component implements OnInit {
   ngOnInit() {
     this.ObtenerParametrosIniciales();
     this.ObtenerParametrosFoliacion();
-    this.ObtenerParametrosEspeciales();
     setTimeout(() => {
-      this.ObtenerParametrosMoneda();
-      setTimeout(() => {
-        this.ObtenerParametrosUnidadNegocio();
-        this.ObtenerParametrosRegistroMaestro();
-      },500);
+      
+        this.ObtenerParametrosEspeciales();
+        this.ObtenerParametrosMoneda();
+        setTimeout(() => {
+          this.ObtenerParametrosUnidadNegocio();
+            setTimeout(() => {
+              this.ObtenerParametrosRegistroMaestro();
+            }, 500);
+        },500);
       initLabels();
     }, 1000);
-    
+  }
+
+  CargarParametrosPorGestion(){
+    this.ObtenerParametrosFoliacion();
+    setTimeout(() => {
+      this.ObtenerParametrosEspeciales();
+      this.ObtenerParametrosMoneda();
+    }, 500);
+    setTimeout(() => {
+      this.ObtenerParametrosUnidadNegocio();
+      setTimeout(() => {
+        this.ObtenerParametrosRegistroMaestro();
+      }, 500);
+    },500);
+    initLabels();
+     
   }
 
   ObtenerParametrosIniciales(){
@@ -92,7 +110,7 @@ export class Adm004Component implements OnInit {
     .subscribe(resp => {
       if(["ok"])
       {
-        
+
         this.parametrosIniciales = resp["datos1"];
       }
       else{
@@ -113,6 +131,7 @@ export class Adm004Component implements OnInit {
         setTimeout(() => {
           initLabels();
         }, 1000);
+        console.log("moneda: " , resp["datos2"]);
       }
       else{
           this.notyG.noty("error", "no se pudo Obtener Parametros Moneda", 3500);
@@ -126,7 +145,7 @@ export class Adm004Component implements OnInit {
     .subscribe(resp => {
       if(["ok"])
       {
-        console.warn("datos Foliacion",resp["dastos3"]);
+        // console.warn("datos Foliacion",resp["dastos3"]);
         this.folio = resp["datos3"][0];
         this.TipoFolio = resp["datos3"][1];
         this.prefijo = resp["datos3"][2];
@@ -153,7 +172,7 @@ export class Adm004Component implements OnInit {
         this.listaParametrosEspeciales = resp["datos4"];
         // console.log("Parametros Especiales total: ", this.listaParametrosEspeciales);
         this.parametroEspecial = this.listaParametrosEspeciales[0];
-        // console.log("Parametros Especial: ", this.parametroEspecial);
+        console.log("Parametros Especial: ", this.parametroEspecial);
         this.listaParametrosEspeciales.shift();
         // console.log("Parametros Especiales shift: ", this.listaParametrosEspeciales);
       }
@@ -164,21 +183,25 @@ export class Adm004Component implements OnInit {
   }
 
   ObtenerParametrosUnidadNegocio(){
+    console.log("unid Neg gestion: " , this.idGestion);
     this._adm004Service
     .ObtenerParametrosUnidadNegocio(this.idGestion)
     .subscribe(resp => {
       if(["ok"])
       {
-        this.ListUnidadNegocio = resp["datos5"]
-        // console.log("List U Negocio: ", this.ListUnidadNegocio);
-        this.unidadNegocio = resp["datos5"][0];
-        this.CheckUniNeg = resp["datos5"][1];
-        this.selectUniNegocio = resp["datos5"][2];
+        console.log(resp["datos5"]);
+        this.ListUnidadNegocio = resp["datos5"];
+        console.log("List Unit Negocio: ", this.ListUnidadNegocio);
+        this.unidadNegocio =this.ListUnidadNegocio[0];
+        this.CheckUniNeg = this.ListUnidadNegocio[1];
+        this.selectUniNegocio = this.ListUnidadNegocio[2];
        
         this.ListUnidadNegocio.shift();
         this.ListUnidadNegocio.shift();
         this.ListUnidadNegocio.shift();
-        this.idUnidadNegocio = ""+this.CalcularIdNiveles(this.ListUnidadNegocio);
+        // this.idUnidadNegocio = ""+this.CalcularIdNiveles(this.ListUnidadNegocio);
+        this.idUnidadNegocio = ""+(this.ListUnidadNegocio.length);
+        console.log("unidad de negocio call: ", this.idUnidadNegocio);
       }
       else{
           this.notyG.noty("error", "no se pudo Obtener Parametros Unidad de negocio", 3500);
@@ -187,8 +210,11 @@ export class Adm004Component implements OnInit {
   }
 
   CalcularIdNiveles(lista : any){
-    console.log("calculando id");
-    const index = lista.findIndex(elemento => elemento.adpiatr2 == null);
+    let index = lista.findIndex(elemento => elemento.adpiatr2 == null);
+    console.log("calculando id: " , index);
+    if(index == -1){
+      index = lista.length;
+    }
     return index;
   }
 
@@ -202,12 +228,29 @@ export class Adm004Component implements OnInit {
         this.numerador = resp["datos6"][2];
         this.adicionadorPrefijo = resp["datos6"][3];
         this.separadorRol = resp["datos6"][4];
-        this.cantDigitos = resp["datos6"][5];        
+        this.cantDigitos = resp["datos6"][5];  
+        console.log("Reg Maestro: " , resp["datos6"]);      
       }
       else{
         this.notyG.noty("error", "no se pudo Obtener Parametros Registro Maestro", 3500);
       }
     });
+  }
+
+  ActualizarParametros() {
+    console.log("lista parametros: ",this.ListParametrosSend);
+    console.log(this.idGestion);
+    this._adm004Service
+      .ActualizarParametros(this.ListParametrosSend, this.idGestion)
+      .subscribe(resp => {
+        if (resp["ok"]) {
+          console.info(resp);
+          this.notyG.noty("success", "parametros actualizados", 3500);
+        } else {
+          console.error(resp);
+          this.notyG.noty("error", "No se pudo actualizar", 3500);
+        }
+      });
   }
 
   ModoEdicion(){
@@ -217,6 +260,7 @@ export class Adm004Component implements OnInit {
   Actualizar(){
     this.editar = true;
     this.Cargar();
+    this.ActualizarParametros();
     this.editar = false;
   }
 

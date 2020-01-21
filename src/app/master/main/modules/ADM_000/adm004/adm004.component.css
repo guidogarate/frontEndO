@@ -55,6 +55,12 @@ padding-bottom: 0%;
 .margin-top-card{
     margin-top: 0.5em;
 }
+.font-tittle{
+    font-size: 14px;
+}
+.padding-botton-card{
+    padding-bottom: 0.5em;
+}
 @media screen and (max-width: 600px) {
     .title-icon{
         font-size: 1.3em;
