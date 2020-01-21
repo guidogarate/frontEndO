@@ -61,6 +61,9 @@ padding-bottom: 0%;
 .padding-botton-card{
     padding-bottom: 0.5em;
 }
+.prch{
+    padding-right: 10em;
+}
 @media screen and (max-width: 600px) {
     .title-icon{
         font-size: 1.3em;
@@ -74,6 +77,9 @@ padding-bottom: 0%;
     .card-padding{
         padding-left: 0.5em;
         padding-right: 0.5em;
+    }
+    .prch{
+        padding-right: 0.8em;
     }
   
 }
