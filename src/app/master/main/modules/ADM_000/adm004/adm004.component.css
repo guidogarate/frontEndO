@@ -15,8 +15,8 @@
 }
 
 .card-padding{
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
 .mt0{
@@ -46,6 +46,15 @@ padding-bottom: 0%;
 .cardMb{
     margin-bottom: 0.5em;
 }
+.padding-title{
+    padding: 0.5em;
+}
+.margin-botton-card{
+    margin-bottom: 0.5em;
+}
+.margin-top-card{
+    margin-top: 0.5em;
+}
 @media screen and (max-width: 600px) {
     .title-icon{
         font-size: 1.3em;
@@ -55,6 +64,10 @@ padding-bottom: 0%;
     }
     .centrarCheckdesktop{
         text-align: left;
+    }
+    .card-padding{
+        padding-left: 0.5em;
+        padding-right: 0.5em;
     }
   
 }

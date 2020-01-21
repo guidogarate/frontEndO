@@ -2,9 +2,9 @@
 <div class="row haciadentro animaciones">
     <div class="col-xl-12">
       <!-- Table with togglable columns -->
-        <div class="card card-padding">
-            <div class="card-header header-elements-inline plr0">
-                <h5 class="card-title">
+        <div class="card card-padding margin-botton-card">
+            <div class="header-elements-inline padding-title">
+                <h5 class="card-title m0">
                     <i class="icon-clipboard5 title-icon align-vertical-icon-0"></i>
                     PARAMETROS INICIALES</h5>
                 <div class="header-elements">
@@ -48,8 +48,8 @@
                     <div class="col-md-3 d-none d-sm-none d-md-block"></div>
                 </div>
             </div>
-            <div class="card card-padding">
-                <div class="card card-padding" *ngIf="moneda != undefined">
+            <div class="card card-padding margin-botton-card ">
+                <div class="card card-padding margin-botton-card margin-top-card " *ngIf="moneda != undefined">
                     <div class="card-body p0">
                         <div class="row text-center p0" >
                             <div class="col-lg-6 col-12" style="align-self: center;">
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div> 
-                <div class="card" *ngIf="folio!= undefined">
+                <div class="card margin-botton-card" *ngIf="folio!= undefined">
                     <div class="header-elements-inline p0" style="align-self: center;" >
                         <h6 class="card-title m0">{{folio.adpidesc}}</h6>
                     </div>
@@ -139,7 +139,7 @@
                                     </div>
                                 </div>                
                             </div>
-                            <div class="row p0 m0" style="padding-bottom: 1em;">
+                            <div class="row p0 m0">
                                 <div class="col-md-12" style="display: flex;">
                                     <div class="col-sm-6 col-8 p0">
                                         <label class="col-form-label p0 m0"><b>{{digFolio.adpidesc}}</b></label>
@@ -157,7 +157,7 @@
                         </div>
                     </div>
                 </div>   
-                <div class="card" *ngIf="parametroEspecial != undefined">
+                <div class="card margin-botton-card" *ngIf="parametroEspecial != undefined">
                         <div class="header-elements-inline" style="align-self: center;">
                             <h6 class="card-title text-center m0">{{parametroEspecial.adpidesc}}</h6>
                         </div>
@@ -174,7 +174,7 @@
                             </div>      
                         </div>
                 </div> 
-                <div class="card" *ngIf="unidadNegocio != undefined" >
+                <div class="card margin-botton-card" *ngIf="unidadNegocio != undefined" >
                         <div class="header-elements-inline p0" style="align-self: center;">
                             <h6 class="card-title m0">
                                 {{unidadNegocio.adpidesc}}
@@ -217,7 +217,7 @@
                             </div>
                         </div>
                 </div>  
-                <div class="card p0" *ngIf="registroMaestro != undefined">
+                <div class="card p0 margin-botton-card" *ngIf="registroMaestro != undefined">
                     <div class="header-elements-inline" style="align-self: center;">
                         <h6 class="card-title p0 m0">{{registroMaestro.adpidesc}}</h6>
                     </div>
@@ -262,7 +262,7 @@
                                 <div class="col-sm-6 col-6 text-center">
                                     <div class="row p0 m0">
                                         <div class="col-sm-3 col-12">
-                                            <input class="form-group text-center form-control p0 alturaInputs" 
+                                            <input class="form-group text-center form-control p0 alturaInputs m0" 
                                             [value]="separadorRol.adpiatr2" [(ngModel)]="separadorRol.adpiatr2" >
                                         </div>
                                     </div>
@@ -274,7 +274,7 @@
                                 <div class="row p0 m0"> 
                                     <div class="col-sm-4 d-none d-sm-none d-md-block"></div>
                                     <div class="col-sm-4 col-12 text-center">
-                                        <input class="form-group alturaInputs" disabled value="IN VING-2019-01-000001">
+                                        <input class="form-group alturaInputs m0" disabled value="IN VING-2019-01-000001">
                                     </div>
                                     <div class="col-sm-4 d-none d-sm-none d-md-block"></div>
                                 </div>
