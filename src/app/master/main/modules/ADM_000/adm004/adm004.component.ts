@@ -64,7 +64,7 @@ export class Adm004Component implements OnInit {
   textoRegMaestro : string = "1";
 
   /** para enviar a modificar */
-  ListParametrosSend : any = [];
+  ListParametrosSend : any;
 
   constructor(
     private _adm004Service: Adm004Service,
@@ -83,7 +83,7 @@ export class Adm004Component implements OnInit {
       },500);
       initLabels();
     }, 1000);
-    //console.info("listaParametros: ", this.ListParametrosSend);
+    
   }
 
   ObtenerParametrosIniciales(){
@@ -215,6 +215,8 @@ export class Adm004Component implements OnInit {
   }
 
   Actualizar(){
+    this.editar = true;
+    this.Cargar();
     this.editar = false;
   }
 
@@ -225,7 +227,7 @@ export class Adm004Component implements OnInit {
   /*funciones auxiliares*/
   ColocarPrefijo(){
     let pref : string = "Inv";
-    console.info("valor Check: ", this.prefijo.content);
+    //console.info("valor Check: ", this.prefijo.content);
     if(this.prefijo.content == true){
       this.textoFolio = pref;
           if (this.idFolio == "3"){
@@ -277,23 +279,23 @@ export class Adm004Component implements OnInit {
   }
 
   Cargar(){
-    this.ListParametrosSend  =
+    this.ListParametrosSend =
     [ 
         {
-          adpicori: "20",
-          adpiatr1: this.moneda.content!= null ? this.moneda.content : ""
+          "adpicori": "20",
+          "adpiatr1": this.moneda.content
         },
         {
-          adpicori: "21",
-          "adpiatr1": this.idImputacion
+          "adpicori": "21",
+          "adpiatr1": +this.idImputacion
         },
         {
-          adpicori: "22",
-          "adpiatr1": this.idConversion
+          "adpicori": "22",
+          "adpiatr1": +this.idConversion
         },
         {
           "adpicori": "31",
-          "adpiatr1": this.idFolio
+          "adpiatr1": +this.idFolio
         },
         {
           "adpicori": "32",
@@ -341,11 +343,11 @@ export class Adm004Component implements OnInit {
         },
         {
           "adpicori": "61",
-          "adpiatr1": this.idTipoRegistro
+          "adpiatr1": +this.idTipoRegistro
         },
         {
           "adpicori": "62",
-          "adpiatr1": this.idNumerador
+          "adpiatr1": +this.idNumerador
         },
         {
           "adpicori": "63",
@@ -357,7 +359,7 @@ export class Adm004Component implements OnInit {
         },
         {
           "adpicori": "65",
-          "adpiatr1": this.idCantDigito
+          "adpiatr1": +this.idCantDigito
         },
         {
           "adpicori": "71",
@@ -365,41 +367,41 @@ export class Adm004Component implements OnInit {
         },
         {
           "adpicori": "72",
-          "adpiatr1": this.idUnidadNegocio
+          "adpiatr1": +this.idUnidadNegocio
         },
         {
           "adpicori": "81",
           "adpiatr2": this.ListUnidadNegocio[0].adpiatr2,
-          "adpiatr1": this.ListUnidadNegocio[0].adpiatr1
+          "adpiatr1": +this.ListUnidadNegocio[0].adpiatr1
         },
         {
           "adpicori": "82",
           "adpiatr2": this.ListUnidadNegocio[1].adpiatr2,
-          "adpiatr1": this.ListUnidadNegocio[1].adpiatr1 
+          "adpiatr1": +this.ListUnidadNegocio[1].adpiatr1 
         },
         {
           "adpicori": "83",
           "adpiatr2": this.ListUnidadNegocio[2].adpiatr2,
-          "adpiatr1": this.ListUnidadNegocio[2].adpiatr1,
+          "adpiatr1": +this.ListUnidadNegocio[2].adpiatr1,
         },
         {
           "adpicori": "84",
           "adpiatr2": this.ListUnidadNegocio[3].adpiatr2,
-          "adpiatr1": this.ListUnidadNegocio[3].adpiatr1
+          "adpiatr1": +this.ListUnidadNegocio[3].adpiatr1
         },
         {
           "adpicori": "85",
           "adpiatr2": this.ListUnidadNegocio[4].adpiatr2,
-          "adpiatr1": this.ListUnidadNegocio[4].adpiatr1
+          "adpiatr1": +this.ListUnidadNegocio[4].adpiatr1
         },
         {
           "adpicori": "86",
           "adpiatr2": this.ListUnidadNegocio[5].adpiatr2,
-          "adpiatr1": this.ListUnidadNegocio[5].adpiatr1
+          "adpiatr1": +this.ListUnidadNegocio[5].adpiatr1
         }
     ];
   
-
+    console.log("lista para enviar: " ,this.ListParametrosSend);
   }
 /** Metodo zombie */
   nada(){}
