@@ -94,3 +94,8 @@ label {
 .pb0 {
   padding-bottom: 0.5em;
 }
+
+/* para margen de arriba */
+.superior {
+  margin-top: 5px;
+}

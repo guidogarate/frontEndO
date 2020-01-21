@@ -14,6 +14,11 @@ const mainRoutes: Routes = [
     component: MainComponent,
     canActivate: [ModulesGuard],
     loadChildren: "./bienvenido/bienvenido.module#BienvenidoModule"
+  },
+  {
+    path: "",
+    redirectTo: "/bienvenido",
+    pathMatch: "full"
   }
 ];
 
