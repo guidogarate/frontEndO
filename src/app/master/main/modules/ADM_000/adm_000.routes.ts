@@ -2,7 +2,12 @@ import { RouterModule, Routes } from "@angular/router";
 import { Adm001Component } from "./adm001/adm001.component";
 import { Adm002Component } from "./adm002/adm002.component";
 import { Adm003Component } from "./adm003/adm003.component";
-import { Adm004Component } from './adm004/adm004.component';
+import { Adm004Component } from "./adm004/adm004.component";
+
+// const menu = JSON.parse(sessionStorage.getItem("datos_user"));
+// console.log(menu);
+// console.log(menu.ok);
+// console.log("cargando ruta");
 
 const adm000_Routes: Routes = [
   {
@@ -21,19 +26,14 @@ const adm000_Routes: Routes = [
     data: { titulo: "adm_003" }
   },
   {
-    path: "adm_003/editar",
-    component: Adm003Component,
-    data: { titulo: "adm_003" }
-  },
-  {
-    path: "adm_003/agregar",
-    component: Adm003Component,
-    data: { titulo: "adm_003" }
-  },
-  {
     path: "adm_004",
     component: Adm004Component,
     data: { titulo: "adm_004" }
+  },
+  {
+    path: "",
+    redirectTo: "/md/adm_000/adm_003",
+    pathMatch: "full"
   }
 ];
 

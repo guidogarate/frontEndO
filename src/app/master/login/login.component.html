@@ -23,9 +23,12 @@
                   >Introduzca sus credenciales</span
                 >
               </div>
+              <!-- oninvalid="setCustomValidity('Debe seleccionar una base de datos');" -->
               <div class="form-group">
                 <select
                   *ngIf="!isMobile"
+                  onchange="setCustomValidity('')"
+                  oninvalid="this.setCustomValidity('Debe seleccionar una base de datos')"
                   required
                   title="Seleccione una base de datos"
                   class="form-control selectpicker show-tick"
@@ -41,6 +44,8 @@
                 </select>
                 <select
                   *ngIf="isMobile"
+                  onchange="setCustomValidity('')"
+                  oninvalid="this.setCustomValidity('Debe seleccionar una base de datos')"
                   required
                   [(ngModel)]="usuario.databaseid"
                   name="databaseid"
@@ -141,6 +146,8 @@
                   type="text"
                   class="form-control"
                   placeholder="Usuario"
+                  oninvalid="this.setCustomValidity('Debe ingresar datos en este campo')"
+                  oninput="setCustomValidity('')"
                   required
                   [(ngModel)]="usuario.cod_user"
                   name="cod_user"
@@ -158,6 +165,8 @@
                   type="password"
                   class="form-control"
                   placeholder="Contraseña"
+                  oninvalid="this.setCustomValidity('Debe ingresar datos en este campo')"
+                  oninput="setCustomValidity('')"
                   required
                   [(ngModel)]="usuario.passw"
                   name="passw"
