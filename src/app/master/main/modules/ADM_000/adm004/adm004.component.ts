@@ -40,7 +40,7 @@ export class Adm004Component implements OnInit {
   sepFolioDocumento : any;
   digFolio : any;
   idDigito : string = "1";
-  textoFolio : string ="INV-2019-01-1";
+  textoFolio : string = "INV-2019-01-1";
   // textPrefijo : string = "INV";
   /** parametros especiales */
   parametroEspecial : any;
@@ -61,7 +61,7 @@ export class Adm004Component implements OnInit {
   separadorRol : any;
   cantDigitos : any;
   idCantDigito : string = "1";
-  textoRegMaestro : string = "1";
+  textoRegMaestro : string = "INV-2019-01-1";
 
   /** para enviar a modificar */
   ListParametrosSend : any;
@@ -77,11 +77,11 @@ export class Adm004Component implements OnInit {
     setTimeout(() => {
       
         this.ObtenerParametrosEspeciales();
-        this.ObtenerParametrosMoneda();
+        ///this.ObtenerParametrosMoneda();
         setTimeout(() => {
-          this.ObtenerParametrosUnidadNegocio();
+        //  this.ObtenerParametrosUnidadNegocio();
             setTimeout(() => {
-              this.ObtenerParametrosRegistroMaestro();
+         //     this.ObtenerParametrosRegistroMaestro();
             }, 500);
         },500);
       initLabels();
@@ -154,6 +154,7 @@ export class Adm004Component implements OnInit {
         this.sepFolioPeriodo = resp["datos3"][5];
         this.sepFolioDocumento = resp["datos3"][6];
         this.digFolio = resp["datos3"][7];
+       this.rellenarDig(); 
         console.log("folio: ", resp["datos3"]);
         // console.log("prefijo: ", this.prefijo);
       }
@@ -163,6 +164,25 @@ export class Adm004Component implements OnInit {
     });
   }
 
+  rellenarDig(){
+    console.log(this.idFolio);
+    let i = 0;
+    this.digFolio.content.forEach(element => {
+      i = element.nume ; 
+    });
+    console.log(i);
+    const cantidad = 6;
+    while(i < cantidad){
+      this.digFolio.content.push(
+        {
+          "nume": i+1
+        }
+      );
+
+      i++;
+    }
+    return i;
+  }
   ObtenerParametrosEspeciales(){
     this._adm004Service
     .ObtenerParametrosEspeciales(this.idGestion)
@@ -201,6 +221,7 @@ export class Adm004Component implements OnInit {
         this.ListUnidadNegocio.shift();
         // this.idUnidadNegocio = ""+this.CalcularIdNiveles(this.ListUnidadNegocio);
         this.idUnidadNegocio = ""+(this.ListUnidadNegocio.length);
+        this.CalcularIdNiveles();
         console.log("unidad de negocio call: ", this.idUnidadNegocio);
       }
       else{
@@ -209,14 +230,49 @@ export class Adm004Component implements OnInit {
     });
   }
 
-  CalcularIdNiveles(lista : any){
-    let index = lista.findIndex(elemento => elemento.adpiatr2 == null);
-    console.log("calculando id: " , index);
-    if(index == -1){
-      index = lista.length;
+  CalcularIdNiveles(){
+    let vf = 80;
+    let inicio = +this.idUnidadNegocio;
+    let cantidad = 6;
+    console.log("inicio: ", inicio);
+    while( inicio < cantidad){
+      this.selectUniNegocio.content.push(
+        {
+          "nume": inicio+1
+        }
+      );
+      this.ListUnidadNegocio.push(
+        {
+          "adpicori": vf + (inicio+1),
+          "adpidesc": "Nivel "+ (inicio+1),
+          "adpiatr1": inicio+1,
+          "adpiatr2": ""
+      },
+      );
+      inicio++;
     }
-    return index;
+    console.log("calculado select Unid Neg: ", this.selectUniNegocio);
+    console.log("calculado listaUnidades: ", this.ListUnidadNegocio);
   }
+
+  LimpiarNiveles(){
+    let i = 0;
+    this.ListUnidadNegocio.forEach( element => {
+      if(element.adpiatr1 > this.idUnidadNegocio){
+        element.adpiatr2 = "";
+      }
+
+    });
+  }
+
+  // CalcularIdNiveles(lista : any){
+  //   let index = lista.findIndex(elemento => elemento.adpiatr2 == null);
+  //   console.log("calculando id: " , index);
+  //   if(index == -1){
+  //     index = lista.length;
+  //   }
+  //   return index;
+  // }
 
   ObtenerParametrosRegistroMaestro(){
     this._adm004Service
@@ -229,12 +285,33 @@ export class Adm004Component implements OnInit {
         this.adicionadorPrefijo = resp["datos6"][3];
         this.separadorRol = resp["datos6"][4];
         this.cantDigitos = resp["datos6"][5];  
+        this.CantidadDigitos(); 
         console.log("Reg Maestro: " , resp["datos6"]);      
       }
       else{
         this.notyG.noty("error", "no se pudo Obtener Parametros Registro Maestro", 3500);
       }
     });
+  }
+
+  CantidadDigitos(){
+    //console.log(this.CantidadDigitos);
+    let i = 0;
+    this.cantDigitos.content.forEach(element => {
+      i = element.nume ; 
+    });
+    console.log("unidad de negocio digitos :" , i);
+    const cantidad = 6;
+    while(i < cantidad){
+      this.cantDigitos.content.push(
+        {
+          "nume": i+1
+        }
+      );
+
+      i++;
+    }
+    return i;
   }
 
   ActualizarParametros() {
@@ -255,6 +332,7 @@ export class Adm004Component implements OnInit {
 
   ModoEdicion(){
     this.editar = true;
+    this.Cargar();
   }
 
   Actualizar(){
@@ -266,6 +344,48 @@ export class Adm004Component implements OnInit {
 
   ModoVista(){
     this.editar = false;
+    this.Cancelar();
+    this.textoFolio = "";
+    this.ColocarPrefijo();
+    this.ColocarPrefijoRegMaestro();
+  }
+
+  Cancelar() {
+    this.moneda.content = this.ListParametrosSend[0].adpiatr1;
+    this.idImputacion = this.ListParametrosSend[1].adpiatr1;
+    this.idConversion = this.ListParametrosSend[2].adpiatr1;
+    this.idFolio = this.ListParametrosSend[3].adpiatr1;
+    this.prefijo.content = this.ListParametrosSend[4].adpiatr1;
+    this.sepFolioGestion.adpiatr2 = this.ListParametrosSend[5].adpiatr2;
+    this.sepFolioDocumento.adpiatr2 = this.ListParametrosSend[6].adpiatr2;
+    this.sepFolioDocumento.adpiatr2 = this.ListParametrosSend[7].adpiatr2;
+    this.idDigito = this.ListParametrosSend[8].adpiatr1;
+    this.listaParametrosEspeciales[0].content = this.ListParametrosSend[9].adpiatr1;
+    this.listaParametrosEspeciales[0].content = this.ListParametrosSend[9].adpiatr1;
+    this.listaParametrosEspeciales[1].content = this.ListParametrosSend[10].adpiatr1;
+    this.listaParametrosEspeciales[2].content = this.ListParametrosSend[11].adpiatr1;
+    this.listaParametrosEspeciales[3].content = this.ListParametrosSend[12].adpiatr1;
+    this.listaParametrosEspeciales[4].content = this.ListParametrosSend[13].adpiatr1;
+    this.listaParametrosEspeciales[5].content = this.ListParametrosSend[14].adpiatr1;
+    this.idTipoRegistro = this.ListParametrosSend[15].adpiatr1;
+    this.idNumerador = this.ListParametrosSend[16].adpiatr1;
+    this.adicionadorPrefijo.content = this.ListParametrosSend[17].adpiatr1;
+    this.separadorRol.adpiatr2 = this.ListParametrosSend[18].adpiatr2;
+    this.idCantDigito = this.ListParametrosSend[19].adpiatr1;
+    this.CheckUniNeg.content = this.ListParametrosSend[20].adpiatr1;
+    this.idUnidadNegocio = this.ListParametrosSend[21].adpiatr1;
+    this.ListUnidadNegocio[0].adpiatr2 = this.ListParametrosSend[22].adpiatr2;
+    this.ListUnidadNegocio[0].adpiatr1 = this.ListParametrosSend[22].adpiatr1;
+    this.ListUnidadNegocio[1].adpiatr2 = this.ListParametrosSend[23].adpiatr2;
+    this.ListUnidadNegocio[1].adpiatr1 = this.ListParametrosSend[23].adpiatr1;
+    this.ListUnidadNegocio[2].adpiatr2 = this.ListParametrosSend[24].adpiatr2;
+    this.ListUnidadNegocio[2].adpiatr1 = this.ListParametrosSend[24].adpiatr1;
+    this.ListUnidadNegocio[3].adpiatr2 = this.ListParametrosSend[25].adpiatr2;
+    this.ListUnidadNegocio[3].adpiatr1 = this.ListParametrosSend[25].adpiatr1;
+    this.ListUnidadNegocio[4].adpiatr2 = this.ListParametrosSend[26].adpiatr2;
+    this.ListUnidadNegocio[4].adpiatr1 = this.ListParametrosSend[26].adpiatr1;
+    this.ListUnidadNegocio[5].adpiatr2 = this.ListParametrosSend[27].adpiatr2;
+    this.ListUnidadNegocio[5].adpiatr1 = this.ListParametrosSend[27].adpiatr1;
   }
 
   /*funciones auxiliares*/
@@ -281,7 +401,7 @@ export class Adm004Component implements OnInit {
           }
           if(this.idFolio == "2"){
             this.textoFolio = this.textoFolio + this.sepFolioGestion.adpiatr2 
-                              + "2019"+this.sepFolioDocumento.adpiatr2;
+                              + "2019"+this.sepFolioPeriodo.adpiatr2;
           }
           if(this.idFolio == "1"){
             this.textoFolio = this.textoFolio + this.sepFolioDocumento.adpiatr2;
@@ -291,16 +411,16 @@ export class Adm004Component implements OnInit {
       // console.info("False: ", this.prefijo.content);
       this.textoFolio = "";
       if (this.idFolio == "3"){
-        this.textoFolio = this.textoFolio + this.sepFolioGestion.adpiatr2 
+        this.textoFolio = this.textoFolio 
                           + "2019"+this.sepFolioPeriodo.adpiatr2
                           +"01"+this.sepFolioDocumento.adpiatr2;
       }
       if(this.idFolio == "2"){
-        this.textoFolio = this.textoFolio + this.sepFolioGestion.adpiatr2 
+        this.textoFolio = this.textoFolio  
                           + "2019"+this.sepFolioDocumento.adpiatr2;
       }
       if(this.idFolio == "1"){
-        this.textoFolio = this.textoFolio + this.sepFolioDocumento.adpiatr2;
+        this.textoFolio = this.textoFolio;
 
       }
     }
@@ -446,6 +566,28 @@ export class Adm004Component implements OnInit {
     ];
   
     console.log("lista para enviar: " ,this.ListParametrosSend);
+  }
+
+  /*funciones auxiliares*/
+  ColocarPrefijoRegMaestro(){
+    let pref : string = "CLI";
+ 
+    if(this.adicionadorPrefijo.content == true){
+      this.textoRegMaestro = pref+ this.separadorRol.adpiatr2;
+      
+    }else{
+     
+      this.textoRegMaestro = "";
+      
+   
+    }
+    this.CambiarDigitoRegMaestro();
+  }
+  CambiarDigitoRegMaestro(){
+    let textDigito : string = "";
+    textDigito = "1";
+    textDigito = textDigito.padStart(+(this.idCantDigito),'0');
+    this.textoRegMaestro = this.textoRegMaestro+textDigito;
   }
 /** Metodo zombie */
   nada(){}

@@ -18,7 +18,7 @@
                             <i class="icon-floppy-disk title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
                         </a>
                         <a class="list-icons-item" 
-                            [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "ModoVista()">
+                            [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "ModoVista()">
                             <i class="icon-exit title-icon " data-toggle="tooltip" data-placement="top" title="Salir"> </i>
                         </a>
                     </div>
@@ -40,7 +40,7 @@
                                         </option>
                                     </select> 
                                     <ng-template #inputNormal>
-                                        <input type="text" class="form-control text-center p0 alturaInputs" placeholder="{{item.adpidesc}}" [value]="item.content" [disabled] = "!editar">
+                                        <input type="text" class="form-control text-center p0 alturaInputs" placeholder="{{item.adpidesc}}" [value]="item.content" disabled>
                                     </ng-template> 
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
             <div class="card card-padding margin-botton-card ">
                 <div class="card card-padding margin-botton-card margin-top-card padding-botton-card" *ngIf="moneda != undefined">
                     <div class="card-body p0">
-                        <div class="row text-center p0" >
+                        <div class="row text-center p0" style="padding-top: 0.5em;" >
 
                             <div class="col-sm-6 col-12 prch" >
                                 <div class="col-md-12 form-check form-check-right m0 p0">
@@ -64,15 +64,6 @@
     
                                 </div>
                             </div>
-<!-- 
-                            <div class="col-lg-6 col-12 prch">
-                                <div class="form-check form-check-inline form-check-right">
-                                    <label class="form-check-label m0 p0"><b>{{moneda.adpidesc}}</b>
-                                    <input type="checkbox" class="form-check-input alturaInputs" [disabled] = "!editar"
-                                            [(ngModel)]="moneda.content" [checked]="moneda.content">
-                                    </label>
-                                </div>
-                            </div> -->
                             <div class="col-lg-6 col-12" style="display : inline-flex">
                                     <div class="col-lg-4 col-6 form-group form-group-float m0">
                                         <label class="form-group-float-label m0 p0"><b>{{listImputacion.adpidesc}}</b></label>
@@ -119,7 +110,6 @@
                                 </label>
                                 <input type="checkbox" class="form-check-input-styled alturaInputs" data-fouc style="visibility: visible;"
                                 [(ngModel)]="prefijo.content" value= "{{prefijo.content}}" (change)="ColocarPrefijo()" [disabled] = "!editar" >
-
                             </div>
                         </div>
                     </div>
@@ -144,15 +134,15 @@
                                     <div class="row p0 m0">
                                         <div class="col-sm-3 col-4">
                                             <input class="form-group text-center form-control alturaInputs ptb0" [disabled] = "!editar"
-                                                    [value]="sepFolioGestion.adpiatr2" [(ngModel)]="sepFolioGestion.adpiatr2" >
+                                                    [value]="sepFolioGestion.adpiatr2" [(ngModel)]="sepFolioGestion.adpiatr2" (change)="ColocarPrefijo()">
                                         </div>
                                         <div class="col-sm-3 col-4">
                                             <input class="form-group text-center form-control alturaInputs ptb0" [disabled] = "!editar" 
-                                                    [value]="sepFolioPeriodo.adpiatr2" [(ngModel)]="sepFolioPeriodo.adpiatr2" >
+                                                    [value]="sepFolioPeriodo.adpiatr2" [(ngModel)]="sepFolioPeriodo.adpiatr2" (change)="ColocarPrefijo()">
                                         </div>
                                         <div class="col-sm-3 col-4">
                                             <input class="form-group text-center form-control alturaInputs ptb0" [disabled] = "!editar"
-                                                    [value]="sepFolioDocumento.adpiatr2" [(ngModel)]="sepFolioDocumento.adpiatr2" >
+                                                    [value]="sepFolioDocumento.adpiatr2" [(ngModel)]="sepFolioDocumento.adpiatr2" (change)="ColocarPrefijo()">
                                         </div>
                                     </div>
                                 </div>                
@@ -165,7 +155,7 @@
                                     <div class="col-sm-6 col-4" style="align-self: center;">
                                         <select class="form-control p0 selectCenter alturaInputs" [disabled] = "!editar"
                                                 [(ngModel)]="idDigito" (change)="ColocarPrefijo()" >
-                                            <option [value]="item.nume" *ngFor="let item of digFolio.content">
+                                            <option [value]="item.nume" *ngFor="let item of digFolio.content; let i = index">
                                                 {{item.nume}}
                                             </option>
                                         </select>
@@ -181,7 +171,7 @@
                         </div>
                         <div class="card-body p0">
                             <div class="row m0 p0">
-                                <div class="col-md-4 col-12 centrarCheckdesktop" *ngFor="let item of listaParametrosEspeciales">
+                                <div class="col-md-4 col-12 centrarCheckdesktop plr5em text-left" *ngFor="let item of listaParametrosEspeciales">
                                     <div class="form-check form-check-right">
                                         <label class="form-check-label m0 p0"><b>{{item.adpidesc}}</b>
                                                 <input type="checkbox"  style="visibility: visible;" class="form-check-input-styled alturaInputs" 
@@ -212,12 +202,12 @@
                                     <div class="row p0 m0">
                                         <label class="col-sm-6 col-6 col-form-label p0 m0"><b>{{selectUniNegocio.adpidesc}}</b></label>
                                         <div class="col-sm-6 col-6">
-                                        <select class="form-control p0 selectCenter alturaInputs" [disabled] = "!editar" 
-                                                [(ngModel)]="idUnidadNegocio">
-                                            <option [value]="item.nume" *ngFor="let item of selectUniNegocio.content">
-                                            {{item.nume}}
-                                            </option>
-                                        </select>
+                                            <select class="form-control p0 selectCenter alturaInputs" [disabled] = "!editar"
+                                                    [(ngModel)]="idUnidadNegocio" (change)="LimpiarNiveles()">
+                                                <option [value]="item.nume" *ngFor="let item of selectUniNegocio.content">
+                                                                {{item.nume}}
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -257,7 +247,7 @@
                             <div class="col-md-6 col-12">
                                 <div class="col-md-12 col-12 p0" style="display: flex;" >
                                     <label class="form-check form-check-right p0 m0" style="padding-right: 8em;"><b>{{adicionadorPrefijo.adpidesc}}</b></label>
-                                    <input type="checkbox" class="form-check-input-styled alturaInputs"data-fouc style="visibility: visible;"
+                                    <input type="checkbox" class="form-check-input-styled alturaInputs"data-fouc style="visibility: visible;" (change)="ColocarPrefijoRegMaestro()"
                                         [(ngModel)]="adicionadorPrefijo.content" [checked]= "adicionadorPrefijo.content" [disabled] = "!editar">
                                 </div>
                             </div>
@@ -285,7 +275,7 @@
                                     <div class="row p0 m0">
                                         <div class="col-sm-3 col-12">
                                             <input class="form-group text-center form-control p0 alturaInputs m0" [disabled] = "!editar"
-                                            [value]="separadorRol.adpiatr2" [(ngModel)]="separadorRol.adpiatr2" >
+                                            [value]="separadorRol.adpiatr2" [(ngModel)]="separadorRol.adpiatr2" (change)="ColocarPrefijoRegMaestro()">
                                         </div>
                                     </div>
                                 </div> 
@@ -296,7 +286,7 @@
                                 <div class="row p0 m0"> 
                                     <div class="col-sm-4 d-none d-sm-none d-md-block"></div>
                                     <div class="col-sm-4 col-12 text-center">
-                                        <input class="form-group alturaInputs m0" disabled value="IN VING-2019-01-000001">
+                                        <input class="form-group alturaInputs m0" disabled [value]="textoRegMaestro">
                                     </div>
                                     <div class="col-sm-4 d-none d-sm-none d-md-block"></div>
                                 </div>
@@ -307,7 +297,7 @@
                                 </div>
                                 <div class="col-sm-6 col-4">
                                     <select class="form-control p0 selectCenter alturaInputs" [disabled] = "!editar" 
-                                            [(ngModel)]="idCantDigito">
+                                            [(ngModel)]="idCantDigito" (change)="ColocarPrefijoRegMaestro()">
                                             <option [value]="item.nume" *ngFor="let item of cantDigitos.content">
                                                 {{item.nume}}
                                             </option>

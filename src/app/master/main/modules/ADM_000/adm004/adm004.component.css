@@ -57,12 +57,17 @@ padding-bottom: 0%;
 }
 .font-tittle{
     font-size: 14px;
+    font-weight: 700;
 }
 .padding-botton-card{
     padding-bottom: 0.5em;
 }
 .prch{
     padding-right: 10em;
+}
+.plr5em{
+    padding-left: 5em;
+    padding-right: 5em;
 }
 @media screen and (max-width: 600px) {
     .title-icon{
@@ -80,6 +85,10 @@ padding-bottom: 0%;
     }
     .prch{
         padding-right: 0.8em;
+    }
+    .plr2em{
+        padding-left: 0;
+        padding-right: 0;
     }
   
 }
