@@ -77,11 +77,11 @@ export class Adm004Component implements OnInit {
     setTimeout(() => {
       
         this.ObtenerParametrosEspeciales();
-        ///this.ObtenerParametrosMoneda();
+        this.ObtenerParametrosMoneda();
         setTimeout(() => {
-        //  this.ObtenerParametrosUnidadNegocio();
+        this.ObtenerParametrosUnidadNegocio();
             setTimeout(() => {
-         //     this.ObtenerParametrosRegistroMaestro();
+            this.ObtenerParametrosRegistroMaestro();
             }, 500);
         },500);
       initLabels();
@@ -351,6 +351,9 @@ export class Adm004Component implements OnInit {
   }
 
   Cancelar() {
+    if(true){
+
+    }
     this.moneda.content = this.ListParametrosSend[0].adpiatr1;
     this.idImputacion = this.ListParametrosSend[1].adpiatr1;
     this.idConversion = this.ListParametrosSend[2].adpiatr1;
@@ -386,6 +389,128 @@ export class Adm004Component implements OnInit {
     this.ListUnidadNegocio[4].adpiatr1 = this.ListParametrosSend[26].adpiatr1;
     this.ListUnidadNegocio[5].adpiatr2 = this.ListParametrosSend[27].adpiatr2;
     this.ListUnidadNegocio[5].adpiatr1 = this.ListParametrosSend[27].adpiatr1;
+  }
+
+  validarDatos(){
+//     {
+//       "adpicori": "20",
+//       "adpiatr1": this.moneda.content
+//     },
+//     {
+//       "adpicori": "21",
+//       "adpiatr1": +this.idImputacion
+//     },
+//     {
+//       "adpicori": "22",
+//       "adpiatr1": +this.idConversion
+//     },
+//     {
+//       "adpicori": "31",
+//       "adpiatr1": +this.idFolio
+//     },
+//     {
+//       "adpicori": "32",
+//       "adpiatr1": this.prefijo.content
+//     },
+//     {
+//       "adpicori": "34",
+//       "adpiatr2": this.sepFolioGestion.adpiatr2
+//     },
+//     {
+//       "adpicori": "35",
+//       "adpiatr2": this.sepFolioPeriodo.adpiatr2
+//     },
+//     {
+//       "adpicori": "36",
+//       "adpiatr2": this.sepFolioDocumento.adpiatr2
+//     },
+//     {
+//       "adpicori": "37",
+//       "adpiatr1": this.idDigito
+//     },
+//     {
+//       "adpicori": "41",
+//       "adpiatr1": this.listaParametrosEspeciales[0].content
+//     },
+//     {
+//       "adpicori": "42",
+//       "adpiatr1": this.listaParametrosEspeciales[1].content
+//     },
+//     {
+//       "adpicori": "43",
+//       "adpiatr1": this.listaParametrosEspeciales[2].content
+//     },
+//     {
+//       "adpicori": "44",
+//       "adpiatr1": this.listaParametrosEspeciales[3].content
+//     },
+//     {
+//       "adpicori": "45",
+//       "adpiatr1": this.listaParametrosEspeciales[4].content
+//     },
+//     {
+//       "adpicori": "46",
+//       "adpiatr1": this.listaParametrosEspeciales[5].content
+//     },
+//     {
+//       "adpicori": "61",
+//       "adpiatr1": +this.idTipoRegistro
+//     },
+//     {
+//       "adpicori": "62",
+//       "adpiatr1": +this.idNumerador
+//     },
+//     {
+//       "adpicori": "63",
+//       "adpiatr1": this.adicionadorPrefijo.content
+//     },
+//     {
+//       "adpicori": "64",
+//       "adpiatr2": this.separadorRol.adpiatr2
+//     },
+//     {
+//       "adpicori": "65",
+//       "adpiatr1": +this.idCantDigito
+//     },
+//     {
+//       "adpicori": "71",
+//       "adpiatr1": this.CheckUniNeg.content
+//     },
+//     {
+//       "adpicori": "72",
+//       "adpiatr1": +this.idUnidadNegocio
+//     },
+//     {
+//       "adpicori": "81",
+//       "adpiatr2": this.ListUnidadNegocio[0].adpiatr2,
+//       "adpiatr1": +this.ListUnidadNegocio[0].adpiatr1
+//     },
+//     {
+//       "adpicori": "82",
+//       "adpiatr2": this.ListUnidadNegocio[1].adpiatr2,
+//       "adpiatr1": +this.ListUnidadNegocio[1].adpiatr1 
+//     },
+//     {
+//       "adpicori": "83",
+//       "adpiatr2": this.ListUnidadNegocio[2].adpiatr2,
+//       "adpiatr1": +this.ListUnidadNegocio[2].adpiatr1,
+//     },
+//     {
+//       "adpicori": "84",
+//       "adpiatr2": this.ListUnidadNegocio[3].adpiatr2,
+//       "adpiatr1": +this.ListUnidadNegocio[3].adpiatr1
+//     },
+//     {
+//       "adpicori": "85",
+//       "adpiatr2": this.ListUnidadNegocio[4].adpiatr2,
+//       "adpiatr1": +this.ListUnidadNegocio[4].adpiatr1
+//     },
+//     {
+//       "adpicori": "86",
+//       "adpiatr2": this.ListUnidadNegocio[5].adpiatr2,
+//       "adpiatr1": +this.ListUnidadNegocio[5].adpiatr1
+//     }
+// ];
   }
 
   /*funciones auxiliares*/
