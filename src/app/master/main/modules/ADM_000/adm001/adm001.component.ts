@@ -177,14 +177,6 @@ export class Adm001Component implements OnInit {
     this.adm001Service.actualizar(this.tipoCambioSend).subscribe(resp => {
       if (resp["ok"]) {
         this.notyG.noty("success", "Actualizando ..", 3500);
-        // new Noty({
-        //   text: "actualizado",
-        //   theme: "nest",
-        //   progressBar: false,
-        //   timeout: 3500,
-        //   type: "error",
-        //   layout: "bottomRight"
-        // }).show();
         console.log("Actualizando: ", resp);
         this.cargarLista();
         this.cargarPredeterminado();
@@ -219,14 +211,7 @@ export class Adm001Component implements OnInit {
           this.cargarLista();
           this.Cancelar();
           this.cargarPredeterminado();
-          // new Noty({
-          //   text: "Eliminando",
-          //   theme: "nest",
-          //   progressBar: false,
-          //   timeout: 3500,
-          //   type: "error",
-          //   layout: "bottomRight"
-          // }).show();
+         
         } else {
           console.log("no se pudo eliminar", resp);
           return resp;

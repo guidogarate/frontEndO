@@ -5,14 +5,14 @@
       style="margin-bottom: 0;">
       <div class="card-header header-elements-inline" style="padding: 0.1em;">  
           <div class="col-md-12 col-12" style="padding: 0.1em;">
-            <div class="row" style="padding: 0;margin: 0;">
+            <div class="row p0 m0">
                 <div class="col-md-8 col-5 ptitulo" style="align-self: center;">
-                  <h2 class="card-title font-weight-bold PLR0-1em text-left fuentetitulo" style="font-size: large;">
-                    <i class="icon-home mr-2"></i>
+                  <h2 class="card-title font-weight-bold PLR0-1em text-left title-head">
+                    <i class="icon-calendar mr-2"></i>
                      Fecha del dia  
                   </h2>
                 </div>
-                <div class="col-md-4 col-7 ptitulo">
+                <!-- <div class="col-md-4 col-7 ptitulo">
                     <div class="row" style="margin: 0;padding: 0;">
                         <div class="col-md-8 col-7 ptitulo">
                           <select class="form-control float-left" [(ngModel)]="mes" (change)="ActualizarLista()">
@@ -25,7 +25,7 @@
                           </select> 
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
           </div>
       </div>
@@ -34,35 +34,51 @@
       <div class="card m02">
         <div class="card-header header-elements-inline" 
               style="padding: 1.5em; padding-top: 5px;padding-bottom: 5px;">  
-          <div class="col-md-12 col-12" 
-                style="padding: 0;">
-              <h6 class="card-title font-weight-bold xxl-mobileH2 text-left"> Registro de Grupos
-                <div class="list-icons float-right"> 
-                  <a *ngIf="!editar"  [routerLink]="" routerLinkActive="router-link-active" 
-                    (click) ="Guardar()" >
-                      <i style="font-size: 1.2em;" class="icon-floppy-disk" data-toggle="tooltip" data-placement="top" title="Guardar"></i>
-                  </a>
-                  <a  *ngIf="!editar" [routerLink]="" routerLinkActive="router-link-active"
-                    (click) ="Limpiar()" >
-                      <i style="font-size: 1.2em;" class="icon-file-plus" data-toggle="tooltip" data-placement="top" title="Nuevo"></i>
-                  </a>
-                  <a *ngIf="!editar" [routerLink]="" routerLinkActive="router-link-active"
-                    (click) ="Eliminar()" >
-                      <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
-                  </a>
-                  <a *ngIf="editar"  [routerLink]="" routerLinkActive="router-link-active" (click) ="Actualizar()">
-                      <i style="font-size: 1.2em;" class="icon-floppy-disk" data-toggle="tooltip" data-placement="top" title="Actualizar"></i>
-                  </a>
-                  <a *ngIf="editar" [routerLink]="" routerLinkActive="router-link-active"
-                    (click) ="Cancelar()" >
-                      <i style="font-size: 1.2em;" class="icon-exit" data-toggle="tooltip" data-placement="top" title="Cancelar"></i>
-                  </a>
-                  <a *ngIf="editar" [routerLink]="" routerLinkActive="router-link-active"
-                    (click) ="Eliminar()" >
-                    <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
-                </a>
-                </div>
-              </h6>
+          <div class="col-md-12 col-12 p0">
+              <!-- <h6 class="card-title font-weight-bold xxl-mobileH2 text-left"> -->
+                  <div class="col-md-12 col-12 ptitulo">
+                      <div class="row p0 m0">
+                          <div class="col-sm-7 ">
+
+                          </div>
+                          <div class="col-md-2 col-4 ptitulo">
+                              <select class="form-control float-left" [(ngModel)]="mes" (change)="ActualizarLista()">
+                                    <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option>
+                            </select>
+                          </div>
+                          <div class="col-md-1 col-4 ptitulo">
+                              <select  class="form-control float-left"  [(ngModel)]="anho" (change)="ActualizarLista()">
+                                      <option *ngFor="let item of listaAnhos" [value]="item.fecha">{{item.fecha}}</option>
+                              </select> 
+                          </div>
+                          <div class="col-md-2 col-4 list-icons float-right"> 
+                              <a *ngIf="!editar"  [routerLink]="" routerLinkActive="router-link-active" 
+                                (click) ="Guardar()" class="list-icons-item text-teal-600">
+                                  <i style="font-size: 1.2em;" class="icon-floppy-disk" data-toggle="tooltip" data-placement="top" title="Guardar"></i>
+                              </a>
+                              <a  *ngIf="!editar" [routerLink]="" routerLinkActive="router-link-active"
+                                (click) ="Limpiar()" class="list-icons-item text-teal-600">
+                                  <i style="font-size: 1.2em;" class="icon-file-plus" data-toggle="tooltip" data-placement="top" title="Nuevo"></i>
+                              </a>
+                              <a *ngIf="!editar" [routerLink]="" routerLinkActive="router-link-active"
+                                (click) ="Eliminar()" class="list-icons-item text-danger-600">
+                                  <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+                              </a>
+                              <a *ngIf="editar"  [routerLink]="" routerLinkActive="router-link-active" (click) ="Actualizar()" class="list-icons-item text-teal-600">
+                                  <i style="font-size: 1.2em;" class="icon-floppy-disk" data-toggle="tooltip" data-placement="top" title="Actualizar"></i>
+                              </a>
+                              <a *ngIf="editar" [routerLink]="" routerLinkActive="router-link-active"
+                                (click) ="Cancelar()" class="list-icons-item text-teal-600" >
+                                  <i style="font-size: 1.2em;" class="icon-exit" data-toggle="tooltip" data-placement="top" title="Cancelar"></i>
+                              </a>
+                              <a *ngIf="editar" [routerLink]="" routerLinkActive="router-link-active"
+                                (click) ="Eliminar()" class="list-icons-item text-danger-600" >
+                                <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+              <!-- </h6> -->
           </div>      
         </div>
         <div class="card-body" 
@@ -74,15 +90,15 @@
                   <div class="card">
                       <div class="card-header"
                             style="padding: 0; padding-left: 2.3em;">
-                          <h6 class="card-title"><b> Fecha Actual</b></h6>
+                          <h6 class="card-title text-center "><b>Fecha de Proceso</b></h6>
                       </div>
                       <div class="card-body" style="padding: 0;padding-bottom: 1em;">
                           <div class="text-left">
                               <div class="col-md-12">
                                   <label class="col-form-label col-lg-6 p0 m0" style="padding-left: 0.8em;">Fecha</label>
                                   <div class="col-lg-6 col-12">
-                                    <input  *ngIf="predeterminado!=undefined" type="text" readonly class="form-control h30"  value="{{predeterminado.fecha |date:'yyyy-MM-dd'}}">
-                                    <input  *ngIf="predeterminado== undefined" type="text" readonly class="form-control h30"  value="">
+                                    <input  *ngIf="predeterminado!=undefined" type="text" readonly class="form-control h30 text-center"  value="{{predeterminado.fecha |date:'yyyy-MM-dd'}}">
+                                    <input  *ngIf="predeterminado== undefined" type="text" readonly class="form-control h30 text-center "  value="">
                                   </div>
                               </div>
                          </div>
@@ -90,14 +106,14 @@
                             <div class="col-md-6 col-6 text-left">
                               <label class="col-lg-12 col-12 m0">T/C Oficial</label>
                               <div class="col-lg-12 col-12">
-                                <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30" value={{predeterminado.tc_oficial}}>
-                                <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value="">
+                                <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center " value={{predeterminado.tc_oficial}}>
+                                <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30 text-center " value="">
                               </div>
                             </div>
                             <div class="col-md-6 col-6 text-left">
                               <label class="col-lg-12 m0">T/C Compras</label>
                               <div class="col-lg-12">
-                                <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 " value={{predeterminado.tc_compra}}>
+                                <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center " value={{predeterminado.tc_compra}}>
                                 <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value="">
                               </div>
                             </div>
@@ -106,14 +122,14 @@
                             <div class="col-md-6 col-6 text-left">
                                 <label class="col-lg-12 m0">T/C Ventas</label>
                                 <div class="col-lg-12">
-                                  <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30" value={{predeterminado.tc_venta}}>
+                                  <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center" value={{predeterminado.tc_venta}}>
                                   <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value="">
                                 </div>
                             </div>
                             <div class="col-md-6 col-6 text-left">
                                 <label class="col-lg-12 m0">T/C UFV</label>
                                 <div class="col-lg-12">
-                                  <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30" value= {{predeterminado.tc_ufv}}>
+                                  <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center " value= {{predeterminado.tc_ufv}}>
                                   <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value= "">
                                 </div>
                             </div>
