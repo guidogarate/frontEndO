@@ -1,84 +1,80 @@
 <!-- Page content -->
 <div class="row haciadentro animaciones">
   <div class="col-xl-12">
-    <div class="card"
-      style="margin-bottom: 0;">
-      <div class="card-header header-elements-inline" style="padding: 0.1em;">  
-          <div class="col-md-12 col-12" style="padding: 0.1em;">
-            <div class="row p0 m0">
-                <div class="col-md-8 col-5 ptitulo" style="align-self: center;">
-                  <h2 class="card-title font-weight-bold PLR0-1em text-left title-head">
-                    <i class="icon-calendar mr-2"></i>
-                     Fecha del dia  
-                  </h2>
-                </div>
-                <!-- <div class="col-md-4 col-7 ptitulo">
-                    <div class="row" style="margin: 0;padding: 0;">
-                        <div class="col-md-8 col-7 ptitulo">
-                          <select class="form-control float-left" [(ngModel)]="mes" (change)="ActualizarLista()">
-                            <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option>
-                        </select>
-                        </div>
-                        <div class="col-md-4 col-5 ptitulo">
-                          <select  class="form-control float-left"  [(ngModel)]="anho" (change)="ActualizarLista()">
-                            <option *ngFor="let item of listaAnhos" [value]="item.fecha">{{item.fecha}}</option>
-                          </select> 
-                        </div>
-                    </div>
-                </div> -->
-            </div>
-          </div>
-      </div>
-    </div>
-
       <div class="card m02">
-        <div class="card-header header-elements-inline" 
-              style="padding: 1.5em; padding-top: 5px;padding-bottom: 5px;">  
+        <!--  -->
+        <div class="card-header header-elements-inline" style="padding: 0.1em;">  
+            <div class="col-md-12 col-12" style="padding: 0.1em;">
+                <div class="row p0 m0">
+                    <div class="col-md-8 col-5 ptitulo" style="align-self: center;">
+                        <h2 class="card-title font-weight-bold PLR0-1em text-left title-head">
+                            <i class="icon-calendar mr-2"></i>
+                              Fecha del dia  
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <!--  -->
+
+        <div class="card-header header-elements-inline p0">  
           <div class="col-md-12 col-12 p0">
-              <!-- <h6 class="card-title font-weight-bold xxl-mobileH2 text-left"> -->
                   <div class="col-md-12 col-12 ptitulo">
                       <div class="row p0 m0">
                           <div class="col-sm-7 ">
-
                           </div>
-                          <div class="col-md-2 col-4 ptitulo">
-                              <select class="form-control float-left" [(ngModel)]="mes" (change)="ActualizarLista()">
+                          <div class="col-md-2 col-4 ptitulo form-group-feedback form-group-feedback-right">
+                              <select class="form-control float-left selectCenter p0" [(ngModel)]="mes" (change)="ActualizarLista()">
                                     <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option>
                             </select>
+                            <div class="form-control-feedback">
+                              <label for="buscarGrupoLupa">
+                                <i class="icon-search4 puntero" title="buscar"></i
+                              ></label>
+                            </div>
                           </div>
-                          <div class="col-md-1 col-4 ptitulo">
-                              <select  class="form-control float-left"  [(ngModel)]="anho" (change)="ActualizarLista()">
+                          <div class="form-group-feedback form-group-feedback-right col-md-1 col-4 ptitulo">
+                              <select  class="form-control float-left selectCenter p0"  [(ngModel)]="anho" (change)="ActualizarLista()">
                                       <option *ngFor="let item of listaAnhos" [value]="item.fecha">{{item.fecha}}</option>
                               </select> 
+                              <div class="form-control-feedback">
+                                <label for="buscarGrupoLupa">
+                                  <i class="icon-search4 puntero" title="buscar"></i
+                                ></label>
+                              </div>
                           </div>
                           <div class="col-md-2 col-4 list-icons float-right"> 
-                              <a *ngIf="!editar"  [routerLink]="" routerLinkActive="router-link-active" 
-                                (click) ="Guardar()" class="list-icons-item text-teal-600">
-                                  <i style="font-size: 1.2em;" class="icon-floppy-disk" data-toggle="tooltip" data-placement="top" title="Guardar"></i>
-                              </a>
                               <a  *ngIf="!editar" [routerLink]="" routerLinkActive="router-link-active"
-                                (click) ="Limpiar()" class="list-icons-item text-teal-600">
-                                  <i style="font-size: 1.2em;" class="icon-file-plus" data-toggle="tooltip" data-placement="top" title="Nuevo"></i>
+                                (click) ="Limpiar()" class="list-icons-item">
+                                  <i class="icon-file-plus icons-options" data-toggle="tooltip" data-placement="top" title="Nuevo"></i>
                               </a>
-                              <a *ngIf="!editar" [routerLink]="" routerLinkActive="router-link-active"
-                                (click) ="Eliminar()" class="list-icons-item text-danger-600">
+                              <a *ngIf="!editar"  [routerLink]="" routerLinkActive="router-link-active" 
+                                (click) ="Guardar()" class="list-icons-item">
+                                  <i class="icon-floppy-disk icons-options" data-toggle="tooltip" data-placement="top" title="Guardar"></i>
+                              </a>
+                              <a *ngIf="!editar"  [routerLink]="" routerLinkActive="router-link-active" 
+                                (click) ="nada()" class="list-icons-item">
+                                  <i class="icon-printer2 icons-options" data-toggle="tooltip" data-placement="top" title="Imprimir"></i>
+                              </a>
+                              <!-- <a *ngIf="!editar" [routerLink]="" routerLinkActive="router-link-active"
+                                (click) ="Eliminar(null)" class="list-icons-item text-danger-600">
                                   <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
-                              </a>
-                              <a *ngIf="editar"  [routerLink]="" routerLinkActive="router-link-active" (click) ="Actualizar()" class="list-icons-item text-teal-600">
-                                  <i style="font-size: 1.2em;" class="icon-floppy-disk" data-toggle="tooltip" data-placement="top" title="Actualizar"></i>
-                              </a>
-                              <a *ngIf="editar" [routerLink]="" routerLinkActive="router-link-active"
-                                (click) ="Cancelar()" class="list-icons-item text-teal-600" >
-                                  <i style="font-size: 1.2em;" class="icon-exit" data-toggle="tooltip" data-placement="top" title="Cancelar"></i>
+                              </a> -->
+                              <a *ngIf="editar"  [routerLink]="" routerLinkActive="router-link-active" (click) ="Actualizar()" class="list-icons-item">
+                                  <i class="icon-floppy-disk icons-options" data-toggle="tooltip" data-placement="top" title="Actualizar"></i>
                               </a>
                               <a *ngIf="editar" [routerLink]="" routerLinkActive="router-link-active"
-                                (click) ="Eliminar()" class="list-icons-item text-danger-600" >
+                                (click) ="Cancelar()" class="list-icons-item" >
+                                  <i class="icon-exit icons-options" data-toggle="tooltip" data-placement="top" title="Cancelar"></i>
+                              </a>
+                              <!-- <a *ngIf="editar" [routerLink]="" routerLinkActive="router-link-active"
+                                (click) ="Eliminar(null)" class="list-icons-item text-danger-600" >
                                 <i style="font-size: 1.2em;" class="icon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
-                              </a>
+                              </a> -->
                           </div>
                       </div>
                   </div>
-              <!-- </h6> -->
+               
           </div>      
         </div>
         <div class="card-body" 
@@ -87,135 +83,157 @@
         padding-bottom: 0.5em;">
           <div class="row p0 m0" >
               <div class="col-md-6">
-                  <div class="card">
-                      <div class="card-header"
-                            style="padding: 0; padding-left: 2.3em;">
-                          <h6 class="card-title text-center "><b>Fecha de Proceso</b></h6>
+                  <div class="card mb05">
+                      <div class="card-header p0"
+                            style="padding-left: 2.3em;">
+                          <h6 class="card-title text-center title-negrita">Fecha de Proceso</h6>
                       </div>
-                      <div class="card-body" style="padding: 0;padding-bottom: 1em;">
-                          <div class="text-left">
-                              <div class="col-md-12">
-                                  <label class="col-form-label col-lg-6 p0 m0" style="padding-left: 0.8em;">Fecha</label>
-                                  <div class="col-lg-6 col-12">
+                      <div class="card-body p0 pb1" *ngIf="predeterminado!=undefined">
+                          <div class="text-left" style="display: flex;">
+                              <div class="col-md-6 col-6">
+                                  <label class="col-form-label col-lg-6 p0 m0 title-negrita" style="padding-left: 0.8em;">Fecha</label>
+                                  <div class="col-lg-12 col-12">
                                     <input  *ngIf="predeterminado!=undefined" type="text" readonly class="form-control h30 text-center"  value="{{predeterminado.fecha |date:'yyyy-MM-dd'}}">
-                                    <input  *ngIf="predeterminado== undefined" type="text" readonly class="form-control h30 text-center "  value="">
+                                    <input  *ngIf="predeterminado== undefined" type="text" readonly class="form-control h30 "  value="">
+                                  </div>
+                              </div>
+                              <div class="col-md-6 col-6">
+                                  <div class="form-group" style="margin-bottom: 0.1em;">
+                                        <div class="custom-control custom-switch" style="margin-bottom: 0.2em;">
+                                            <input type="checkbox" class="custom-control-input" id="pred" name="pred" disabled
+                                                    checked="predeterminado.estado == 'true'" data-fouc >
+                                            <label *ngIf="predeterminado.estado" class="custom-control-label h30" for="pred">Abierto</label>
+                                            <label *ngIf="!predeterminado.estado" class="custom-control-label h30" for="pred">Cerrado</label>
+                                        </div>
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input h30" disabled id="tipo" name="tipo" checked="true">
+                                            <label class="custom-control-label h30" for="tipo">Predeterminado</label>
+                                        </div>
                                   </div>
                               </div>
                          </div>
                         <div class="row p0 m0" style="padding-top: 0.3em;">
                             <div class="col-md-6 col-6 text-left">
-                              <label class="col-lg-12 col-12 m0">T/C Oficial</label>
-                              <div class="col-lg-12 col-12">
-                                <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center " value={{predeterminado.tc_oficial}}>
-                                <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30 text-center " value="">
-                              </div>
+                                <label class="col-lg-12 col-12 m0 title-negrita">Tipo de Cambio Oficial</label>
+                                <div class="col-lg-12 col-12">
+                                    <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center" value={{predeterminado.tc_oficial}}>
+                                    <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value="">
+                                </div>
                             </div>
-                            <div class="col-md-6 col-6 text-left">
-                              <label class="col-lg-12 m0">T/C Compras</label>
-                              <div class="col-lg-12">
-                                <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center " value={{predeterminado.tc_compra}}>
-                                <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value="">
-                              </div>
-                            </div>
-                        </div>
+                            <div class="col-md-12 col-6 text-left"></div>
+                         </div>
                         <div class="row p0 m0">
                             <div class="col-md-6 col-6 text-left">
-                                <label class="col-lg-12 m0">T/C Ventas</label>
+                                <label class="col-lg-12 m0 title-negrita">Tipo de Cambio Compras</label>
                                 <div class="col-lg-12">
-                                  <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center" value={{predeterminado.tc_venta}}>
-                                  <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value="">
+                                    <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center" value={{predeterminado.tc_compra}}>
+                                    <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value="">
                                 </div>
                             </div>
                             <div class="col-md-6 col-6 text-left">
-                                <label class="col-lg-12 m0">T/C UFV</label>
+                                <label class="col-lg-12 m0 title-negrita">Tipo de Cambio UFV</label>
                                 <div class="col-lg-12">
-                                  <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center " value= {{predeterminado.tc_ufv}}>
-                                  <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value= "">
+                                    <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center" value= {{predeterminado.tc_ufv}}>
+                                    <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value= "">
                                 </div>
                             </div>
                         </div> 
+                        <div class="row p0 m0">
+                            <div class="col-md-6 col-6 text-left">
+                                <label class="col-lg-12 m0 title-negrita">Tipo de Cambio Ventas</label>
+                                <div class="col-lg-12">
+                                    <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center" value={{predeterminado.tc_venta}}>
+                                    <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-6 text-left">
+                                <div class="col-lg-10 text-right">
+                                    <a [routerLink]="nada()" routerLinkActive="router-link-active"
+                                        class="list-icons-item text-danger-600" (click)="Copiar()" >
+                                        <!-- (click) ="Eliminar()"  -->
+                                          <i style="font-size: 2
+                                          
+                                             .2em;" class="icon-pencil7" data-toggle="tooltip" data-placement="top" title="Copiar"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                       </div>
                   </div>
               </div>
               <div class="col-md-6">
-                  <div class="card">
-                      <div class="card-header pTB0">
-                            <h6 class="card-title"><b> Ingreso de Fecha</b></h6>
-                      </div>
-                      <div class="card-body p0" >
-                        <div class="row p0 m0">
+                  <div class="card mb05">
+                      <div class="card-body p0 pb1" >
+                        <div class="row p0 m0 ptcard">
                             <div class="col-md-6 col-6">
-                              <div class="form-group form-group-float text-left m0">
-                                <label class="form-group-float-label m0">Fecha</label>
-                                <input [disabled]="editar" type="date" name="Fecha" required class="form-control text-center h30"
-                                value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}" [(ngModel)]="tipoCambio.fecha"placeholder="Fecha"
-                                data-date="" data-date-format="yyyy-MM-dd" max="{{fechaMaxima}}"
-                                >
-                            </div>
+                                <div class="form-group form-group-feedback form-group-feedback-right  form-group-float text-left m0">
+                                    <label class="form-group-float-label m0 title-negrita">Fecha</label>
+                                    <input [disabled]="editar" type="date" name="Fecha" required class="form-control text-center h30"
+                                          value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}" [(ngModel)]="tipoCambio.fecha"placeholder="Fecha"
+                                          data-date="" data-date-format="yyyy-MM-dd" max="{{fechaMaxima}}"
+                                    >
+                                    <div class="form-control-feedback">
+                                      <i class="icon-calendar" data-toggle="tooltip" data-placement="top" title="Copiar"></i>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6 col-6">
                                 <div class="form-group" style="margin-bottom: 0.1em;">
-                                        <div class="custom-control custom-switch" style="margin-bottom: 0.2em;">
-                                            <input type="checkbox" class="custom-control-input" id="switch1" name="sw1"
-                                            [checked]="tipoCambio.estado == 'true'" data-fouc [(ngModel)]="tipoCambio.estado ">
-                                            <label *ngIf="tipoCambio.estado" class="custom-control-label h30" for="switch1">Abierto</label>
-                                            <label *ngIf="!tipoCambio.estado" class="custom-control-label h30" for="switch1">Cerrado</label>
-                                        </div>
-                                        <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input h30" id="switch2" name="sw2"
-                                            [checked]="tipoCambio.pred" [(ngModel)]="tipoCambio.pred">
-                                            <label class="custom-control-label" for="switch2">Predeterminado</label>
-                                        </div>
-                                  </div>
-                              </div>
+                                    <div class="custom-control custom-switch" style="margin-bottom: 0.2em;">
+                                        <input type="checkbox" class="custom-control-input" id="switch1" name="sw1"
+                                        [checked]="tipoCambio.estado == 'true'" data-fouc [(ngModel)]="tipoCambio.estado ">
+                                        <label *ngIf="tipoCambio.estado" class="custom-control-label h30 title-negrita" for="switch1">Abierto</label>
+                                        <label *ngIf="!tipoCambio.estado" class="custom-control-label h30 title-negrita" for="switch1">Cerrado</label>
+                                    </div>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input h30" id="switch2" name="sw2"
+                                        [checked]="tipoCambio.pred" [(ngModel)]="tipoCambio.pred">
+                                        <label class="custom-control-label title-negrita" for="switch2">Predeterminado</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row p0 m0"> 
-                            <div class="col-md-6 col-6 text-left">
-                              <div class="form-group form-group-float m02">
-                                  <label class="col-lg-12 form-group-float-label m0">T/C Oficial</label>
-                                  <div class="col-lg-12">
-                                    <input type="text" class="form-control text-center h30" name="tcOficial" 
-                                    placeholder="T/C Oficial" required value="{{tipoCambio.tc_oficial}}" [(ngModel)]="tipoCambio.tc_oficial">
-                                  </div>
-                              </div>
+                            <div class="col-sm-6 col-6 text-left">
+                                <div class="form-group form-group-float m02">
+                                    <label class="col-lg-12 form-group-float-label m0 title-negrita">Tipo de Cambio Oficial                                  </label>
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control text-center h30" name="tcOficial" 
+                                                placeholder="T/C Oficial" required value="{{tipoCambio.tc_oficial}}" [(ngModel)]="tipoCambio.tc_oficial">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6 col-6 text-left">
-                              <div class="form-group form-group-float m02">
-                                  <label class="col-lg-12 form-group-float-label m0">T/C Compras</label>
-                                  <div class="col-lg-12">
-                                    <input type="text" class="form-control text-center h30" name="tcCompras" 
-                                    placeholder="T/C Compras" required value="{{tipoCambio.tc_compra}}" [(ngModel)]="tipoCambio.tc_compra">
-                                  </div>
-                              </div>
-                            </div>
+                            <div class="col-sm-6 col-0"></div>
                         </div>
                         <div class="row m0 p0">
-                            <div class="col-md-6 col-6 text-left" style="margin-bottom: 0.6em;" >
-                              <div class="form-group form-group-float m02">
-                                <label class="col-lg-12 form-group-float-label m0">T/C Ventas</label>
-                                <div class="col-lg-12">
-                                  <input type="text" class="form-control text-center h30" name="tcVentas" 
-                                  placeholder="T/C Ventas" required value="{{tipoCambio.tc_venta}}" [(ngModel)]="tipoCambio.tc_venta">
-                                </div>
-                             </div>
-                                <!-- <label class="col-lg-12">T/C Ventas</label>
-                                <div class="col-lg-12">
-                                  <input type="text" name="tcVenta" class="form-control" required value="{{tipoCambio.tc_venta}}" [(ngModel)]="tipoCambio.tc_venta">
-                                </div> -->
-                            </div>
-                          
                             <div class="col-md-6 col-6 text-left">
-                              <div class="form-group form-group-float m02">
-                                <label class="col-lg-12 form-group-float-label m0">T/C UFV</label>
-                                <div class="col-lg-12">
-                                  <input type="text" class="form-control text-center h30" name="tcUfv" 
-                                  placeholder="T/C UFV" required value="{{tipoCambio.tc_ufv}}" [(ngModel)]="tipoCambio.tc_ufv">
+                                <div class="form-group form-group-float m02">
+                                    <label class="col-lg-12 form-group-float-label m0 title-negrita">Tipo de Cambio Compras</label>
+                                    <div class="col-lg-12">
+                                          <input type="text" class="form-control text-center h30" name="tcCompras" 
+                                                placeholder="T/C Compras" required value="{{tipoCambio.tc_compra}}" [(ngModel)]="tipoCambio.tc_compra">
+                                    </div>
                                 </div>
-                             </div>
-                              <!-- <label class="col-lg-12">T/C UFV</label>
-                              <div class="col-lg-12">
-                                <input type="text" name="tcUfv" class="form-control" required value="{{tipoCambio.tc_ufv}}" [(ngModel)]="tipoCambio.tc_ufv">
-                              </div> -->
+                            </div>
+                            <div class="col-md-6 col-6 text-left">
+                                <div class="form-group form-group-float m02">
+                                    <label class="col-lg-12 form-group-float-label m0 title-negrita">Tipo de Cambio UFV</label>
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control text-center h30" name="tcUfv" 
+                                                placeholder="T/C UFV" required value="{{tipoCambio.tc_ufv}}" [(ngModel)]="tipoCambio.tc_ufv">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p0 m0">
+                            <div class="col-md-6 col-6 text-left m0" >
+                                <div class="form-group form-group-float m02">
+                                    <label class="col-lg-12 form-group-float-label m0 title-negrita">Tipo de Cambio Ventas</label>
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control text-center h30" name="tcVentas" 
+                                                placeholder="T/C Ventas" required value="{{tipoCambio.tc_venta}}" [(ngModel)]="tipoCambio.tc_venta">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                       </div>
@@ -229,29 +247,42 @@
                     <thead  class="bg-blue">
                       <tr class="table-border-double">
                         <th class="p0">Fecha</th>
-                        <th class="p0">T/C Oficial</th>
-                        <th class="p0">T/C Compra</th>
-                        <th class="p0">T/C Venta</th>
-                        <th class="p0">T/C UFV</th>
+                        <th class="p0">Tipo Cambio Oficial</th>
+                        <th class="p0">Tipo Cambio Compra</th>
+                        <th class="p0">Tipo Cambio Venta</th>
+                        <th class="p0">Tipo Cambio UFV</th>
                         <th class="p0">Estado</th>
+                        <th class="p0">Acciones</th>
                       </tr>
                     </thead>
                     <tbody >
-                      <tr *ngFor="let item of ListTipoCambio" (click)="cargarEdicion(item)" class="puntero">
+                      <tr *ngFor="let item of ListTipoCambio ; let i = index"  class=" p0 puntero">
+                        <!-- (click)="cargarEdicion(item)" -->
                         <td class="p0">{{item.fecha | date:'mediumDate':'+0400'}} </td>
                         <td class="p0">{{item.tc_oficial}}</td>
                         <td class="p0">{{item.tc_compra}}</td>
                         <td class="p0">{{item.tc_venta}}</td>
                         <td class="p0">{{ item.tc_ufv }} </td>
-                        <td *ngIf="item.estado == '1'" class="pTB0"> 
-                          <span  class="badge badge-success ">
-                            Activo 
-                          </span>
+                        <td class="p0">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="{{i+1}}" name="stade1"
+                                        [checked]="item.estado == true" data-fouc disabled>
+                                <label class="custom-control-label h30" for="{{i+1}}"></label>
+                            </div>
+                          
                         </td>
-                        <td *ngIf="item.estado == '0'" class="pTB0"> 
-                            <span  class="badge badge-danger">
-                              Inactivo 
-                            </span>
+                        <td class="pTB0">
+                            <div class="list-icons"> 
+                                <a class="list-icons-item text-teal-600"  (click)="cargarEdicion(item)"
+                                  [routerLink]="nada()" routerLinkActive="router-link-active" 
+                                >
+                                    <i class="icon-pencil7 xl" data-toggle="tooltip" data-placement="top" title="Editar fecha"> </i>
+                                </a>
+                                <a class="list-icons-item text-danger-600" (click) ="Eliminar(item)"
+                                  [routerLink]="nada()" routerLinkActive="router-link-active">
+                                    <i class="icon-trash xl " data-toggle="tooltip" data-placement="top" title="Eliminar fecha"> </i>
+                                </a>
+                            </div>
                         </td>
                       </tr>
                     </tbody>
