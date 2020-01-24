@@ -4,11 +4,6 @@ import { Adm002Component } from "./adm002/adm002.component";
 import { Adm003Component } from "./adm003/adm003.component";
 import { Adm004Component } from "./adm004/adm004.component";
 
-// const menu = JSON.parse(sessionStorage.getItem("datos_user"));
-// console.log(menu);
-// console.log(menu.ok);
-// console.log("cargando ruta");
-
 const adm000_Routes: Routes = [
   {
     path: "adm_001",
@@ -36,5 +31,12 @@ const adm000_Routes: Routes = [
     pathMatch: "full"
   }
 ];
+
+const menu = JSON.parse(sessionStorage.getItem("menu"));
+const result = menu.find(compon => compon.id === "12");
+
+console.log(result.subMenu);
+
+console.log(menu);
 
 export const ADM_000_MODULES_ROUTES = RouterModule.forChild(adm000_Routes);
