@@ -6,9 +6,9 @@ import { NotyGlobal } from "src/app/master/utils/global/index.global";
 declare function initLabels ();
 
 @Component({
-  selector: 'app-adm004',
-  templateUrl: './adm004.component.html',
-  styleUrls: ['./adm004.component.css']
+  selector: "app-adm004",
+  templateUrl: "./adm004.component.html",
+  styleUrls: ["./adm004.component.css"]
 })
 export class Adm004Component implements OnInit {
 

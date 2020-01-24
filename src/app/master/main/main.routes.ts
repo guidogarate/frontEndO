@@ -22,6 +22,8 @@ const mainRoutes: Routes = [
   }
 ];
 
+// export const MAIN_ROUTES = RouterModule.forRoot(mainRoutes);
+
 export const MAIN_ROUTES = RouterModule.forRoot(mainRoutes, {
   preloadingStrategy: PreloadAllModules
 });
