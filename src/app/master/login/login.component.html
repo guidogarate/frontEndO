@@ -28,7 +28,7 @@
                 <select
                   *ngIf="!isMobile"
                   onchange="setCustomValidity('')"
-                  oninvalid="this.setCustomValidity('Debe seleccionar una base de datos')"
+                  oninvalid="setCustomValidity('Debe seleccionar una base de datos')"
                   required
                   title="Seleccione una base de datos"
                   class="form-control selectpicker show-tick"
@@ -45,7 +45,7 @@
                 <select
                   *ngIf="isMobile"
                   onchange="setCustomValidity('')"
-                  oninvalid="this.setCustomValidity('Debe seleccionar una base de datos')"
+                  oninvalid="setCustomValidity('Debe seleccionar una base de datos')"
                   required
                   [(ngModel)]="usuario.databaseid"
                   name="databaseid"
@@ -58,87 +58,10 @@
                     >{{ db.id }} - {{ db.nombre }}</option
                   >
                 </select>
-                <!-- <select
-                  [(ngModel)]="usuario.databaseid"
-                  name="databaseid"
-                  required
-                  class="form-control puntero"
-                >
-                  <option value="" disabled selected>
-                    Selecciona una base de datos</option
-                  >
-                  <ng-container *ngFor="let db of databases">
-                    <option [value]="db.id"> {{ db.nombre }}</option>
-                  </ng-container>
-                </select> -->
               </div>
-              <!-- <select
-                [(ngModel)]="usuario.databaseid"
-                name="databaseid"
-                required
-                class="form-control puntero"
-              >
-                <option value="" disabled selected>
-                  Selecciona una base de datos</option
-                >
-                <ng-container *ngFor="let db of databases">
-                  <option [value]="db.id"> {{ db.nombre }}</option>
-                </ng-container>
-              </select> -->
-
-              <!-- <select
-                [(ngModel)]="usuario.databaseid"
-                class="form-control select"
-                name="databaseid"
-                #t
-                (change)="cargarLista(t.value)"
-                required
-              >
-                <option *ngFor="let db of databases" [value]="db.id">
-                  {{ db.nombre }}</option
-                >
-              </select> -->
               <div
                 class="form-group form-group-feedback form-group-feedback-left"
-              >
-                <!-- <select
-                  data-placeholder="Selecciona una base de datos"
-                  class="form-control select"
-                  data-fouc
-                  [(ngModel)]="usuario.databaseid"
-                  name="databaseid"
-                  required
-                >
-                  <option value="" selected disabled
-                    >Selecciona una base de datos</option
-                  >
-                  <option
-                    *ngFor="let db of databases"
-                    data-icon="database"
-                    [value]="db.id"
-                  >
-                    {{ db.nombre }}</option
-                  >
-                </select> -->
-                <!-- <mat-form-field style="width:100%;" on-focusout="seleccione()">
-                  <mat-label> Selecciona una base de datos</mat-label>
-                  <span matPrefix class="px-1">
-                    <i class="icon-cloud text-muted"></i>
-                  </span>
-                  <mat-select
-                    [(ngModel)]="usuario.databaseid"
-                    required
-                    name="databaseid"
-                  >
-                    <mat-option
-                      *ngFor="let database of databases"
-                      [value]="database.id"
-                    >
-                      {{ database.nombre }}</mat-option
-                    >
-                  </mat-select>
-                </mat-form-field> -->
-              </div>
+              ></div>
               <div
                 class="form-group form-group-feedback form-group-feedback-left"
               >
