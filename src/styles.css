@@ -53,4 +53,14 @@ body {
 .p0{
   padding: 0;
 }
+.title-head{
+  font-size: 14px;
+}
+.title-negrita{
+font-weight: 700;
+}
+
+.selectCenter{
+  text-align-last: center;
+}
 

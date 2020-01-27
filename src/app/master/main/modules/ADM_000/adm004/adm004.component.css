@@ -69,6 +69,9 @@ padding-bottom: 0%;
     padding-left: 5em;
     padding-right: 5em;
 }
+.title-head{
+    font-size: 14px;
+}
 @media screen and (max-width: 600px) {
     .title-icon{
         font-size: 1.3em;

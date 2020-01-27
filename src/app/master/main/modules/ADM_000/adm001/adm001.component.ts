@@ -75,6 +75,7 @@ export class Adm001Component implements OnInit {
           "yyyy-MM-dd",
           "+0400"
         );
+        this.predeterminado.estado = this.predeterminado.estado == "1" ? true: false;
       } else {
         console.log("no se cargo el TC predeterminado");
       }
@@ -141,14 +142,6 @@ export class Adm001Component implements OnInit {
     this.adm001Service.agregar(this.tipoCambioSend).subscribe(resp => {
       if (resp["ok"]) {
         this.notyG.noty("success", "Guardando ", 3500);
-        // new Noty({
-        //   text: "Guardando",
-        //   theme: "nest",
-        //   progressBar: false,
-        //   timeout: 3500,
-        //   type: "error",
-        //   layout: "bottomRight"
-        // }).show();
         console.log("Guardando: ", resp);
         this.Limpiar();
         this.cargarLista();
@@ -177,14 +170,6 @@ export class Adm001Component implements OnInit {
     this.adm001Service.actualizar(this.tipoCambioSend).subscribe(resp => {
       if (resp["ok"]) {
         this.notyG.noty("success", "Actualizando ..", 3500);
-        // new Noty({
-        //   text: "actualizado",
-        //   theme: "nest",
-        //   progressBar: false,
-        //   timeout: 3500,
-        //   type: "error",
-        //   layout: "bottomRight"
-        // }).show();
         console.log("Actualizando: ", resp);
         this.cargarLista();
         this.cargarPredeterminado();
@@ -203,30 +188,28 @@ export class Adm001Component implements OnInit {
       tc_compra: "",
       tc_venta: "",
       tc_ufv: "",
-      estado: false,
+      estado: true,
       pred: true
     };
   }
 
-  Eliminar() {
+  Eliminar(item: any) {
+
+    // if(this.tipoCambio.fecha!=null){
+    //   this.tipoCambio.fecha = item.fecha;
+    // }
+      console.log("eliminando null",item.fecha);
     let confirmar = confirm("desea eliminar");
     if(confirmar){
       this.loading= true;
-      this.adm001Service.eliminar(this.tipoCambio.fecha).subscribe(resp => {
+      this.adm001Service.eliminar(item.fecha).subscribe(resp => {
         if (resp["ok"]) {
           this.notyG.noty("success", "Eliminando ..", 3500);
           this.Limpiar();
           this.cargarLista();
           this.Cancelar();
           this.cargarPredeterminado();
-          // new Noty({
-          //   text: "Eliminando",
-          //   theme: "nest",
-          //   progressBar: false,
-          //   timeout: 3500,
-          //   type: "error",
-          //   layout: "bottomRight"
-          // }).show();
+         
         } else {
           console.log("no se pudo eliminar", resp);
           return resp;
@@ -295,6 +278,21 @@ export class Adm001Component implements OnInit {
     this.Paginacion()
     this.cargarLista();
     this.loading= false;
+  }
+
+  Copiar(){
+    this.tipoCambio = {
+      fecha: this.datePipe.transform(this.today, "yyyy-MM-dd"),
+      tc_oficial: this.predeterminado.tc_oficial,
+      tc_compra: this.predeterminado.tc_compra,
+      tc_venta: this.predeterminado.tc_venta,
+      tc_ufv: this.predeterminado.tc_ufv,
+      estado: true,
+      pred: true
+    };
+    setTimeout(() => {
+      initLabels();
+    }, 1000);
   }
   nada(){}
 
