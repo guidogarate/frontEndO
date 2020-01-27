@@ -17,7 +17,7 @@ export class Adm004Component implements OnInit {
   /* para el encabezado*/
   Lista : any = [];
   parametrosIniciales: any = [];
-  idGestion : string ="2019";
+  idGestion : string ;
 
   /* Para seccion Moneda*/
   parametroMoneda : any = [];
@@ -40,7 +40,7 @@ export class Adm004Component implements OnInit {
   sepFolioDocumento : any;
   digFolio : any;
   idDigito : string = "1";
-  textoFolio : string = "INV-2019-01-1";
+  textoFolio : string = "";
   // textPrefijo : string = "INV";
   /** parametros especiales */
   parametroEspecial : any;
@@ -61,7 +61,7 @@ export class Adm004Component implements OnInit {
   separadorRol : any;
   cantDigitos : any;
   idCantDigito : string = "1";
-  textoRegMaestro : string = "INV-2019-01-1";
+  textoRegMaestro : string = "";
 
   /** para enviar a modificar */
   ListParametrosSend : any;
@@ -82,13 +82,14 @@ export class Adm004Component implements OnInit {
           this.ObtenerParametrosUnidadNegocio();
               setTimeout(() => {
               this.ObtenerParametrosRegistroMaestro();
-              }, 500);
+            }, 500);
           },500);
-        initLabels();
-      }, 1000);
-    }, 500);
-    this.ColocarPrefijo();
-    this.ColocarPrefijoRegMaestro();
+          initLabels();
+        }, 1000);
+        
+        this.ColocarPrefijo();
+        this.ColocarPrefijoRegMaestro();
+    }, 1000);
   }
 
   CargarParametrosPorGestion(){
@@ -103,9 +104,11 @@ export class Adm004Component implements OnInit {
         this.ObtenerParametrosRegistroMaestro();
       }, 500);
     },500);
+    setTimeout(() => {
+      this.ColocarPrefijo();
+      this.ColocarPrefijoRegMaestro();
+    }, 1000);
     initLabels();
-    this.ColocarPrefijo();
-    this.ColocarPrefijoRegMaestro();
   }
 
   ObtenerParametrosIniciales(){
@@ -117,7 +120,7 @@ export class Adm004Component implements OnInit {
 
         this.parametrosIniciales = resp["datos1"];
         //asigno la gestion dinamicamente
-        //this.idGestion = "";
+        this.idGestion = ""+this.parametrosIniciales[3].adpiatr1;
       }
       else{
           this.notyG.noty("error", "no se pudo Obtener Parametros Iniciales", 3500);
@@ -146,23 +149,29 @@ export class Adm004Component implements OnInit {
   }
 
   ObtenerParametrosFoliacion(){
+    console.warn("datos id gestion Foliacion",""+this.idGestion);
     this._adm004Service
-    .ObtenerParametrosFolio(this.idGestion)
+    .ObtenerParametrosFolio(""+this.idGestion)
     .subscribe(resp => {
       if(["ok"])
       {
-        // console.warn("datos Foliacion",resp["dastos3"]);
-        this.folio = resp["datos3"][0];
-        this.TipoFolio = resp["datos3"][1];
-        this.prefijo = resp["datos3"][2];
-        this.sepFolio = resp["datos3"][3];
-        this.sepFolioGestion = resp["datos3"][4];
-        this.sepFolioPeriodo = resp["datos3"][5];
-        this.sepFolioDocumento = resp["datos3"][6];
-        this.digFolio = resp["datos3"][7];
-       this.rellenarDig(); 
-        console.log("folio: ", resp["datos3"]);
-        // console.log("prefijo: ", this.prefijo);
+        if(resp["datos3"]== undefined)
+        {
+          console.log("no cargo foliacion");
+          console.info("id gestion folio: ", this.idGestion)
+        }else{
+          this.folio = resp["datos3"][0];
+          this.TipoFolio = resp["datos3"][1];
+          this.prefijo = resp["datos3"][2];
+          this.sepFolio = resp["datos3"][3];
+          this.sepFolioGestion = resp["datos3"][4];
+          this.sepFolioPeriodo = resp["datos3"][5];
+          this.sepFolioDocumento = resp["datos3"][6];
+          this.digFolio = resp["datos3"][7];
+         this.rellenarDig(); 
+          console.log("folio: ", resp["datos3"]);
+        }
+        
       }
       else{
           this.notyG.noty("error", "no se pudo Obtener Parametros de Foliacion", 3500);
@@ -195,12 +204,17 @@ export class Adm004Component implements OnInit {
     .subscribe(resp => {
       if(["ok"])
       {
-        this.listaParametrosEspeciales = resp["datos4"];
-        // console.log("Parametros Especiales total: ", this.listaParametrosEspeciales);
-        this.parametroEspecial = this.listaParametrosEspeciales[0];
-        console.log("Parametros Especial: ", this.parametroEspecial);
-        this.listaParametrosEspeciales.shift();
-        // console.log("Parametros Especiales shift: ", this.listaParametrosEspeciales);
+        if(resp["datos4"]== undefined)
+        {
+          console.log("no cargo foliacion");
+        }else{
+          this.listaParametrosEspeciales = resp["datos4"];
+          // console.log("Parametros Especiales total: ", this.listaParametrosEspeciales);
+          this.parametroEspecial = this.listaParametrosEspeciales[0];
+          console.log("Parametros Especial: ", this.parametroEspecial);
+          this.listaParametrosEspeciales.shift();
+          // console.log("Parametros Especiales shift: ", this.listaParametrosEspeciales);
+        }
       }
       else{
           this.notyG.noty("error", "no se pudo Obtener Parametros Especiales", 3500);
@@ -215,20 +229,25 @@ export class Adm004Component implements OnInit {
     .subscribe(resp => {
       if(["ok"])
       {
-        console.log(resp["datos5"]);
-        this.ListUnidadNegocio = resp["datos5"];
-        console.log("List Unit Negocio: ", this.ListUnidadNegocio);
-        this.unidadNegocio =this.ListUnidadNegocio[0];
-        this.CheckUniNeg = this.ListUnidadNegocio[1];
-        this.selectUniNegocio = this.ListUnidadNegocio[2];
-       
-        this.ListUnidadNegocio.shift();
-        this.ListUnidadNegocio.shift();
-        this.ListUnidadNegocio.shift();
-        // this.idUnidadNegocio = ""+this.CalcularIdNiveles(this.ListUnidadNegocio);
-        this.idUnidadNegocio = ""+(this.ListUnidadNegocio.length);
-        this.CalcularIdNiveles();
-        console.log("unidad de negocio call: ", this.idUnidadNegocio);
+        if(resp["datos5"]== undefined)
+        {
+          console.log("no cargo foliacion");
+        }else{
+          console.log(resp["datos5"]);
+          this.ListUnidadNegocio = resp["datos5"];
+          console.log("List Unit Negocio: ", this.ListUnidadNegocio);
+          this.unidadNegocio =this.ListUnidadNegocio[0];
+          this.CheckUniNeg = this.ListUnidadNegocio[1];
+          this.selectUniNegocio = this.ListUnidadNegocio[2];
+         
+          this.ListUnidadNegocio.shift();
+          this.ListUnidadNegocio.shift();
+          this.ListUnidadNegocio.shift();
+          // this.idUnidadNegocio = ""+this.CalcularIdNiveles(this.ListUnidadNegocio);
+          this.idUnidadNegocio = ""+(this.ListUnidadNegocio.length);
+          this.CalcularIdNiveles();
+          console.log("unidad de negocio call: ", this.idUnidadNegocio);
+        }
       }
       else{
           this.notyG.noty("error", "no se pudo Obtener Parametros Unidad de negocio", 3500);
@@ -523,39 +542,45 @@ export class Adm004Component implements OnInit {
   ColocarPrefijo(){
     let pref : string = "Inv";
     //console.info("valor Check: ", this.prefijo.content);
-    if(this.prefijo.content == true){
-      this.textoFolio = pref;
-          if (this.idFolio == "3"){
-            this.textoFolio = this.textoFolio + this.sepFolioGestion.adpiatr2 
-                              + "2019"+this.sepFolioPeriodo.adpiatr2
-                              +"01"+this.sepFolioDocumento.adpiatr2;
-          }
-          if(this.idFolio == "2"){
-            this.textoFolio = this.textoFolio + this.sepFolioGestion.adpiatr2 
-                              + "2019"+this.sepFolioPeriodo.adpiatr2;
-          }
-          if(this.idFolio == "1"){
-            this.textoFolio = this.textoFolio + this.sepFolioDocumento.adpiatr2;
-
-          }
-    }else{
-      // console.info("False: ", this.prefijo.content);
-      this.textoFolio = "";
-      if (this.idFolio == "3"){
-        this.textoFolio = this.textoFolio 
-                          + "2019"+this.sepFolioPeriodo.adpiatr2
-                          +"01"+this.sepFolioDocumento.adpiatr2;
-      }
-      if(this.idFolio == "2"){
-        this.textoFolio = this.textoFolio  
-                          + "2019"+this.sepFolioDocumento.adpiatr2;
-      }
-      if(this.idFolio == "1"){
-        this.textoFolio = this.textoFolio;
-
-      }
+    if(this.prefijo == undefined){
+        console.log("no se puede cargar prefijos");
     }
-    this.CambiarDigitoFolio();
+    else{
+
+      if(this.prefijo.content == true){
+        this.textoFolio = pref;
+            if (this.idFolio == "3"){
+              this.textoFolio = this.textoFolio + this.sepFolioGestion.adpiatr2 
+                                + "2019"+this.sepFolioPeriodo.adpiatr2
+                                +"01"+this.sepFolioDocumento.adpiatr2;
+            }
+            if(this.idFolio == "2"){
+              this.textoFolio = this.textoFolio + this.sepFolioGestion.adpiatr2 
+                                + "2019"+this.sepFolioPeriodo.adpiatr2;
+            }
+            if(this.idFolio == "1"){
+              this.textoFolio = this.textoFolio + this.sepFolioDocumento.adpiatr2;
+  
+            }
+      }else{
+        // console.info("False: ", this.prefijo.content);
+        this.textoFolio = "";
+        if (this.idFolio == "3"){
+          this.textoFolio = this.textoFolio 
+                            + "2019"+this.sepFolioPeriodo.adpiatr2
+                            +"01"+this.sepFolioDocumento.adpiatr2;
+        }
+        if(this.idFolio == "2"){
+          this.textoFolio = this.textoFolio  
+                            + "2019"+this.sepFolioDocumento.adpiatr2;
+        }
+        if(this.idFolio == "1"){
+          this.textoFolio = this.textoFolio;
+  
+        }
+      }
+      this.CambiarDigitoFolio();
+    }
   }
   CambiarDigitoFolio(){
     let textDigito : string = "";
@@ -703,16 +728,17 @@ export class Adm004Component implements OnInit {
   ColocarPrefijoRegMaestro(){
     let pref : string = "CLI";
  
-    if(this.adicionadorPrefijo.content == true){
-      this.textoRegMaestro = pref+ this.separadorRol.adpiatr2;
-      
-    }else{
-     
-      this.textoRegMaestro = "";
-      
-   
+    if(this.adicionadorPrefijo == undefined){
+      console.log("no se cargo prefijo reg maestro: ", this.adicionadorPrefijo);
     }
-    this.CambiarDigitoRegMaestro();
+    else{
+      if(this.adicionadorPrefijo.content == true){
+        this.textoRegMaestro = pref+ this.separadorRol.adpiatr2;
+      }else{
+        this.textoRegMaestro = "";
+      }
+      this.CambiarDigitoRegMaestro();
+    }
   }
   CambiarDigitoRegMaestro(){
     let textDigito : string = "";
