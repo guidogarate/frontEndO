@@ -47,6 +47,7 @@ export class Adm004Service {
 
   ObtenerParametrosFolio(fecha : string) {
     const url1 = `${url.prod}${url.get_folio}${fecha}`;
+    console.log("cargando folio fecha: ",url1);
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({

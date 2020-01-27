@@ -73,31 +73,34 @@ export class Adm004Component implements OnInit {
 
   ngOnInit() {
     this.ObtenerParametrosIniciales();
+    
     setTimeout(() => {
-      this.ObtenerParametrosFoliacion();
       setTimeout(() => { 
-          this.ObtenerParametrosEspeciales();
-          this.ObtenerParametrosMoneda();
-          setTimeout(() => {
+        this.ObtenerParametrosEspeciales();
+        this.ObtenerParametrosMoneda();
+        setTimeout(() => {
           this.ObtenerParametrosUnidadNegocio();
-              setTimeout(() => {
-              this.ObtenerParametrosRegistroMaestro();
-            }, 500);
-          },500);
-          initLabels();
-        }, 1000);
-        
+          setTimeout(() => {
+            this.ObtenerParametrosRegistroMaestro();
+          }, 500);
+        },500);
+        initLabels();
+      }, 1000);
+      setTimeout(() => {
         this.ColocarPrefijo();
         this.ColocarPrefijoRegMaestro();
-    }, 1000);
+      }, 1000);
+      this.ObtenerParametrosFoliacion();
+    }, 1500);
   }
 
   CargarParametrosPorGestion(){
+
     this.ObtenerParametrosFoliacion();
     setTimeout(() => {
       this.ObtenerParametrosEspeciales();
       this.ObtenerParametrosMoneda();
-    }, 500);
+    }, 1000);
     setTimeout(() => {
       this.ObtenerParametrosUnidadNegocio();
       setTimeout(() => {
@@ -109,6 +112,7 @@ export class Adm004Component implements OnInit {
       this.ColocarPrefijoRegMaestro();
     }, 1000);
     initLabels();
+
   }
 
   ObtenerParametrosIniciales(){
@@ -121,6 +125,7 @@ export class Adm004Component implements OnInit {
         this.parametrosIniciales = resp["datos1"];
         //asigno la gestion dinamicamente
         this.idGestion = ""+this.parametrosIniciales[3].adpiatr1;
+        console.log("idGestion p1: ",  this.idGestion);
       }
       else{
           this.notyG.noty("error", "no se pudo Obtener Parametros Iniciales", 3500);
@@ -149,9 +154,12 @@ export class Adm004Component implements OnInit {
   }
 
   ObtenerParametrosFoliacion(){
-    console.warn("datos id gestion Foliacion",""+this.idGestion);
+    console.warn("datos id gestion Foliacion",this.idGestion);
+    setTimeout(() => {
+      console.log("carga wey");
+    }, 1000);
     this._adm004Service
-    .ObtenerParametrosFolio(""+this.idGestion)
+    .ObtenerParametrosFolio(this.idGestion)
     .subscribe(resp => {
       if(["ok"])
       {
@@ -382,12 +390,12 @@ export class Adm004Component implements OnInit {
     this.moneda.content = this.ListParametrosSend[0].adpiatr1;
     this.idImputacion = this.ListParametrosSend[1].adpiatr1;
     this.idConversion = this.ListParametrosSend[2].adpiatr1;
-    this.idFolio = this.ListParametrosSend[3].adpiatr1;
-    this.prefijo.content = this.ListParametrosSend[4].adpiatr1;
-    this.sepFolioGestion.adpiatr2 = this.ListParametrosSend[5].adpiatr2;
-    this.sepFolioDocumento.adpiatr2 = this.ListParametrosSend[6].adpiatr2;
-    this.sepFolioDocumento.adpiatr2 = this.ListParametrosSend[7].adpiatr2;
-    this.idDigito = this.ListParametrosSend[8].adpiatr1;
+    // this.idFolio = this.ListParametrosSend[3].adpiatr1;
+    // this.prefijo.content = this.ListParametrosSend[4].adpiatr1;
+    // this.sepFolioGestion.adpiatr2 = this.ListParametrosSend[5].adpiatr2;
+    // this.sepFolioDocumento.adpiatr2 = this.ListParametrosSend[6].adpiatr2;
+    // this.sepFolioDocumento.adpiatr2 = this.ListParametrosSend[7].adpiatr2;
+    // this.idDigito = this.ListParametrosSend[8].adpiatr1;
     this.listaParametrosEspeciales[0].content = this.ListParametrosSend[9].adpiatr1;
     // this.listaParametrosEspeciales[0].content = this.ListParametrosSend[9].adpiatr1;
     this.listaParametrosEspeciales[1].content = this.ListParametrosSend[10].adpiatr1;
@@ -613,30 +621,30 @@ export class Adm004Component implements OnInit {
           "adpicori": "22",
           "adpiatr1": +this.idConversion
         },
-        {
-          "adpicori": "31",
-          "adpiatr1": +this.idFolio
-        },
-        {
-          "adpicori": "32",
-          "adpiatr1": this.prefijo.content
-        },
-        {
-          "adpicori": "34",
-          "adpiatr2": this.sepFolioGestion.adpiatr2
-        },
-        {
-          "adpicori": "35",
-          "adpiatr2": this.sepFolioPeriodo.adpiatr2
-        },
-        {
-          "adpicori": "36",
-          "adpiatr2": this.sepFolioDocumento.adpiatr2
-        },
-        {
-          "adpicori": "37",
-          "adpiatr1": this.idDigito
-        },
+        // {
+        //   "adpicori": "31",
+        //   "adpiatr1": +this.idFolio
+        // },
+        // {
+        //   "adpicori": "32",
+        //   "adpiatr1": this.prefijo.content
+        // },
+        // {
+        //   "adpicori": "34",
+        //   "adpiatr2": this.sepFolioGestion.adpiatr2
+        // },
+        // {
+        //   "adpicori": "35",
+        //   "adpiatr2": this.sepFolioPeriodo.adpiatr2
+        // },
+        // {
+        //   "adpicori": "36",
+        //   "adpiatr2": this.sepFolioDocumento.adpiatr2
+        // },
+        // {
+        //   "adpicori": "37",
+        //   "adpiatr1": this.idDigito
+        // },
         {
           "adpicori": "41",
           "adpiatr1": this.listaParametrosEspeciales[0].content

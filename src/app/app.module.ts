@@ -22,6 +22,10 @@ import { NopagefoundComponent } from "./master/nopagefound/nopagefound.component
 import { from } from 'rxjs';
 
 // para cambiar idioma de fechas a español
+import es from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(es);
 import {LOCALE_ID} from '@angular/core';
 @NgModule({
   declarations: [AppComponent, LoginComponent, NopagefoundComponent],
@@ -39,7 +43,7 @@ import {LOCALE_ID} from '@angular/core';
     DeviceDetectorModule.forRoot()
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: "es"}
+    {  provide: LOCALE_ID, useValue: 'es-ES' } 
   ],
   bootstrap: [AppComponent]
 })

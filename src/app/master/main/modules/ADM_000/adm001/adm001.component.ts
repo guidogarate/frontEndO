@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, LOCALE_ID } from "@angular/core";
 import { DatePipe } from "@angular/common";
 import { Adm001Service } from "../../../../utils/service/ADM-001/Adm001.service";
 import * as Noty from "noty";
