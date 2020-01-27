@@ -73,19 +73,22 @@ export class Adm004Component implements OnInit {
 
   ngOnInit() {
     this.ObtenerParametrosIniciales();
-    this.ObtenerParametrosFoliacion();
     setTimeout(() => {
-      
-        this.ObtenerParametrosEspeciales();
-        this.ObtenerParametrosMoneda();
-        setTimeout(() => {
-        this.ObtenerParametrosUnidadNegocio();
-            setTimeout(() => {
-            this.ObtenerParametrosRegistroMaestro();
-            }, 500);
-        },500);
-      initLabels();
-    }, 1000);
+      this.ObtenerParametrosFoliacion();
+      setTimeout(() => { 
+          this.ObtenerParametrosEspeciales();
+          this.ObtenerParametrosMoneda();
+          setTimeout(() => {
+          this.ObtenerParametrosUnidadNegocio();
+              setTimeout(() => {
+              this.ObtenerParametrosRegistroMaestro();
+              }, 500);
+          },500);
+        initLabels();
+      }, 1000);
+    }, 500);
+    this.ColocarPrefijo();
+    this.ColocarPrefijoRegMaestro();
   }
 
   CargarParametrosPorGestion(){
@@ -101,7 +104,8 @@ export class Adm004Component implements OnInit {
       }, 500);
     },500);
     initLabels();
-     
+    this.ColocarPrefijo();
+    this.ColocarPrefijoRegMaestro();
   }
 
   ObtenerParametrosIniciales(){
@@ -112,6 +116,8 @@ export class Adm004Component implements OnInit {
       {
 
         this.parametrosIniciales = resp["datos1"];
+        //asigno la gestion dinamicamente
+        //this.idGestion = "";
       }
       else{
           this.notyG.noty("error", "no se pudo Obtener Parametros Iniciales", 3500);
@@ -295,7 +301,7 @@ export class Adm004Component implements OnInit {
   }
 
   CantidadDigitos(){
-    //console.log(this.CantidadDigitos);
+    
     let i = 0;
     this.cantDigitos.content.forEach(element => {
       i = element.nume ; 
@@ -351,8 +357,8 @@ export class Adm004Component implements OnInit {
   }
 
   Cancelar() {
-    if(true){
-
+    let valor = window.confirm("desea salir sin guardar los cambios?");
+    if(valor){
     }
     this.moneda.content = this.ListParametrosSend[0].adpiatr1;
     this.idImputacion = this.ListParametrosSend[1].adpiatr1;
@@ -364,7 +370,7 @@ export class Adm004Component implements OnInit {
     this.sepFolioDocumento.adpiatr2 = this.ListParametrosSend[7].adpiatr2;
     this.idDigito = this.ListParametrosSend[8].adpiatr1;
     this.listaParametrosEspeciales[0].content = this.ListParametrosSend[9].adpiatr1;
-    this.listaParametrosEspeciales[0].content = this.ListParametrosSend[9].adpiatr1;
+    // this.listaParametrosEspeciales[0].content = this.ListParametrosSend[9].adpiatr1;
     this.listaParametrosEspeciales[1].content = this.ListParametrosSend[10].adpiatr1;
     this.listaParametrosEspeciales[2].content = this.ListParametrosSend[11].adpiatr1;
     this.listaParametrosEspeciales[3].content = this.ListParametrosSend[12].adpiatr1;

@@ -71,6 +71,11 @@
       font-size: 1.5em; /* de esta manera modificas el tamaño de tus iconos.*/
       color: #03a9f4;
   }
+  /* para errores en los campos */
+  .ng-invalid.ng-touched:not(form){
+      border:1px solid red;
+  }
+  
 @media screen and (max-width: 600px) {
 
     .tamTitleH2{
