@@ -8,5 +8,4 @@ const BienvenidoRoutes: Routes = [
     component: BienvenidoComponent
   }
 ];
-
 export const BIENVENIDO_ROUTES = RouterModule.forChild(BienvenidoRoutes);
