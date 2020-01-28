@@ -1,8 +1,13 @@
 import { RouterModule, Routes } from "@angular/router";
+
 import { Adm001Component } from "./adm001/adm001.component";
 import { Adm002Component } from "./adm002/adm002.component";
 import { Adm003Component } from "./adm003/adm003.component";
 import { Adm004Component } from "./adm004/adm004.component";
+
+// console.log(window.location);
+// console.log(window.location.href);
+// console.log(window.location.search);
 
 const adm000_Routes: Routes = [
   {
@@ -31,12 +36,5 @@ const adm000_Routes: Routes = [
     pathMatch: "full"
   }
 ];
-
-const menu = JSON.parse(sessionStorage.getItem("menu"));
-const result = menu.find(compon => compon.id === "12");
-
-console.log(result.subMenu);
-
-console.log(menu);
 
 export const ADM_000_MODULES_ROUTES = RouterModule.forChild(adm000_Routes);
