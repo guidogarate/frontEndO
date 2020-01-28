@@ -46,7 +46,7 @@
 
 /**personalizando switch*/
 /* --------switch desabilitado------- */
-.custom-control-input:disabled ~ .custom-control-label::before {
+/* .custom-control-input:disabled ~ .custom-control-label::before {
     background-color: rgb(173, 3, 3);
   }
   
@@ -59,14 +59,14 @@
   }
   
   /* --------switch habilitado------- */
-  .custom-control-input:checked ~ .custom-control-label::before {
+  /* .custom-control-input:checked ~ .custom-control-label::before {
     background-color: rgb(13, 148, 11);
-  }
+  } */
   
   /**disabled swtich*/
-  .custom-control-input:disabled ~ .custom-control-label:before {
+  /*.custom-control-input:disabled ~ .custom-control-label:before {
     opacity: 0.5;
-  }
+  } */
   .icons-options{
       font-size: 1.5em; /* de esta manera modificas el tamaño de tus iconos.*/
       color: #03a9f4;
