@@ -1,22 +1,97 @@
 .p0{
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding: 0em;
 }
 .m0{
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin: 0em;
 }
-
+.selectCenter{
+    text-align-last: center;
+}
 .title-icon{
-    font-size: 2em;
+    font-size: 1.5em;
 }
 .align-vertical-icon-0{
     vertical-align: 0em;
 }
 
+.card-padding{
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.mt0{
+    margin-top: 0em;
+}
+.ptb0{
+padding-top: 0%;
+padding-bottom: 0%;
+}
+.plr0{
+    padding-left: 0%;
+    padding-right: 0%;
+}
+.centrarCheckdesktop{
+    text-align: center;
+}
+.ocultar {
+    display: none;
+}
+.pb1{
+    padding-bottom: 1em;
+}
+
+.alturaInputs{
+    height: 20px;
+}
+.cardMb{
+    margin-bottom: 0.5em;
+}
+.padding-title{
+    padding: 0.5em;
+}
+.margin-botton-card{
+    margin-bottom: 0.5em;
+}
+.margin-top-card{
+    margin-top: 0.5em;
+}
+.font-tittle{
+    font-size: 14px;
+    font-weight: 700;
+}
+.padding-botton-card{
+    padding-bottom: 0.5em;
+}
+.prch{
+    padding-right: 10em;
+}
+.plr5em{
+    padding-left: 5em;
+    padding-right: 5em;
+}
+.title-head{
+    font-size: 14px;
+}
 @media screen and (max-width: 600px) {
     .title-icon{
-        font-size: 1.8em;
+        font-size: 1.3em;
+    }
+    .title {
+        font-size: smaller;
+    }
+    .centrarCheckdesktop{
+        text-align: left;
+    }
+    .card-padding{
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+    .prch{
+        padding-right: 0.8em;
+    }
+    .plr2em{
+        padding-left: 0;
+        padding-right: 0;
     }
   
-  }
+}

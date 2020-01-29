@@ -3,8 +3,8 @@
     <!-- Content area -->
     <div class="col-xl-12">
         <!-- contenido posts -->
-        <div class="card pb0">
-            <div class="row card-header header-elements-inline">  
+        <div class="card pb0" style="margin-bottom: 0%;">
+            <div class="card-header header-elements-inline">  
                 <div class="col-md-12 col-12">
                     <h2 class="card-title font-weight-bold xxl-mobileH2 text-center">REGISTRO DE GESTIONES
                         <a class="list-icons-item text-primary-600 float-right" (click)="AgregarGestion()"
@@ -16,17 +16,18 @@
                 </div>
             </div>
             <div class="card-body pb0">
-                <div class="row">
+                <div class="row mLR0">
                     <div class="col-md-12 col-12">
                         <h3 class="text-left">
                             <i class="icon-calendar22 xxl-title float-left plIcon"></i>
-                            <span class="font-weight-semibold"> 
+                            <!-- <i class="icon-cogs" aria-hidden="true"></i> -->
+                            <span class="font-weight-semibold" style="margin-left: 2em;"> 
                                 Gestion
                             </span>
                         </h3>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mLR0">
                     <div class="col-md-1 d-none d-sm-none d-md-block" >
                     </div>
                     <div class="col-md-10">
@@ -72,23 +73,25 @@
                               <span class="sr-only">Loading...</span>
                             </div>
                         </div>
+                       <!-- // <pre>{{gestionModelo | json}}</pre> -->
                     </div>
 
                     <div class="col-md-1 d-none d-sm-none d-md-block"></div>
                 </div>
 
                 <!-- TODO:  segunda tabla -->
-                <div class="row">
+                <div class="row mLR0">
                     <div class="col-md-12 col-12">
                         <h3 class="text-left">
                             <i class="icon-calendar22 xxl-title float-left plIcon"></i>
-                            <span class="font-weight-semibold">
+                            <span class="font-weight-semibold" style="margin-left: 2em;">
                                 Periodos de Gestion
                             </span>
                         </h3>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mLR0 pb05"
+                style="padding-bottom: 2em;">
                     <div class="col-md-1 d-none d-sm-none d-md-block" >
                     </div>
                     <div class="col-md-10">
@@ -110,7 +113,7 @@
                                         <td class="puntero">{{periodo.adprmesp | nombremes}}</td>
                                         <td class="puntero">{{periodo.adprdesc}}</td>
                                         <td class="puntero">{{periodo.adprideg}}</td>
-                                        <td class="puntero">{{periodo.adpresta| estadoperiodo}}</td>
+                                        <td class="puntero">{{periodo.adpresta| estado}}</td>
                                         <td class="puntero PRL0"> 
                                             <div class="list-icons"> 
                                                 <a class="list-icons-item text-primary-600" (click)="VerPeriodo(periodo)"
@@ -359,7 +362,7 @@
                         <label class="form-group-float-label">Estado</label>
                         <select class="form-control" [(ngModel)]="periodoModelo.adpresta" [disabled] = "!editPeriodo" >
                          <option *ngFor="let item of ListaEstadosGestionPeriodos; let i = index" 
-                         [value]="i" >{{item.adamdesc }}</option>
+                         [value]="i+1" >{{item.adamdesc }}</option>
                         </select>
                     </div>
                 </div>

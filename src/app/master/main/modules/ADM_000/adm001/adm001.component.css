@@ -5,18 +5,83 @@
 .m0{
     margin: 0;
 }
+.m02{
+    margin-bottom: 0.2em;
+}
+.card-header:not([class*=bg-]):not([class*=alpha-]){
+
+    padding-bottom: 0;
+    padding-top: 0;
+  }
 .p0{
     padding: 0;
+}
+.h30{
+    height: 18px;
+}
+.mLR0{
+    margin-left: 0em;
+    margin-right: 0em;
+    padding-left: 0em;
+    padding-right: 0em;
 }
 
 .PLR0-1em{
     padding-left: 0.1em;
     padding-right: 0.1em;
 }
+.ptitulo{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.ptcard{
+    padding-top: 1.5em;
+}
+.pb1{
+    padding-bottom: 1em;
+}
+.mb05{
+    margin-bottom: 0.5em;
+}
 
+/**personalizando switch*/
+/* --------switch desabilitado------- */
+/* .custom-control-input:disabled ~ .custom-control-label::before {
+    background-color: rgb(173, 3, 3);
+  }
+  
+  .custom-switch .custom-control-label::after {
+    background-color: #fff;
+  }
+  
+  .custom-control-label::before {
+    background-color: rgb(173, 3, 3);
+  }
+  
+  /* --------switch habilitado------- */
+  /* .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: rgb(13, 148, 11);
+  } */
+  
+  /**disabled swtich*/
+  /*.custom-control-input:disabled ~ .custom-control-label:before {
+    opacity: 0.5;
+  } */
+  .icons-options{
+      font-size: 1.5em; /* de esta manera modificas el tamaño de tus iconos.*/
+      color: #03a9f4;
+  }
+  /* para errores en los campos */
+  .ng-invalid.ng-touched:not(form){
+      border:1px solid red;
+  }
+  
 @media screen and (max-width: 600px) {
 
     .tamTitleH2{
         font-size: large;
+    }
+    .fuentetitulo{
+        font-size: 2em;
     }
 }

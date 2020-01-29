@@ -47,3 +47,22 @@ body {
 .tablaCebradoImpar {
   background-color: white;
 }
+.m0{
+  margin: 0;
+}
+.p0{
+  padding: 0;
+}
+.title-head{
+  font-size: 14px;
+}
+.title-negrita{
+font-weight: 700;
+}
+
+.selectCenter{
+  text-align-last: center;
+}
+.height-container{
+  height: 100%;
+}

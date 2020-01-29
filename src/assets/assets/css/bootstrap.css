@@ -2755,7 +2755,8 @@ input[type="button"].btn-block {
   .custom-control-input:checked ~ .custom-control-label::before {
     color: #fff;
     border-color: transparent;
-    background-color: #455A64;
+    /* background-color: #455A64; */
+    background-color: #05a9f4;
     box-shadow: none; }
   .custom-control-input:focus ~ .custom-control-label::before {
     box-shadow: 0 0 0 0 transparent, 0 1px 0 #009688; }
@@ -2769,7 +2770,8 @@ input[type="button"].btn-block {
   .custom-control-input:disabled ~ .custom-control-label {
     color: #999; }
     .custom-control-input:disabled ~ .custom-control-label::before {
-      background-color: #f5f5f5; }
+      /* background-color: #f5f5f5;  */
+    }
 
 .custom-control-label {
   position: relative;
@@ -2781,7 +2783,8 @@ input[type="button"].btn-block {
     left: -1.875rem;
     display: block;
     width: 1.25rem;
-    height: 1.25rem;
+    /* height: 1.25rem; */
+    height: 1.05rem;
     pointer-events: none;
     content: "";
     background-color: #eee;
@@ -2832,12 +2835,14 @@ input[type="button"].btn-block {
     left: -2.8125rem;
     width: 2.1875rem;
     pointer-events: all;
-    border-radius: 0.625rem; }
+    border-radius: 0.625rem; 
+    background-color: red;
+  }
   .custom-switch .custom-control-label::after {
     top: calc(0.00002rem + 2px);
     left: calc(-2.8125rem + 2px);
     width: calc(1.25rem - 4px);
-    height: calc(1.25rem - 4px);
+    height: calc(1.25rem - 7px);
     background-color: #ddd;
     border-radius: 0.625rem;
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-transform 0.15s ease-in-out;
@@ -2851,7 +2856,9 @@ input[type="button"].btn-block {
     -webkit-transform: translateX(0.9375rem);
             transform: translateX(0.9375rem); }
   .custom-switch .custom-control-input:disabled:checked ~ .custom-control-label::before {
-    background-color: rgba(69, 90, 100, 0.5); }
+    background-color:#05a9f4; 
+    /* background-color: rgba(69, 90, 100, 0.5);  */
+  }
 
 .custom-select {
   display: inline-block;

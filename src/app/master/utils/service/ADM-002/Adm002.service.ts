@@ -123,7 +123,7 @@ export class Adm002Service {
 
   ActualizarPeriodo(Periodo: any, fechaAnhoDia : string) {
     const json = JSON.stringify({
-      estPeriodo: +Periodo.adpresta == 1 ? "1":"0",
+      estPeriodo: +Periodo.adpresta == 1 ? "1":"2",
       modAutomatica : Periodo.adprmoda == true ? "1" : "0",
       fechaModAutomatica : Periodo.adprdiam
     });
