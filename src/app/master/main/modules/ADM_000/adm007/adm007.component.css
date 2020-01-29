@@ -1,0 +1,46 @@
+.card-padding{
+    padding-left: 2em;
+    padding-right: 2em;
+}
+.margin-botton-card{
+    margin-bottom: 0.5em;
+}
+.padding-title{
+    padding: 0.5em;
+}
+.title-head{
+    font-size: 14px;
+}
+.font-tittle{
+    font-size: 1.1em;
+    font-weight: 700;
+}
+.title-icon{
+    font-size: 1.8em;
+}
+.plr0{
+    padding-left: 0%;
+    padding-right: 0%;
+}
+.icon-head{
+    font-size: 2em;
+}
+.mb0{
+    margin-bottom: 0em;
+}
+
+
+@media screen and (max-width: 600px) {
+    .title-icon{
+        font-size: 1.5em;
+    }
+    .centrarCheckdesktop{
+        text-align: left;
+    }
+    .card-padding{
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+
+  
+}
