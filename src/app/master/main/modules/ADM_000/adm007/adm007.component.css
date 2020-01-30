@@ -12,7 +12,7 @@
     font-size: 14px;
 }
 .font-tittle{
-    font-size: 1.1em;
+    font-size: 1.0em;
     font-weight: 700;
 }
 .title-icon{
@@ -40,6 +40,10 @@
     .card-padding{
         padding-left: 0.5em;
         padding-right: 0.5em;
+    }
+    .switch-float{
+        float: right;
+        bottom: 5em;
     }
 
   

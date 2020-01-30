@@ -11,6 +11,7 @@ declare function initLabels ();
 export class Adm007Component implements OnInit {
 
   editar : boolean = false;
+  ocultarSeccion : boolean = false;
 
   constructor( private _adm007Service : Adm007Service,
               private _notyG: NotyGlobal) { 
@@ -39,6 +40,14 @@ export class Adm007Component implements OnInit {
   }
   AgregarTelefono(){
     
+  }
+
+  Ocultar(){
+    this.ocultarSeccion = true;
+  }
+
+  Mostrar(){
+    this.ocultarSeccion = false;
   }
 
 }
