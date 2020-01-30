@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import adm0003 from "src/app/master/config/adm000/adm003_config";
+import adm0003 from "src/app/master/config/adm000/adm003_url";
 import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
 

@@ -1,10 +1,12 @@
 import { NgModule } from "@angular/core";
 
-import { Adm001Service } from "./index.shared.service";
-import { Adm002Service } from "./index.shared.service";
-import { Adm003Service } from "./index.shared.service";
-import { Adm004Service } from "./index.shared.service";
-import { Adm007Service } from "./index.shared.service"; 
+import { Adm001Service,
+         Adm002Service,
+         Adm003Service,
+         Adm004Service,
+         Adm005Service,
+         Adm007Service
+} from "./index.shared.service";
 
 @NgModule({
   providers: [
@@ -12,6 +14,7 @@ import { Adm007Service } from "./index.shared.service";
               Adm002Service,
               Adm003Service,
               Adm004Service,
+              Adm005Service,
               Adm007Service
   ]
 })

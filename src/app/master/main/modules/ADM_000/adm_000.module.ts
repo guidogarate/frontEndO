@@ -9,6 +9,7 @@ import { Adm001Component } from "./adm001/adm001.component";
 import { Adm002Component } from "./adm002/adm002.component";
 import { Adm003Component } from "./adm003/adm003.component";
 import { Adm004Component } from "./adm004/adm004.component";
+import { Adm005Component } from './adm005/adm005.component';
 
 import { Adm007Component } from './adm007/adm007.component';
 
@@ -20,6 +21,7 @@ import { PipesModule } from "../../../utils/pipe/pipes.module";
     Adm002Component,
     Adm003Component,
     Adm004Component,
+    Adm005Component,
     Adm007Component
   ],
   providers: [
