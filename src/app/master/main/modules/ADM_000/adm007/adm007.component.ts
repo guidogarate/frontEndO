@@ -12,6 +12,7 @@ export class Adm007Component implements OnInit {
 
   editar : boolean = false;
   ocultarSeccion : boolean = false;
+  lista : any = [];
 
   constructor( private _adm007Service : Adm007Service,
               private _notyG: NotyGlobal) { 
