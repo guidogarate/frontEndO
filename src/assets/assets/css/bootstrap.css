@@ -2770,7 +2770,7 @@ input[type="button"].btn-block {
   .custom-control-input:disabled ~ .custom-control-label {
     color: #999; }
   .custom-control-input:disabled ~ .custom-control-label::before {
-      /* background-color: #f5f5f5;  */
+      background-color: #f5f5f5; 
       /* background-color: rgba(0, 0, 0, 0); */
     }
 
@@ -2857,8 +2857,8 @@ input[type="button"].btn-block {
     -webkit-transform: translateX(0.9375rem);
             transform: translateX(0.9375rem); }
   .custom-switch .custom-control-input:disabled:checked ~ .custom-control-label::before {
-    background-color:#05a9f4; 
-    /* background-color: rgba(69, 90, 100, 0.5);  */
+    /* background-color:#05a9f4;  */
+    background-color: rgba(69, 90, 100, 0.5); 
   }
 
 .custom-select {

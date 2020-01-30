@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from "rxjs/operators";
+import adm0001 from "src/app/master/config/adm000/adm001_config";
 import url from "src/app/master/config/url.config";
-import { TipoCambio } from "../../models/TipoCambio";
+import { TipoCambio } from "../../../../models/TipoCambio";
 import { from } from "rxjs";
 
 @Injectable()
@@ -17,7 +18,7 @@ export class Adm001Service {
   }
 
   CargarPredeterminados() {
-    const url1 = `${url.prod}${url.mostrarPred}`;
+    const url1 = `${url.prod}${adm0001.mostrarPred}`;
     console.log("token", this.token);
     return this.httpClient
       .get(url1, {
@@ -39,7 +40,7 @@ export class Adm001Service {
       mes,
       anho
     });
-    const url1 = `${url.prod}${url.busqPagi}`;
+    const url1 = `${url.prod}${adm0001.busqPagi}`;
     return this.httpClient
       .post(url1, json, {
         headers: new HttpHeaders({
@@ -61,7 +62,7 @@ export class Adm001Service {
       mes,
       anho
     });
-    const url1 = `${url.prod}${url.paginado}`;
+    const url1 = `${url.prod}${adm0001.paginado}`;
     return this.httpClient
       .post(url1, json, {
         headers: new HttpHeaders({
@@ -77,7 +78,7 @@ export class Adm001Service {
   }
 
   eliminar(fecha: any) {
-    const url1 = `${url.prod}${url.eliminar}${fecha}`;
+    const url1 = `${url.prod}${adm0001.eliminar}${fecha}`;
     console.log("eliminando fecha: ", url1);
     return this.httpClient
       .delete(url1, {
@@ -104,7 +105,7 @@ export class Adm001Service {
       adtcpred: tipoCambio.adtcpred
     });
     console.log("service guardar: ", json);
-    const url1 = `${url.prod}${url.agregar}`;
+    const url1 = `${url.prod}${adm0001.agregar}`;
     return this.httpClient
       .post(url1, json, {
         headers: new HttpHeaders({
@@ -128,7 +129,7 @@ export class Adm001Service {
       adtcesta: tipoCambio.adtcesta,
       adtcpred: tipoCambio.adtcpred
     });
-    const url1 = `${url.prod}${url.actualizar}${tipoCambio.adtcfecd}`;
+    const url1 = `${url.prod}${adm0001.actualizar}${tipoCambio.adtcfecd}`;
     console.log("actualizando a: ", tipoCambio.adtcfecd);
     console.log("actualizando a: ", json);
     return this.httpClient
@@ -146,7 +147,7 @@ export class Adm001Service {
   }
 
   obtenerGestiones() {
-    const url1 = `${url.prod}${url.gestionesDisponibles}`;
+    const url1 = `${url.prod}${adm0001.gestionesDisponibles}`;
     console.log("Obteniendo Gestiones Disponibles: ", url1);
     return this.httpClient
       .get(url1, {
@@ -162,7 +163,7 @@ export class Adm001Service {
       );
   }
   obtenerGestionesDisponiblesPredeterminado() {
-    const url1 = `${url.prod}${url.gest_dispo_y_predet}`;
+    const url1 = `${url.prod}${adm0001.gest_dispo_y_predet}`;
     console.log("Obteniendo Gestiones Disponibles y Predeterminado: ", url1);
     return this.httpClient
       .get(url1, {

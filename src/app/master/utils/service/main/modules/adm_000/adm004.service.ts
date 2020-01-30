@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from "rxjs/operators";
+import adm0004 from "src/app/master/config/adm000/adm004_config";
 import url from "src/app/master/config/url.config";
 import { from } from "rxjs";
  
@@ -15,7 +16,7 @@ export class Adm004Service {
   }
 
   ObtenerParametros() {
-    const url1 = `${url.prod}${url.get_paraminicial}`;
+    const url1 = `${url.prod}${adm0004.get_paraminicial}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -30,7 +31,7 @@ export class Adm004Service {
       );
   }
   ObtenerParametrosMoneda(fecha : string) {
-    const url1 = `${url.prod}${url.get_monedas}${fecha}`;
+    const url1 = `${url.prod}${adm0004.get_monedas}${fecha}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -46,7 +47,7 @@ export class Adm004Service {
   }
 
   ObtenerParametrosFolio(fecha : string) {
-    const url1 = `${url.prod}${url.get_folio}${fecha}`;
+    const url1 = `${url.prod}${adm0004.get_folio}${fecha}`;
     console.log("cargando folio fecha: ",url1);
     return this.httpClient
       .get(url1, {
@@ -62,7 +63,7 @@ export class Adm004Service {
       );
   }
   ObtenerParametrosEspeciales(fecha : string) {
-    const url1 = `${url.prod}${url.parama_espec}${fecha}`;
+    const url1 = `${url.prod}${adm0004.parama_espec}${fecha}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -78,7 +79,7 @@ export class Adm004Service {
   }
 
   ObtenerParametrosUnidadNegocio(fecha : string) {
-    const url1 = `${url.prod}${url.unidad_negocio}${fecha}`;
+    const url1 = `${url.prod}${adm0004.unidad_negocio}${fecha}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -94,7 +95,7 @@ export class Adm004Service {
   }
 
   ObtenerParametrosRegistroMaestro(fecha : string) {
-    const url1 = `${url.prod}${url.reg_maest}${fecha}` ;
+    const url1 = `${url.prod}${adm0004.reg_maest}${fecha}` ;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -126,7 +127,7 @@ export class Adm004Service {
    
     console.log("service Actualizar Gestion: ", item);
 
-    const url1 = `${url.prod}${url.put_paraminicial}${gestion}`;
+    const url1 = `${url.prod}${adm0004.put_paraminicial}${gestion}`;
     console.log(url1);
     return this.httpClient
       .put(url1, item, {

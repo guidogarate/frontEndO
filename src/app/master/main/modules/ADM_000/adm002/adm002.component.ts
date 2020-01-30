@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Adm002Service } from "../../../../utils/service/ADM-002/Adm002.service";
+import { Adm002Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { DatePipe } from "@angular/common";
 import { from, empty } from "rxjs";
 import { filter } from "rxjs/operators";
@@ -59,7 +59,7 @@ export class Adm002Component implements OnInit {
   /* Periodo*/
   DiaInicioGestion: string;
   constructor(
-    private adm002Service: Adm002Service,
+    private _adm002Service: Adm002Service,
     private datePipe: DatePipe,
     private notyG: NotyGlobal
   ) {}
@@ -76,7 +76,7 @@ export class Adm002Component implements OnInit {
   /* Peticiones */
   obtenerGestionesPeriodos() {
     this.cargando = true;
-    this.adm002Service.ObtenerGestionesPeriodos().subscribe(resp => {
+    this._adm002Service.ObtenerGestionesPeriodos().subscribe(resp => {
       if (resp["ok"]) {
         this.ListaGestiones = resp["gestion"];
         // var removed = this.ListaGestiones.splice(3);
@@ -97,7 +97,7 @@ export class Adm002Component implements OnInit {
   GuardarGestion() {
     this.nuevo = true;
     //console.log(this.gestionModelo);
-    this.adm002Service.AgregarGestion(this.gestionModelo).subscribe(resp => {
+    this._adm002Service.AgregarGestion(this.gestionModelo).subscribe(resp => {
       if (resp["ok"]) {
         //  console.log("registrado correctamente");
         this.limpiarGestion();
@@ -113,7 +113,7 @@ export class Adm002Component implements OnInit {
 
   ActualizarGestion() {
     console.log(this.gestionModelo);
-    this.adm002Service.ActualizarGestion(this.gestionModelo).subscribe(resp => {
+    this._adm002Service.ActualizarGestion(this.gestionModelo).subscribe(resp => {
       if (resp["ok"]) {
         console.log("registrado correctamente");
         this.limpiarGestion();
@@ -129,7 +129,7 @@ export class Adm002Component implements OnInit {
 
   VerPeriodos(gestion: any) {
     this.cargando = true;
-    this.adm002Service.ObtenerPeriodos(gestion.adgtideg).subscribe(resp => {
+    this._adm002Service.ObtenerPeriodos(gestion.adgtideg).subscribe(resp => {
       if (resp["ok"]) {
         this.ListaPeriodos = resp["periodos"];
         this.notyG.noty(
@@ -158,7 +158,7 @@ export class Adm002Component implements OnInit {
         this.gestionModelo = item;
       }
       console.log("eliminando: ", this.gestionModelo);
-      this.adm002Service
+      this._adm002Service
         .EliminarGestion(this.gestionModelo.adgtideg)
         .subscribe(resp => {
           if (resp["ok"]) {
@@ -427,7 +427,7 @@ export class Adm002Component implements OnInit {
     anhoDia =
       "" + this.periodoModelo.adprideg + "/" + this.periodoModelo.adprmesp;
     console.warn("Actualizar Periodo: ", this.periodoModelo);
-    this.adm002Service
+    this._adm002Service
       .ActualizarPeriodo(this.periodoModelo, anhoDia)
       .subscribe(resp => {
         if (resp["ok"]) {
