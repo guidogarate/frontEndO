@@ -14,6 +14,7 @@ export class Adm005Component implements OnInit {
   numeroPag = 1;
   auxma: any[];
   pagi: any[];
+  loading = true;
 
   constructor(private adm005S: Adm005Service, private notyG: NotyGlobal) {
     this.buscarAdm003(this.texto);
@@ -40,7 +41,7 @@ export class Adm005Component implements OnInit {
         // this.notyG.noty("error", resp["mensaje"], 5000);
       }
       // this.buscar = false;
-      // this.loading = false;
+      this.loading = false;
     });
   }
 }

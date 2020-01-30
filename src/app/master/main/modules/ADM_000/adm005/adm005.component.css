@@ -94,3 +94,12 @@ label {
 .pb0 {
   padding-bottom: 0.5em;
 }
+
+/*activo*/
+.rojo {
+  color: rgb(252, 103, 103);
+}
+
+.verde {
+  color: rgb(12, 197, 36);
+}
