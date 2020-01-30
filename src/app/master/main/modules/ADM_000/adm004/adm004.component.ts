@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Adm004Service } from 'src/app/master/utils/service/ADM-004/Adm004.service';
-
+import { Adm004Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
-import { stringify } from '@angular/compiler/src/util';
 
 declare function initLabels ();
 

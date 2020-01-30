@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from "rxjs/operators";
+import adm0002 from "src/app/master/config/adm000/adm002_config";
 import url from "src/app/master/config/url.config";
 import { from } from "rxjs";
 
@@ -13,7 +14,7 @@ export class Adm002Service {
   }
 
   ObtenerPeriodos(fecha: any) {
-    const url1 = `${url.prod}${url.get_periodos}${fecha}`;
+    const url1 = `${url.prod}${adm0002.get_periodos}${fecha}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -28,7 +29,7 @@ export class Adm002Service {
       );
   }
   ObtenerGestionesPeriodos() {
-    const url1 = `${url.prod}${url.get_gestion_periodos}`;
+    const url1 = `${url.prod}${adm0002.get_gestion_periodos}`;
   
     return this.httpClient
       .get(url1, {
@@ -58,7 +59,7 @@ export class Adm002Service {
       fechaModAutomatica: item.adgtdiam,
     });
     
-    const url1 = `${url.prod}${url.agregar_gestion}`;
+    const url1 = `${url.prod}${adm0002.agregar_gestion}`;
     return this.httpClient
       .post(url1, json, {
         headers: new HttpHeaders({
@@ -74,7 +75,7 @@ export class Adm002Service {
   }
 
   EliminarGestion(fecha: any) {
-    const url1 = `${url.prod}${url.eliminar_Gestion}${fecha}`;
+    const url1 = `${url.prod}${adm0002.eliminar_Gestion}${fecha}`;
     console.log("eliminando Gestion: ", url1);
     return this.httpClient
       .delete(url1, {
@@ -104,7 +105,7 @@ export class Adm002Service {
     });
   
 
-    const url1 = `${url.prod}${url.actualizar_gestion}${item.adgtideg}`;
+    const url1 = `${url.prod}${adm0002.actualizar_gestion}${item.adgtideg}`;
     console.error("datos service: ", json);
     console.log(url1);
     return this.httpClient
@@ -128,7 +129,7 @@ export class Adm002Service {
       fechaModAutomatica : Periodo.adprdiam
     });
     console.info("Actualizando en service: ", json);
-    const url1 = `${url.prod}${url.actualizar_periodo}${fechaAnhoDia}`;
+    const url1 = `${url.prod}${adm0002.actualizar_periodo}${fechaAnhoDia}`;
      
     return this.httpClient
       .put(url1, json, {
