@@ -15,13 +15,15 @@ import { Adm002Service } from "../../../utils/service/ADM-002/Adm002.service";
 import { Adm004Service } from "../../../utils/service/ADM-004/Adm004.service";
 
 import { PipesModule } from "../../../utils/pipe/pipes.module";
+import { Adm005Component } from './adm005/adm005.component';
 
 @NgModule({
   declarations: [
     Adm001Component,
     Adm002Component,
     Adm003Component,
-    Adm004Component
+    Adm004Component,
+    Adm005Component
   ],
   providers: [Adm001Service, DatePipe, Adm002Service, Adm004Service],
   imports: [

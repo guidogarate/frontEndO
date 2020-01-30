@@ -4,6 +4,7 @@ import { Adm001Component } from "./adm001/adm001.component";
 import { Adm002Component } from "./adm002/adm002.component";
 import { Adm003Component } from "./adm003/adm003.component";
 import { Adm004Component } from "./adm004/adm004.component";
+import { Adm005Component } from './adm005/adm005.component';
 
 // console.log(window.location);
 // console.log(window.location.href);
@@ -28,6 +29,11 @@ const adm000_Routes: Routes = [
   {
     path: "adm004",
     component: Adm004Component,
+    data: { titulo: "adm004" }
+  },
+  {
+    path: "adm005",
+    component: Adm005Component,
     data: { titulo: "adm004" }
   },
   {
