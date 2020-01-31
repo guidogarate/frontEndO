@@ -34,11 +34,17 @@
           <div class="col-2 col-sm-2 col-md-3 col-lg-4">
             <div class="form-control-feedback">
               <i
-                data-toggle="modal"
-                data-target="#modal_theme_info"
-                class="icon-diff-added puntero"
-                (click)="nuevElemGrup()"
-                title="agregar"
+                *ngIf="habiCampo.editar"
+                class="icon-pencil7 xxl puntero"
+                (click)="habilitar('editar')"
+                title="editar"
+              >
+              </i>
+              <i
+                *ngIf="habiCampo.atras"
+                class="icon-exit xxl puntero"
+                (click)="habilitar('atras')"
+                title="atras"
               ></i>
             </div>
           </div>
@@ -76,7 +82,6 @@
                     let par = even
                   "
                   ><tr
-                    (dblclick)="myFunction()"
                     [ngClass]="{
                       tablaCebradoPar: par,
                       tablaCebradoImpar: impar,
@@ -124,9 +129,9 @@
                         <input
                           type="checkbox"
                           class="custom-control-input"
-                          [disabled]="true"
-                          [checked]="false"
-                          title="adm005.activo"
+                          [disabled]="habiCampo.deshab"
+                          [(ngModel)]="adm005.estado"
+                          title="adm005.estado"
                           id="GrupEst{{ i }}"
                         />
                         <label
@@ -137,9 +142,11 @@
                     </td>
                     <td class="text-center">
                       <div class="list-icons">
-                        <a href="#" class="list-icons-item"
-                          ><i class="icon-floppy-disk" title="guardar"></i
-                        ></a>
+                        <i
+                          (click)="reset(adm005)"
+                          class="icon-floppy-disk"
+                          title="reset"
+                        ></i>
                       </div>
                     </td>
                   </tr>
