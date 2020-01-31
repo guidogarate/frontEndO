@@ -11,7 +11,7 @@ declare function initLabels ();
 export class Adm010Component implements OnInit {
 
   editar : boolean = false;
-
+  lista : any = [];
   constructor(
     notyG : NotyGlobal,
     _adm010Service : Adm010Service
