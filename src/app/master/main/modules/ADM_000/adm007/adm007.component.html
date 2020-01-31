@@ -1,0 +1,303 @@
+<div class="row haciadentro animaciones height-container">
+    <div class="col-xl-12 height-container">
+      <!-- card principal -->
+        <div class="card card-padding margin-botton-card height-container">
+            <!-- secction titulo -->
+            <div class="header-elements-inline padding-title">
+                <h5 class="card-title  title-head font-tittle m0">
+                    <i class="icon-cog title-icon align-vertical-icon-0"></i>
+                    PERSONALIZACION DE EMPRESA
+                </h5>
+                <div class="header-elements">
+                    <div class="list-icons">
+                        <a class="list-icons-item"  *ngIf="!editar" (click)="ModoEdicion()"
+                            [routerLink]="nada()" routerLinkActive="router-link-active">
+                            <i class="icon-pencil7 title-icon" data-toggle="tooltip" data-placement="top" title="Editar"> </i>
+                        </a>
+                        <a class="list-icons-item"  *ngIf="editar" (click) = "Actualizar()"
+                            [routerLink]="nada()" routerLinkActive="router-link-active" >
+                            <i class="icon-floppy-disk title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
+                        </a>
+                        <a class="list-icons-item" 
+                            [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "ModoVista()">
+                            <i class="icon-exit title-icon " data-toggle="tooltip" data-placement="top" title="Salir"> </i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- primer card -->
+            <div class="row p0 m0">
+                <div class="col-sm-2 col-12">
+                    <div class="card card-padding margin-botton-card ">
+                        <img src="https://thumbs.dreamstime.com/b/icono-del-usuario-46707697.jpg" 
+                            alt="imagen no encontrada" class="img-responsive rounded img-fluid"
+                            style="height: 116px;width: 100px; align-self: center;">
+                    </div>
+                </div>
+                <div class="col-sm-10 col-12">
+                    <div class="card card-padding margin-botton-card ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-feedback m0">
+                                    <div class="row text-center m0">
+                                        <i class="icon-clipboard5 icon-head"> </i>
+                                        <div class="col-sm-6 col-5 form-group form-group-float m0">
+                                            <label class="form-group-float-label m0 p0">Nombre </label>
+                                            <input type="text" class="form-control text-center p0 alturaInputs" placeholder="Nombre" 
+                                                value="Ormate" disabled >
+                                        </div>
+                                        <div class="col-sm-5 col-5 form-group form-group-float m0">
+                                            <label class="form-group-float-label m0 p0">Sigla </label>
+                                            <input type="text" class="form-control text-center p0 alturaInputs" placeholder="sigla" 
+                                                value="Ormate Srl" disabled >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                            <div class="row text-center m0">
+                                                <div class="col-sm-1 col-0"></div>
+                                                <div class="col-sm-6 col-7 form-group form-group-float m0">
+                                                    <label class="form-group-float-label m0 p0" > Actividad de la Empresa</label>
+                                                        <select class="form-control p0 selectCenter alturaInputs" 
+                                                                    name="gestionSelect">
+                                                        <!-- [(ngModel)]="idGestion" (change)="CargarParametrosPorGestion()" -->
+                                                            <option value="1">Comercial</option>
+                                                            <option value="2">Industrial</option>
+                                                            <option value="3">Contable</option>
+                                                        <!-- *ngFor="let contents of item.content"
+                                                                [value]="contents.adgtideg"> {{contents.adgtideg}} -->
+                                                        </select> 
+                                                </div>
+                                                <div class="col-sm-5 col-5 form-group form-group-float m0">
+                                                    <label class="form-group-float-label m0 p0">Nit </label>
+                                                    <input type="text" class="form-control text-center p0 alturaInputs" placeholder="Nit" 
+                                                            value="123456789"   >
+                                                </div>  
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- segundo card -->
+            <div class="row p0 m0">
+                <div class="col-sm-12">
+                    <div class="card card-padding margin-botton-card " style="padding-bottom: 0.5em;">
+                        <div class="header-elements-inline padding-title plr0">
+                            <h5 class="card-title  title-head font-tittle m0">
+                                <i class="icon-location4 title-icon align-vertical-icon-0 mr-2"></i>
+                                Direcciones
+                            </h5>
+                            <div class="header-elements">
+                                <div class="list-icons">
+                                    <a class="list-icons-item"  (click)="AgregarDireccion()"
+                                        [routerLink]="nada()" routerLinkActive="router-link-active">
+                                        <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Direccion"> </i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p0 m0">
+                            <div class="col-sm-3 col-8">
+                                <!-- <label class="form-group-float-label m0 p0" > Actividad de la Empresa</label> -->
+                                    <select class="form-control p0 selectCenter alturaInputs" 
+                                                name="direccionSelect">
+                                    <!-- [(ngModel)]="idGestion" (change)="CargarParametrosPorGestion()" -->
+                                        <option value="1">Domicilio</option>
+                                        <option value="2">Particular</option>
+                                        <option value="3">Trabajo</option>
+                                    <!-- *ngFor="let contents of item.content"
+                                            [value]="contents.adgtideg"> {{contents.adgtideg}} -->
+                                    </select> 
+                            </div>
+                            <div class="col-sm-7 col-12">
+                                <input type="text" class="form-control text-center" >
+                            </div>
+                            <div class="col-sm-2 col-12" style="align-self: flex-end;">
+                                <div class="custom-control custom-switch switch-float">
+                                    <input type="checkbox" class="custom-control-input" name="direccion"
+                                         data-fouc checked >
+                                    <label class="custom-control-label h30" for="direccion">Activo</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p0 m0" style="padding-top: 0.5em;">
+                            <div class="col-sm-3">
+                                <div class="form-group row mb0">
+                                    <label class="col-form-label col-lg-4 col-6">Pais</label>
+                                    <div class="col-lg-8 col-6">
+                                        <div class="input-group" style="justify-content: center;" >
+                                            <input disabled type="text" name="pais" disabled class="text-center"
+                                            value="Bolivia" 
+                                            >   
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group row mb0">
+                                    <label class="col-form-label col-lg-4 col-6">Departamento</label>
+                                    <div class="col-lg-8 col-6">
+                                        <div class="input-group" style="justify-content: center;" >
+                                            <input disabled type="text" name="departamento" disabled class="text-center"
+                                            value="SANTA CRUZ" 
+                                            >   
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group row mb0">
+                                    <label class="col-form-label col-lg-4 col-6">Ciudad</label>
+                                    <div class="col-lg-8 col-6">
+                                        <select class="form-control p0 selectCenter alturaInputs">
+                                            <option  value="1" >Santa Cruz</option>
+                                            <option  value="2" >La Paz</option>
+                                            <option  value="3" >Cochabamba</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 col-0"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- tercer card -->
+            <div class="row p0 m0">
+                <div class="col-sm-12">
+                    <div class="card card-padding margin-botton-card " style="padding-bottom: 0.5em;">
+                        <div class="header-elements-inline padding-title plr0">
+                            <h5 class="card-title  title-head font-tittle m0">
+                                <i class="icon-phone-wave title-icon align-vertical-icon-0 mr-2"></i>
+                                Telefonos
+                            </h5>
+                            <div class="header-elements">
+                                <div class="list-icons">
+                                    <a class="list-icons-item"  (click)="AgregarTelefono()"
+                                        [routerLink]="nada()" routerLinkActive="router-link-active">
+                                        <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Direccion"> </i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p0 m0">
+                            <div class="col-sm-2 col-0"></div>
+                            <div class="col-sm-2 col-8 col-8">
+                                    <select class="form-control p0 selectCenter alturaInputs" 
+                                                name="direccionSelect">
+                                    <!-- [(ngModel)]="idGestion" (change)="CargarParametrosPorGestion()" -->
+                                        <option value="1">Domicilio</option>
+                                        <option value="2">Particular</option>
+                                        <option value="3">Trabajo</option>
+                                    <!-- *ngFor="let contents of item.content"
+                                            [value]="contents.adgtideg"> {{contents.adgtideg}} -->
+                                    </select> 
+                            </div>
+                            <div class="col-sm-2 col-6">
+                                <div class="form-group row mb0">
+                                    <label class="col-form-label col-lg-3 col-1"><i class="icon-flag3"></i> </label>
+                                    <div class="col-lg-9 col-9">
+                                        <div class="input-group" style="justify-content: center;" >
+                                            <input type="text" class="form-control text-center" value="+591" >
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="col-sm-2 col-6">
+                                <input type="text" class="form-control text-center" >
+                            </div>
+                            <div class="col-sm-2 col-12" style="align-self: flex-end;">
+                                <div class="custom-control custom-switch switch-float">
+                                    <input type="checkbox" class="custom-control-input" name="phone"
+                                         data-fouc checked >
+                                    <label class="custom-control-label h30" for="phone">Activo</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 col-0"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  cuarto card -->
+            <div class="row p0 m0">
+                <div class="col-sm-12">
+                    <div class="card card-padding margin-botton-card " style="padding-bottom: 0.5em;">
+                        <div class="header-elements-inline padding-title plr0">
+                            <h5 class="card-title  title-head font-tittle m0">
+                                <i class="icon-cogs title-icon align-vertical-icon-0 mr-2"></i>
+                                Modulos 
+                            </h5>
+                            <div class="header-elements">
+                                <div class="list-icons">
+                                    <a class="list-icons-item" *ngIf="!ocultarSeccion" 
+                                        (click)="Ocultar()" > 
+                                        <i class="icon-arrow-down12" data-toggle="tooltip" data-placement="top" title="Ocultar" ></i> 
+                                    </a>
+                                    <a class="list-icons-item" *ngIf="ocultarSeccion" 
+                                        (click)="Mostrar()" > 
+                                        <i class="icon-arrow-up12" data-toggle="tooltip" data-placement="top" title="Mostrar"></i> 
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p0 m0" *ngIf="!ocultarSeccion" id="data-toggle">
+                            <div class="col-sm-3">
+                                    <div>
+                                        <p>SAGESOFT</p>
+                                        <p>VERSION 1.0</p>
+                                    </div>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="col-sm-12">
+                                    <div class="table-responsive text-center">
+                                        <table class="table table-sm table-hover">
+                                            <thead>
+                                                <th scope="col">Descripcion</th>
+                                                <th scope="col">Version</th>
+                                                <th scope="col">SolTec</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="table-border-double" 
+                                                *ngFor="let periodo of lista;let impar = odd;let par = even;" 
+                                                [ngClass]="{ tablaCebradoPar:par , tablaCebradoImpar:impar}">
+                                                    <td class="puntero"> </td>
+                                                    <td class="puntero"> </td>
+                                                    <td class="puntero"> </td>
+                                                </tr>                                                  
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-sm-3">
+                                <div class="form-group row mb0">
+                                    <label class="col-form-label col-lg-3"><i class="icon-flag3"></i> </label>
+                                    <div class="col-lg-9">
+                                        <div class="input-group" style="justify-content: center;" >
+                                            <input type="text" class="form-control" value="+591" >
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" >
+                            </div>
+                            <div class="col-sm-3" style="align-self: flex-end;">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" name="telefono"
+                                         data-fouc checked >
+                                    <label class="custom-control-label h30" for="telefono">Activo</label>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>        

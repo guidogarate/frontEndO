@@ -16,28 +16,7 @@ const url = {
   eliminarFto: "sys_000/sys_002/eliminar-favoritos",
   agregarFto: "sys_000/sys_002/agregar-favoritos",
   fotoDefecto:
-    "https://cdn0.iconfinder.com/data/icons/business-4-4/97/197-512.png", // foto de imagen por defeceto
-  mostrarPred: "adm_000/adm_001/mostrar-pred",
-  busqPagi: "adm_000/adm_001/busq-pagi",
-  paginado: "adm_000/adm_001/paginado",
-  eliminar: "adm_000/adm_001/eliminar/",
-  agregar: "adm_000/adm_001/agregar",
-  actualizar: "adm_000/adm_001/actualizar/",
-  gestionesDisponibles: "adm_000/adm_001/gest-dispo",
-  gest_dispo_y_predet: "adm_000/adm_001/gest-dispo_y_predet",
-  get_gestion_periodos: "adm_000/adm_002/get-gestion-periodos",
-  get_periodos: "adm_000/adm_002/get-periodos/",
-  agregar_gestion: "adm_000/adm_002/agregar-gestion",
-  eliminar_Gestion: "adm_000/adm_002/eliminar/",
-  actualizar_gestion: "adm_000/adm_002/actualizar-gestion/",
-  actualizar_periodo: "adm_000/adm_002/actualizar-perido/",
-  get_paraminicial: "adm_000/adm_004/get-paraminicial1",
-  get_monedas: "adm_000/adm_004/get-monedas/",
-  get_folio: "adm_000/adm_004/get-folio/",
-  parama_espec: "adm_000/adm_004/parama-espec/",
-  unidad_negocio: "adm_000/adm_004/unidad-negocio/",
-  reg_maest: "adm_000/adm_004/reg-maest/",
-  put_paraminicial: "adm_000/adm_004/put-paraminicial/"
+    "https://cdn0.iconfinder.com/data/icons/business-4-4/97/197-512.png"
 };
 
 export default url;
