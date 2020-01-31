@@ -25,14 +25,13 @@ export class Adm005Service {
       );
   }
 
-  nuevoAdm003(adamcodm: string, dato: any) {
+  editaAdm005(codigo: string, estado: boolean) {
     const json = JSON.stringify({
-      adamcodm,
-      adamtipa: dato.adamtipa,
-      adamdesc: dato.adamdesc,
-      adamesta: dato.adamesta,
-      adamsigl: dato.adamsigl
+      estado,
+      codigo
     });
+    console.log(json);
+
     const url1 = `${url.prod}${adm0005.resetContra}`;
     return this.httpClient
       .post(url1, json, {
