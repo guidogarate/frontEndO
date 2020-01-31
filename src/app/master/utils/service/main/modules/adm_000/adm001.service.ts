@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from "rxjs/operators";
-import adm0001 from "src/app/master/config/adm000/adm001_config";
+import adm0001 from "src/app/master/config/adm000/adm001_url";
 import url from "src/app/master/config/url.config";
 import { TipoCambio } from "../../../../models/TipoCambio";
 import { from } from "rxjs";

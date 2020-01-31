@@ -13,6 +13,7 @@ import { Adm005Component } from './adm005/adm005.component';
 
 import { Adm007Component } from './adm007/adm007.component';
 
+import { Adm010Component } from './adm010/adm010.component';
 import { PipesModule } from "../../../utils/pipe/pipes.module";
 
 @NgModule({
@@ -22,7 +23,8 @@ import { PipesModule } from "../../../utils/pipe/pipes.module";
     Adm003Component,
     Adm004Component,
     Adm005Component,
-    Adm007Component
+    Adm007Component,
+    Adm010Component
   ],
   providers: [
     DatePipe

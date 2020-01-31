@@ -66,3 +66,14 @@ font-weight: 700;
 .height-container{
   height: 100%;
 }
+/* prueba estilos */
+.card-padding{
+  padding-left: 2em;
+  padding-right: 2em;
+}
+.margin-botton-card{
+  margin-bottom: 0.5em;
+}
+.padding-title{
+  padding: 0.5em;
+}
