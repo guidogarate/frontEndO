@@ -2,10 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { Observable, Subscription } from "rxjs";
 import { Adm005Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { NotyGlobal } from "src/app/master/utils/global/noty.global";
-import {
-  Adm005,
-  Adm005Pag
-} from "src/app/master/utils/models/main/adm_000/adm_005.models";
+import { Adm005 } from "src/app/master/utils/models/main/adm_000/index.models";
+import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models";
 
 @Component({
   selector: "app-adm005",
@@ -17,7 +15,7 @@ export class Adm005Component implements OnInit {
   sus: Subscription;
   numeroPag = 1;
   auxma: Adm005[];
-  pagi: Adm005Pag[];
+  pagi: Paginacion[];
   loading = true;
   buscar = true;
   habiCampo = {

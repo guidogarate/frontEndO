@@ -9,7 +9,3 @@ export interface Adm005 {
   cantidad: number;
   estado: boolean;
 }
-
-export interface Adm005Pag {
-  pag: string;
-}

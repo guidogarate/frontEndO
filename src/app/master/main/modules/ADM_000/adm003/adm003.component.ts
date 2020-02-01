@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
 import { Adm003Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { Observable, Subscription } from "rxjs";
-import { Adm003Models } from "src/app/master/utils/models/main/adm_000/adm_003.models";
+import { Adm003Models } from "src/app/master/utils/models/main/adm_000/index.models";
+import { Paginacion } from "src/app/master/utils/models/main/global/index.models";
 declare function initLabels();
 
 @Component({
@@ -19,7 +20,7 @@ export class Adm003Component implements OnInit, OnDestroy {
   auxma: any[];
   auxmaSub: any[];
   sus: Subscription;
-  pagi: any[];
+  pagi: Paginacion[];
   numeroPag = 1;
   texto = "all_auxma";
   accionSubGrupo = "";
@@ -138,7 +139,7 @@ export class Adm003Component implements OnInit, OnDestroy {
     });
   }
 
-  // mostrar datos subGrupo
+  // mostrar datos Grupo
   actualizar(adm_003: Adm003Models) {
     this.amd003 = adm_003;
     let peticion: Observable<any>;
@@ -338,6 +339,7 @@ export class Adm003Component implements OnInit, OnDestroy {
     }
   }
 
+  // mostrar datos subGrupo
   SubGrup(accion: string) {
     switch (accion) {
       case "nuevo":
