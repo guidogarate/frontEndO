@@ -2,7 +2,7 @@
 <div class="row haciadentro animaciones height-container ">
     <div class="col-xl-12 height-container">
       <!-- Table with togglable columns -->
-        <div class="card card-padding margin-botton-card margin-botton-card height-container">
+        <div class="card card-padding m0 height-container">
             <div class="header-elements-inline padding-title">
                 <h5 class="card-title  title-head font-tittle m0">
                     <i class="icon-cog title-icon align-vertical-icon-0"></i>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <hr class="p0 m0">
-            <div class="card card-padding margin-botton-card margin-botton-card" style="padding: 0.5em;" *ngIf="idGestion != undefined">
+            <div class="card card-padding margin-botton-card" style="padding: 0.5em;" *ngIf="idGestion != undefined">
                 <div class="row text-center">
                     <div class="col-md-3 d-none d-sm-none d-md-block"></div>
                     <div class="col-md-6">
@@ -51,7 +51,7 @@
                     <div class="col-md-3 d-none d-sm-none d-md-block"></div>
                 </div>
             </div>
-            <div class="card card-padding margin-botton-card ">
+            <div class="card card-padding m0">
                 <div class="card card-padding margin-botton-card margin-top-card padding-botton-card" *ngIf="moneda != undefined">
                     <div class="card-body p0">
                         <div class="row text-center p0" style="padding-top: 0.5em;" >
@@ -95,7 +95,7 @@
                         <div class="col-md-6">
                             <div class="row p0 m0">
                                 <label class="col-sm-4 col-6 col-form-label p0 m0">{{TipoFolio.adpidesc}}</label>
-                                <div class="col-sm-6 col-6">
+                                <div class="col-md-6 col-6">
                                     <select class="form-control p0 selectCenter alturaInputs" [disabled] = "!editar"
                                             [(ngModel)]="idFolio" (change)="ColocarPrefijo()">
                                         <option [value]="item.adamidea" *ngFor="let item of TipoFolio.content">
@@ -105,7 +105,7 @@
                                 </div>  
                             </div>
                         </div>
-                        <div class="col-sm-6 col-12 prch" >
+                        <div class="col-md-6 col-12 prch" >
                             <div class="col-md-12 form-check form-check-right m0 p0">
                                 <label class="form-check-label m0 p0">
                                     {{prefijo.adpidesc}}
@@ -173,7 +173,7 @@
                         </div>
                         <div class="card-body p0">
                             <div class="row m0 p0">
-                                <div class="col-md-4 col-12 centrarCheckdesktop plr5em text-left" *ngFor="let item of listaParametrosEspeciales">
+                                <div class="col-md-4 col-12 centrarCheckdesktop text-left" *ngFor="let item of listaParametrosEspeciales">
                                     <div class="form-check form-check-right">
                                         <label class="form-check-label m0 p0">{{item.adpidesc}}
                                                 <input type="checkbox"  style="visibility: visible;" class="form-check-input-styled alturaInputs" 
