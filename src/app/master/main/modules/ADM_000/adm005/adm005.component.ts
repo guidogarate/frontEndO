@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { Observable, Subscription } from "rxjs";
 import { Adm005Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { NotyGlobal } from "src/app/master/utils/global/noty.global";
+import { Adm005 } from "src/app/master/utils/models/main/adm_000/index.models";
+import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models";
 
 @Component({
   selector: "app-adm005",
@@ -12,8 +14,8 @@ export class Adm005Component implements OnInit {
   texto = "all_auxma";
   sus: Subscription;
   numeroPag = 1;
-  auxma: any[];
-  pagi: any[];
+  auxma: Adm005[];
+  pagi: Paginacion[];
   loading = true;
   buscar = true;
   habiCampo = {
@@ -106,7 +108,7 @@ export class Adm005Component implements OnInit {
     });
   }
 
-  habilitar(tipo: any) {
+  habilitar(tipo: string) {
     if (tipo === "editar") {
       this.habiCampo.atras = true;
       this.habiCampo.editar = false;
@@ -115,24 +117,29 @@ export class Adm005Component implements OnInit {
       this.habiCampo.atras = false;
       this.habiCampo.editar = true;
       this.habiCampo.deshab = true;
+      for (let index = 0; index < this.auxma.length; index++) {
+        this.auxma[index].estado = false;
+      }
     } else {
       return;
     }
   }
 
-  reset(str: any) {
-    console.log(str);
+  reset(str: Adm005) {
     if (str.estado) {
-      console.log("realizar peticion");
-      this.adm005S.editaAdm005(str.login, str.estado).subscribe(resp => {
-        str.estado = false;
-        if (resp["ok"]) {
-          this.notyG.noty("info", resp["mensaje"], 5000);
-        } else {
-          console.log(resp["mensaje"]);
-          // this.notyG.noty("error", resp["mensaje"], 5000);
-        }
-      });
+      if (str.activo) {
+        this.notyG.noty("error", "Usuario debe estar fuera de sesion", 5000);
+        return;
+      } else {
+        this.adm005S.editaAdm005(str.login, str.estado).subscribe(resp => {
+          str.estado = false;
+          if (resp["ok"]) {
+            this.notyG.noty("info", resp["mensaje"], 5000);
+          } else {
+            //  console.log(resp["mensaje"]);
+          }
+        });
+      }
     } else {
       str.estado = false;
       return;

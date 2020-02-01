@@ -30,8 +30,6 @@ export class Adm005Service {
       estado,
       codigo
     });
-    console.log(json);
-
     const url1 = `${url.prod}${adm0005.resetContra}`;
     return this.httpClient
       .post(url1, json, {
