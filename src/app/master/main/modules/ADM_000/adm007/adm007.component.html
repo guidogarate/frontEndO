@@ -51,16 +51,12 @@
                                             <input type="text" class="form-control text-center p0 alturaInputs" placeholder="sigla" 
                                                 [value]="lista[0].sigla" [(ngModel)]="lista[0].sigla" >
                                         </div>
-                                        <!-- <pre> nit : {{ lista[0].razon_social | json }} </pre>
-                                        <pre> nit : {{ lista[0].sigla | json }} </pre>
-                                        <pre> nit : {{ lista[0].nit | json }} </pre>
-                                        <pre> nit : {{ lista[0].nit | json }} </pre> -->
                                     </div>
                                     <div class="col-sm-12" *ngIf="lista != undefined">
                                         <div class="row text-center m0">
                                             <div class="col-sm-1 col-0"></div>
                                             <div class="col-sm-6 col-7 form-group form-group-float m0">
-                                                <label class="form-group-float-label m0 p0" > Actividad de la Empresa</label>
+                                                <label class="form-group-float-label m0 p0" >Actividad de la Empresa</label>
                                                     <select class="form-control p0 selectCenter alturaInputs" 
                                                                 name="gestionSelect">
                                                     <!-- [(ngModel)]="idGestion" (change)="CargarParametrosPorGestion()" -->
@@ -104,28 +100,27 @@
                             </div>
                         </div>
                         <div class="row p0 m0">
-                            <div class="col-sm-3 col-8">
-                                <!-- <label class="form-group-float-label m0 p0" > Actividad de la Empresa</label> -->
-                                    <select class="form-control p0 selectCenter alturaInputs" 
-                                                name="direccionSelect">
-                                    <!-- [(ngModel)]="idGestion" (change)="CargarParametrosPorGestion()" -->
-                                        <option value="1">Domicilio</option>
-                                        <option value="2">Particular</option>
-                                        <option value="3">Trabajo</option>
-                                    <!-- *ngFor="let contents of item.content"
-                                            [value]="contents.adgtideg"> {{contents.adgtideg}} -->
-                                    </select> 
-                            </div>
-                            <div class="col-sm-7 col-12">
-                                <input type="text" class="form-control text-center" >
-                            </div>
-                            <div class="col-sm-2 col-12" style="align-self: flex-end;">
-                                <div class="custom-control custom-switch switch-float">
-                                    <input type="checkbox" class="custom-control-input" name="direccion"
-                                         data-fouc checked >
-                                    <label class="custom-control-label h30" for="direccion">Activo</label>
+                            <div class="col-sm-12 p0 m0" style="display: flex;" *ngFor="let item of ListDirecciones; let i = index">
+                                <div class="col-sm-3 col-8">
+                                        <select class="form-control p0 selectCenter alturaInputs" 
+                                                [(ngModel)]="item.idTipoDireccion" (change)="nada()" name="direccionSelect">
+                                                <option *ngFor="let dir of ListDirecciones"
+                                                    [value]="dir.id_tipo_direccion"> {{dir.tipo_direccion}}</option>
+                                        </select> 
+                                </div>
+                                <div class="col-sm-7 col-12">
+                                    <input type="text" class="form-control text-center" [(ngModel)]="item.direccion" [value] = "item.direccion" >
+                                </div>
+                                <div class="col-sm-2 col-12" style="align-self: flex-end;">
+                                    <div class="custom-control custom-switch switch-float">
+                                        <label class="custom-control-label h30" for="direccion{{i}}">Activo</label>
+                                        <input type="checkbox" class="custom-control-input" name="direccion{{i}}"
+                                             data-fouc [checked] = "item.estado == 0"  [(ngModel)]="item.estado" >
+                                    </div>
+                                    <pre>item:{{i}} {{item.estado | json}}</pre> 
                                 </div>
                             </div>
+                            
                         </div>
                         <div class="row p0 m0" style="padding-top: 0.5em;">
                             <div class="col-sm-3">

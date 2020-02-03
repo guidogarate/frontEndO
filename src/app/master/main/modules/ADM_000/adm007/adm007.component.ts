@@ -15,6 +15,7 @@ export class Adm007Component implements OnInit {
   lista : any ;
   ListActividadEmpresarial :  any;
   ListTipoDirecciones : any;
+  idTipoDireccion : string ="1" ;
   ListDirecciones : any ;
   ListTipoContactos: any ;
   ListContactos : any;
@@ -44,16 +45,16 @@ export class Adm007Component implements OnInit {
     .subscribe(resp => {
       if (resp ["ok"]) {
         this.lista = resp["datos"];
-        console.log("empresa: ",  this.lista[0].razon_social);
-        this.ListActividadEmpresarial = this.lista["actividad_empresarial"];
-        this.ListTipoDirecciones = this.lista["tipo_direcciones"];
-        this.ListDirecciones = this.lista["direcciones"];
-        this.ListTipoContactos = this.lista["tipo_contactos"];
-        this.ListContactos = this.lista["contactos"];
-        this.ListModulos = this.lista["modulos"];
-        this.ListPaises = this.lista["paises"];
-        this.ListDepartamentos = this.lista["departamentos"];;
-        this.ListCuidades = this.lista["ciudades"];
+        this.ListActividadEmpresarial = this.lista[0]["actividad_empresarial"];
+        this.ListTipoDirecciones = this.lista[0]["tipo_direcciones"];
+        this.ListDirecciones = this.lista[0]["direcciones"];
+        console.log("direcciones: ",  this.ListDirecciones);
+        this.ListTipoContactos = this.lista[0]["tipo_contactos"];
+        this.ListContactos = this.lista[0]["contactos"];
+        this.ListModulos = this.lista[0]["modulos"];
+        this.ListPaises = this.lista[0]["paises"];
+        this.ListDepartamentos = this.lista[0]["departamentos"];;
+        this.ListCuidades = this.lista[0]["ciudades"];
         initLabels();
       }
       else {
