@@ -5,9 +5,10 @@ import { Adm002Component } from "./adm002/adm002.component";
 import { Adm003Component } from "./adm003/adm003.component";
 import { Adm004Component } from "./adm004/adm004.component";
 import { Adm005Component } from "./adm005/adm005.component";
+import { Adm006Component } from "./adm006/adm006.component";
 import { Adm007Component } from "./adm007/adm007.component";
-import { Adm010Component } from "./adm010/adm010.component";
 import { Adm008Component } from "./adm008/adm008.component";
+import { Adm010Component } from "./adm010/adm010.component";
 
 // console.log(window.location);
 // console.log(window.location.href);
@@ -35,6 +36,11 @@ const adm000_Routes: Routes = [
     data: { titulo: "adm004" }
   },
   { path: "adm005", component: Adm005Component, data: { titulo: "adm005" } },
+  {
+    path: "adm006",
+    component: Adm006Component,
+    data: { titulo: "adm006" }
+  },
   {
     path: "adm007",
     component: Adm007Component,

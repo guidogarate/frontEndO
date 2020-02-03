@@ -150,6 +150,7 @@ export class Adm005Component implements OnInit, OnDestroy {
         this.adm005S.editaAdm005(str.login, str.estado).subscribe(resp => {
           str.estado = false;
           if (resp["ok"]) {
+            this.buscarAdm005(this.texto);
             this.notyG.noty("info", resp["mensaje"], 5000);
           } else {
             //  console.log(resp["mensaje"]);

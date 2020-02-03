@@ -10,12 +10,12 @@ import { Adm002Component } from "./adm002/adm002.component";
 import { Adm003Component } from "./adm003/adm003.component";
 import { Adm004Component } from "./adm004/adm004.component";
 import { Adm005Component } from "./adm005/adm005.component";
-
+import { Adm006Component } from "./adm006/adm006.component";
 import { Adm007Component } from "./adm007/adm007.component";
-
-import { Adm010Component } from "./adm010/adm010.component";
-import { PipesModule } from "../../../utils/pipe/pipes.module";
 import { Adm008Component } from "./adm008/adm008.component";
+import { Adm010Component } from "./adm010/adm010.component";
+
+import { PipesModule } from "../../../utils/pipe/pipes.module";
 
 @NgModule({
   declarations: [
@@ -24,9 +24,10 @@ import { Adm008Component } from "./adm008/adm008.component";
     Adm003Component,
     Adm004Component,
     Adm005Component,
+    Adm006Component,
     Adm007Component,
-    Adm010Component,
-    Adm008Component
+    Adm008Component,
+    Adm010Component
   ],
   providers: [DatePipe],
   imports: [

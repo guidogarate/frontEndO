@@ -146,6 +146,7 @@ export class Adm008Component implements OnInit, OnDestroy {
         console.log(resp);
         str.estado = false;
         if (resp["ok"]) {
+          this.buscarAdm008(this.texto);
           this.notyG.noty("info", resp["mensaje"], 5000);
         } else {
           this.notyG.noty("error", resp["mensaje"], 5000);
