@@ -1,5 +1,7 @@
 const adm0007 = {
-    get_paraminicial : "adm_000/adm_004/get-paraminicial1",
+    
+    get_datos_empresa : "adm_000/adm_007/get-datos-empresa/",
+    
     get_monedas : "adm_000/adm_004/get-monedas/",
     get_folio : "adm_000/adm_004/get-folio/",
     parama_espec: "adm_000/adm_004/parama-espec/",

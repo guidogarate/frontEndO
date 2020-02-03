@@ -39,40 +39,44 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group form-group-feedback m0">
-                                    <div class="row text-center m0">
+                                    <div class="row text-center m0" *ngIf="lista != undefined">
                                         <i class="icon-clipboard5 icon-head"> </i>
                                         <div class="col-sm-6 col-5 form-group form-group-float m0">
                                             <label class="form-group-float-label m0 p0">Nombre </label>
                                             <input type="text" class="form-control text-center p0 alturaInputs" placeholder="Nombre" 
-                                                value="Ormate" disabled >
+                                                [value]="lista[0].razon_social" [(ngModel)]="lista[0].razon_social" >
                                         </div>
                                         <div class="col-sm-5 col-5 form-group form-group-float m0">
                                             <label class="form-group-float-label m0 p0">Sigla </label>
                                             <input type="text" class="form-control text-center p0 alturaInputs" placeholder="sigla" 
-                                                value="Ormate Srl" disabled >
+                                                [value]="lista[0].sigla" [(ngModel)]="lista[0].sigla" >
                                         </div>
+                                        <!-- <pre> nit : {{ lista[0].razon_social | json }} </pre>
+                                        <pre> nit : {{ lista[0].sigla | json }} </pre>
+                                        <pre> nit : {{ lista[0].nit | json }} </pre>
+                                        <pre> nit : {{ lista[0].nit | json }} </pre> -->
                                     </div>
-                                    <div class="col-sm-12">
-                                            <div class="row text-center m0">
-                                                <div class="col-sm-1 col-0"></div>
-                                                <div class="col-sm-6 col-7 form-group form-group-float m0">
-                                                    <label class="form-group-float-label m0 p0" > Actividad de la Empresa</label>
-                                                        <select class="form-control p0 selectCenter alturaInputs" 
-                                                                    name="gestionSelect">
-                                                        <!-- [(ngModel)]="idGestion" (change)="CargarParametrosPorGestion()" -->
-                                                            <option value="1">Comercial</option>
-                                                            <option value="2">Industrial</option>
-                                                            <option value="3">Contable</option>
-                                                        <!-- *ngFor="let contents of item.content"
-                                                                [value]="contents.adgtideg"> {{contents.adgtideg}} -->
-                                                        </select> 
-                                                </div>
-                                                <div class="col-sm-5 col-5 form-group form-group-float m0">
-                                                    <label class="form-group-float-label m0 p0">Nit </label>
-                                                    <input type="text" class="form-control text-center p0 alturaInputs" placeholder="Nit" 
-                                                            value="123456789"   >
-                                                </div>  
+                                    <div class="col-sm-12" *ngIf="lista != undefined">
+                                        <div class="row text-center m0">
+                                            <div class="col-sm-1 col-0"></div>
+                                            <div class="col-sm-6 col-7 form-group form-group-float m0">
+                                                <label class="form-group-float-label m0 p0" > Actividad de la Empresa</label>
+                                                    <select class="form-control p0 selectCenter alturaInputs" 
+                                                                name="gestionSelect">
+                                                    <!-- [(ngModel)]="idGestion" (change)="CargarParametrosPorGestion()" -->
+                                                        <option value="1">Comercial</option>
+                                                        <option value="2">Industrial</option>
+                                                        <option value="3">Contable</option>
+                                                    <!-- *ngFor="let contents of item.content"
+                                                            [value]="contents.adgtideg"> {{contents.adgtideg}} -->
+                                                    </select> 
                                             </div>
+                                            <div class="col-sm-5 col-5 form-group form-group-float m0">
+                                                <label class="form-group-float-label m0 p0">Nit </label>
+                                                <input type="text" class="form-control text-center p0 alturaInputs" placeholder="Nit" 
+                                                        value="{{lista[0].nit}}" [(ngModel)]="lista[0].nit" >
+                                            </div>  
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +176,7 @@
                         <div class="header-elements-inline padding-title plr0">
                             <h5 class="card-title  title-head font-tittle m0">
                                 <i class="icon-phone-wave title-icon align-vertical-icon-0 mr-2"></i>
-                                Telefonos
+                                Contactos
                             </h5>
                             <div class="header-elements">
                                 <div class="list-icons">
@@ -272,26 +276,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="col-sm-3">
-                                <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-3"><i class="icon-flag3"></i> </label>
-                                    <div class="col-lg-9">
-                                        <div class="input-group" style="justify-content: center;" >
-                                            <input type="text" class="form-control" value="+591" >
-                                        </div>
-                                    </div>
-                                </div>                                
-                            </div>
-                            <div class="col-sm-3">
-                                <input type="text" class="form-control" >
-                            </div>
-                            <div class="col-sm-3" style="align-self: flex-end;">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" name="telefono"
-                                         data-fouc checked >
-                                    <label class="custom-control-label h30" for="telefono">Activo</label>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                 </div>

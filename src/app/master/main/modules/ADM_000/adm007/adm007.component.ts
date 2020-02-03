@@ -12,7 +12,16 @@ export class Adm007Component implements OnInit {
 
   editar : boolean = false;
   ocultarSeccion : boolean = false;
-  lista : any = [];
+  lista : any ;
+  ListActividadEmpresarial :  any;
+  ListTipoDirecciones : any;
+  ListDirecciones : any ;
+  ListTipoContactos: any ;
+  ListContactos : any;
+  ListModulos : any;
+  ListCuidades : any ;
+  ListDepartamentos : any;
+  ListPaises : any ;
 
   constructor( private _adm007Service : Adm007Service,
               private _notyG: NotyGlobal) { 
@@ -20,11 +29,39 @@ export class Adm007Component implements OnInit {
   }
 
   ngOnInit() {
-    initLabels();
+    this.ObtenerDatos();
+    setTimeout(() => {
+      initLabels();
+    }, 1000);
+
   }
 
-  
+  /**@description */
+  ObtenerDatos(){
+    
+    this._adm007Service
+    .ObtenerParametros()
+    .subscribe(resp => {
+      if (resp ["ok"]) {
+        this.lista = resp["datos"];
+        console.log("empresa: ",  this.lista[0].razon_social);
+        this.ListActividadEmpresarial = this.lista["actividad_empresarial"];
+        this.ListTipoDirecciones = this.lista["tipo_direcciones"];
+        this.ListDirecciones = this.lista["direcciones"];
+        this.ListTipoContactos = this.lista["tipo_contactos"];
+        this.ListContactos = this.lista["contactos"];
+        this.ListModulos = this.lista["modulos"];
+        this.ListPaises = this.lista["paises"];
+        this.ListDepartamentos = this.lista["departamentos"];;
+        this.ListCuidades = this.lista["ciudades"];
+        initLabels();
+      }
+      else {
+        console.log("error: ", resp["mensaje"])
+      }
+    });
 
+  }
   /* metodos auxiliares*/
   nada(){}
   Actualizar(){
@@ -51,4 +88,5 @@ export class Adm007Component implements OnInit {
     this.ocultarSeccion = false;
   }
 
+  /**metodos auxiliares del tab */
 }
