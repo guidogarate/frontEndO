@@ -13,7 +13,6 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {}
   salir() {
     this.loginS.logout().subscribe(resp => {
-      console.log("saliendo desde navbar");
       window.open(url.salir, "_self");
       // window.location.href = url.salir;
     });
