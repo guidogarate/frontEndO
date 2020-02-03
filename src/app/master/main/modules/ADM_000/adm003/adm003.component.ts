@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
 import { Adm003Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { Observable, Subscription } from "rxjs";
+import { debounceTime } from "rxjs/operators";
+import { FormControl } from "@angular/forms";
 import { Adm003Models } from "src/app/master/utils/models/main/adm_000/index.models";
 import { Paginacion } from "src/app/master/utils/models/main/global/index.models";
 declare function initLabels();
@@ -14,6 +16,7 @@ declare function initLabels();
 export class Adm003Component implements OnInit, OnDestroy {
   // this.amd003 ==== Grupo
   // this.auxmaSub==== SubGrupo
+  textBuscarAdm003 = new FormControl("", []);
   buscar = true;
   loading = true;
   loadingSub = false;
@@ -50,6 +53,16 @@ export class Adm003Component implements OnInit, OnDestroy {
 
   constructor(private adm003S: Adm003Service, private notyG: NotyGlobal) {
     this.buscarAdm003(this.texto);
+    this.textBuscarAdm003.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe(value => {
+        if (value.length > 1) {
+          this.buscarAdm003(value);
+        } else {
+          this.texto = "all_auxma";
+          this.buscarAdm003(this.texto);
+        }
+      });
   }
 
   ngOnInit() {
@@ -59,6 +72,7 @@ export class Adm003Component implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.sus.unsubscribe();
+    this.textBuscarAdm003 = null;
   }
 
   buscarAdm003(texto: string) {
@@ -77,7 +91,7 @@ export class Adm003Component implements OnInit, OnDestroy {
         this.auxma = resp["auxma"];
         this.pagi = resp["cant"];
       } else {
-        // this.notyG.noty("error", resp["mensaje"], 5000);
+        this.notyG.noty("error", resp["messagge"], 5000);
       }
       this.buscar = false;
       this.loading = false;

@@ -1,21 +1,21 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Observable, Subscription } from "rxjs";
-import { debounceTime } from "rxjs/operators";
 import { FormControl } from "@angular/forms";
-import { Adm005Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
-import { NotyGlobal } from "src/app/master/utils/global/noty.global";
+import { debounceTime } from "rxjs/operators";
+import { Observable, Subscription } from "rxjs";
+import { Adm008Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { Adm005 } from "src/app/master/utils/models/main/adm_000/index.models";
 import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models";
+import { NotyGlobal } from "src/app/master/utils/global/noty.global";
 
 @Component({
-  selector: "app-adm005",
-  templateUrl: "./adm005.component.html",
-  styleUrls: ["./adm005.component.css"]
+  selector: "app-adm008",
+  templateUrl: "./adm008.component.html",
+  styleUrls: ["./adm008.component.css"]
 })
-export class Adm005Component implements OnInit, OnDestroy {
-  textBuscarAdm005 = new FormControl("", []);
-  texto = "all_auxma";
+export class Adm008Component implements OnInit, OnDestroy {
+  textBuscar = new FormControl("", []);
   sus: Subscription;
+  texto = "all_auxma";
   numeroPag = 1;
   auxma: Adm005[];
   pagi: Paginacion[];
@@ -27,34 +27,33 @@ export class Adm005Component implements OnInit, OnDestroy {
     atras: false
   };
 
-  constructor(private adm005S: Adm005Service, private notyG: NotyGlobal) {
-    this.buscarAdm005(this.texto);
-    this.textBuscarAdm005.valueChanges
-      .pipe(debounceTime(500))
-      .subscribe(value => {
-        if (value.length > 1) {
-          this.buscarAdm005(value);
-        } else {
-          this.texto = "all_auxma";
-          this.buscarAdm005(this.texto);
-        }
-      });
+  constructor(private adm008S: Adm008Service, private notyG: NotyGlobal) {
+    this.buscarAdm008(this.texto);
+    this.textBuscar.valueChanges.pipe(debounceTime(500)).subscribe(value => {
+      if (value.length > 1) {
+        this.buscarAdm008(value);
+      } else {
+        this.texto = "all_auxma";
+        this.buscarAdm008(this.texto);
+      }
+    });
   }
 
   ngOnInit() {}
 
   ngOnDestroy() {
-    this.textBuscarAdm005 = null;
+    this.textBuscar = null;
   }
-  buscarAdm005(texto: string) {
+
+  buscarAdm008(texto: string) {
     this.buscar = true;
     let peticion: Observable<any>;
     if (texto.length === 0 || texto === "all_auxma") {
       this.texto = "all_auxma";
-      peticion = this.adm005S.buscarAdm005("90", "1", this.texto);
+      peticion = this.adm008S.buscarAdm008("90", "1", this.texto);
     } else {
       this.texto = texto;
-      peticion = this.adm005S.buscarAdm005("90", "1", this.texto);
+      peticion = this.adm008S.buscarAdm008("90", "1", this.texto);
     }
     this.sus = peticion.subscribe(resp => {
       this.numeroPag = 1;
@@ -78,7 +77,7 @@ export class Adm005Component implements OnInit, OnDestroy {
     let peticion: Observable<any>;
     if (nume > 0 && nume <= total) {
       this.numeroPag = nume;
-      peticion = this.adm005S.buscarAdm005(
+      peticion = this.adm008S.buscarAdm008(
         "90",
         this.numeroPag.toString(),
         this.texto
@@ -93,7 +92,7 @@ export class Adm005Component implements OnInit, OnDestroy {
         } else {
           this.numeroPag--;
         }
-        peticion = this.adm005S.buscarAdm005(
+        peticion = this.adm008S.buscarAdm008(
           "90",
           this.numeroPag.toString(),
           this.texto
@@ -107,7 +106,7 @@ export class Adm005Component implements OnInit, OnDestroy {
         } else {
           this.numeroPag++;
         }
-        peticion = this.adm005S.buscarAdm005(
+        peticion = this.adm008S.buscarAdm008(
           "90",
           this.numeroPag.toString(),
           this.texto
@@ -143,19 +142,16 @@ export class Adm005Component implements OnInit, OnDestroy {
 
   reset(str: Adm005) {
     if (str.estado) {
-      if (str.activo) {
-        this.notyG.noty("error", "Usuario debe estar fuera de sesion", 5000);
-        return;
-      } else {
-        this.adm005S.editaAdm005(str.login, str.estado).subscribe(resp => {
-          str.estado = false;
-          if (resp["ok"]) {
-            this.notyG.noty("info", resp["mensaje"], 5000);
-          } else {
-            //  console.log(resp["mensaje"]);
-          }
-        });
-      }
+      this.adm008S.editaAdm008(str.login).subscribe(resp => {
+        console.log(resp);
+        str.estado = false;
+        if (resp["ok"]) {
+          this.notyG.noty("info", resp["mensaje"], 5000);
+        } else {
+          this.notyG.noty("error", resp["mensaje"], 5000);
+          //  console.log(resp["mensaje"]);
+        }
+      });
     } else {
       str.estado = false;
       return;

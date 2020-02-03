@@ -18,8 +18,7 @@
                 class="form-control"
                 placeholder="Buscar"
                 id="buscarGrupoLupa"
-                #texto
-                (keyup)="buscarAdm003(texto.value)"
+                [formControl]="textBuscarAdm003"
               />
               <div *ngIf="buscar" class="form-control-feedback">
                 <i class="icon-spinner2 spinner"></i>

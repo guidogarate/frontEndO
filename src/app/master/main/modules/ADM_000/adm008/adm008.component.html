@@ -1,10 +1,8 @@
-<!-- Dashboard content -->
 <div class="row haciadentro animaciones superior">
   <div class="col-xl-12">
-    <!-- Table with togglable columns -->
     <div class="card pb0">
       <div class="card-header header-elements-inline">
-        <h5 class="card-title">Inicializar Contrase&ntilde;a de Usuario</h5>
+        <h5 class="card-title">Desactivar Usuario</h5>
       </div>
       <div class="card-body pb0">
         <div class="row">
@@ -17,14 +15,14 @@
                 type="text"
                 class="form-control"
                 placeholder="Buscar"
-                id="buscarGrupoLupa"
-                [formControl]="textBuscarAdm005"
+                id="textBuscarAdm_005"
+                [formControl]="textBuscar"
               />
               <div *ngIf="buscar" class="form-control-feedback">
                 <i class="icon-spinner2 spinner"></i>
               </div>
               <div *ngIf="!buscar" class="form-control-feedback">
-                <label for="buscarGrupoLupa">
+                <label for="textBuscarAdm_005">
                   <i class="icon-search4 puntero" title="buscar"></i
                 ></label>
               </div>
@@ -49,7 +47,6 @@
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
@@ -66,7 +63,7 @@
                   </th>
                   <th data-hide="phone,tablet">Tipo_de_Usuario</th>
                   <th data-hide="phone,tablet">Relacion_persona</th>
-                  <th data-hide="phone,tablet">Inicio clave acceso</th>
+                  <th data-hide="phone,tablet">Desactivar</th>
                   <th class="text-center" style="width: 30px;">
                     Opciones
                   </th>
