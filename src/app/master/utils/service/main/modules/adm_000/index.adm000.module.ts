@@ -6,6 +6,7 @@ import {
   Adm003Service,
   Adm004Service,
   Adm005Service,
+  Adm006Service,
   Adm007Service,
   Adm008Service,
   Adm010Service
@@ -18,6 +19,7 @@ import {
     Adm003Service,
     Adm004Service,
     Adm005Service,
+    Adm006Service,
     Adm007Service,
     Adm008Service,
     Adm010Service

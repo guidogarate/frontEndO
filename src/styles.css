@@ -47,33 +47,33 @@ body {
 .tablaCebradoImpar {
   background-color: white;
 }
-.m0{
+.m0 {
   margin: 0;
 }
-.p0{
+.p0 {
   padding: 0;
 }
-.title-head{
+.title-head {
   font-size: 14px;
 }
-.title-negrita{
-font-weight: 700;
+.title-negrita {
+  font-weight: 700;
 }
 
-.selectCenter{
+.selectCenter {
   text-align-last: center;
 }
-.height-container{
+.height-container {
   height: 100%;
 }
 /* prueba estilos */
-.card-padding{
+.card-padding {
   padding-left: 2em;
   padding-right: 2em;
 }
-.margin-botton-card{
+.margin-botton-card {
   margin-bottom: 0.5em;
 }
-.padding-title{
+.padding-title {
   padding: 0.5em;
 }
