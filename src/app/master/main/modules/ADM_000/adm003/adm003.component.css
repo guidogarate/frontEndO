@@ -45,7 +45,7 @@ label {
 /**personalizando switch*/
 /* --------switch desabilitado------- */
 .custom-control-input:disabled ~ .custom-control-label::before {
-  background-color: rgb(173, 3, 3);
+  background-color: #808080;
 }
 
 .custom-switch .custom-control-label::after {
@@ -53,12 +53,12 @@ label {
 }
 
 .custom-control-label::before {
-  background-color: rgb(173, 3, 3);
+  background-color: #808080;
 }
 
 /* --------switch habilitado------- */
 .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: rgb(13, 148, 11);
+  background-color: #03a9f4;
 }
 
 /**disabled swtich*/
@@ -93,4 +93,13 @@ label {
 
 .pb0 {
   padding-bottom: 0.5em;
+}
+
+/*activo*/
+.gris {
+  color: #808080;
+}
+
+.verde {
+  color: rgb(12, 197, 36);
 }

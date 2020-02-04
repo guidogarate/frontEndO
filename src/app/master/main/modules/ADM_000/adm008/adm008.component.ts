@@ -6,6 +6,7 @@ import { Adm008Service } from "src/app/master/utils/service/main/modules/adm_000
 import { Adm005 } from "src/app/master/utils/models/main/adm_000/index.models";
 import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models";
 import { NotyGlobal } from "src/app/master/utils/global/noty.global";
+import url from "src/app/master/config/url.config";
 
 @Component({
   selector: "app-adm008",
@@ -13,6 +14,7 @@ import { NotyGlobal } from "src/app/master/utils/global/noty.global";
   styleUrls: ["./adm008.component.css"]
 })
 export class Adm008Component implements OnInit, OnDestroy {
+  bienvenido: string = url.bienvenido;
   textBuscar = new FormControl("", []);
   sus: Subscription;
   texto = "all_auxma";
