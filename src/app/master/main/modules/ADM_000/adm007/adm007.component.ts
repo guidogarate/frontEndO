@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Adm007Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
+import { element } from 'protractor';
 declare function initLabels ();
 
 @Component({
@@ -18,6 +19,10 @@ export class Adm007Component implements OnInit {
   idTipoDireccion : string ="1" ;
   ListDirecciones : any ;
   ListTipoContactos: any ;
+  ListTipoRedesSociales : any;
+  ListTipoTelefono : any;
+  ListTipoEmail : any ; 
+  ListaFiltrada : any ;
   ListContactos : any;
   ListModulos : any;
   ListCuidades : any ;
@@ -48,9 +53,11 @@ export class Adm007Component implements OnInit {
         this.ListActividadEmpresarial = this.lista[0]["actividad_empresarial"];
         this.ListTipoDirecciones = this.lista[0]["tipo_direcciones"];
         this.ListDirecciones = this.lista[0]["direcciones"];
+        this.CambiarTipoEstado();
         console.log("direcciones: ",  this.ListDirecciones);
-        this.ListTipoContactos = this.lista[0]["tipo_contactos"];
         this.ListContactos = this.lista[0]["contactos"];
+        this.ListTipoContactos = this.lista[0]["tipo_contactos"];
+        this.AgregarId();
         this.ListModulos = this.lista[0]["modulos"];
         this.ListPaises = this.lista[0]["paises"];
         this.ListDepartamentos = this.lista[0]["departamentos"];;
@@ -89,5 +96,26 @@ export class Adm007Component implements OnInit {
     this.ocultarSeccion = false;
   }
 
+  /** poner estado a uno o cero en las direcciones */
+  CambiarTipoEstado(){
+    this.ListDirecciones.forEach( element => {
+      element = element.estado == 0 ? true : false
+    });
+  }
+  SeparaTiposContacto(id : any){
+    this.ListTipoContactos.forEach(element => {
+      if(element.id_tipo_contacto == id){
+        this.ListaFiltrada.push(element);
+      }
+    });
+  }
+  AgregarId(){
+    this.ListContactos.forEach(element => {
+      element.id_contacto = ""+element.id_tipo_contacto+"-"+element.id_subtipo_contacto;
+    });
+    this.ListTipoContactos.forEach(element => {
+      element.id_contacto = ""+element.id_tipo_contacto+"-"+element.id_tipo;
+    });
+  }
   /**metodos auxiliares del tab */
 }

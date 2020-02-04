@@ -100,27 +100,28 @@
                             </div>
                         </div>
                         <div class="row p0 m0">
-                            <div class="col-sm-12 p0 m0" style="display: flex;" *ngFor="let item of ListDirecciones; let i = index">
-                                <div class="col-sm-3 col-8">
-                                        <select class="form-control p0 selectCenter alturaInputs" 
-                                                [(ngModel)]="item.idTipoDireccion" (change)="nada()" name="direccionSelect">
-                                                <option *ngFor="let dir of ListDirecciones"
-                                                    [value]="dir.id_tipo_direccion"> {{dir.tipo_direccion}}</option>
-                                        </select> 
-                                </div>
-                                <div class="col-sm-7 col-12">
-                                    <input type="text" class="form-control text-center" [(ngModel)]="item.direccion" [value] = "item.direccion" >
-                                </div>
-                                <div class="col-sm-2 col-12" style="align-self: flex-end;">
-                                    <div class="custom-control custom-switch switch-float">
-                                        <label class="custom-control-label h30" for="direccion{{i}}">Activo</label>
-                                        <input type="checkbox" class="custom-control-input" name="direccion{{i}}"
-                                             data-fouc [checked] = "item.estado == 0"  [(ngModel)]="item.estado" >
+                            <div class="col-sm-12 p0 m0" *ngFor="let item of ListDirecciones; let i = index">
+                                <div class="row p0 m0">
+                                    <div class="col-sm-3 col-6">
+                                            <select class="form-control p0 selectCenter alturaInputs" 
+                                                    [(ngModel)]="item.id_tipo_direccion" (change)="nada()" name="direccionSelect">
+                                                    <option *ngFor="let dir of ListTipoDirecciones"
+                                                        [value]="dir.id_tipo_direccion"> {{dir.tipo_direccion}}</option>
+                                            </select> 
                                     </div>
-                                    <pre>item:{{i}} {{item.estado | json}}</pre> 
+                                    <div class="col-sm-7 col-12">
+                                        <input type="text" class="form-control text-center" [(ngModel)]="item.direccion" [value] = "item.direccion" >
+                                    </div>
+                                    <div class="col-sm-2 col-12" style="align-self: flex-end;">
+                                        <div class="custom-control custom-switch switch-float">
+                                            <input type="checkbox" class="custom-control-input" id="direccion{{i}}" name="estados}}"
+                                                [checked]="item.estado == 'true'" data-fouc [(ngModel)]="item.estado" >
+                                            <label *ngIf="item.estado == 'true' || item.estado == 1" class="custom-control-label h30" for="direccion{{i}}">Activo</label>
+                                            <label *ngIf="!(item.estado == 'true'|| item.estado == 1)" class="custom-control-label h30" for="direccion{{i}}">Inactivo</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            
                         </div>
                         <div class="row p0 m0" style="padding-top: 0.5em;">
                             <div class="col-sm-3">
@@ -183,39 +184,41 @@
                             </div>
                         </div>
                         <div class="row p0 m0">
-                            <div class="col-sm-2 col-0"></div>
-                            <div class="col-sm-2 col-8 col-8">
-                                    <select class="form-control p0 selectCenter alturaInputs" 
-                                                name="direccionSelect">
-                                    <!-- [(ngModel)]="idGestion" (change)="CargarParametrosPorGestion()" -->
-                                        <option value="1">Domicilio</option>
-                                        <option value="2">Particular</option>
-                                        <option value="3">Trabajo</option>
-                                    <!-- *ngFor="let contents of item.content"
-                                            [value]="contents.adgtideg"> {{contents.adgtideg}} -->
-                                    </select> 
-                            </div>
-                            <div class="col-sm-2 col-6">
-                                <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-3 col-1"><i class="icon-flag3"></i> </label>
-                                    <div class="col-lg-9 col-9">
-                                        <div class="input-group" style="justify-content: center;" >
-                                            <input type="text" class="form-control text-center" value="+591" >
+                            <div class="col-sm-12 col-12 p0 m0" *ngFor="let item of ListContactos; let i = index">
+                                <div class="row p0 m0">
+                                    <div class="col-sm-2 col-0"></div>
+                                    <div class="col-sm-2 col-8">
+                                        <select class="form-control p0 selectCenter alturaInputs"
+                                                [(ngModel)]="item.id_contacto" name="ContactosSelect">
+                                                <option *ngFor="let element of ListTipoContactos"
+                                                [value]="element.id_contacto">{{element.tipo}}</option>
+                                        </select> 
+                                    </div>
+                                    <div class="col-sm-2 col-8">
+                                        <div class="form-group row mb0">
+                                            <label class="col-form-label col-lg-3 col-1"><i class="icon-flag3"></i> </label>
+                                            <div class="col-lg-9 col-9">
+                                                <div class="input-group" style="justify-content: center;" >
+                                                    <input type="text" class="form-control text-center" [(ngModel)]="item.codigo_contacto" [value]="item.codigo_contacto" >
+                                                </div>
+                                            </div>
+                                        </div>                                
+                                    </div>
+                                    <div class="col-sm-2 col-12">
+                                        <input type="text" class="form-control text-center" [(ngModel)]="item.contacto" [value]="item.contacto" >
+                                    </div>
+                                    <div class="col-sm-2 col-12" style="align-self: flex-end;">
+                                        <div class="custom-control custom-switch switch-float">
+                                            <input type="checkbox" class="custom-control-input" id="phones{{i}}" name="phones"
+                                            [checked]="item.estado == 'true'" data-fouc [(ngModel)]="item.estado" >
+                                            <label *ngIf="item.estado == 'true' || item.estado == 1" class="custom-control-label h30" for="phones{{i}}">Activo</label>
+                                            <label *ngIf="!(item.estado == 'true'|| item.estado == 1)" class="custom-control-label h30" for="phones{{i}}">Inactivo</label>
                                         </div>
                                     </div>
-                                </div>                                
-                            </div>
-                            <div class="col-sm-2 col-6">
-                                <input type="text" class="form-control text-center" >
-                            </div>
-                            <div class="col-sm-2 col-12" style="align-self: flex-end;">
-                                <div class="custom-control custom-switch switch-float">
-                                    <input type="checkbox" class="custom-control-input" name="phone"
-                                         data-fouc checked >
-                                    <label class="custom-control-label h30" for="phone">Activo</label>
+                                    <div class="col-sm-2 col-0">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-2 col-0"></div>
                         </div>
                     </div>
                 </div>
