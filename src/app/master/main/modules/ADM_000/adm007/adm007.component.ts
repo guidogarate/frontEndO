@@ -25,7 +25,10 @@ export class Adm007Component implements OnInit {
   ListaFiltrada : any ;
   ListContactos : any;
   ListModulos : any;
-  ListCuidades : any ;
+  ListCiudades : any ;
+  idCiudad : string ="0010101" ;
+  textPais : string = "";
+  textDepartamento : string = "";
   ListDepartamentos : any;
   ListPaises : any ;
 
@@ -61,7 +64,7 @@ export class Adm007Component implements OnInit {
         this.ListModulos = this.lista[0]["modulos"];
         this.ListPaises = this.lista[0]["paises"];
         this.ListDepartamentos = this.lista[0]["departamentos"];;
-        this.ListCuidades = this.lista[0]["ciudades"];
+        this.ListCiudades = this.lista[0]["ciudades"];
         initLabels();
       }
       else {
@@ -102,19 +105,28 @@ export class Adm007Component implements OnInit {
       element = element.estado == 0 ? true : false
     });
   }
-  SeparaTiposContacto(id : any){
-    this.ListTipoContactos.forEach(element => {
-      if(element.id_tipo_contacto == id){
-        this.ListaFiltrada.push(element);
-      }
-    });
-  }
+  // SeparaTiposContacto(id : any){
+  //   this.ListTipoContactos.forEach(element => {
+  //     if(element.id_tipo_contacto == id){
+  //       this.ListaFiltrada.push(element);
+  //     }
+  //   });
+  // }
   AgregarId(){
     this.ListContactos.forEach(element => {
       element.id_contacto = ""+element.id_tipo_contacto+"-"+element.id_subtipo_contacto;
     });
     this.ListTipoContactos.forEach(element => {
       element.id_contacto = ""+element.id_tipo_contacto+"-"+element.id_tipo;
+    });
+  }
+  MostrarCiudad(data : any){
+    this.ListCiudades.forEach(element => {
+      if(element.nombre_pais == data.ciudad){
+        this.idCiudad = element.id_pais;
+        this.textPais = data.pais;
+        this.textDepartamento = data.departamento;
+      }
     });
   }
   /**metodos auxiliares del tab */

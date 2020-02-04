@@ -58,13 +58,11 @@
                                             <div class="col-sm-6 col-7 form-group form-group-float m0">
                                                 <label class="form-group-float-label m0 p0" >Actividad de la Empresa</label>
                                                     <select class="form-control p0 selectCenter alturaInputs" 
-                                                                name="gestionSelect">
-                                                    <!-- [(ngModel)]="idGestion" (change)="CargarParametrosPorGestion()" -->
-                                                        <option value="1">Comercial</option>
-                                                        <option value="2">Industrial</option>
-                                                        <option value="3">Contable</option>
-                                                    <!-- *ngFor="let contents of item.content"
-                                                            [value]="contents.adgtideg"> {{contents.adgtideg}} -->
+                                                            [(ngModel)]="lista[0].id_actividad_empresarial" name="actEmp">
+                                                        <option *ngFor="let contents of ListActividadEmpresarial"
+                                                                [value]="contents.id_actividad_empresarial">{{contents.actividad_empresa}}
+                                                        </option>
+                                                        
                                                     </select> 
                                             </div>
                                             <div class="col-sm-5 col-5 form-group form-group-float m0">
@@ -100,8 +98,8 @@
                             </div>
                         </div>
                         <div class="row p0 m0">
-                            <div class="col-sm-12 p0 m0" *ngFor="let item of ListDirecciones; let i = index">
-                                <div class="row p0 m0">
+                            <div class="col-sm-12 p0 m0"  *ngFor="let item of ListDirecciones; let i = index">
+                                <div class="row p0 m0" (click) = "MostrarCiudad(item)">
                                     <div class="col-sm-3 col-6">
                                             <select class="form-control p0 selectCenter alturaInputs" 
                                                     [(ngModel)]="item.id_tipo_direccion" (change)="nada()" name="direccionSelect">
@@ -123,7 +121,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row p0 m0" style="padding-top: 0.5em;">
+                        <div class="row p0 m0" *ngIf="editar" style="padding-top: 0.5em;">
                             <div class="col-sm-3">
                                 <div class="form-group row mb0">
                                     <label class="col-form-label col-lg-4 col-6">Pais</label>
@@ -152,10 +150,49 @@
                                 <div class="form-group row mb0">
                                     <label class="col-form-label col-lg-4 col-6">Ciudad</label>
                                     <div class="col-lg-8 col-6">
-                                        <select class="form-control p0 selectCenter alturaInputs">
-                                            <option  value="1" >Santa Cruz</option>
-                                            <option  value="2" >La Paz</option>
-                                            <option  value="3" >Cochabamba</option>
+                                        <select class="form-control p0 selectCenter alturaInputs"
+                                                [(ngModel)]="idCiudad">
+                                            <option *ngFor="let ciudad of ListCiudades" 
+                                            [value]="ciudad.id_pais">{{ciudad.nombre_pais}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 col-0"></div>
+                        </div>
+                        <div class="row p0 m0" *ngIf="!editar" style="padding-top: 0.5em;">
+                            <div class="col-sm-3">
+                                <div class="form-group row mb0">
+                                    <label class="col-form-label col-lg-4 col-6">Pais</label>
+                                    <div class="col-lg-8 col-6">
+                                        <div class="input-group" style="justify-content: center;" >
+                                            <input disabled type="text" name="pais" disabled class="text-center"
+                                            [value]="textPais" 
+                                            >   
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group row mb0">
+                                    <label class="col-form-label col-lg-4 col-6">Departamento</label>
+                                    <div class="col-lg-8 col-6">
+                                        <div class="input-group" style="justify-content: center;" >
+                                            <input disabled type="text" name="departamento" disabled class="text-center"
+                                            [value]="textDepartamento" 
+                                            >   
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group row mb0">
+                                    <label class="col-form-label col-lg-4 col-6">Ciudad</label>
+                                    <div class="col-lg-8 col-6">
+                                        <select class="form-control p0 selectCenter alturaInputs"
+                                                [(ngModel)]="idCiudad">
+                                            <option *ngFor="let ciudad of ListCiudades" 
+                                            [value]="ciudad.id_pais">{{ciudad.nombre_pais}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -194,7 +231,7 @@
                                                 [value]="element.id_contacto">{{element.tipo}}</option>
                                         </select> 
                                     </div>
-                                    <div class="col-sm-2 col-8">
+                                    <div class="col-sm-2 col-6">
                                         <div class="form-group row mb0">
                                             <label class="col-form-label col-lg-3 col-1"><i class="icon-flag3"></i> </label>
                                             <div class="col-lg-9 col-9">
@@ -204,7 +241,7 @@
                                             </div>
                                         </div>                                
                                     </div>
-                                    <div class="col-sm-2 col-12">
+                                    <div class="col-sm-2 col-6 input-group">
                                         <input type="text" class="form-control text-center" [(ngModel)]="item.contacto" [value]="item.contacto" >
                                     </div>
                                     <div class="col-sm-2 col-12" style="align-self: flex-end;">
@@ -246,28 +283,28 @@
                             </div>
                         </div>
                         <div class="row p0 m0" *ngIf="!ocultarSeccion" id="data-toggle">
-                            <div class="col-sm-3">
+                            <div class="col-sm-2 col-12">
                                     <div>
-                                        <p>SAGESOFT</p>
+                                        <p>SAGESOFT</p> <br>
                                         <p>VERSION 1.0</p>
                                     </div>
                             </div>
-                            <div class="col-sm-9">
-                                <div class="col-sm-12">
-                                    <div class="table-responsive text-center">
+                            <div class="col-sm-9 col-12">
+                                <div class="col-sm-12 ">
+                                    <div class="table-responsive text-left">
                                         <table class="table table-sm table-hover">
                                             <thead>
                                                 <th scope="col">Descripcion</th>
                                                 <th scope="col">Version</th>
-                                                <th scope="col">SolTec</th>
+                                                <th scope="col">SoLTec</th>
                                             </thead>
                                             <tbody>
                                                 <tr class="table-border-double" 
-                                                *ngFor="let periodo of lista;let impar = odd;let par = even;" 
+                                                *ngFor="let mod of ListModulos;let impar = odd;let par = even;" 
                                                 [ngClass]="{ tablaCebradoPar:par , tablaCebradoImpar:impar}">
-                                                    <td class="puntero"> </td>
-                                                    <td class="puntero"> </td>
-                                                    <td class="puntero"> </td>
+                                                    <td class="puntero">{{mod.modulo}} </td>
+                                                    <td class="puntero">{{mod.version_modulo}}</td>
+                                                    <td class="puntero">{{mod.sol_tec}}</td>
                                                 </tr>                                                  
                                             </tbody>
                                         </table>
@@ -278,8 +315,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>        
