@@ -28,119 +28,40 @@ export class Adm007Service {
         })
       );
   }
-  // ObtenerParametrosMoneda(fecha : string) {
-  //   const url1 = `${url.prod}${adm0004.get_monedas}${fecha}`;
-  //   return this.httpClient
-  //     .get(url1, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //        console.log(resp);
-  //         return resp;
-  //       })
-  //     );
-  // }
-
-  // ObtenerParametrosFolio(fecha : string) {
-  //   const url1 = `${url.prod}${adm0004.get_folio}${fecha}`;
-  //   console.log("cargando folio fecha: ",url1);
-  //   return this.httpClient
-  //     .get(url1, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         console.log(resp);
-  //         return resp;
-  //       })
-  //     );
-  // }
-  // ObtenerParametrosEspeciales(fecha : string) {
-  //   const url1 = `${url.prod}${adm0004.parama_espec}${fecha}`;
-  //   return this.httpClient
-  //     .get(url1, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         console.log(resp);
-  //         return resp;
-  //       })
-  //     );
-  // }
-
-  // ObtenerParametrosUnidadNegocio(fecha : string) {
-  //   const url1 = `${url.prod}${adm0004.unidad_negocio}${fecha}`;
-  //   return this.httpClient
-  //     .get(url1, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         console.log(resp);
-  //         return resp;
-  //       })
-  //     );
-  // }
-
-  // ObtenerParametrosRegistroMaestro(fecha : string) {
-  //   const url1 = `${url.prod}${adm0004.reg_maest}${fecha}` ;
-  //   return this.httpClient
-  //     .get(url1, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         console.log(resp);
-  //         return resp;
-  //       })
-  //     );
-  // }
-
+ 
   
 
-  // ActualizarParametros(item: any, gestion : string) {
-  //   // const json = JSON.stringify({
-  //   //   descripcion: item.adgtdesc,
-  //   //   actEmpresa: +item.adgtacte,
-  //   //   cantPeridos: +item.adgtcanp,
-  //   //   estPeriodo: +item.adgtesta,
-  //   //   fechaInicio: item.adgtfegi,
-  //   //   fechaFin: item.adgtfegf,
-  //   //   gtionDefec: item.adgtgesd == true ? "1" : "0",
-  //   //   modAutomatica: item.adgtmoda == true ? "1" : "0",
-  //   //   fechaModAutomatica: new Date(item.adgtdiam+"-01"),
-  //   // });
+  ActualizarDatos(item: any) {
+    //   const json = JSON.stringify({
+    //   descripcion: item.adgtdesc,
+    //   actEmpresa: +item.adgtacte,
+    //   cantPeridos: +item.adgtcanp,
+    //   estPeriodo: +item.adgtesta,
+    //   fechaInicio: item.adgtfegi,
+    //   fechaFin: item.adgtfegf,
+    //   gtionDefec: item.adgtgesd == true ? "1" : "0",
+    //   modAutomatica: item.adgtmoda == true ? "1" : "0",
+    //   fechaModAutomatica: new Date(item.adgtdiam+"-01"),
+    // });
    
-  //   console.log("service Actualizar Gestion: ", item);
+    console.log("service Actualizar data: ", item);
 
-  //   const url1 = `${url.prod}${adm0004.put_paraminicial}${gestion}`;
-  //   console.log(url1);
-  //   return this.httpClient
-  //     .put(url1, item, {
-  //       headers: new HttpHeaders({
-  //         authorization: this.token,
-  //         "Content-Type": "application/json"
-  //       })
-  //     })
-  //     .pipe(
-  //       map(resp => {
-  //         console.log(resp);
-  //         return resp;
-  //       })
-  //     );
-  // }
+    const url1 = `${url.prod}${adm0007.insert_datos_empresa}`;
+    console.log(url1,item);
+    return this.httpClient
+      .post(url1, item, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          console.log(resp);
+          return resp;
+        })
+      );
+  }
 
   
 }
