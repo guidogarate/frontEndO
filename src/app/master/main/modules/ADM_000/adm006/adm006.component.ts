@@ -6,6 +6,7 @@ import { Adm006Service } from "src/app/master/utils/service/main/modules/adm_000
 import { Observable, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { FormControl } from "@angular/forms";
+import url from "src/app/master/config/url.config";
 
 @Component({
   selector: "app-adm006",
@@ -13,6 +14,7 @@ import { FormControl } from "@angular/forms";
   styleUrls: ["./adm006.component.css"]
 })
 export class Adm006Component implements OnInit {
+  bienvenido: string = url.bienvenido;
   textBuscarAdm006 = new FormControl("", []);
   buscar = true;
   texto = "all_auxma";
@@ -21,6 +23,12 @@ export class Adm006Component implements OnInit {
   auxma: Adm006[];
   pagi: Paginacion[];
   loading = true;
+  btnGrupo = {
+    BtnGuard: false,
+    BtnCance: false,
+    BtnEdita: false,
+    BtnElimi: false
+  };
 
   constructor(private adm006S: Adm006Service, private notyG: NotyGlobal) {
     this.getAdm006(this.texto);
@@ -49,16 +57,71 @@ export class Adm006Component implements OnInit {
       peticion = this.adm006S.geAdm006("90", "1", this.texto);
     }
     this.sus = peticion.subscribe(resp => {
-      console.log(resp);
       this.numeroPag = 1;
       if (resp["ok"]) {
-        this.auxma = resp["auxma"];
+        this.auxma = resp["usr"];
         this.pagi = resp["cant"];
+        console.log(this.auxma);
       } else {
         this.notyG.noty("error", resp["messagge"], 5000);
       }
       this.buscar = false;
       this.loading = false;
+    });
+  }
+
+  paginacion(numero: string) {
+    const nume = Number(numero);
+    if (this.numeroPag === nume) {
+      return;
+    }
+    const total = this.pagi.length;
+    let peticion: Observable<any>;
+    if (nume > 0 && nume <= total) {
+      this.numeroPag = nume;
+      peticion = this.adm006S.geAdm006(
+        "90",
+        this.numeroPag.toString(),
+        this.texto
+      );
+    } else {
+      if (numero === "000") {
+        if (this.numeroPag === 1) {
+          return;
+        }
+        if (this.numeroPag === 1) {
+          this.numeroPag = 1;
+        } else {
+          this.numeroPag--;
+        }
+        peticion = this.adm006S.geAdm006(
+          "90",
+          this.numeroPag.toString(),
+          this.texto
+        );
+      } else if (numero === "999") {
+        if (this.numeroPag === total) {
+          return;
+        }
+        if (this.numeroPag === total) {
+          this.numeroPag = total;
+        } else {
+          this.numeroPag++;
+        }
+        peticion = this.adm006S.geAdm006(
+          "90",
+          this.numeroPag.toString(),
+          this.texto
+        );
+      }
+    }
+    this.sus = peticion.subscribe(resp => {
+      if (resp["ok"]) {
+        this.auxma = resp["auxma"];
+        this.pagi = resp["cant"];
+      } else {
+        // this.notyG.noty("error", resp["mensaje"], 5000);
+      }
     });
   }
 }

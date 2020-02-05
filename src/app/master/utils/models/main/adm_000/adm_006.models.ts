@@ -9,5 +9,10 @@ export interface Adm006 {
   nombre_persona: string;
   foto: string;
   cantidad: number;
-  estado: boolean;
+  tipos_usuario: Adm006Obj[];
+}
+
+export interface Adm006Obj {
+  id_grupos_perfil: number;
+  descripcion: string;
 }

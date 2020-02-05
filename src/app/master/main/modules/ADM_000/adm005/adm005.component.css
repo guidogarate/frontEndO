@@ -103,3 +103,19 @@ label {
 .verde {
   color: rgb(12, 197, 36);
 }
+.blue {
+  color: #03a9f4;
+}
+
+/*tabla*/
+.table-sm th,
+.table-sm td {
+  padding: 0;
+  vertical-align: middle;
+}
+.table th,
+.table td {
+  padding: 0;
+  vertical-align: middle;
+  border-top: 1px solid #ddd;
+}
