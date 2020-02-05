@@ -6,6 +6,7 @@ import { Adm005Service } from "src/app/master/utils/service/main/modules/adm_000
 import { NotyGlobal } from "src/app/master/utils/global/noty.global";
 import { Adm005 } from "src/app/master/utils/models/main/adm_000/index.models";
 import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models";
+import url from "src/app/master/config/url.config";
 
 @Component({
   selector: "app-adm005",
@@ -13,6 +14,7 @@ import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models
   styleUrls: ["./adm005.component.css"]
 })
 export class Adm005Component implements OnInit, OnDestroy {
+  bienvenido: string = url.bienvenido;
   textBuscarAdm005 = new FormControl("", []);
   texto = "all_auxma";
   sus: Subscription;
@@ -26,6 +28,8 @@ export class Adm005Component implements OnInit, OnDestroy {
     deshab: true,
     atras: false
   };
+  isChecked = false;
+  it: number = 999;
 
   constructor(private adm005S: Adm005Service, private notyG: NotyGlobal) {
     this.buscarAdm005(this.texto);
@@ -133,6 +137,7 @@ export class Adm005Component implements OnInit, OnDestroy {
       this.habiCampo.atras = false;
       this.habiCampo.editar = true;
       this.habiCampo.deshab = true;
+      this.it = 999;
       for (let index = 0; index < this.auxma.length; index++) {
         this.auxma[index].estado = false;
       }

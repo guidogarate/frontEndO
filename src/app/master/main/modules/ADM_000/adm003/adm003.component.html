@@ -4,12 +4,18 @@
     <!-- Table with togglable columns -->
     <div class="card pb0">
       <div class="card-header header-elements-inline">
-        <h5 class="card-title">DATOS COMPLEMENTARIOS</h5>
+        <h5 class="card-title font-weight-bold">
+          <img
+            src="https://trello-attachments.s3.amazonaws.com/5e00f87a7a953c871e9a19f0/37x37/026b03c4f5a191f167b26d1a634519ca/image.png"
+            alt=""
+          />
+          Datos Complementarios
+        </h5>
       </div>
       <div class="card-body pb0">
         <div class="row">
-          <div class="col-1 col-sm-1 col-md-3 col-lg-4"></div>
-          <div class="col-9 col-sm-9 col-md-6 col-lg-4">
+          <div class="col-1 col-sm-1 col-md-3 col-lg-7"></div>
+          <div class="col-8 col-sm-9 col-md-6 col-lg-3">
             <div
               class="form-group form-group-feedback form-group-feedback-right"
             >
@@ -31,7 +37,7 @@
               </div>
             </div>
           </div>
-          <div class="col-2 col-sm-2 col-md-3 col-lg-4">
+          <div class="col-3 col-sm-2 col-md-3 col-lg-2">
             <div class="form-control-feedback">
               <i
                 data-toggle="modal"
@@ -40,18 +46,23 @@
                 (click)="nuevElemGrup()"
                 title="agregar"
               ></i>
+              <i
+                routerLink="{{ bienvenido }}"
+                class="icon-exit xxl puntero"
+                title="Pagina Bienvenido"
+              >
+              </i>
             </div>
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
           <div class="table-responsive text-center">
             <!-- <table class="table table-togglable table-xs table-hover"> -->
             <table
-              class="table table-sm table-hover table-striped table-bordered"
+              class="table table-sm table-hover table-bordered"
             >
               <thead>
                 <tr class="bg-blue">
@@ -66,21 +77,16 @@
                 </tr>
               </thead>
               <tbody>
-                <ng-container
-                  *ngFor="
-                    let adm003 of auxma;
-                    let i = index;
-                    let impar = odd;
-                    let par = even
-                  "
-                  ><tr
+                <tr
+                    class="table-border-double PRL0"
+                    *ngFor="
+                      let adm003 of auxma;
+                      let i = index;
+                      let impar = odd;
+                      let par = even
+                    "
+                    [ngClass]="{ tablaCebradoPar: par, tablaCebradoImpar: impar }"
                     (dblclick)="myFunction()"
-                    [ngClass]="{
-                      tablaCebradoPar: par,
-                      tablaCebradoImpar: impar,
-                      puntero: true,
-                      PRL0: true
-                    }"
                   >
                     <td>{{ adm003.adamtipa }}</td>
                     <td class="table-content-center">
@@ -155,7 +161,6 @@
                       </div>
                     </td>
                   </tr>
-                </ng-container>
               </tbody>
             </table>
             <br />
@@ -486,3 +491,4 @@
     </div>
   </div>
 </div>
+

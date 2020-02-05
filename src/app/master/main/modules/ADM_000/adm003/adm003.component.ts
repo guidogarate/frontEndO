@@ -6,6 +6,7 @@ import { debounceTime } from "rxjs/operators";
 import { FormControl } from "@angular/forms";
 import { Adm003Models } from "src/app/master/utils/models/main/adm_000/index.models";
 import { Paginacion } from "src/app/master/utils/models/main/global/index.models";
+import url from "src/app/master/config/url.config";
 declare function initLabels();
 
 @Component({
@@ -16,6 +17,7 @@ declare function initLabels();
 export class Adm003Component implements OnInit, OnDestroy {
   // this.amd003 ==== Grupo
   // this.auxmaSub==== SubGrupo
+  bienvenido: string = url.bienvenido;
   textBuscarAdm003 = new FormControl("", []);
   buscar = true;
   loading = true;

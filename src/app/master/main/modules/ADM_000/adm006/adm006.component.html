@@ -1,1 +1,249 @@
-<p>en proceso</p>
+<div class="row haciadentro animaciones superior">
+  <div class="col-xl-12">
+    <!-- Table with togglable columns -->
+    <div class="card pb0">
+      <div class="card-header header-elements-inline">
+        <h5 class="card-title font-weight-bold">
+          <img
+            src="https://trello-attachments.s3.amazonaws.com/5e00f87a7a953c871e9a19f0/37x37/026b03c4f5a191f167b26d1a634519ca/image.png"
+            alt=""
+          />
+          Mantenimientos de Usuarios
+        </h5>
+      </div>
+      <div class="card-body pb0">
+        <div class="row">
+          <div class="col-1 col-sm-1 col-md-3 col-lg-7"></div>
+          <div class="col-8 col-sm-9 col-md-6 col-lg-3">
+            <div
+              class="form-group form-group-feedback form-group-feedback-right"
+            >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Buscar"
+                id="buscarGrupoLupa"
+                #texto
+                [formControl]="textBuscarAdm006"
+              />
+              <div *ngIf="buscar" class="form-control-feedback">
+                <i class="icon-spinner2 spinner"></i>
+              </div>
+              <div *ngIf="!buscar" class="form-control-feedback">
+                <label for="buscarGrupoLupa">
+                  <i class="icon-search4 puntero" title="buscar"></i
+                ></label>
+              </div>
+            </div>
+          </div>
+          <div class="col-3 col-sm-2 col-md-3 col-lg-2">
+            <div class="form-control-feedback">
+              <!-- (click)="habilitar('agregar')" -->
+              <i class="icon-diff-added xxl puntero" title="Agregar"> </i>
+              <i
+                routerLink="{{ bienvenido }}"
+                class="icon-exit xxl puntero"
+                title="Pagina Bienvenido"
+              >
+              </i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+          <div class="table-responsive text-center">
+            <table class="table table-sm table-hover table-bordered">
+              <thead>
+                <tr class="bg-blue">
+                  <th data-hide="phone">Login</th>
+                  <th data-hide="phone">Foto</th>
+                  <th data-toggle="true" class="table-content-center">
+                    Descripcion
+                  </th>
+                  <th data-hide="phone,tablet">
+                    Grupo_de_acceso
+                    <div>Grupo_de_perfil</div>
+                  </th>
+                  <th data-hide="phone,tablet">Tipo_de_usuario</th>
+                  <th data-hide="phone,tablet">Relacion_persona</th>
+                  <th class="text-center" style="width: 30px;">
+                    _Opciones_
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container
+                  *ngFor="
+                    let adm006 of auxma;
+                    let i = index;
+                    let impar = odd;
+                    let par = even
+                  "
+                  ><tr
+                    class="table-border-double PRL0"
+                    [ngClass]="{
+                      tablaCebradoPar: par,
+                      tablaCebradoImpar: impar,
+                      puntero: false,
+                      PRL0: true
+                    }"
+                  >
+                    <td>
+                      {{ adm006.login }}
+                    </td>
+                    <td>
+                      <img
+                        src="{{ adm006.foto | imagenpipe }}"
+                        class="img-fluid rounded-circle"
+                        width="20"
+                        height="20"
+                        alt=""
+                      />
+                    </td>
+                    <td class="table-content-center">
+                      {{ adm006.descripcion }}
+                      <div>
+                        Activo
+                        <i
+                          *ngIf="adm006.activo === 1"
+                          class="icon-primitive-dot verde"
+                        ></i>
+                        <i
+                          *ngIf="adm006.activo === 0"
+                          class="icon-primitive-dot rojo"
+                        ></i>
+                      </div>
+                    </td>
+                    <td class="table-content-center">
+                      {{ adm006.grupo_acceso }}
+                      <div>
+                        {{ adm006.grupo_perfil }}
+                      </div>
+                    </td>
+                    <td class="table-content-center">
+                      {{ adm006.tipo_usuario }}
+                    </td>
+                    <td>
+                      Codigo: {{ adm006.codigo_persona }}
+                      <div>
+                        {{ adm006.nombre_persona }}
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="list-icons">
+                        <!-- (click)="reset(adm006)" -->
+                        <i
+                          class="icon-file-eye text-primary-600 puntero"
+                          title="Visualizar"
+                        ></i>
+                        <!-- (click)="editar(adm006, 'editar')" -->
+                        <i
+                          data-toggle="modal"
+                          data-target="#modal_adm_006"
+                          class="icon-pencil7 text-teal-600 puntero"
+                          title="Editar"
+                        ></i>
+                        <!-- (click)="reset(adm006)" -->
+                        <i
+                          class="icon-trash text-danger-600 puntero"
+                          title="Eliminar"
+                        ></i>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+            <br />
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+      <div *ngIf="loading" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div *ngIf="!loading" class="row justify-content-center">
+        <ul class="pagination pagination-flat align-self-center">
+          <li class="page-item puntero">
+            <a (click)="paginacion('000')" class="page-link"
+              >&larr; &nbsp; Atras</a
+            >
+          </li>
+          <ng-container *ngFor="let pg of pagi; let i = index">
+            <li
+              [ngClass]="{
+                'page-item': true,
+                puntero: true,
+                active: numeroPag === i + 1
+              }"
+            >
+              <a (click)="paginacion(pg.pag)" class="page-link">{{ pg.pag }}</a>
+            </li>
+          </ng-container>
+          <li class="page-item puntero">
+            <a (click)="paginacion('999')" class="page-link"
+              >Sig &nbsp; &rarr;</a
+            >
+          </li>
+        </ul>
+      </div>
+      <br />
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<div id="modal_adm_006" class="modal" tabindex="-1">
+  <div class="modal-dialog ">
+    <div class="modal-content animacionmodal haciadentro">
+      <div class="modal-header bg-blue">
+        <h6 class="modal-title">En proceso</h6>
+        <div class="list-icons float-right">
+          <a class="puntero" *ngIf="btnGrupo.BtnGuard"
+            ><i
+              class="icon-floppy-disk xxl"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Guardar"
+            >
+            </i
+          ></a>
+          <a *ngIf="btnGrupo.BtnEdita" class="puntero">
+            <i
+              class="icon-pencil7 xxl"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="editar"
+            >
+            </i
+          ></a>
+          <a class="puntero" *ngIf="btnGrupo.BtnElimi"
+            ><i
+              class="icon-trash xxl"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Eliminar"
+            >
+            </i
+          ></a>
+          <a class="puntero">
+            <!-- (click)="salir()" -->
+            <i
+              class="icon-exit xxl"
+              data-toggle="tooltip"
+              data-placement="top"
+              data-dismiss="modal"
+              title="Salir"
+            >
+            </i
+          ></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
