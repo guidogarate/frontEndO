@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Adm007Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
-import { element } from 'protractor';
 declare function initLabels ();
 
 @Component({
@@ -13,6 +12,8 @@ export class Adm007Component implements OnInit {
 
   editar : boolean = false;
   ocultarSeccion : boolean = false;
+  ocultarSeccionContactos : boolean = false;
+  ocultarSeccionDirecciones : boolean = false;
   lista : any ;
   ListActividadEmpresarial :  any;
   ListTipoDirecciones : any;
@@ -96,10 +97,12 @@ export class Adm007Component implements OnInit {
     this._adm007Service
     .ActualizarDatos(this.ListSend)
     .subscribe(resp => {
-      if(resp["true"]){
-        console.log("datos actualizados correctamente");
+      if(resp["ok"]){
+        // console.log("datos actualizados component");
+        this._notyG.noty("success", "datos actualizados", 3500);
       }
       else {
+        this._notyG.noty("error", "no se pudo actualizar", 3500);
         console.log("error al guardar los datos");
         console.log(resp);
       }
@@ -124,8 +127,8 @@ export class Adm007Component implements OnInit {
   }
   AgregarDireccion(){
     this.pasarDatosDireccion();
-    this.newContacto.estado= this.newContacto.estado == true ? 0 : 1
-    this.newDirection.estado= this.newDirection.estado == true ? 0 : 1
+    this.newContacto.estado = this.newContacto.estado == true ? 1 : 0
+    this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
     this.direcciones.push(this.newDirection);
     this.contactos.push(this.newContacto);
     this.ListDirecciones.push(this.newDirection); 
@@ -164,31 +167,54 @@ export class Adm007Component implements OnInit {
 
   limpiarDataContacto(){
     this.newContacto =  {
-      "id_tipo_contacto": 33,
-      "id_subtipo_contacto": 2,
-      "id_contacto": "33-2",
-      "codigo_contacto": "",
-      "contacto": "",
-      "estado": true,
+      "id_tipo_contacto" : 33,
+      "id_subtipo_contacto" : 2,
+      "id_contacto" : "33-2",
+      "codigo_contacto" : "",
+      "contacto" : "",
+      "estado" : true,
       "tipo": "Fijo"
     };
   }
   AgregarTelefono(){
     
   }
-
-  Ocultar(){
-    this.ocultarSeccion = true;
+  // Ocultar secciones
+  OcultarSeccion(seccion: string){
+    switch (seccion) {
+      case 'modulos': 
+          this.ocultarSeccion = true;
+          break;
+      case 'contactos': 
+          this.ocultarSeccionContactos = true;
+          break;
+      case 'direcciones': 
+          this.ocultarSeccionDirecciones = true;
+          break;
+      default:
+          console.log('invalid section');
+    }
   }
-
-  Mostrar(){
-    this.ocultarSeccion = false;
+  MostrarSeccion(seccion: string){
+    switch (seccion) {
+      case 'modulos': 
+          this.ocultarSeccion = false;
+          break;
+      case 'contactos': 
+          this.ocultarSeccionContactos = false;
+          break;
+      case 'direcciones': 
+          this.ocultarSeccionDirecciones = false;
+          break;
+      default:
+          console.log('invalid section');
+    }
   }
 
   /** poner estado a uno o cero en las direcciones */
   CambiarTipoEstado(){
     this.ListDirecciones.forEach( element => {
-      element = element.estado == 0 ? true : false
+      element = element.estado == 1 ? true : false
     });
   }
 
@@ -205,6 +231,8 @@ export class Adm007Component implements OnInit {
     this.newContacto.id_tipo_contacto = this.newContacto.id_contacto.slice(0,2);
     this.newContacto.id_subtipo_contacto = this.newContacto.id_contacto.slice(3);
     this.BuscarNombreTipoContacto( +this.newContacto.id_tipo_contacto, +this.newContacto.id_subtipo_contacto);
+    this.newContacto.codigo_contacto = "";
+    this.newContacto.contacto = "";
   }
 
   BuscarNombreTipoContacto(tipo : number, subtipo : number){
@@ -249,7 +277,6 @@ export class Adm007Component implements OnInit {
           this.BuscarPais(this.ObtenerPais(this.idCiudad));
           this.newDirection.id_ciudad = this.idCiudad;
           this.BuscarNombreCiudad(this.idCiudad);
-        
     }else{
       this.ListCiudades.forEach(element => {
         if(element.nombre_pais == data.ciudad){
