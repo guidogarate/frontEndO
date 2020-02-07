@@ -40,8 +40,8 @@ export class Adm007Component implements OnInit {
     "tipo_direccion": "Propietario",
     "pais": "",
     "departamento": "",
-    "ciudad": "Santa Cruz ",
-    "id_ciudad":"0010101"
+    "ciudad": "",
+    "id_ciudad":""
   };
 
   newContacto : any =   {
@@ -63,7 +63,7 @@ export class Adm007Component implements OnInit {
     this.ObtenerDatos();
     setTimeout(() => {
       initLabels();
-    }, 1000);
+    }, 1500);
 
   }
 
@@ -111,31 +111,73 @@ export class Adm007Component implements OnInit {
   /* metodos auxiliares*/
   nada(){}
 
-  Actualizar(){
-    this.AgregarDireccion();
-    this.editar = false;
+  Actualizar( seccion : string){
+
+    this.pasarDatosDireccion();
+    switch(seccion){
+
+      case 'all':
+        // this.AgregarDireccion();
+        this.Agregar('contactos');
+        this.Agregar('direccion');
+        console.log('entro por all');
+        break;
+      case 'direccion' :
+        this.Agregar(seccion);
+        console.log('entro por direccion');
+        break;
+      case 'contactos' :
+        this.Agregar(seccion);
+        console.log('entro por contactos');
+        break;
+    };
+    // this.AgregarDireccion();
     this.ActualizarDatos();
+    this.ModoVista();
   }
   ModoEdicion(){
     this.editar = true;
     // this.AgregarDireccion();
+    this.LimpiarData();
   }
   ModoVista(){
     this.editar = false;
     this.LimpiarData();
     this.limpiarDataContacto();
   }
+  Agregar(newData : string){
+
+    this.pasarDatosDireccion();
+    switch (newData) {
+      case 'contactos':
+        this.newContacto.estado = this.newContacto.estado == true ? 1 : 0
+        this.contactos.push(this.newContacto);
+        this.ListContactos.push(this.newContacto);
+        this.limpiarDataContacto();
+        break;
+      case 'direccion':
+        this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
+        this.direcciones.push(this.newDirection);
+        this.ListDirecciones.push(this.newDirection); 
+        this.LimpiarData();
+        break;
+      default:
+        break;
+    }
+
+  }
   AgregarDireccion(){
     this.pasarDatosDireccion();
-    this.newContacto.estado = this.newContacto.estado == true ? 1 : 0
+    // this.newContacto.estado = this.newContacto.estado == true ? 1 : 0
     this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
     this.direcciones.push(this.newDirection);
-    this.contactos.push(this.newContacto);
+    // this.contactos.push(this.newContacto);
     this.ListDirecciones.push(this.newDirection); 
-    this.ListContactos.push(this.newContacto);
+    // this.ListContactos.push(this.newContacto);
     this.LimpiarData();
-    this.limpiarDataContacto();
+    // this.limpiarDataContacto();
   }
+  
 
   pasarDatosDireccion (){
     this.ListSend ={
@@ -149,7 +191,7 @@ export class Adm007Component implements OnInit {
   }
 
   LimpiarData(){
-    this.idCiudad="0010101";
+    this.idCiudad="";
     this.newDirection  = {
       "id_tipo_direccion": 1,
       "estado": true,
@@ -158,8 +200,8 @@ export class Adm007Component implements OnInit {
       "tipo_direccion": "Propietario",
       "pais": "",
       "departamento": "",
-      "ciudad": "Santa Cruz ",
-      "id_ciudad":"0010101"
+      "ciudad": "",
+      "id_ciudad":""
     };
     this.textPais = "";
     this.textDepartamento = "";

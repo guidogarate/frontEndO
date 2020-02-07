@@ -14,9 +14,9 @@
                             [routerLink]="nada()" routerLinkActive="router-link-active">
                             <i class="icon-pencil7 title-icon" data-toggle="tooltip" data-placement="top" title="Editar"> </i>
                         </a>
-                        <a class="list-icons-item" *ngIf = "editar" (click) = "Actualizar()"
+                        <a class="list-icons-item" *ngIf = "editar" (click) = "Actualizar('all')"
                             [routerLink]="nada()" routerLinkActive="router-link-active" >
-                            <i class="icon-floppy-disk title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
+                            <i class="icon-floppy-disk title-icon" data-toggle="tooltip" data-placement="top" title="Guardar"> </i>
                         </a>
                         <a class="list-icons-item" *ngIf = "editar" (click) = "ModoVista()"
                             [routerLink]="nada()" routerLinkActive="router-link-active" >
@@ -96,7 +96,7 @@
                                         (click)="MostrarSeccion('direcciones')" > 
                                         <i class="icon-arrow-up12" data-toggle="tooltip" data-placement="top" title="Mostrar"></i> 
                                     </a>
-                                    <a class="list-icons-item" *ngIf = "editar" (click) = "Actualizar()"
+                                    <a class="list-icons-item" *ngIf = "editar" (click) = "Actualizar('direccion')"
                                         [routerLink]="nada()" routerLinkActive="router-link-active">
                                         <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Direccion"> </i>
                                     </a>
@@ -132,14 +132,14 @@
                             <div class="col-sm-12 p0 m0">
                                 <div class="row p0 m0">
                                     <div class="col-sm-3 col-6">
-                                            <select class="form-control p0 selectCenter alturaInputs"
+                                            <select class="form-control p0 selectCenter alturaInputs" required
                                                     [(ngModel)]="newDirection.id_tipo_direccion" (change)="nada()" name="newDirection">
                                                     <option *ngFor="let dir of ListTipoDirecciones"
                                                         [value]="dir.id_tipo_direccion"> {{dir.tipo_direccion}}</option>
                                             </select> 
                                     </div>
                                     <div class="col-sm-7 col-12">
-                                        <input type="text" class="form-control text-center" placeholder="ingrese su direccion" 
+                                        <input type="text" class="form-control text-center" placeholder="ingrese su direccion" required
                                                 [(ngModel)]="newDirection.direccion" [value] = "newDirection.direccion" >
                                     </div>
                                     <div class="col-sm-2 col-12" style="align-self: flex-end;">
@@ -255,9 +255,9 @@
                                         (click)="MostrarSeccion('contactos')" > 
                                         <i class="icon-arrow-up12" data-toggle="tooltip" data-placement="top" title="Mostrar"></i> 
                                     </a>
-                                    <a class="list-icons-item" *ngIf = "editar" (click)="AgregarTelefono()"
+                                    <a class="list-icons-item" *ngIf = "editar" (click)="Actualizar('contactos')"
                                         [routerLink]="nada()" routerLinkActive="router-link-active">
-                                        <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Direccion"> </i>
+                                        <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Contacto"> </i>
                                     </a>
                                 </div>
                             </div>
