@@ -100,6 +100,10 @@
                                         [routerLink]="nada()" routerLinkActive="router-link-active">
                                         <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Direccion"> </i>
                                     </a>
+                                    <a class="list-icons-item" *ngIf = "editar" (click) = "anadirDireccion()"
+                                    [routerLink]="nada()" routerLinkActive="router-link-active">
+                                    <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Añadir Direccion"> </i>
+                                </a>
                                 </div>
                             </div>
                         </div>
@@ -128,7 +132,7 @@
                             </div>
                         </div>
                         <!-- NuevoElemento -->
-                        <div class="row p0 m0" *ngIf="editar">
+                        <!-- <div class="row p0 m0" *ngIf="editar">
                             <div class="col-sm-12 p0 m0">
                                 <div class="row p0 m0">
                                     <div class="col-sm-3 col-6">
@@ -152,8 +156,38 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- End New Element -->
+                        <div class="row p0 m0" *ngIf="editar">
+                              <div class="col-sm-12 p0 m0">
+                                <form [formGroup]="formulario">
+                                    <h3>Direcciones</h3>
+                                    <div formArrayName="direcciones1">
+                                        <div class="row p0 m0" *ngFor="let dir of direcciones1.controls ; let i = index">
+                                            <div class="col-sm-3 col-6">
+                                                    <select class="form-control p0 selectCenter alturaInputs" required
+                                                            [(ngModel)]="newDirection.id_tipo_direccion" (change)="nada()" name="newDirection">
+                                                            <option *ngFor="let dir of ListTipoDirecciones"
+                                                                [value]="dir.id_tipo_direccion"> {{dir.tipo_direccion}}</option>
+                                                    </select> 
+                                            </div>
+                                            <div class="col-sm-7 col-12">
+                                                <input type="text" class="form-control text-center" placeholder="ingrese su direccion" required
+                                                        [(ngModel)]="newDirection.direccion" [value] = "newDirection.direccion" name="ubicacion" >
+                                            </div>
+                                            <div class="col-sm-2 col-12" style="align-self: flex-end;">
+                                                <div class="custom-control custom-switch switch-float">
+                                                    <input type="checkbox" class="custom-control-input" id="newDirectionSwitch{{i}}" name="estados"
+                                                        [checked]="newDirection.estado == 'true'" data-fouc [(ngModel)]="newDirection.estado" >
+                                                    <label *ngIf="newDirection.estado == 'true' || newDirection.estado == 1" class="custom-control-label h30" for="newDirectionSwitch{{i}}">Activo</label>
+                                                    <label *ngIf="!(newDirection.estado == 'true'|| newDirection.estado == 1)" class="custom-control-label h30" for="newDirectionSwitch{{i}}">Inactivo</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                </form>
+                            </div>
+                        </div>
 
                         <div class="row p0 m0" *ngIf="editar" style="padding-top: 0.5em;">
                             <div class="col-sm-3">

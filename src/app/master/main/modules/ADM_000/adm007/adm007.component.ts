@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Adm007Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
+import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 declare function initLabels ();
 
 @Component({
@@ -54,17 +55,45 @@ export class Adm007Component implements OnInit {
     "tipo": "Fijo"
   };
 
+  formulario : FormGroup;
+
   constructor( private _adm007Service : Adm007Service,
-              private _notyG: NotyGlobal) { 
+              private _notyG: NotyGlobal,
+              private _fb : FormBuilder) { 
 
   }
 
   ngOnInit() {
     this.ObtenerDatos();
+    this.crearFormulario();
+    this.anadirDireccion();
+    console.log("form: ", this.formulario);
+  }
+  crearFormulario(){
+    this.formulario = this._fb.group({
+      direcciones1: this._fb.array([])
+    });
+  
+  }
+
+  get direcciones1(): FormArray {
+    return this.formulario.get('direcciones1') as FormArray;
+  }
+1
+  anadirDireccion() {
+    const direccion = this._fb.group({
+      domicilio: new FormControl(''),
+      ubicacion: new FormControl(''),
+      estado: new FormControl(''),
+      pais: new FormControl(''),
+      departamento: new FormControl(''),
+      ciudad: new FormControl('')
+    });
+    
+    this.direcciones1.push(direccion);
     setTimeout(() => {
       initLabels();
-    }, 1500);
-
+    }, 500);
   }
 
   ObtenerDatos(){
