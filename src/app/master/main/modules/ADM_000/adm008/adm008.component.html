@@ -67,14 +67,13 @@
             <table class="table table-sm table-hover table-bordered">
               <thead>
                 <tr class="bg-blue">
-                  <th data-hide="phone">Login</th>
-                  <th data-hide="phone">Foto</th>
-                  <th data-toggle="true" class="table-content-center">
-                    Descripcion
+                  <th>Login</th>
+                  <th class="w-100" class="table-content-center">
+                    _______Descripcion_______
                   </th>
-                  <th data-hide="phone,tablet">Tipo_de_Usuario</th>
-                  <th data-hide="phone,tablet">Relacion_persona</th>
-                  <th data-hide="phone,tablet">Desactivar</th>
+                  <th>Tipo_de_Usuario</th>
+                  <th>Relacion_persona</th>
+                  <th>Desactivar</th>
                   <th class="text-center" style="width: 30px;">
                     Opciones
                   </th>
@@ -100,27 +99,32 @@
                     <td>
                       {{ adm005.login }}
                     </td>
+
                     <td>
-                      <img
-                        src="{{ adm005.foto | imagenpipe }}"
-                        class="img-fluid rounded-circle"
-                        width="20"
-                        height="20"
-                        alt=""
-                      />
-                    </td>
-                    <td class="table-content-center">
-                      {{ adm005.descripcion }}
-                      <div>
-                        Activo
-                        <i
-                          *ngIf="adm005.activo === 1"
-                          class="icon-primitive-dot verde"
-                        ></i>
-                        <i
-                          *ngIf="adm005.activo === 0"
-                          class="icon-primitive-dot gris"
-                        ></i>
+                      <div class="d-flex align-items-center">
+                        <div class="mr-3">
+                          <img
+                            src="{{ adm005.foto | imagenpipe }}"
+                            class="img-fluid rounded-circle"
+                            width="30"
+                            height="30"
+                            alt=""
+                          />
+                        </div>
+                        <div>
+                          {{ adm005.descripcion }}
+                          <div class="text-muted font-size-sm">
+                            Activo
+                            <i
+                              *ngIf="adm005.activo === 1"
+                              class="icon-primitive-dot verde"
+                            ></i>
+                            <i
+                              *ngIf="adm005.activo === 0"
+                              class="icon-primitive-dot gris"
+                            ></i>
+                          </div>
+                        </div>
                       </div>
                     </td>
                     <td class="table-content-center">

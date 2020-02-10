@@ -134,8 +134,10 @@
                     </td>
                     <td class="text-center">
                       <div class="list-icons">
-                        <!-- (click)="reset(adm006)" -->
                         <i
+                          data-toggle="modal"
+                          data-target="#modal_adm_006"
+                          (click)="Opciones(adm006, 'visualizar')"
                           class="icon-file-eye text-primary-600 puntero"
                           title="Visualizar"
                         ></i>
@@ -242,6 +244,74 @@
             >
             </i
           ></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <ng-container *ngFor="let auxModal of auxmaModal; let i = index">
+            <div class="col-md-3">
+              <div class="form-group form-group-float">
+                <img
+                  src="https://www.hoybolivia.com/imagenes_global/PN27042012110930.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group form-group-float">
+                <p>{{ auxModal.login }}</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group form-group-float">
+                <p>{{ auxModal.descripcion }}</p>
+              </div>
+            </div>
+            <!-- <div class="col-md-6">
+              <select
+                required
+                class="form-control selectpicker show-tick"
+                name="databaseid"
+              >
+                <option *ngFor="let gruac of auxModal.grupos_acceso">
+                  {{ gruac.descripcion }}</option
+                >
+              </select>
+            </div>
+            <div class="col-md-6">
+              <select
+                required
+                class="form-control selectpicker show-tick"
+                name="databaseid"
+              >
+                <option *ngFor="let gruac of auxModal.grupos_perfil">
+                  {{ gruac.descripcion }}</option
+                >
+              </select>
+            </div>
+            <div class="col-md-6">
+              <select
+                required
+                class="form-control selectpicker show-tick"
+                name="databaseid"
+              >
+                <option *ngFor="let gruac of auxModal.tipos_usuario">
+                  {{ gruac.descripcion }}</option
+                >
+              </select>
+            </div>
+            <div class="col-md-6">
+              <select
+                required
+                class="form-control selectpicker show-tick"
+                name="databaseid"
+              >
+                <option *ngFor="let gruac of auxModal.personas">
+                  {{ gruac.id_persona }}</option
+                >
+              </select>
+            </div> -->
+          </ng-container>
         </div>
       </div>
     </div>
