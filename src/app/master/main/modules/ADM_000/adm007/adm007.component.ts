@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Adm007Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
-import { element } from 'protractor';
 declare function initLabels ();
 
 @Component({
@@ -13,6 +12,8 @@ export class Adm007Component implements OnInit {
 
   editar : boolean = false;
   ocultarSeccion : boolean = false;
+  ocultarSeccionContactos : boolean = false;
+  ocultarSeccionDirecciones : boolean = false;
   lista : any ;
   ListActividadEmpresarial :  any;
   ListTipoDirecciones : any;
@@ -39,8 +40,8 @@ export class Adm007Component implements OnInit {
     "tipo_direccion": "Propietario",
     "pais": "",
     "departamento": "",
-    "ciudad": "Santa Cruz ",
-    "id_ciudad":"0010101"
+    "ciudad": "",
+    "id_ciudad":""
   };
 
   newContacto : any =   {
@@ -62,7 +63,7 @@ export class Adm007Component implements OnInit {
     this.ObtenerDatos();
     setTimeout(() => {
       initLabels();
-    }, 1000);
+    }, 1500);
 
   }
 
@@ -96,10 +97,12 @@ export class Adm007Component implements OnInit {
     this._adm007Service
     .ActualizarDatos(this.ListSend)
     .subscribe(resp => {
-      if(resp["true"]){
-        console.log("datos actualizados correctamente");
+      if(resp["ok"]){
+        // console.log("datos actualizados component");
+        this._notyG.noty("success", "datos actualizados", 3500);
       }
       else {
+        this._notyG.noty("error", "no se pudo actualizar", 3500);
         console.log("error al guardar los datos");
         console.log(resp);
       }
@@ -108,31 +111,73 @@ export class Adm007Component implements OnInit {
   /* metodos auxiliares*/
   nada(){}
 
-  Actualizar(){
-    this.AgregarDireccion();
-    this.editar = false;
+  Actualizar( seccion : string){
+
+    this.pasarDatosDireccion();
+    switch(seccion){
+
+      case 'all':
+        // this.AgregarDireccion();
+        this.Agregar('contactos');
+        this.Agregar('direccion');
+        console.log('entro por all');
+        break;
+      case 'direccion' :
+        this.Agregar(seccion);
+        console.log('entro por direccion');
+        break;
+      case 'contactos' :
+        this.Agregar(seccion);
+        console.log('entro por contactos');
+        break;
+    };
+    // this.AgregarDireccion();
     this.ActualizarDatos();
+    this.ModoVista();
   }
   ModoEdicion(){
     this.editar = true;
     // this.AgregarDireccion();
+    this.LimpiarData();
   }
   ModoVista(){
     this.editar = false;
     this.LimpiarData();
     this.limpiarDataContacto();
   }
+  Agregar(newData : string){
+
+    this.pasarDatosDireccion();
+    switch (newData) {
+      case 'contactos':
+        this.newContacto.estado = this.newContacto.estado == true ? 1 : 0
+        this.contactos.push(this.newContacto);
+        this.ListContactos.push(this.newContacto);
+        this.limpiarDataContacto();
+        break;
+      case 'direccion':
+        this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
+        this.direcciones.push(this.newDirection);
+        this.ListDirecciones.push(this.newDirection); 
+        this.LimpiarData();
+        break;
+      default:
+        break;
+    }
+
+  }
   AgregarDireccion(){
     this.pasarDatosDireccion();
-    this.newContacto.estado= this.newContacto.estado == true ? 0 : 1
-    this.newDirection.estado= this.newDirection.estado == true ? 0 : 1
+    // this.newContacto.estado = this.newContacto.estado == true ? 1 : 0
+    this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
     this.direcciones.push(this.newDirection);
-    this.contactos.push(this.newContacto);
+    // this.contactos.push(this.newContacto);
     this.ListDirecciones.push(this.newDirection); 
-    this.ListContactos.push(this.newContacto);
+    // this.ListContactos.push(this.newContacto);
     this.LimpiarData();
-    this.limpiarDataContacto();
+    // this.limpiarDataContacto();
   }
+  
 
   pasarDatosDireccion (){
     this.ListSend ={
@@ -146,7 +191,7 @@ export class Adm007Component implements OnInit {
   }
 
   LimpiarData(){
-    this.idCiudad="0010101";
+    this.idCiudad="";
     this.newDirection  = {
       "id_tipo_direccion": 1,
       "estado": true,
@@ -155,8 +200,8 @@ export class Adm007Component implements OnInit {
       "tipo_direccion": "Propietario",
       "pais": "",
       "departamento": "",
-      "ciudad": "Santa Cruz ",
-      "id_ciudad":"0010101"
+      "ciudad": "",
+      "id_ciudad":""
     };
     this.textPais = "";
     this.textDepartamento = "";
@@ -164,31 +209,54 @@ export class Adm007Component implements OnInit {
 
   limpiarDataContacto(){
     this.newContacto =  {
-      "id_tipo_contacto": 33,
-      "id_subtipo_contacto": 2,
-      "id_contacto": "33-2",
-      "codigo_contacto": "",
-      "contacto": "",
-      "estado": true,
+      "id_tipo_contacto" : 33,
+      "id_subtipo_contacto" : 2,
+      "id_contacto" : "33-2",
+      "codigo_contacto" : "",
+      "contacto" : "",
+      "estado" : true,
       "tipo": "Fijo"
     };
   }
   AgregarTelefono(){
     
   }
-
-  Ocultar(){
-    this.ocultarSeccion = true;
+  // Ocultar secciones
+  OcultarSeccion(seccion: string){
+    switch (seccion) {
+      case 'modulos': 
+          this.ocultarSeccion = true;
+          break;
+      case 'contactos': 
+          this.ocultarSeccionContactos = true;
+          break;
+      case 'direcciones': 
+          this.ocultarSeccionDirecciones = true;
+          break;
+      default:
+          console.log('invalid section');
+    }
   }
-
-  Mostrar(){
-    this.ocultarSeccion = false;
+  MostrarSeccion(seccion: string){
+    switch (seccion) {
+      case 'modulos': 
+          this.ocultarSeccion = false;
+          break;
+      case 'contactos': 
+          this.ocultarSeccionContactos = false;
+          break;
+      case 'direcciones': 
+          this.ocultarSeccionDirecciones = false;
+          break;
+      default:
+          console.log('invalid section');
+    }
   }
 
   /** poner estado a uno o cero en las direcciones */
   CambiarTipoEstado(){
     this.ListDirecciones.forEach( element => {
-      element = element.estado == 0 ? true : false
+      element = element.estado == 1 ? true : false
     });
   }
 
@@ -205,6 +273,8 @@ export class Adm007Component implements OnInit {
     this.newContacto.id_tipo_contacto = this.newContacto.id_contacto.slice(0,2);
     this.newContacto.id_subtipo_contacto = this.newContacto.id_contacto.slice(3);
     this.BuscarNombreTipoContacto( +this.newContacto.id_tipo_contacto, +this.newContacto.id_subtipo_contacto);
+    this.newContacto.codigo_contacto = "";
+    this.newContacto.contacto = "";
   }
 
   BuscarNombreTipoContacto(tipo : number, subtipo : number){
@@ -249,7 +319,6 @@ export class Adm007Component implements OnInit {
           this.BuscarPais(this.ObtenerPais(this.idCiudad));
           this.newDirection.id_ciudad = this.idCiudad;
           this.BuscarNombreCiudad(this.idCiudad);
-        
     }else{
       this.ListCiudades.forEach(element => {
         if(element.nombre_pais == data.ciudad){

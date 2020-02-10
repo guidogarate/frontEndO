@@ -10,17 +10,17 @@
                 </h5>
                 <div class="header-elements">
                     <div class="list-icons">
-                        <a class="list-icons-item"  *ngIf="!editar" (click)="ModoEdicion()"
+                        <a class="list-icons-item" *ngIf="!editar" (click) = "ModoEdicion()"
                             [routerLink]="nada()" routerLinkActive="router-link-active">
                             <i class="icon-pencil7 title-icon" data-toggle="tooltip" data-placement="top" title="Editar"> </i>
                         </a>
-                        <a class="list-icons-item"  *ngIf="editar" (click) = "Actualizar()"
+                        <a class="list-icons-item" *ngIf = "editar" (click) = "Actualizar('all')"
                             [routerLink]="nada()" routerLinkActive="router-link-active" >
-                            <i class="icon-floppy-disk title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
+                            <i class="icon-floppy-disk title-icon" data-toggle="tooltip" data-placement="top" title="Guardar"> </i>
                         </a>
-                        <a class="list-icons-item" 
-                            [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "ModoVista()">
-                            <i class="icon-exit title-icon " data-toggle="tooltip" data-placement="top" title="Salir"> </i>
+                        <a class="list-icons-item" *ngIf = "editar" (click) = "ModoVista()"
+                            [routerLink]="nada()" routerLinkActive="router-link-active" >
+                            <i class="icon-exit title-icon" data-toggle="tooltip" data-placement="top" title="Salir"> </i>
                         </a>
                     </div>
                 </div>
@@ -28,11 +28,11 @@
             <!-- primer card -->
             <div class="row p0 m0">
                 <div class="col-sm-2 col-12">
-                    <div class="card card-padding margin-botton-card ">
-                        <img src="https://thumbs.dreamstime.com/b/icono-del-usuario-46707697.jpg" 
-                            alt="imagen no encontrada" class="img-responsive rounded img-fluid"
-                            style="height: 116px;width: 100px; align-self: center;">
-                    </div>
+                     <div class="card card-padding margin-botton-card ">
+                          <img src="https://thumbs.dreamstime.com/b/icono-del-usuario-46707697.jpg" 
+                               alt="imagen no encontrada" class="img-responsive rounded img-fluid"
+                               style="height: 116px;width: 100px; align-self: center;">
+                     </div>
                 </div>
                 <div class="col-sm-10 col-12">
                     <div class="card card-padding margin-botton-card ">
@@ -44,12 +44,12 @@
                                         <div class="col-sm-6 col-5 form-group form-group-float m0">
                                             <label class="form-group-float-label m0 p0">Nombre </label>
                                             <input type="text" class="form-control text-center p0 alturaInputs" placeholder="Nombre" 
-                                                [value]="lista[0].razon_social" [(ngModel)]="lista[0].razon_social" [disabled] ="!editar" >
+                                                   [value]="lista[0].razon_social" [(ngModel)]="lista[0].razon_social" [disabled] ="!editar" >
                                         </div>
                                         <div class="col-sm-5 col-5 form-group form-group-float m0">
                                             <label class="form-group-float-label m0 p0">Sigla </label>
                                             <input type="text" class="form-control text-center p0 alturaInputs" placeholder="sigla" 
-                                                [value]="lista[0].sigla" [(ngModel)]="lista[0].sigla" [disabled] ="!editar">
+                                                   [value]="lista[0].sigla" [(ngModel)]="lista[0].sigla" [disabled] ="!editar">
                                         </div>
                                     </div>
                                     <div class="col-sm-12" *ngIf="lista != undefined">
@@ -57,13 +57,12 @@
                                             <div class="col-sm-1 col-0"></div>
                                             <div class="col-sm-6 col-7 form-group form-group-float m0">
                                                 <label class="form-group-float-label m0 p0" >Actividad de la Empresa</label>
-                                                    <select class="form-control p0 selectCenter alturaInputs" [disabled] ="!editar" 
-                                                            [(ngModel)]="lista[0].id_actividad_empresarial" name="actEmp">
-                                                        <option *ngFor="let contents of ListActividadEmpresarial"
-                                                                [value]="contents.id_actividad_empresarial">{{contents.actividad_empresa}}
-                                                        </option>
-                                                        
-                                                    </select> 
+                                                       <select class="form-control p0 selectCenter alturaInputs" [disabled] ="!editar" 
+                                                                [(ngModel)]="lista[0].id_actividad_empresarial" name="actEmp">
+                                                                <option *ngFor="let contents of ListActividadEmpresarial"
+                                                                        [value]="contents.id_actividad_empresarial">{{contents.actividad_empresa}}
+                                                                </option>
+                                                       </select> 
                                             </div>
                                             <div class="col-sm-5 col-5 form-group form-group-float m0">
                                                 <label class="form-group-float-label m0 p0">Nit </label>
@@ -77,7 +76,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <!-- segundo card -->
             <div class="row p0 m0">
@@ -90,21 +88,29 @@
                             </h5>
                             <div class="header-elements">
                                 <div class="list-icons">
-                                    <a class="list-icons-item"  (click)="AgregarDireccion()"
+                                    <a class="list-icons-item" *ngIf="!ocultarSeccionDirecciones" 
+                                    (click)="OcultarSeccion('direcciones')" > 
+                                    <i class="icon-arrow-down12" data-toggle="tooltip" data-placement="top" title="Ocultar" ></i> 
+                                    </a>
+                                    <a class="list-icons-item" *ngIf="ocultarSeccionDirecciones" 
+                                        (click)="MostrarSeccion('direcciones')" > 
+                                        <i class="icon-arrow-up12" data-toggle="tooltip" data-placement="top" title="Mostrar"></i> 
+                                    </a>
+                                    <a class="list-icons-item" *ngIf = "editar" (click) = "Actualizar('direccion')"
                                         [routerLink]="nada()" routerLinkActive="router-link-active">
                                         <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Direccion"> </i>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="row p0 m0">
+                        <div class="row p0 m0" *ngIf="!ocultarSeccionDirecciones">
                             <div class="col-sm-12 p0 m0"  *ngFor="let item of ListDirecciones; let i = index">
                                 <div class="row p0 m0" (click) = "MostrarCiudad(item)">
                                     <div class="col-sm-3 col-6">
                                             <select class="form-control p0 selectCenter alturaInputs" disabled
                                                     [(ngModel)]="item.id_tipo_direccion" (change)="nada()" name="direccionSelect">
                                                     <option *ngFor="let dir of ListTipoDirecciones"
-                                                        [value]="dir.id_tipo_direccion"> {{dir.tipo_direccion}}</option>
+                                                            [value]="dir.id_tipo_direccion"> {{dir.tipo_direccion}}</option>
                                             </select> 
                                     </div>
                                     <div class="col-sm-7 col-12">
@@ -126,19 +132,20 @@
                             <div class="col-sm-12 p0 m0">
                                 <div class="row p0 m0">
                                     <div class="col-sm-3 col-6">
-                                            <select class="form-control p0 selectCenter alturaInputs"
+                                            <select class="form-control p0 selectCenter alturaInputs" required
                                                     [(ngModel)]="newDirection.id_tipo_direccion" (change)="nada()" name="newDirection">
                                                     <option *ngFor="let dir of ListTipoDirecciones"
                                                         [value]="dir.id_tipo_direccion"> {{dir.tipo_direccion}}</option>
                                             </select> 
                                     </div>
                                     <div class="col-sm-7 col-12">
-                                        <input type="text" class="form-control text-center" placeholder="ingrese su direccion" [(ngModel)]="newDirection.direccion" [value] = "newDirection.direccion" >
+                                        <input type="text" class="form-control text-center" placeholder="ingrese su direccion" required
+                                                [(ngModel)]="newDirection.direccion" [value] = "newDirection.direccion" >
                                     </div>
                                     <div class="col-sm-2 col-12" style="align-self: flex-end;">
                                         <div class="custom-control custom-switch switch-float">
-                                            <input type="checkbox" class="custom-control-input" id="newDirectionSwitch" name="estados}}"
-                                                [checked]="newDirection.estado == 'true'" data-fouc [(ngModel)]="newDirection.estado" >
+                                            <input type="checkbox" class="custom-control-input" id="newDirectionSwitch" name="estados"
+                                                   [checked]="newDirection.estado == 'true'" data-fouc [(ngModel)]="newDirection.estado" >
                                             <label *ngIf="newDirection.estado == 'true' || newDirection.estado == 1" class="custom-control-label h30" for="newDirectionSwitch">Activo</label>
                                             <label *ngIf="!(newDirection.estado == 'true'|| newDirection.estado == 1)" class="custom-control-label h30" for="newDirectionSwitch">Inactivo</label>
                                         </div>
@@ -154,8 +161,8 @@
                                     <label class="col-form-label col-lg-4 col-6">Pais</label>
                                     <div class="col-lg-8 col-6">
                                         <div class="input-group" style="justify-content: center;" >
-                                            <input  type="text" name="pais"  class="text-center" [(ngModel)]="newDirection.pais"
-                                            [value]="textPais"
+                                            <input type="text" name="pais" class="text-center" [(ngModel)]="newDirection.pais"
+                                                   [value]="textPais" disabled
                                             >   
                                         </div>
                                     </div>
@@ -166,8 +173,8 @@
                                     <label class="col-form-label col-lg-4 col-6">Departamento</label>
                                     <div class="col-lg-8 col-6">
                                         <div class="input-group" style="justify-content: center;" >
-                                            <input type="text" name="departamento"  class="text-center"
-                                            [value]="textDepartamento"  [(ngModel)]="newDirection.departamento"
+                                            <input type="text" name="departamento"  class="text-center" disabled
+                                                   [value]="textDepartamento"  [(ngModel)]="newDirection.departamento"
                                             >   
                                         </div>
                                     </div>
@@ -194,7 +201,7 @@
                                     <div class="col-lg-8 col-6">
                                         <div class="input-group" style="justify-content: center;" >
                                             <input disabled type="text" name="pais" disabled class="text-center"
-                                            [value]="textPais" 
+                                                   [value]="textPais" 
                                             >   
                                         </div>
                                     </div>
@@ -206,7 +213,7 @@
                                     <div class="col-lg-8 col-6">
                                         <div class="input-group" style="justify-content: center;" >
                                             <input disabled type="text" name="departamento" disabled class="text-center"
-                                            [value]="textDepartamento" 
+                                                    [value]="textDepartamento" 
                                             >   
                                         </div>
                                     </div>
@@ -219,7 +226,7 @@
                                         <select class="form-control p0 selectCenter alturaInputs" disabled
                                                 [(ngModel)]="idCiudad">
                                             <option *ngFor="let ciudad of ListCiudades" 
-                                            [value]="ciudad.id_pais">{{ciudad.nombre_pais}}</option>
+                                                    [value]="ciudad.id_pais">{{ciudad.nombre_pais}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -240,14 +247,22 @@
                             </h5>
                             <div class="header-elements">
                                 <div class="list-icons">
-                                    <a class="list-icons-item"  (click)="AgregarTelefono()"
+                                    <a class="list-icons-item" *ngIf="!ocultarSeccionContactos" 
+                                    (click)="OcultarSeccion('contactos')" > 
+                                    <i class="icon-arrow-down12" data-toggle="tooltip" data-placement="top" title="Ocultar" ></i> 
+                                    </a>
+                                    <a class="list-icons-item" *ngIf="ocultarSeccionContactos" 
+                                        (click)="MostrarSeccion('contactos')" > 
+                                        <i class="icon-arrow-up12" data-toggle="tooltip" data-placement="top" title="Mostrar"></i> 
+                                    </a>
+                                    <a class="list-icons-item" *ngIf = "editar" (click)="Actualizar('contactos')"
                                         [routerLink]="nada()" routerLinkActive="router-link-active">
-                                        <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Direccion"> </i>
+                                        <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Contacto"> </i>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="row p0 m0">
+                        <div class="row p0 m0" *ngIf="!ocultarSeccionContactos">
                             <div class="col-sm-12 col-12 p0 m0" *ngFor="let item of ListContactos; let i = index">
                                 <div class="row p0 m0">
                                     <div class="col-sm-2 col-0"></div>
@@ -303,17 +318,19 @@
                                     </div>
                                     <div class="col-sm-2 col-6">
                                         <div class="form-group row mb0">
-                                            <label *ngIf="newContacto.id_tipo_contacto == 33" class="col-form-label col-lg-3 col-1"><i class="icon-flag3"></i> </label>
-                                            <label *ngIf="newContacto.id_contacto === '34-1'" class="col-form-label col-lg-3 col-1"><i class="icon-facebook2"></i> </label>
-                                            <label *ngIf="newContacto.id_contacto === '34-2'" class="col-form-label col-lg-3 col-1"><i class="icon-instagram"></i> </label>
-                                            <label *ngIf="newContacto.id_contacto === '34-3'" class="col-form-label col-lg-3 col-1"><i class="icon-twitter2"></i> </label>
-                                            <label *ngIf="newContacto.id_tipo_contacto == 35" class="col-form-label col-lg-3 col-1"><i class="icon-mail5"></i> </label>
+                                            <label *ngIf="newContacto.id_tipo_contacto == '33'" class="col-form-label col-lg-3 col-1"><i class="icon-flag3 icon-color"></i> </label>
+                                            <label *ngIf="newContacto.id_contacto === '34-1'" class="col-form-label col-lg-3 col-1"><i class="icon-facebook2 icon-color"></i> </label>
+                                            <label *ngIf="newContacto.id_contacto === '34-2'" class="col-form-label col-lg-3 col-1"><i class="icon-instagram icon-color"></i> </label>
+                                            <label *ngIf="newContacto.id_contacto === '34-3'" class="col-form-label col-lg-3 col-1"><i class="icon-twitter2 icon-color"></i> </label>
+                                            <label *ngIf="newContacto.id_tipo_contacto == 35" class="col-form-label col-lg-3 col-1"><i class="icon-mail5 icon-color"></i> </label>
                                             <div class="col-lg-9 col-9">
                                                 <div class="input-group" style="justify-content: center;" >
-                                                    <input type="text" class="form-control text-center" [(ngModel)]="newContacto.codigo_contacto" [value]="newContacto.codigo_contacto" >
+                                                    <input [disabled] = "newContacto.id_tipo_contacto !== '33'" type="text" class="form-control text-center" 
+                                                            [(ngModel)]="newContacto.codigo_contacto" [value]="newContacto.codigo_contacto" 
+                                                            placeholder="codigo de pais">
                                                 </div>
                                             </div>
-                                        </div>                                
+                                        </div>                       
                                     </div>
                                     <div class="col-sm-2 col-6 input-group">
                                         <input type="text" class="form-control text-center"  [(ngModel)]="newContacto.contacto" [value]="newContacto.contacto" >
@@ -347,11 +364,11 @@
                             <div class="header-elements">
                                 <div class="list-icons">
                                     <a class="list-icons-item" *ngIf="!ocultarSeccion" 
-                                        (click)="Ocultar()" > 
+                                        (click)="OcultarSeccion('modulos')" > 
                                         <i class="icon-arrow-down12" data-toggle="tooltip" data-placement="top" title="Ocultar" ></i> 
                                     </a>
                                     <a class="list-icons-item" *ngIf="ocultarSeccion" 
-                                        (click)="Mostrar()" > 
+                                        (click)="MostrarSeccion('modulos')" > 
                                         <i class="icon-arrow-up12" data-toggle="tooltip" data-placement="top" title="Mostrar"></i> 
                                     </a>
                                 </div>
@@ -359,27 +376,27 @@
                         </div>
                         <div class="row p0 m0" *ngIf="!ocultarSeccion" id="data-toggle">
                             <div class="col-sm-2 col-12">
-                                    <div>
-                                        <p>SAGESOFT</p> <br>
-                                        <p>VERSION 1.0</p>
-                                    </div>
+                                <div>
+                                    <p>SAGESOFT</p> <br>
+                                    <p>VERSION 1.0</p>
+                                </div>
                             </div>
                             <div class="col-sm-9 col-12">
                                 <div class="col-sm-12 ">
                                     <div class="table-responsive text-left">
                                         <table class="table table-sm table-hover">
                                             <thead>
-                                                <th scope="col">Descripcion</th>
-                                                <th scope="col">Version</th>
-                                                <th scope="col">SoLTec</th>
+                                                <th scope="col" class="ptb0">Descripcion</th>
+                                                <th scope="col" class="ptb0">Version</th>
+                                                <th scope="col" class="ptb0">SoLTec</th>
                                             </thead>
                                             <tbody>
                                                 <tr class="table-border-double" 
-                                                *ngFor="let mod of ListModulos;let impar = odd;let par = even;" 
-                                                [ngClass]="{ tablaCebradoPar:par , tablaCebradoImpar:impar}">
-                                                    <td class="puntero">{{mod.modulo}} </td>
-                                                    <td class="puntero">{{mod.version_modulo}}</td>
-                                                    <td class="puntero">{{mod.sol_tec}}</td>
+                                                    *ngFor="let mod of ListModulos;let impar = odd;let par = even;" 
+                                                    [ngClass]="{ tablaCebradoPar:par , tablaCebradoImpar:impar}">
+                                                    <td class="puntero ptb0">{{mod.modulo}} </td>
+                                                    <td class="puntero ptb0">{{mod.version_modulo}}</td>
+                                                    <td class="puntero ptb0">{{mod.sol_tec}}</td>
                                                 </tr>                                                  
                                             </tbody>
                                         </table>

@@ -30,7 +30,13 @@
 .mb0{
     margin-bottom: 0em;
 }
-
+.icon-color{
+    color: #03a9f4;
+}
+.ptb0{
+    padding-top: 0em;
+    padding-bottom: 0em;
+}
 
 @media screen and (max-width: 600px) {
     .title-icon{
@@ -47,6 +53,5 @@
         float: right;
         bottom: 5em;
     }
-
   
 }

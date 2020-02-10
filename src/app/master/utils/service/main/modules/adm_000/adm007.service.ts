@@ -32,20 +32,7 @@ export class Adm007Service {
   
 
   ActualizarDatos(item: any) {
-    //   const json = JSON.stringify({
-    //   descripcion: item.adgtdesc,
-    //   actEmpresa: +item.adgtacte,
-    //   cantPeridos: +item.adgtcanp,
-    //   estPeriodo: +item.adgtesta,
-    //   fechaInicio: item.adgtfegi,
-    //   fechaFin: item.adgtfegf,
-    //   gtionDefec: item.adgtgesd == true ? "1" : "0",
-    //   modAutomatica: item.adgtmoda == true ? "1" : "0",
-    //   fechaModAutomatica: new Date(item.adgtdiam+"-01"),
-    // });
-   
     console.log("service Actualizar data: ", item);
-
     const url1 = `${url.prod}${adm0007.insert_datos_empresa}`;
     console.log(url1,item);
     return this.httpClient
