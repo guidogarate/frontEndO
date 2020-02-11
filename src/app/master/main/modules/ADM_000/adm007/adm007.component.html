@@ -163,9 +163,9 @@
                                 <form [formGroup]="formulario">
                                     <h3>Direcciones</h3>
                                     <div formArrayName="direcciones1">
-                                        <div class="row p0 m0" *ngFor="let dir of direcciones1.controls ; let i = index">
+                                        <div class="row p0 m0" *ngFor="let direccion1 of formulario.get('direcciones1').controls ; let i = index">
                                             <div class="col-sm-3 col-6">
-                                                    <select class="form-control p0 selectCenter alturaInputs" required
+                                                    <select class="form-control p0 selectCenter alturaInputs" required formControlName="{{i}}"
                                                             [(ngModel)]="newDirection.id_tipo_direccion" (change)="nada()" name="newDirection">
                                                             <option *ngFor="let dir of ListTipoDirecciones"
                                                                 [value]="dir.id_tipo_direccion"> {{dir.tipo_direccion}}</option>
@@ -173,17 +173,20 @@
                                             </div>
                                             <div class="col-sm-7 col-12">
                                                 <input type="text" class="form-control text-center" placeholder="ingrese su direccion" required
+                                                        formControlName = "{{i}}"
                                                         [(ngModel)]="newDirection.direccion" [value] = "newDirection.direccion" name="ubicacion" >
                                             </div>
                                             <div class="col-sm-2 col-12" style="align-self: flex-end;">
                                                 <div class="custom-control custom-switch switch-float">
                                                     <input type="checkbox" class="custom-control-input" id="newDirectionSwitch{{i}}" name="estados"
+                                                            formControlName = "{{i}}"
                                                         [checked]="newDirection.estado == 'true'" data-fouc [(ngModel)]="newDirection.estado" >
                                                     <label *ngIf="newDirection.estado == 'true' || newDirection.estado == 1" class="custom-control-label h30" for="newDirectionSwitch{{i}}">Activo</label>
                                                     <label *ngIf="!(newDirection.estado == 'true'|| newDirection.estado == 1)" class="custom-control-label h30" for="newDirectionSwitch{{i}}">Inactivo</label>
                                                 </div>
                                             </div>
                                         </div>
+                                        <pre>direcciones1 values: {{direcciones1.controls | json}}</pre>
                                     </div>    
                                 </form>
                             </div>

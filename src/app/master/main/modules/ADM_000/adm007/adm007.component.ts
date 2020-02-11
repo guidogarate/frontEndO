@@ -79,9 +79,9 @@ export class Adm007Component implements OnInit {
   get direcciones1(): FormArray {
     return this.formulario.get('direcciones1') as FormArray;
   }
-1
+
   anadirDireccion() {
-    const direccion = this._fb.group({
+    const direccion1 = this._fb.group({
       domicilio: new FormControl(''),
       ubicacion: new FormControl(''),
       estado: new FormControl(''),
@@ -90,10 +90,11 @@ export class Adm007Component implements OnInit {
       ciudad: new FormControl('')
     });
     
-    this.direcciones1.push(direccion);
+    this.direcciones1.push(direccion1);
     setTimeout(() => {
       initLabels();
     }, 500);
+    console.log("direcciones1: ",this.direcciones1);
   }
 
   ObtenerDatos(){
