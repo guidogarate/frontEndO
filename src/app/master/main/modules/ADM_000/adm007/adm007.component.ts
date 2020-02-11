@@ -84,7 +84,9 @@ export class Adm007Component implements OnInit {
         this.ListPaises = this.lista[0]["paises"];
         this.ListDepartamentos = this.lista[0]["departamentos"];;
         this.ListCiudades = this.lista[0]["ciudades"];
-        initLabels();
+        setTimeout(() => {
+          initLabels();
+        }, 800);
       }
       else {
         console.log("error: ", resp["mensaje"])
