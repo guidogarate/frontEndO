@@ -10,7 +10,6 @@ export class Adm007Service {
   token = sessionStorage.getItem("id");  
 
   constructor(private httpClient: HttpClient) {
-    console.log("cargando predeterminados adm004service: ");
   }
 
   ObtenerParametros() {
