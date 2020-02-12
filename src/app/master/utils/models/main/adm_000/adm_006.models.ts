@@ -10,6 +10,9 @@ export interface Adm006 {
   foto: string;
   cantidad: number;
   tipos_usuario: Adm006Obj[];
+  grupos_acceso: Adm006Obj[];
+  grupos_perfil: Adm006Obj[];
+  personas: Adm006Obj[];
 }
 
 export interface Adm006Obj {

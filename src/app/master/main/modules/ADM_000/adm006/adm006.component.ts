@@ -7,6 +7,7 @@ import { Observable, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { FormControl } from "@angular/forms";
 import url from "src/app/master/config/url.config";
+declare function init_select();
 
 @Component({
   selector: "app-adm006",
@@ -29,8 +30,10 @@ export class Adm006Component implements OnInit {
     BtnEdita: false,
     BtnElimi: false
   };
+  auxmaModal: Adm006[];
 
   constructor(private adm006S: Adm006Service, private notyG: NotyGlobal) {
+    this.texto = "TEST2";
     this.getAdm006(this.texto);
     this.textBuscarAdm006.valueChanges
       .pipe(debounceTime(500))
@@ -38,7 +41,7 @@ export class Adm006Component implements OnInit {
         if (value.length > 1) {
           this.getAdm006(value);
         } else {
-          this.texto = "all_auxma";
+          // this.texto = "all_auxma";
           this.getAdm006(this.texto);
         }
       });
@@ -123,5 +126,15 @@ export class Adm006Component implements OnInit {
         // this.notyG.noty("error", resp["mensaje"], 5000);
       }
     });
+  }
+
+  Opciones(adm_006: Adm006, tipo: string) {
+    setTimeout(() => {
+      init_select();
+    }, 10);
+    this.auxmaModal = this.auxma;
+    console.log(adm_006);
+    console.log(this.auxmaModal);
+    console.log(tipo);
   }
 }

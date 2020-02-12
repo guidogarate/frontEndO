@@ -10,7 +10,8 @@ export class Adm006Service {
   constructor(private httpClient: HttpClient) {}
 
   geAdm006(modulo: string, indice: string, texto: string) {
-    const url1 = `${url.prod}${adm006.geAdm006}${modulo}/${indice}/${texto}`;
+    // const url1 = `${url.prod}${adm006.geAdm006}${modulo}/${indice}/${texto}`;
+    const url1 = `${url.prod}${adm006.geAdm006}${modulo}/${texto}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
