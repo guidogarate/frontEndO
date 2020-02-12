@@ -23,7 +23,7 @@ export class Adm007Component implements OnInit {
   ListContactos : any;
   ListModulos : any;
   ListCiudades : any ;
-  idCiudad : string ="";
+  idCiudad : string ="0";
   textPais : string = "";
   textDepartamento : string = "";
   ListDepartamentos : any;
@@ -120,8 +120,10 @@ export class Adm007Component implements OnInit {
 
       case 'all':
         // this.AgregarDireccion();
-        this.Agregar('contactos');
-        this.Agregar('direccion');
+        // this.Agregar('contactos');
+        // this.Agregar('direccion');
+        this.ActualizarDatos();
+        this.ModoVista();
         console.log('entro por all');
         break;
       case 'direccion' :
@@ -134,8 +136,8 @@ export class Adm007Component implements OnInit {
         break;
     };
     // this.AgregarDireccion();
-    this.ActualizarDatos();
-    this.ModoVista();
+    //this.ActualizarDatos();
+    //this.ModoVista();
   }
   ModoEdicion(){
     this.editar = true;
@@ -147,21 +149,31 @@ export class Adm007Component implements OnInit {
     this.LimpiarData();
     this.limpiarDataContacto();
   }
-  Agregar(newData : string){
 
-    this.pasarDatosDireccion();
+  Agregar(newData : string){
+    // this.pasarDatosDireccion();
     switch (newData) {
       case 'contactos':
         this.newContacto.estado = this.newContacto.estado == true ? 1 : 0
-        this.contactos.push(this.newContacto);
-        this.ListContactos.push(this.newContacto);
-        this.limpiarDataContacto();
+        if(!this.ValidarContacto()){
+          this._notyG.noty("warning", "rellene todos datos de contacto", 3500);
+        }else{
+          this.contactos.push(this.newContacto);
+          this.ListContactos.push(this.newContacto);
+          this.limpiarDataContacto();
+        }
         break;
       case 'direccion':
         this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
-        this.direcciones.push(this.newDirection);
-        this.ListDirecciones.push(this.newDirection); 
-        this.LimpiarData();
+        if(!this.ValidarDireccion()){
+          this._notyG.noty("warning", "rellene todos los datos de la nueva direccion", 3500);  
+        }
+        else{
+          this.direcciones.push(this.newDirection);
+          this.ListDirecciones.push(this.newDirection); 
+          this._notyG.noty("success", "direccion añadida", 3500);  
+          this.LimpiarData();
+        }
         break;
       default:
         break;
@@ -219,9 +231,6 @@ export class Adm007Component implements OnInit {
       "estado" : true,
       "tipo": "Fijo"
     };
-  }
-  AgregarTelefono(){
-    
   }
   // Ocultar secciones
   OcultarSeccion(seccion: string){
@@ -332,4 +341,21 @@ export class Adm007Component implements OnInit {
     }
   }
   /**metodos auxiliares del tab */
+  // validadores
+  ValidarDireccion(){
+    if(this.newDirection.direccion == "" || this.newDirection.id_ciudad== ""){
+      return false;
+    }
+    return true;
+
+  }
+  ValidarContacto(){
+    if(this.newContacto.contacto == ""){
+      return false;
+    }
+    return true;
+  }
+  ValidarDatosEmpresa(){
+
+  }
 }
