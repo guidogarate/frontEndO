@@ -141,7 +141,7 @@ export class Adm007Component implements OnInit {
   }
   ModoEdicion(){
     this.editar = true;
-    // this.AgregarDireccion();
+     
     this.LimpiarData();
   }
   ModoVista(){
@@ -180,17 +180,17 @@ export class Adm007Component implements OnInit {
     }
 
   }
-  AgregarDireccion(){
-    this.pasarDatosDireccion();
-    // this.newContacto.estado = this.newContacto.estado == true ? 1 : 0
-    this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
-    this.direcciones.push(this.newDirection);
-    // this.contactos.push(this.newContacto);
-    this.ListDirecciones.push(this.newDirection); 
-    // this.ListContactos.push(this.newContacto);
-    this.LimpiarData();
-    // this.limpiarDataContacto();
-  }
+  // AgregarDireccion(){
+  //   this.pasarDatosDireccion();
+   
+  //   this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
+  //   this.direcciones.push(this.newDirection);
+  
+  //   this.ListDirecciones.push(this.newDirection); 
+    
+  //   this.LimpiarData();
+     
+  // }
   
 
   pasarDatosDireccion (){
@@ -355,6 +355,7 @@ export class Adm007Component implements OnInit {
     }
     return true;
   }
+  // por implements 
   ValidarDatosEmpresa(){
 
   }
