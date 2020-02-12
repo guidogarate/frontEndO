@@ -100,62 +100,37 @@
                             </div>
                         </div>
                         <div class="row p0 m0">
-                            <div class="col-sm-3 col-0"></div>
-                            <div class="col-sm-6 col-12">
-                                <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-6 col-6 text-center">Codigo</label>
-                                    <label class="col-form-label col-lg-6 col-6 text-center">Naturaleza</label>
-                                </div>
-                                <div class="form-group row mb0">
-                                    <div class="col-lg-6 col-6">
-                                        <select class="form-control p0 selectCenter alturaInputs">
-                                            <option  value="1" >1010101010</option>
-                                            <option  value="2" >0101010101</option>
-                                            <option  value="3" >0100110011</option>
-                                        </select>
+                            <div class="col-sm-8">
+                                
+                                <div class="col-sm-12 col-12" *ngIf="estructuraPlanDeCuentas!=undefined">
+                                    <div class="form-group row mb0">
+                                        <label class="col-form-label col-lg-3 col-3 text-center">Nombre</label>
+                                        <label class="col-form-label col-lg-3 col-3 text-center">Largo</label>
+                                        <label class="col-form-label col-lg-3 col-3 text-center">Separador</label>
                                     </div>
-                                    <div class="col-lg-6 col-6">
-                                        <select class="form-control p0 selectCenter alturaInputs">
-                                            <option  value="1" >Activo</option>
-                                            <option  value="2" >Pasivo</option>
-                                            <option  value="3" >Patrimonio</option>
-                                        </select>
+                                    <div class="form-group row mb0" *ngFor="let ed of estructuraPlanDeCuentas ; let i = index">
+                                        <div class="col-sm-4 col-6">     
+                                            <input type="text" [(ngModel)]="ed.nombre" [value]="ed.nombre" required [disabled]="editar" class="form-control">
+                                        </div>
+                                        <div class="col-sm-4 col-6">
+                                            <input type="text" class="form-control" [(ngModel)]="ed.largo" [value] = "ed.largo" [disabled] = "editar" >
+                                           
+                                        </div>
+                                        <div class="col-sm-4 col-6">
+                                            <input type="text" class="form-control" ng [(ngModel)]="ed.separador" [value]="ed.separador" [disabled] = "editar">
+                                        </div>
                                     </div>
-                                    <div class="col-lg-6 col-6">
-                                        <select class="form-control p0 selectCenter alturaInputs">
-                                            <option  value="1" >1010101010</option>
-                                            <option  value="2" >0101010101</option>
-                                            <option  value="3" >0100110011</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-6 col-6">
-                                        <select class="form-control p0 selectCenter alturaInputs">
-                                            <option  value="1" >Activo</option>
-                                            <option  value="2" >Pasivo</option>
-                                            <option  value="3" >Patrimonio</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-6 col-6">
-                                        <select class="form-control p0 selectCenter alturaInputs">
-                                            <option  value="1" >1010101010</option>
-                                            <option  value="2" >0101010101</option>
-                                            <option  value="3" >0100110011</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-6 col-6">
-                                        <select class="form-control p0 selectCenter alturaInputs">
-                                            <option  value="1" >Activo</option>
-                                            <option  value="2" >Pasivo</option>
-                                            <option  value="3" >Patrimonio</option>
-                                        </select>
-                                    </div>
-                                </div>
-
+                                 </div>
                             </div>
-                            <div class="col-sm-3 col-0"></div>
-                        </div>
+                            <div class="col-sm-4">
+                                <div class="col-sm-12 col-6" *ngIf="ultimoElemento != undefined">
+                                    <label class="custom-control-label form-control">{{ultimoElemento.nombre}}</label>
+                                    <input type="text" class="form-control" [(ngModel)]="ultimoElemento.largo" [value]="ultimoElemento.largo">
+                             </div>
+                            </div>
 
-                    </div>
+                         </div>
+                        </div>
                 </div>
             </div>
             <!-- tercer card -->

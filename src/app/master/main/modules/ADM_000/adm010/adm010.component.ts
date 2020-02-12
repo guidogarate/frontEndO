@@ -12,12 +12,21 @@ export class Adm010Component implements OnInit {
 
   editar : boolean = false;
   lista : any = [];
+  estructuraPlanDeCuentas : any = [];
+  naturalezas : any = [];
+  cuentas : any = [];
+  allCodigosNaturalezas : any = [];
+  allNaturalezas : any = [];
+  gestiones : any = [];
+  ultimoElemento : any ;
+
   constructor(
-    notyG : NotyGlobal,
-    _adm010Service : Adm010Service
+    private _notyG : NotyGlobal,
+    private _adm010Service : Adm010Service
   ) { }
 
   ngOnInit() {
+    this.ObtenerDatos();
   }
   ModoVista(){
     this.editar = false;
@@ -31,5 +40,33 @@ export class Adm010Component implements OnInit {
 
   /** */
   nada(){}
+
+  ObtenerDatos(){
+
+    this._adm010Service
+    .ObtenerParametrosIniciales()
+    .subscribe(resp => {
+      console.log(resp);
+      if (resp ["ok"]) {
+        this.lista = resp["datos"];
+        this.estructuraPlanDeCuentas = this.lista[0]["estructura_plan_cuentas"];
+        this.ultimoElemento = this.estructuraPlanDeCuentas[this.estructuraPlanDeCuentas.length-1];
+        this.estructuraPlanDeCuentas.pop(); 
+        console.log("ultimo: ", this.ultimoElemento);
+        this.naturalezas = this.lista[0]["naturalezas"];
+        this.cuentas = this.lista[0]["cuentas"];
+        this.allCodigosNaturalezas = this.lista[0]["all_codigos_naturalezas"];
+        this.naturalezas = this.lista[0]["all_naturalezas"];
+        this.gestiones = this.lista[0]["gestiones"];
+        
+        setTimeout(() => {
+          initLabels();
+        }, 800);
+      }
+      else {
+        console.log("error: ", resp["mensaje"])
+      }
+    });
+  }
 
 }
