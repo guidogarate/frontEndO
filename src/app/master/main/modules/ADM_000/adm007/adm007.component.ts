@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Adm007Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
-import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 declare function initLabels ();
 
 @Component({
@@ -82,10 +82,10 @@ export class Adm007Component implements OnInit {
 
   anadirDireccion() {
     const direccion1 = this._fb.group({
-      domicilio: new FormControl(''),
+      domicilio: new FormControl('',Validators.minLength(1)),
       ubicacion: new FormControl(''),
       estado: new FormControl(''),
-      pais: new FormControl(''),
+      pais: new FormControl('',Validators.minLength(2)),
       departamento: new FormControl(''),
       ciudad: new FormControl('')
     });

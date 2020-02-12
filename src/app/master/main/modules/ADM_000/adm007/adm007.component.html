@@ -163,7 +163,7 @@
                                 <form [formGroup]="formulario">
                                     <h3>Direcciones</h3>
                                     <div formArrayName="direcciones1">
-                                        <div class="row p0 m0" *ngFor="let direccion1 of formulario.get('direcciones1').controls ; let i = index">
+                                        <div class="row p0 m0" *ngFor="let direccion1 of direcciones1.get('direcciones1').controls ; let i = index">
                                             <div class="col-sm-3 col-6">
                                                     <select class="form-control p0 selectCenter alturaInputs" required formControlName="{{i}}"
                                                             [(ngModel)]="newDirection.id_tipo_direccion" (change)="nada()" name="newDirection">
