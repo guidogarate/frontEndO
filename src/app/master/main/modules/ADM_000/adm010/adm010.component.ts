@@ -11,7 +11,8 @@ declare function initLabels ();
 export class Adm010Component implements OnInit {
 
   editar : boolean = false;
-  lista : any = [];
+  lista : any ;
+  actividadEmpresarial : any = [];
   estructuraPlanDeCuentas : any = [];
   naturalezas : any = [];
   cuentas : any = [];
@@ -53,10 +54,13 @@ export class Adm010Component implements OnInit {
         this.ultimoElemento = this.estructuraPlanDeCuentas[this.estructuraPlanDeCuentas.length-1];
         this.estructuraPlanDeCuentas.pop(); 
         console.log("ultimo: ", this.ultimoElemento);
+        console.log("cabezera: ", this.lista[0].id_actividad_empresarial);
+        console.log("cabezera: ", this.lista[0].razon_social);
+        this.actividadEmpresarial = this.lista[0]["actividad_empresarial"];
         this.naturalezas = this.lista[0]["naturalezas"];
         this.cuentas = this.lista[0]["cuentas"];
         this.allCodigosNaturalezas = this.lista[0]["all_codigos_naturalezas"];
-        this.naturalezas = this.lista[0]["all_naturalezas"];
+        this.allNaturalezas = this.lista[0]["all_naturalezas"];
         this.gestiones = this.lista[0]["gestiones"];
         
         setTimeout(() => {
