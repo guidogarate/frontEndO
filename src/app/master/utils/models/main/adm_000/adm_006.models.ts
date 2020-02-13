@@ -4,6 +4,7 @@ export interface Adm006 {
   activo: boolean;
   grupo_acceso: string;
   grupo_perfil: string;
+  id_grupo_perfil: number;
   tipo_usuario: string;
   codigo_persona: string;
   nombre_persona: string;

@@ -1,5 +1,6 @@
 const adm006 = {
-  geAdm006: "adm_000/adm_006/get-usuario/",
+  geAdm006: "adm_000/adm_006/get-usuario-paginado/",
+  geAdm006getUser: "adm_000/adm_006/get-usuario/",
   upAdm006: "",
   deAdm006: "",
   inAdm006: ""
