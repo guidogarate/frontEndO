@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class Adm007Service {
 
-  
   token = sessionStorage.getItem("id");  
 
   constructor(private httpClient: HttpClient) {

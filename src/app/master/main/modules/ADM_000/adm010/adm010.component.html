@@ -27,14 +27,14 @@
             </div>
             <!-- primer card -->
             <div class="row p0 m0">
-                <div class="col-sm-2 col-12">
+                <div class="col-sm-2 col-12 m0 p0">
                     <div class="card card-padding margin-botton-card ">
                         <img src="https://thumbs.dreamstime.com/b/icono-del-usuario-46707697.jpg" 
                             alt="imagen no encontrada" class="img-responsive rounded img-fluid"
                             style="height: 116px;width: 100px; align-self: center;">
                     </div>
                 </div>
-                <div class="col-sm-10 col-12">
+                <div class="col-sm-10 col-12 m0 p0">
                     <div class="card card-padding margin-botton-card ">
                         <div class="row">
                             <div class="col-sm-12">
@@ -58,7 +58,7 @@
                                             <div class="col-sm-6 col-7 form-group form-group-float m0">
                                                 <label class="form-group-float-label m0 p0" >Actividad de la Empresa</label>
                                                 <select class="form-control p0 selectCenter alturaInputs" 
-                                                        [(ngModel)]="lista[0].id_actividad_empresarial" (change)="CargarParametrosPorGestion()"
+                                                        [(ngModel)]="actividadEmpresarial.id_actividad_empresarial"
                                                         name="actividadSelect">
                                                     <option [value]="actividad.id_actividad_empresarial" *ngFor="let actividad of actividadEmpresarial">
                                                             {{actividad.actividad_empresa}}
@@ -68,14 +68,12 @@
                                             <div class="col-sm-5 col-5 form-group form-group-float m0">
                                                 <label class="form-group-float-label m0 p0">Gestion</label>
                                                 <select class="form-control p0 selectCenter alturaInputs" 
-                                                        [(ngModel)]="lista[0].gestion" (change)="CargarParametrosPorGestion()"
+                                                        [(ngModel)]="lista[0].gestion"
                                                         name="gestionSelect">
                                                     <option [value]="gestion.gestion" *ngFor="let gestion of gestiones">
                                                             {{gestion.gestion}}
                                                     </option>
                                                 </select> 
-                                                <!-- <input type="text" class="form-control text-center p0 alturaInputs" placeholder="Nit" 
-                                                        value="123456789"> -->
                                             </div>  
                                         </div>
                                     </div>
@@ -84,11 +82,10 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <!-- segundo card -->
             <div class="row p0 m0">
-                <div class="col-sm-12">
+                <div class="col-sm-12 m0 p0">
                     <div class="card card-padding margin-botton-card " style="padding-bottom: 0.5em;">
                         <div class="header-elements-inline padding-title plr0">
                             <h5 class="card-title  title-head font-tittle m0">
@@ -98,51 +95,56 @@
                             <div class="header-elements">
                                 <div class="list-icons">
                                     <a class="list-icons-item"
-                                        [routerLink]="nada()" routerLinkActive="router-link-active">
-                                        <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Direccion"> </i>
+                                       [routerLink]="nada()" routerLinkActive="router-link-active">
+                                       <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Direccion"> </i>
                                     </a>
                                 </div>
                             </div>
                         </div>
                         <div class="row p0 m0">
                             <div class="col-sm-8">
-                                
-                                <div class="col-sm-12 col-12" *ngIf="estructuraPlanDeCuentas!=undefined">
+                                <div class="col-sm-12 col-12 m0 p0" *ngIf="estructuraPlanDeCuentas!=undefined">
                                     <div class="form-group row mb0">
-                                        <label class="col-form-label col-lg-3 col-3 text-center">Nombre</label>
-                                        <label class="col-form-label col-lg-3 col-3 text-center">Largo</label>
-                                        <label class="col-form-label col-lg-3 col-3 text-center">Separador</label>
+                                        <label class="col-form-label col-sm-3 col-5 text-center">Nombre</label>
+                                        <label class="col-form-label col-sm-3 col-3 text-center">Largo</label>
+                                        <label class="col-form-label col-sm-3 col-4 text-center">Separador</label>
+                                        <label class="col-form-label col-sm-3 col-0 text-center"></label>
                                     </div>
                                     <div class="form-group row mb0" *ngFor="let ed of estructuraPlanDeCuentas ; let i = index">
-                                        <div class="col-sm-3 col-6">     
-                                            <input type="text" [(ngModel)]="ed.nombre" [value]="ed.nombre" required [disabled]="editar" class="form-control">
+                                        <div class="col-sm-3 col-5">
+                                            <input type="text" [(ngModel)]="ed.nombre" [value]="ed.nombre" required [disabled]="!editar" class="form-control">
                                         </div>
-                                        <div class="col-sm-3 col-6">
-                                            <input type="text" class="form-control text-center" [(ngModel)]="ed.largo" [value] = "ed.largo" [disabled] = "editar" >
-                                           
+                                        <div class="col-sm-3 col-3">
+                                            <input type="text" class="form-control text-center" [(ngModel)]="ed.largo" [value] = "ed.largo" [disabled] = "!editar" >
                                         </div>
-                                        <div class="col-sm-3 col-6">
-                                            <input type="text" class="form-control text-center" ng [(ngModel)]="ed.separador" [value]="ed.separador" [disabled] = "editar">
+                                        <div class="col-sm-3 col-2">
+                                            <input type="text" class="form-control text-center" [(ngModel)]="ed.separador" [value]="ed.separador" [disabled] = "!editar">
                                         </div>
-                                    </div>
-                                 </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group row" *ngIf="ultimoElemento != undefined">
-                                    <label class="col-lg-8 col-form-label">{{ultimoElemento.nombre}}:</label>
-                                    <div class="col-lg-4">
-                                        <input type="text" class="form-control" [(ngModel)]="ultimoElemento.largo" [value]="ultimoElemento.largo">
+                                        <div class="col-sm-3 col-2" style="align-self: center;" >
+                                            <a class="list-icons-item"  
+                                               [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "EliminarPlanDeCuenta(i)">
+                                               <i class="icon-cancel-circle2 title-icon " data-toggle="tooltip" data-placement="top" title="Eliminar"> </i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="col-sm-4 col-12">
+                                <div class="form-group row m0 p0" *ngIf="ultimoElemento != undefined">
+                                    <label class="col-lg-8 col-8 col-form-label">{{ultimoElemento.nombre}}:</label>
+                                    <div class="col-lg-4 col-4">
+                                        <input type="text" class="form-control text-center" [(ngModel)]="ultimoElemento.largo" 
+                                               [value]="ultimoElemento.largo" [disabled] = "!editar">
+                                    </div>
+                                </div>
+                            </div>
                          </div>
-                        </div>
+                    </div>
                 </div>
             </div>
             <!-- tercer card -->
             <div class="row p0 m0">
-                <div class="col-sm-12">
+                <div class="col-sm-12 m0 p0">
                     <div class="card card-padding margin-botton-card " style="padding-bottom: 0.5em;">
                         <div class="header-elements-inline padding-title plr0">
                             <h5 class="card-title  title-head font-tittle m0">
@@ -162,23 +164,30 @@
                             <div class="col-sm-3 col-0"></div>
                             <div class="col-sm-6 col-12">
                                 <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-6 col-6 text-center">Codigo</label>
-                                    <label class="col-form-label col-lg-6 col-6 text-center">Naturaleza</label>
+                                    <label class="col-form-label col-sm-4 col-6 text-center">Codigo</label>
+                                    <label class="col-form-label col-sm-4 col-6 text-center">Naturaleza</label>
+                                    <label class="col-form-label col-sm-4 col-0 text-center"></label>
                                 </div>
-                                <div class="form-group row mb0" *ngFor="let naturaleza of naturalezas" >
-                                    <div class="col-lg-6 col-12" >
-                                        <select class="form-control p0 selectCenter alturaInputs" [(ngModel)]="naturaleza.id_codigo">
-                                            <option [value]="codNaturaleza.id_codigo" *ngFor="let codNaturaleza of allCodigosNaturalezas">
-                                                {{codNaturaleza.codigo}}
-                                            </option>
+                                <div class="form-group row mb0" *ngFor="let naturaleza of Listnaturalezas; let i = index" >
+                                    <div class="col-sm-5 col-5" >
+                                        <select class="form-control p0 selectCenter alturaInputs" [(ngModel)]="naturaleza.id_codigo" [disabled] = "!editar">
+                                                <option [value]="codNaturaleza.id_codigo" *ngFor="let codNaturaleza of allCodigosNaturalezas">
+                                                        {{codNaturaleza.codigo}}
+                                                </option>
                                         </select>
                                     </div> 
-                                    <div class="col-lg-6 col-12" >      
-                                        <select class="form-control p0 selectCenter alturaInputs" [(ngModel)]="naturaleza.id_naturaleza">
-                                            <option [value]="oneNaturaleza.id_naturaleza" *ngFor="let oneNaturaleza of allNaturalezas">
-                                                    {{oneNaturaleza.naturaleza}}
-                                            </option>
+                                    <div class="col-sm-5 col-5" >      
+                                        <select class="form-control p0 selectCenter alturaInputs" [(ngModel)]="naturaleza.id_naturaleza" [disabled] = "!editar">
+                                                <option [value]="oneNaturaleza.id_naturaleza" *ngFor="let oneNaturaleza of allNaturalezas">
+                                                        {{oneNaturaleza.naturaleza}}
+                                                </option>
                                         </select>
+                                    </div>
+                                    <div class="col-sm-2 col-2" >      
+                                        <a class="list-icons-item"  
+                                            [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "EliminarNaturaleza(i)">
+                                            <i class="icon-cancel-circle2 title-icon " data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -189,7 +198,7 @@
             </div>
             <!--  cuarto card -->
             <div class="row p0 m0">
-                <div class="col-sm-12">
+                <div class="col-sm-12 p0 m0">
                     <div class="card card-padding margin-botton-card " style="padding-bottom: 0.5em;">
                         <div class="header-elements-inline padding-title plr0">
                             <h5 class="card-title  title-head font-tittle m0">
@@ -211,35 +220,15 @@
                             <div class="col-sm-2"></div>
                             <div class="col-sm-6">
                                 <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-6 col-6">{{cuenta.nombre}}</label>
-                                    <div class="col-lg-4 col-6">
-                                        <input type="text" [(ngModel)]="cuenta.codigo" value="cuenta.codigo" class="form-control text-center">    
-                                        <!-- <select class="form-control p0 selectCenter alturaInputs">
-                                            <option  value="1" >1010101010</option>
-                                            <option  value="2" >0101010101</option>
-                                            <option  value="3" >0100110011</option>
-                                        </select> -->
+                                    <label class="col-form-label col-sm-8 col-8">{{cuenta.nombre}}</label>
+                                    <div class="col-sm-4 col-4">
+                                        <input type="text" [(ngModel)]="cuenta.codigo" value="cuenta.codigo" 
+                                        class="form-control text-center" [disabled] = "true">    
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-2"></div>
                         </div>
-                        <!-- <div class="row p0 m0">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-6">
-                                <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-4 col-6">Cuenta de Resultado Acumulado</label>
-                                    <div class="col-lg-8 col-6">
-                                        <select class="form-control p0 selectCenter alturaInputs">
-                                            <option  value="1" >1010101010</option>
-                                            <option  value="2" >0101010101</option>
-                                            <option  value="3" >0100110011</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3"></div>
-                        </div> -->
                     </div>
                 </div>
             </div>

@@ -14,12 +14,16 @@ export class Adm010Component implements OnInit {
   lista : any ;
   actividadEmpresarial : any = [];
   estructuraPlanDeCuentas : any = [];
-  naturalezas : any = [];
+  Listnaturalezas : any = [];
   cuentas : any = [];
   allCodigosNaturalezas : any = [];
   allNaturalezas : any = [];
   gestiones : any = [];
   ultimoElemento : any ;
+  estructuras : any = [];
+  newEstructura : any = {};
+  naturalezas : any = [];
+  newNaturaleza : any = {};
 
   constructor(
     private _notyG : NotyGlobal,
@@ -53,11 +57,8 @@ export class Adm010Component implements OnInit {
         this.estructuraPlanDeCuentas = this.lista[0]["estructura_plan_cuentas"];
         this.ultimoElemento = this.estructuraPlanDeCuentas[this.estructuraPlanDeCuentas.length-1];
         this.estructuraPlanDeCuentas.pop(); 
-        console.log("ultimo: ", this.ultimoElemento);
-        console.log("cabezera: ", this.lista[0].id_actividad_empresarial);
-        console.log("cabezera: ", this.lista[0].razon_social);
         this.actividadEmpresarial = this.lista[0]["actividad_empresarial"];
-        this.naturalezas = this.lista[0]["naturalezas"];
+        this.Listnaturalezas = this.lista[0]["naturalezas"];
         this.cuentas = this.lista[0]["cuentas"];
         this.allCodigosNaturalezas = this.lista[0]["all_codigos_naturalezas"];
         this.allNaturalezas = this.lista[0]["all_naturalezas"];
@@ -71,6 +72,16 @@ export class Adm010Component implements OnInit {
         console.log("error: ", resp["mensaje"])
       }
     });
+  }
+
+  EliminarPlanDeCuenta( posicion : number){
+    console.log("Eliminar plan de cuentas: " , posicion);
+  }
+  EliminarNaturaleza(posicion : number){
+    console.log("eliminar naturaleza: ", posicion);
+  }
+  AñadirEstructura(){
+
   }
 
 }
