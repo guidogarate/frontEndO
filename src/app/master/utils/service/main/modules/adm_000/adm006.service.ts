@@ -10,8 +10,23 @@ export class Adm006Service {
   constructor(private httpClient: HttpClient) {}
 
   geAdm006(modulo: string, indice: string, texto: string) {
-    // const url1 = `${url.prod}${adm006.geAdm006}${modulo}/${indice}/${texto}`;
-    const url1 = `${url.prod}${adm006.geAdm006}${modulo}/${texto}`;
+    const url1 = `${url.prod}${adm006.geAdm006}${modulo}/${indice}/${texto}`;
+    return this.httpClient
+      .get(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
+  }
+
+  geAdm006getUser(modulo: string, texto: string) {
+    const url1 = `${url.prod}${adm006.geAdm006getUser}${modulo}/${texto}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({

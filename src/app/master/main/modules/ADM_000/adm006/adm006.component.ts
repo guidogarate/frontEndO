@@ -8,6 +8,7 @@ import { debounceTime } from "rxjs/operators";
 import { FormControl } from "@angular/forms";
 import url from "src/app/master/config/url.config";
 declare function init_select();
+declare function initLabels();
 
 @Component({
   selector: "app-adm006",
@@ -25,15 +26,25 @@ export class Adm006Component implements OnInit {
   pagi: Paginacion[];
   loading = true;
   btnGrupo = {
-    BtnGuard: false,
     BtnCance: false,
     BtnEdita: false,
-    BtnElimi: false
+    BtnElimi: false,
+    BtnGuard: false,
+    BtnNuevo: false
+  };
+  disabled = {
+    descripci: true,
+    GrupoAcce: true,
+    GrupoPerf: true,
+    login: true,
+    TipoUsuar: true,
+    TipoCodRe: true
   };
   auxmaModal: Adm006[];
+  loadingSub = false;
+  controlLoginModal = "";
 
   constructor(private adm006S: Adm006Service, private notyG: NotyGlobal) {
-    this.texto = "TEST2";
     this.getAdm006(this.texto);
     this.textBuscarAdm006.valueChanges
       .pipe(debounceTime(500))
@@ -41,7 +52,7 @@ export class Adm006Component implements OnInit {
         if (value.length > 1) {
           this.getAdm006(value);
         } else {
-          // this.texto = "all_auxma";
+          this.texto = "all_auxma";
           this.getAdm006(this.texto);
         }
       });
@@ -64,7 +75,6 @@ export class Adm006Component implements OnInit {
       if (resp["ok"]) {
         this.auxma = resp["usr"];
         this.pagi = resp["cant"];
-        console.log(this.auxma);
       } else {
         this.notyG.noty("error", resp["messagge"], 5000);
       }
@@ -128,13 +138,113 @@ export class Adm006Component implements OnInit {
     });
   }
 
-  Opciones(adm_006: Adm006, tipo: string) {
+  OpcionesTable(adm_006: Adm006, tipo: string) {
+    switch (tipo) {
+      case "visualizar":
+        this.btnGrupo.BtnEdita = true;
+        this.btnGrupo.BtnNuevo = true;
+        this.initSelect();
+        break;
+      case "editar":
+        this.btnGrupo.BtnCance = true;
+        this.btnGrupo.BtnGuard = true;
+
+        this.boolDisabled(false);
+        this.initSelect();
+        break;
+      case "eliminar":
+        break;
+      default:
+        this.notyG.noty("error", "Operacion incorrecta", 5000);
+        break;
+    }
+    if (this.controlLoginModal === adm_006.login) {
+      return;
+    }
+    this.controlLoginModal = adm_006.login;
+
+    this.auxmaModal = null;
+    this.loadingSub = true;
+    let peticion: Observable<any>;
+    peticion = this.adm006S.geAdm006getUser("90", adm_006.login);
+    this.sus = peticion.subscribe(resp => {
+      this.loadingSub = false;
+      if (resp["ok"]) {
+        setTimeout(() => {
+          initLabels();
+          init_select();
+        }, 10);
+        this.auxmaModal = resp["usr"];
+        console.log(this.auxmaModal);
+      } else {
+        // this.notyG.noty("error", resp["messagge"], 5000);
+      }
+    });
+  }
+
+  nuevoAdm006() {
+    this.boolBtnGrupo(false, true);
+    this.boolDisabled(false);
+
+    //    this.auxmaModal[0].login = "";
+    //    this.auxmaModal[0].descripcion = "";
+    this.initSelect();
+  }
+
+  OpcionesModal(tipo: string) {
+    switch (tipo) {
+      case "nuevo":
+        this.boolBtnGrupo(false, true);
+        this.boolDisabled(false);
+        this.auxmaModal[0].login = "";
+        this.auxmaModal[0].descripcion = "";
+
+        this.initSelect();
+        return;
+      case "editar":
+        this.boolDisabled(false);
+        this.boolBtnGrupo(false, true);
+        this.initSelect();
+        return;
+      case "cancelar":
+        this.boolDisabled(true);
+        this.boolBtnGrupo(true, false);
+        this.initSelect();
+        return;
+
+      case "guardar":
+        this.boolDisabled(true);
+        this.boolBtnGrupo(true, false);
+        console.log(this.auxmaModal);
+
+        this.initSelect();
+        return;
+    }
+
+    this.boolBtnGrupo(true, true);
+    this.boolBtnGrupo(false, false);
+  }
+
+  initSelect() {
     setTimeout(() => {
       init_select();
-    }, 10);
-    this.auxmaModal = this.auxma;
-    console.log(adm_006);
-    console.log(this.auxmaModal);
-    console.log(tipo);
+    }, 5);
+  }
+
+  boolDisabled(bool: boolean) {
+    this.disabled.descripci = bool;
+    this.disabled.GrupoAcce = bool;
+    this.disabled.GrupoPerf = bool;
+    this.disabled.login = bool;
+    this.disabled.TipoUsuar = bool;
+    this.disabled.TipoCodRe = bool;
+  }
+
+  boolBtnGrupo(editNuevo: boolean, cancelGuardar: boolean) {
+    this.btnGrupo.BtnCance = cancelGuardar;
+    this.btnGrupo.BtnEdita = editNuevo;
+    this.btnGrupo.BtnElimi = false;
+    this.btnGrupo.BtnGuard = cancelGuardar;
+    this.btnGrupo.BtnNuevo = editNuevo;
   }
 }

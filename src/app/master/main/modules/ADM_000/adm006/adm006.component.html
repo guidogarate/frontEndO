@@ -38,8 +38,13 @@
           </div>
           <div class="col-3 col-sm-2 col-md-3 col-lg-2">
             <div class="form-control-feedback">
-              <!-- (click)="habilitar('agregar')" -->
-              <i class="icon-diff-added xxl puntero" title="Agregar"> </i>
+              <i
+                data-toggle="modal"
+                data-target="#modal_adm_006"
+                class="icon-diff-added puntero xxl"
+                (click)="nuevoAdm006()"
+                title="agregar"
+              ></i>
               <i
                 routerLink="{{ bienvenido }}"
                 class="icon-exit xxl puntero"
@@ -137,18 +142,18 @@
                         <i
                           data-toggle="modal"
                           data-target="#modal_adm_006"
-                          (click)="Opciones(adm006, 'visualizar')"
+                          (click)="OpcionesTable(adm006, 'visualizar')"
                           class="icon-file-eye text-primary-600 puntero"
-                          title="Visualizar"
+                          title="visualizar"
                         ></i>
-                        <!-- (click)="editar(adm006, 'editar')" -->
                         <i
                           data-toggle="modal"
                           data-target="#modal_adm_006"
+                          (click)="OpcionesTable(adm006, 'editar')"
                           class="icon-pencil7 text-teal-600 puntero"
                           title="Editar"
                         ></i>
-                        <!-- (click)="reset(adm006)" -->
+
                         <i
                           class="icon-trash text-danger-600 puntero"
                           title="Eliminar"
@@ -204,13 +209,33 @@
   <div class="modal-dialog ">
     <div class="modal-content animacionmodal haciadentro">
       <div class="modal-header bg-blue">
-        <h6 class="modal-title">En proceso</h6>
+        <h6 class="modal-title">ADM006</h6>
         <div class="list-icons float-right">
+          <a class="puntero" *ngIf="btnGrupo.BtnCance"
+            ><i
+              class="icon-cancel-circle2 xxl"
+              data-toggle="tooltip"
+              data-placement="top"
+              (click)="OpcionesModal('cancelar')"
+              title="Cancelar"
+            >
+            </i
+          ></a>
+          <a class="puntero" *ngIf="btnGrupo.BtnNuevo">
+            <i
+              data-toggle="tooltip"
+              data-placement="top"
+              class="icon-diff-added xxl"
+              (click)="OpcionesModal('nuevo')"
+              title="nuevo"
+            ></i>
+          </a>
           <a class="puntero" *ngIf="btnGrupo.BtnGuard"
             ><i
               class="icon-floppy-disk xxl"
               data-toggle="tooltip"
               data-placement="top"
+              (click)="OpcionesModal('guardar')"
               title="Guardar"
             >
             </i
@@ -220,6 +245,7 @@
               class="icon-pencil7 xxl"
               data-toggle="tooltip"
               data-placement="top"
+              (click)="OpcionesModal('editar')"
               title="editar"
             >
             </i
@@ -234,9 +260,9 @@
             </i
           ></a>
           <a class="puntero">
-            <!-- (click)="salir()" -->
             <i
               class="icon-exit xxl"
+              (click)="OpcionesModal('salir')"
               data-toggle="tooltip"
               data-placement="top"
               data-dismiss="modal"
@@ -249,69 +275,154 @@
       <div class="modal-body">
         <div class="row">
           <ng-container *ngFor="let auxModal of auxmaModal; let i = index">
-            <div class="col-md-3">
-              <div class="form-group form-group-float">
-                <img
-                  src="https://www.hoybolivia.com/imagenes_global/PN27042012110930.jpg"
-                  alt=""
-                />
+            <div class="col-xl-12">
+              <div class="media flex-column flex-sm-row mt-0 mb-3">
+                <div class="mr-sm-3 mb-2 mb-sm-0">
+                  <div class="card-img-actions">
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png"
+                      class="img-fluid img-preview rounded"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div class="media-body  text-center">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group form-group-float">
+                        <label class="form-group-float-label">Login</label>
+                        <input
+                          style="text-align: center;"
+                          type="text"
+                          class="form-control"
+                          [disabled]="disabled.login"
+                          placeholder="{{ auxModal.login }}"
+                          [(ngModel)]="auxModal.login"
+                          title="{{ auxModal.login }}"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group form-group-float">
+                        <label class="form-group-float-label"
+                          >Descripcion</label
+                        >
+                        <input
+                          style="text-align: center;"
+                          type="text text-align-center;"
+                          class="form-control"
+                          [disabled]="disabled.descripci"
+                          placeholder="{{ auxModal.descripcion }}"
+                          [(ngModel)]="auxModal.descripcion"
+                          title="{{ auxModal.descripcion }}"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="form-group">Grupo Acceso</label>
+                      <select
+                        required
+                        [disabled]="disabled.GrupoAcce"
+                        [(ngModel)]="auxModal.id_grupo_acceso"
+                        class="form-control selectpicker show-tick"
+                        name="databaseid"
+                      >
+                        <option
+                          *ngFor="let gruac of auxModal.grupos_acceso"
+                          [value]="gruac.id_grupos_acceso"
+                        >
+                          {{ gruac.descripcion }}</option
+                        >
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-group">Grupo Perfil</label>
+                      <select
+                        required
+                        [disabled]="disabled.GrupoPerf"
+                        [(ngModel)]="auxModal.id_grupo_perfil"
+                        class="form-control selectpicker show-tick"
+                        name="databaseid"
+                      >
+                        <option
+                          *ngFor="let gruac of auxModal.grupos_perfil"
+                          [value]="gruac.id_grupos_perfil"
+                        >
+                          {{ gruac.descripcion }}</option
+                        >
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="form-group">Tipo de Usuario</label>
+                      <select
+                        required
+                        [disabled]="disabled.TipoUsuar"
+                        [(ngModel)]="auxModal.id_tipo_usuario"
+                        class="form-control selectpicker show-tick"
+                        name="databaseid"
+                      >
+                        <option
+                          *ngFor="let gruac of auxModal.tipos_usuario"
+                          [value]="gruac.id_grupos_perfil"
+                        >
+                          {{ gruac.descripcion }}</option
+                        >
+                      </select>
+                    </div>
+                    <div class="col-md-6 ">
+                      <label class="form-group">Codigo relacion persona</label>
+                      <select
+                        required
+                        [disabled]="disabled.TipoCodRe"
+                        [(ngModel)]="auxModal.codigo_persona"
+                        class="form-control selectpicker show-tick"
+                        name="databaseid"
+                      >
+                        <option
+                          *ngFor="let gruac of auxModal.personas"
+                          [value]="gruac.id_persona"
+                        >
+                          {{ gruac.id_persona }}</option
+                        >
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="separadorh"></div>
+            </div>
+            <div class="col-xl-12">
+              <div class="row text-center">
+                <div class="col-md-4">
+                  <span><b>Fecha de registro</b></span>
+                  <div style="background-color: #f5f5f5;">
+                    <p>{{ auxModal.fecha_registro | datos }}</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <span><b>Fecha de ultimo ingreso</b></span>
+                  <div style="background-color: #f5f5f5;">
+                    <p>{{ auxModal.fecha_registro | datos }}</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <span><b>Fecha de ultimo reset</b></span>
+                  <div style="background-color: #f5f5f5;">
+                    <p>{{ auxModal.fecha_registro | datos }}</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="form-group form-group-float">
-                <p>{{ auxModal.login }}</p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group form-group-float">
-                <p>{{ auxModal.descripcion }}</p>
-              </div>
-            </div>
-            <!-- <div class="col-md-6">
-              <select
-                required
-                class="form-control selectpicker show-tick"
-                name="databaseid"
-              >
-                <option *ngFor="let gruac of auxModal.grupos_acceso">
-                  {{ gruac.descripcion }}</option
-                >
-              </select>
-            </div>
-            <div class="col-md-6">
-              <select
-                required
-                class="form-control selectpicker show-tick"
-                name="databaseid"
-              >
-                <option *ngFor="let gruac of auxModal.grupos_perfil">
-                  {{ gruac.descripcion }}</option
-                >
-              </select>
-            </div>
-            <div class="col-md-6">
-              <select
-                required
-                class="form-control selectpicker show-tick"
-                name="databaseid"
-              >
-                <option *ngFor="let gruac of auxModal.tipos_usuario">
-                  {{ gruac.descripcion }}</option
-                >
-              </select>
-            </div>
-            <div class="col-md-6">
-              <select
-                required
-                class="form-control selectpicker show-tick"
-                name="databaseid"
-              >
-                <option *ngFor="let gruac of auxModal.personas">
-                  {{ gruac.id_persona }}</option
-                >
-              </select>
-            </div> -->
           </ng-container>
+        </div>
+        <div *ngIf="loadingSub" class="d-flex justify-content-center">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
         </div>
       </div>
     </div>
