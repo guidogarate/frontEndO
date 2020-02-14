@@ -11,6 +11,7 @@ declare function initLabels ();
 export class Adm010Component implements OnInit {
 
   editar : boolean = false;
+  nuevo : boolean = false;
   lista : any ;
   actividadEmpresarial : any = [];
   estructuraPlanDeCuentas : any = [];
@@ -24,6 +25,9 @@ export class Adm010Component implements OnInit {
   newEstructura : any = {};
   naturalezas : any = [];
   newNaturaleza : any = {};
+  listSend : any = {};
+  idGestion : number = 0;
+  idActividad : number = 1;
 
   constructor(
     private _notyG : NotyGlobal,
@@ -42,14 +46,16 @@ export class Adm010Component implements OnInit {
   Actualizar(){
     this.editar = false;
   }
+  Agregar(){
+
+  }
 
   /** */
   nada(){}
 
   ObtenerDatos(){
-
     this._adm010Service
-    .ObtenerParametrosIniciales()
+    .ObtenerParametrosIniciales(this.idGestion)
     .subscribe(resp => {
       console.log(resp);
       if (resp ["ok"]) {
@@ -74,14 +80,86 @@ export class Adm010Component implements OnInit {
     });
   }
 
-  EliminarPlanDeCuenta( posicion : number){
-    console.log("Eliminar plan de cuentas: " , posicion);
+  EliminarPlanDeCuenta( item :any){
+    console.log("Eliminar plan de cuentas: " , item);
+    console.log(" count List: ", this.estructuraPlanDeCuentas.length);
+    this.Eliminar(item.id_estructura);
   }
-  EliminarNaturaleza(posicion : number){
-    console.log("eliminar naturaleza: ", posicion);
+  EliminarNaturaleza(item : any){
+    console.log("eliminar naturaleza: ", item);
+    this.Eliminar(item.id_codigo);
   }
-  AñadirEstructura(){
+  AddEstructura(){
+    this.InicializarListsSend();
+    this.newEstructura.gestion = this.idGestion;
+    this.estructuras.push(this.newEstructura);
+    console.log(this.newEstructura);
+    console.log(this.listSend);
+    this.Insertar();
+    this.estructuras = [];
+  }
 
+  Insertar(){
+    this._adm010Service
+    .Insertar(this.listSend,this.idGestion)
+    .subscribe(resp => {
+      if(resp["ok"]){
+        this.InicializarEstructura();
+        this.InicializarNaturaleza();
+        this.ObtenerDatos();
+        this._notyG.noty("success","datos guardados exitosamente",3500);
+      }
+      else{
+        this._notyG.noty("warning","no se pudo guardar los datos",3500);
+      }
+    });
+    
+  }
+  Eliminar(id: number){
+    this._adm010Service
+    .Eliminar(id,this.idGestion)
+    .subscribe( resp => {
+      if(resp["ok"]){
+          this._notyG.noty("success","datos eliminados correctamente",3500);
+          this.ObtenerDatos();
+          this.InicializarEstructura();
+          this.InicializarNaturaleza();
+        }
+        else{
+          this._notyG.noty("warning","no se pudo eliminar los datos",3500);
+          console.log(resp);
+      }
+
+    });   
+  }
+  AddNaturaleza(){
+    this.InicializarListsSend();
+    this.naturalezas.push(this.newNaturaleza);
+    console.log(this.newNaturaleza);
+    console.log(this.listSend);
+    this.Insertar();
+    this.naturalezas = [];
+
+  }
+  InicializarEstructura(){
+    this.newEstructura = {
+      gestion : 0,
+      nombre : "",
+      largo : 0,
+      separador : ""
+    }
+  }
+  InicializarNaturaleza(){
+    this.newNaturaleza = {
+      id_codigo : 0,
+      id_naturaleza : 0
+    }
+  }
+  InicializarListsSend(){
+    this.listSend = {
+      "estructuras": this.estructuras,
+      "naturalezas": this.naturalezas
+    }
   }
 
 }
