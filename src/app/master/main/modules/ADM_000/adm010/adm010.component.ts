@@ -26,7 +26,7 @@ export class Adm010Component implements OnInit {
   naturalezas : any = [];
   newNaturaleza : any = {};
   listSend : any = {};
-  idGestion : number = 0;
+  idGestion : number = 2019;
   idActividad : number = 1;
 
   constructor(
@@ -39,6 +39,8 @@ export class Adm010Component implements OnInit {
   }
   ModoVista(){
     this.editar = false;
+    this.InicializarEstructura();
+    this.InicializarNaturaleza();
   }
   ModoEdicion(){
     this.editar = true;
@@ -46,6 +48,7 @@ export class Adm010Component implements OnInit {
   Actualizar(){
     this.editar = false;
   }
+
   Agregar(){
 
   }
@@ -61,8 +64,13 @@ export class Adm010Component implements OnInit {
       if (resp ["ok"]) {
         this.lista = resp["datos"];
         this.estructuraPlanDeCuentas = this.lista[0]["estructura_plan_cuentas"];
-        this.ultimoElemento = this.estructuraPlanDeCuentas[this.estructuraPlanDeCuentas.length-1];
-        this.estructuraPlanDeCuentas.pop(); 
+        if(this.estructuraPlanDeCuentas != null){
+          this.ultimoElemento = this.estructuraPlanDeCuentas[this.estructuraPlanDeCuentas.length-1];
+          this.estructuraPlanDeCuentas.pop(); 
+        }
+        else {
+          this.ultimoElemento =  null;
+        }
         this.actividadEmpresarial = this.lista[0]["actividad_empresarial"];
         this.Listnaturalezas = this.lista[0]["naturalezas"];
         this.cuentas = this.lista[0]["cuentas"];
@@ -80,18 +88,17 @@ export class Adm010Component implements OnInit {
     });
   }
 
-  EliminarPlanDeCuenta( item :any){
+  EliminarPlanDeCuenta( item :number){
     console.log("Eliminar plan de cuentas: " , item);
     console.log(" count List: ", this.estructuraPlanDeCuentas.length);
-    this.Eliminar(item.id_estructura);
+    this.Eliminar(item);
   }
-  EliminarNaturaleza(item : any){
+  EliminarNaturaleza(item : number){
     console.log("eliminar naturaleza: ", item);
-    this.Eliminar(item.id_codigo);
+    this.Eliminar(item);
   }
   AddEstructura(){
     this.InicializarListsSend();
-    this.newEstructura.gestion = this.idGestion;
     this.estructuras.push(this.newEstructura);
     console.log(this.newEstructura);
     console.log(this.listSend);
@@ -104,8 +111,8 @@ export class Adm010Component implements OnInit {
     .Insertar(this.listSend,this.idGestion)
     .subscribe(resp => {
       if(resp["ok"]){
-        this.InicializarEstructura();
-        this.InicializarNaturaleza();
+        this.ModoVista();
+        this.ModoEdicion();
         this.ObtenerDatos();
         this._notyG.noty("success","datos guardados exitosamente",3500);
       }
@@ -143,7 +150,6 @@ export class Adm010Component implements OnInit {
   }
   InicializarEstructura(){
     this.newEstructura = {
-      gestion : 0,
       nombre : "",
       largo : 0,
       separador : ""
@@ -160,6 +166,45 @@ export class Adm010Component implements OnInit {
       "estructuras": this.estructuras,
       "naturalezas": this.naturalezas
     }
+  }
+
+  Update( ){
+    this._adm010Service
+    .Actualizar(this.listSend , this.idGestion )
+    .subscribe(resp => {
+      if(resp["ok"]){
+        this.ModoVista();
+        this.ModoEdicion();
+        this.ObtenerDatos();
+        this._notyG.noty("success","registro actualizado correctamente",3500);
+      }
+      else{
+        this._notyG.noty("warning","no se actualizo los datos, revise los datos",3500);
+      }
+    });
+  }
+
+  ActualizarEd(item : any){
+    console.log(item);
+    this.InicializarListsSend();
+    this.newEstructura.id_estructura = item.id_estructura;
+    this.newEstructura.nombre = item.nombre;
+    this.newEstructura.largo = item.largo;
+    this.newEstructura.separador = item.separador;
+    this.estructuras.push(this.newEstructura);
+    console.log(this.listSend);
+    this.Update();
+    this.estructuras = [];
+  }
+  ActualizarNat(item : any){
+    console.log(item);
+    this.InicializarListsSend();
+    this.newNaturaleza.id_codigo = item.id_codigo;
+    this.newNaturaleza.id_naturaleza = item.id_naturaleza;
+    this.naturalezas.push(this.newNaturaleza);
+    console.log(this.listSend);
+    this.Update();
+    this.estructuras = [];
   }
 
 }

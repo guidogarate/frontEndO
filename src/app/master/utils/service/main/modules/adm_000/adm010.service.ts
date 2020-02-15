@@ -68,8 +68,8 @@ export class Adm010Service {
       );
   }
   Eliminar( id : number, gestion : number){
-    console.log("service Delete data: ", gestion);
-    const url1 = `${url.prod}${adm0010.update_parametros_iniciales}${id}+'/'+${gestion}`;
+    console.log("service Delete data: ", id);
+    const url1 = `${url.prod}${adm0010.delete_parametros_iniciales}${id}`+'/'+`${gestion}`;
     console.log(url1);
     return this.httpClient
       .put(url1, null, {
