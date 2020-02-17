@@ -245,7 +245,7 @@ export class Adm010Component implements OnInit {
     }else{
       this._notyG.noty("warning","el valor total del largo no debe pasar de 12 ",1200);
     }
-    
+  
   }
 
   CalcularTotal(){
