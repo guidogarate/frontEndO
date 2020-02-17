@@ -55,7 +55,8 @@
     "no-string-literal": false,
     "no-shadowed-variable": false,
     "prefer-for-of": false,
-    "variable-name": [false, "check-format", "allow-leading-underscore"]
+    "variable-name": [false, "check-format", "allow-leading-underscore"],
+    "only-arrow-functions": false
   },
   "rulesDirectory": ["codelyzer"]
 }

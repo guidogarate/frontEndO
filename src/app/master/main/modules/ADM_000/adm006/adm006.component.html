@@ -277,13 +277,43 @@
           <ng-container *ngFor="let auxModal of auxmaModal; let i = index">
             <div class="col-xl-12">
               <div class="media flex-column flex-sm-row mt-0 mb-3">
-                <div class="mr-sm-3 mb-2 mb-sm-0">
+                <div
+                  class="mr-sm-3 mb-2 mb-sm-0 text-center"
+                  style="margin-top: 20px;"
+                >
                   <div class="card-img-actions">
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png"
-                      class="img-fluid img-preview rounded"
-                      alt=""
+                    <input
+                      type="file"
+                      class="d-none"
+                      [disabled]="disabled.foto"
+                      (change)="onPhotoSelected($event)"
+                      #photoInput
                     />
+                    <img
+                      [src]="
+                        photoSelected || auxModal.foto || 'assets/subir_img.png'
+                      "
+                      class="img-fluid img-preview rounded puntero"
+                      alt="No existe imagen, seleccione una imagen"
+                      (click)="photoInput.click()"
+                    />
+                  </div>
+                  <label>Estado</label>
+                  <div>
+                    <select
+                      required
+                      [disabled]="disabled.TipoUsuar"
+                      [(ngModel)]="auxModal.activo"
+                      class="form-control selectpicker show-tick"
+                      name="databaseid"
+                    >
+                      <option
+                        *ngFor="let gruac of auxModal.estados"
+                        [value]="gruac.id_estado"
+                      >
+                        {{ gruac.tipo_estado }}</option
+                      >
+                    </select>
                   </div>
                 </div>
                 <div class="media-body  text-center">
@@ -296,7 +326,7 @@
                           type="text"
                           class="form-control"
                           [disabled]="disabled.login"
-                          placeholder="{{ auxModal.login }}"
+                          placeholder="Introducir Login"
                           [(ngModel)]="auxModal.login"
                           title="{{ auxModal.login }}"
                         />
@@ -312,7 +342,7 @@
                           type="text text-align-center;"
                           class="form-control"
                           [disabled]="disabled.descripci"
-                          placeholder="{{ auxModal.descripcion }}"
+                          placeholder="Introducir descripcion"
                           [(ngModel)]="auxModal.descripcion"
                           title="{{ auxModal.descripcion }}"
                         />
