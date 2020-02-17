@@ -54,7 +54,7 @@ export class Adm006Component implements OnInit {
     { id: "inactivo", valor: 0 }
   ];
   contorlAccion: string = "";
-
+  id_login = "";
   photoSelected: string | ArrayBuffer;
   file: File;
 
@@ -154,6 +154,7 @@ export class Adm006Component implements OnInit {
   }
 
   OpcionesTable(adm_006: Adm006, tipo: string) {
+    this.id_login = adm_006.login;
     switch (tipo) {
       case "visualizar":
         this.btnGrupo.BtnEdita = true;
@@ -244,9 +245,12 @@ export class Adm006Component implements OnInit {
         this.file = null;
         break;
       case "guardar":
-        console.log(this.contorlAccion);
-        this.validandoDatos(this.auxmaModal, this.file);
-        this.guardarDatos(this.auxmaModal, this.file, this.contorlAccion);
+        const b: boolean = this.validandoDatos(this.auxmaModal, this.file);
+        if (b) {
+          this.guardarDatos(this.auxmaModal, this.file, this.contorlAccion);
+        } else {
+          console.log("complete los campos");
+        }
         this.initSelect();
         return;
     }
@@ -296,8 +300,9 @@ export class Adm006Component implements OnInit {
     }
   }
 
-  validandoDatos(auxModal: Adm006[], img: File) {
+  validandoDatos(auxModal: Adm006[], img: File): boolean {
     if (
+      auxModal[0].activo !== undefined &&
       auxModal[0].id_grupo_acceso !== undefined &&
       auxModal[0].id_grupo_acceso !== undefined &&
       auxModal[0].id_tipo_usuario !== undefined &&
@@ -307,9 +312,10 @@ export class Adm006Component implements OnInit {
       if (auxModal[0].login && auxModal[0].descripcion) {
         this.boolDisabled(true);
         this.boolBtnGrupo(true, false);
+        return true;
       } else {
         console.log("complete los campos input");
-        return;
+        return false;
       }
       // } else {
       //   console.log("seleccione una imagen");
@@ -317,23 +323,22 @@ export class Adm006Component implements OnInit {
       // }
     } else {
       console.log("conplete los campos de select");
-      return;
+      return false;
     }
   }
   guardarDatos(auxModal: Adm006[], img: File, contorlAccion: string) {
-    console.log(auxModal);
-    const login: string = auxModal[0].login;
+    console.log(this.id_login);
     let peticion: Observable<any>;
     if (contorlAccion === "nuevo") {
-      peticion = this.adm006S.inAdm006(auxModal);
+      peticion = this.adm006S.inAdm006(auxModal, img);
     } else if (contorlAccion === "editar") {
-      peticion = this.adm006S.upAdm005(auxModal, login);
+      peticion = this.adm006S.upAdm005(auxModal, this.id_login, img);
     }
     this.sus = peticion.subscribe(resp => {
+      console.log(resp);
       if (resp["ok"]) {
         this.getAdm006(this.texto);
       }
-      console.log(resp);
     });
   }
 }

@@ -294,7 +294,7 @@
                         photoSelected || auxModal.foto || 'assets/subir_img.png'
                       "
                       class="img-fluid img-preview rounded puntero"
-                      alt="No Image"
+                      alt="No existe imagen, seleccione una imagen"
                       (click)="photoInput.click()"
                     />
                   </div>
@@ -308,10 +308,10 @@
                       name="databaseid"
                     >
                       <option
-                        *ngFor="let gruac of estadoUs"
-                        [value]="gruac.valor"
+                        *ngFor="let gruac of auxModal.estados"
+                        [value]="gruac.id_estado"
                       >
-                        {{ gruac.id }}</option
+                        {{ gruac.tipo_estado }}</option
                       >
                     </select>
                   </div>

@@ -16,6 +16,7 @@ export interface Adm006 {
   grupos_acceso: Adm006Obj[];
   grupos_perfil: Adm006Obj[];
   personas: Adm006Obj[];
+  estado: Adm006Obj[];
 }
 
 export interface Adm006Obj {

@@ -42,31 +42,26 @@ export class Adm006Service {
       );
   }
 
-  upAdm005(adm_006: Adm006[], login: string) {
-    const json = JSON.stringify({
-      login: adm_006[0].login,
-      descripcion: adm_006[0].descripcion,
-      foto:
-        "https://www.socialtools.me/blog/wp-content/uploads/2016/04/foto-de-perfil.jpg",
-      estado: adm_006[0].activo.toString(),
-      id_grupo_acceso: adm_006[0].id_grupo_acceso,
-      id_grupo_perfil: adm_006[0].id_grupo_perfil,
-      id_tipo_usuario: adm_006[0].id_tipo_usuario,
-      id_persona: adm_006[0].codigo_persona
-    });
+  upAdm005(adm_006: Adm006[], login: string, img: File) {
     const url1 = `${url.prod}${adm006.upAdm006}${login}`;
-    return this.httpClient
-      .put(url1, json, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json"
-        })
+    const fd = new FormData();
+    fd.append("login", adm_006[0].login);
+    fd.append("descripcion", adm_006[0].descripcion);
+    fd.append("estado", adm_006[0].activo.toString());
+    fd.append("id_grupo_acceso", adm_006[0].id_grupo_acceso);
+    fd.append("id_grupo_perfil", adm_006[0].id_grupo_perfil.toString());
+    fd.append("id_tipo_usuario", adm_006[0].id_tipo_usuario);
+    fd.append("id_persona", adm_006[0].codigo_persona);
+    if (img) {
+      fd.append("foto", img, img.name);
+    } else {
+      fd.append("foto_url", adm_006[0].foto);
+    }
+    return this.httpClient.put(url1, fd, {
+      headers: new HttpHeaders({
+        authorization: this.token
       })
-      .pipe(
-        map(resp => {
-          return resp;
-        })
-      );
+    });
   }
 
   deAdm006(login: string) {
@@ -85,32 +80,23 @@ export class Adm006Service {
       );
   }
 
-  inAdm006(adm_006: Adm006[]) {
-    const json = JSON.stringify({
-      login: adm_006[0].login,
-      descripcion: adm_006[0].descripcion,
-      foto:
-        "https://www.socialtools.me/blog/wp-content/uploads/2016/04/foto-de-perfil.jpg",
-      estado: adm_006[0].activo.toString(),
-      id_grupo_acceso: adm_006[0].id_grupo_acceso,
-      id_grupo_perfil: adm_006[0].id_grupo_perfil,
-      id_tipo_usuario: adm_006[0].id_tipo_usuario,
-      id_persona: adm_006[0].codigo_persona
-    });
-    console.log(JSON.parse(json));
-
+  inAdm006(adm_006: Adm006[], img: File) {
     const url1 = `${url.prod}${adm006.inAdm006}`;
-    return this.httpClient
-      .post(url1, json, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json"
-        })
+    const fd = new FormData();
+    fd.append("login", adm_006[0].login);
+    fd.append("descripcion", adm_006[0].descripcion);
+    fd.append("estado", adm_006[0].activo.toString());
+    fd.append("id_grupo_acceso", adm_006[0].id_grupo_acceso);
+    fd.append("id_grupo_perfil", adm_006[0].id_grupo_perfil.toString());
+    fd.append("id_tipo_usuario", adm_006[0].id_tipo_usuario);
+    fd.append("id_persona", adm_006[0].codigo_persona);
+    if (img) {
+      fd.append("foto", img, img.name);
+    }
+    return this.httpClient.post(url1, fd, {
+      headers: new HttpHeaders({
+        authorization: this.token
       })
-      .pipe(
-        map(resp => {
-          return resp;
-        })
-      );
+    });
   }
 }
