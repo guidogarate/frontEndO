@@ -241,17 +241,18 @@ export class Adm010Component implements OnInit {
       this.totalLargo= this.CalcularTotal();
       this.ultimoElemento.largo = this.totalLargo;
       this.Update();
-      this.InicializarEstructura();
     }else{
       this._notyG.noty("warning","el valor total del largo no debe pasar de 12 ",1200);
     }
+    this.ListUpdatesPlan = [];
+    this.InicializarEstructura();
   
   }
 
   CalcularTotal(){
     let sum: number =0;
     this.estructuraPlanDeCuentas.forEach( element => {
-      sum = sum + (+element.id_estructura);
+      sum = sum + (+element.largo);
     });
     return sum;
   }
