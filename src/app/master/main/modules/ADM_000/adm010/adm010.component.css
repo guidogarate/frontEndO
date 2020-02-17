@@ -9,6 +9,10 @@
     font-size: 1.8em;
     color: #03a9f4;
 }
+.colorDelete{
+    color: red;
+    font-size: 1.8em;
+}
 .plr0{
     padding-left: 0%;
     padding-right: 0%;
@@ -36,7 +40,8 @@
     .switch-float{
         float: right;
         bottom: 5em;
+    }  
+    .colorDelete{
+        font-size: 1.5em;
     }
-
-  
 }

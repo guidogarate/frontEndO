@@ -57,8 +57,8 @@
                                             <div class="col-sm-1 col-0"></div>
                                             <div class="col-sm-6 col-7 form-group form-group-float m0">
                                                 <label class="form-group-float-label m0 p0" >Actividad de la Empresa</label>
-                                                <select class="form-control p0 selectCenter alturaInputs" 
-                                                        [(ngModel)]="actividadEmpresarial.id_actividad_empresarial"
+                                                <select class="form-control p0 selectCenter alturaInputs" disabled
+                                                        [(ngModel)]="idActividad"
                                                         name="actividadSelect">
                                                     <option [value]="actividad.id_actividad_empresarial" *ngFor="let actividad of actividadEmpresarial">
                                                             {{actividad.actividad_empresa}}
@@ -67,8 +67,8 @@
                                             </div>
                                             <div class="col-sm-5 col-5 form-group form-group-float m0">
                                                 <label class="form-group-float-label m0 p0">Gestion</label>
-                                                <select class="form-control p0 selectCenter alturaInputs" 
-                                                        [(ngModel)]="lista[0].gestion"
+                                                <select class="form-control p0 selectCenter alturaInputs" (change) = "ObtenerDatos()"
+                                                        [(ngModel)]="idGestion"
                                                         name="gestionSelect">
                                                     <option [value]="gestion.gestion" *ngFor="let gestion of gestiones">
                                                             {{gestion.gestion}}
@@ -112,18 +112,22 @@
                                     </div>
                                     <div class="form-group row mb0" *ngFor="let ed of estructuraPlanDeCuentas ; let i = index">
                                         <div class="col-sm-3 col-5">
-                                            <input type="text" [(ngModel)]="ed.nombre" [value]="ed.nombre" required [disabled]="!editar" class="form-control">
+                                            <input type="text" [(ngModel)]="ed.nombre" [value]="ed.nombre" required [disabled]="!editar || i == 0" class="form-control">
                                         </div>
                                         <div class="col-sm-3 col-3">
-                                            <input type="text" class="form-control text-center" [(ngModel)]="ed.largo" [value] = "ed.largo" [disabled] = "!editar" >
+                                            <input type="text" class="form-control text-center" [(ngModel)]="ed.largo" [value] = "ed.largo" [disabled] = "!editar || i == 0">
                                         </div>
                                         <div class="col-sm-3 col-2">
-                                            <input type="text" class="form-control text-center" [(ngModel)]="ed.separador" [value]="ed.separador" [disabled] = "!editar">
+                                            <input type="text" class="form-control text-center" [(ngModel)]="ed.separador" [value]="ed.separador" [disabled] = "!editar || i == 0">
                                         </div>
-                                        <div class="col-sm-3 col-2" style="align-self: center;" >
-                                            <a class="list-icons-item"  
-                                               [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "EliminarPlanDeCuenta(i)">
-                                               <i class="icon-cancel-circle2 title-icon " data-toggle="tooltip" data-placement="top" title="Eliminar"> </i>
+                                        <div class="col-sm-3 col-2 p0" style="align-self: center; display: flex;" *ngIf="editar" >
+                                            <a class="list-icons-item" (click) = "ActualizarEd(ed)" *ngIf = "i > 0"
+                                                [routerLink]="nada()" routerLinkActive="router-link-active" >
+                                                <i class="icon-checkmark-circle title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
+                                            </a>
+                                            <a class="list-icons-item"  *ngIf = "i==estructuraPlanDeCuentas.length-1"
+                                               [routerLink]="nada()"  routerLinkActive="router-link-active" (click) = "EliminarPlanDeCuenta(ed.id_estructura)">
+                                               <i class="icon-cancel-circle2 colorDelete " data-toggle="tooltip" data-placement="top" title="Eliminar"> </i>
                                             </a>
                                         </div>
                                     </div>
@@ -138,7 +142,34 @@
                                     </div>
                                 </div>
                             </div>
-                         </div>
+                        </div>
+                         <!-- new estructura -->
+                        <div class="row p0 m0" *ngIf="editar">
+                            <div class="col-sm-8">
+                                <div class="col-sm-12 col-12 m0 p0">
+                                    <div class="form-group row mb0">
+                                        <div class="col-sm-3 col-5">
+                                             <input type="text" [(ngModel)]="newEstructura.nombre" [value]="newEstructura.nombre" required class="form-control">
+                                        </div>
+                                        <div class="col-sm-3 col-3">
+                                             <input type="text" class="form-control text-center" [(ngModel)]="newEstructura.largo" [value] = "newEstructura.largo">
+                                        </div>
+                                        <div class="col-sm-3 col-2">
+                                             <input type="text" class="form-control text-center" [(ngModel)]="newEstructura.separador" [value]="newEstructura.separador">
+                                        </div>
+                                        <div class="col-sm-3 col-2" style="align-self: center;"  >
+                                             <a class="list-icons-item"  
+                                                [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "AddEstructura()">
+                                                <i class="icon-checkmark-circle title-icon " data-toggle="tooltip" data-placement="top" title="Agregar"></i>
+                                             </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p> * Solo Puede crear un maximo de 6 tipos de estructuras de plan de cuenta</p>
+                            <pre>{{newEstructura | json}}</pre>
+                        </div>
+                        <!-- end new Ed -->
                     </div>
                 </div>
             </div>
@@ -183,16 +214,52 @@
                                                 </option>
                                         </select>
                                     </div>
-                                    <div class="col-sm-2 col-2" >      
-                                        <a class="list-icons-item"  
-                                            [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "EliminarNaturaleza(i)">
-                                            <i class="icon-cancel-circle2 title-icon " data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+                                    <div class="col-sm-2 col-2" *ngIf="editar" > 
+                                        <a class="list-icons-item"  (click) = "ActualizarNat(naturaleza)"
+                                            [routerLink]="nada()" routerLinkActive="router-link-active" >
+                                            <i class="icon-checkmark-circle title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
+                                        </a>     
+                                        <a class="list-icons-item" *ngIf = "i==Listnaturalezas.length-1"
+                                            [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "EliminarNaturaleza(naturaleza.id_codigo)">
+                                            <i class="icon-cancel-circle2 colorDelete" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-0"></div>
                         </div>
+                        <!-- new naturaleza -->
+                        <div class="row p0 m0" *ngIf="editar">
+                            <div class="col-sm-3 col-0"></div>
+                            <div class="col-sm-6 col-12">
+                                <div class="form-group row mb0">
+                                    <div class="col-sm-5 col-5" >
+                                        <select class="form-control p0 selectCenter alturaInputs" [(ngModel)]="newNaturaleza.id_codigo" [disabled] = "!editar">
+                                                <option [value]="codNaturaleza.id_codigo" *ngFor="let codNaturaleza of allCodigosNaturalezas">
+                                                        {{codNaturaleza.codigo}}
+                                                </option>
+                                        </select>
+                                    </div> 
+                                    <div class="col-sm-5 col-5" >      
+                                        <select class="form-control p0 selectCenter alturaInputs" [(ngModel)]="newNaturaleza.id_naturaleza" [disabled] = "!editar">
+                                                <option [value]="oneNaturaleza.id_naturaleza" *ngFor="let oneNaturaleza of allNaturalezas">
+                                                        {{oneNaturaleza.naturaleza}}
+                                                </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2 col-2">      
+                                        <a class="list-icons-item"
+                                            [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "AddNaturaleza()">
+                                            <i class="icon-checkmark-circle title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Naturaleza"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-0"></div>
+                            <pre>{{newNaturaleza | json}}</pre>
+                            <pre>{{idGestion | json}}</pre>
+                        </div>
+                        <!-- end new Naturaleza -->
                     </div>
                 </div>
             </div>
