@@ -6,6 +6,7 @@ export interface Adm006 {
   id_grupo_acceso: string;
   grupo_perfil: string;
   id_grupo_perfil: number;
+  id_estado: number;
   tipo_usuario: string;
   id_tipo_usuario: string;
   codigo_persona: string;

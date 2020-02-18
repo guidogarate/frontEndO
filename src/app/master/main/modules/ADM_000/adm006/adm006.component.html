@@ -153,9 +153,14 @@
                           class="icon-pencil7 text-teal-600 puntero"
                           title="Editar"
                         ></i>
-
+                        <!-- (click)="OpcionesTable(adm006, 'eliminar')"
+                         (click)="OpcionesTable(adm006, 'eliminar')"
+                        -->
                         <i
                           class="icon-trash text-danger-600 puntero"
+                          data-toggle="modal"
+                          (click)="OpcionesTable(adm006, 'eliminar')"
+                          data-target="#modal_adm_006_eliminar"
                           title="Eliminar"
                         ></i>
                       </div>
@@ -303,7 +308,7 @@
                     <select
                       required
                       [disabled]="disabled.TipoUsuar"
-                      [(ngModel)]="auxModal.activo"
+                      [(ngModel)]="auxModal.id_estado"
                       class="form-control selectpicker show-tick"
                       name="databaseid"
                     >
@@ -454,6 +459,35 @@
             <span class="sr-only">Loading...</span>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal_adm_006_eliminar" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Adm006</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6 class="font-weight-semibold">Desea eliminar {{ eliminAdm_006 }}</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" data-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn bg-primary"
+          data-dismiss="modal"
+          (click)="eliminarAdm006(eliminAdm_006)"
+        >
+          Aceptar
+        </button>
       </div>
     </div>
   </div>

@@ -47,7 +47,7 @@ export class Adm006Service {
     const fd = new FormData();
     fd.append("login", adm_006[0].login);
     fd.append("descripcion", adm_006[0].descripcion);
-    fd.append("estado", adm_006[0].activo.toString());
+    fd.append("estado", adm_006[0].id_estado.toString());
     fd.append("id_grupo_acceso", adm_006[0].id_grupo_acceso);
     fd.append("id_grupo_perfil", adm_006[0].id_grupo_perfil.toString());
     fd.append("id_tipo_usuario", adm_006[0].id_tipo_usuario);
@@ -85,7 +85,7 @@ export class Adm006Service {
     const fd = new FormData();
     fd.append("login", adm_006[0].login);
     fd.append("descripcion", adm_006[0].descripcion);
-    fd.append("estado", adm_006[0].activo.toString());
+    fd.append("estado", adm_006[0].id_estado.toString());
     fd.append("id_grupo_acceso", adm_006[0].id_grupo_acceso);
     fd.append("id_grupo_perfil", adm_006[0].id_grupo_perfil.toString());
     fd.append("id_tipo_usuario", adm_006[0].id_tipo_usuario);

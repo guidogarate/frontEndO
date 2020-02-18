@@ -57,6 +57,7 @@ export class Adm006Component implements OnInit {
   id_login = "";
   photoSelected: string | ArrayBuffer;
   file: File;
+  eliminAdm_006: string = "";
 
   constructor(private adm006S: Adm006Service, private notyG: NotyGlobal) {
     this.getAdm006(this.texto);
@@ -145,8 +146,9 @@ export class Adm006Component implements OnInit {
     }
     this.sus = peticion.subscribe(resp => {
       if (resp["ok"]) {
-        this.auxma = resp["auxma"];
+        this.auxma = resp.usr[0].registros;
         this.pagi = resp["cant"];
+        this.nuevoAuxmaModal = resp.usr[0];
       } else {
         // this.notyG.noty("error", resp["mensaje"], 5000);
       }
@@ -169,6 +171,8 @@ export class Adm006Component implements OnInit {
         this.initSelect();
         break;
       case "eliminar":
+        this.eliminAdm_006 = adm_006.login;
+        return;
         break;
       default:
         this.notyG.noty("error", "Operacion incorrecta", 5000);
@@ -206,10 +210,26 @@ export class Adm006Component implements OnInit {
     this.nuevoAuxmaModal.login = "";
     this.nuevoAuxmaModal.descripcion = "";
     this.auxmaModal = [this.nuevoAuxmaModal];
+    this.contorlAccion = "nuevo";
     setTimeout(() => {
       initLabels();
     }, 5);
     this.initSelect();
+  }
+
+  eliminarAdm006(login: string) {
+    let peticion: Observable<any>;
+    peticion = this.adm006S.deAdm006(login);
+    this.sus = peticion.subscribe(resp => {
+      console.log("eliminar", resp);
+      if (resp["ok"]) {
+        this.getAdm006(this.texto);
+        this.eliminAdm_006 = "";
+        this.notyG.noty("success", resp[" mensaje"], 3000);
+      } else {
+        this.notyG.noty("error", resp["mensaje"], 3000);
+      }
+    });
   }
 
   OpcionesModal(tipo: string) {
@@ -248,8 +268,6 @@ export class Adm006Component implements OnInit {
         const b: boolean = this.validandoDatos(this.auxmaModal, this.file);
         if (b) {
           this.guardarDatos(this.auxmaModal, this.file, this.contorlAccion);
-        } else {
-          console.log("complete los campos");
         }
         this.initSelect();
         return;
@@ -302,7 +320,7 @@ export class Adm006Component implements OnInit {
 
   validandoDatos(auxModal: Adm006[], img: File): boolean {
     if (
-      auxModal[0].activo !== undefined &&
+      auxModal[0].id_estado !== undefined &&
       auxModal[0].id_grupo_acceso !== undefined &&
       auxModal[0].id_grupo_acceso !== undefined &&
       auxModal[0].id_tipo_usuario !== undefined &&
@@ -314,7 +332,7 @@ export class Adm006Component implements OnInit {
         this.boolBtnGrupo(true, false);
         return true;
       } else {
-        console.log("complete los campos input");
+        this.notyG.noty("error", "conplete los campos de input", 3000);
         return false;
       }
       // } else {
@@ -322,22 +340,26 @@ export class Adm006Component implements OnInit {
       //   return;
       // }
     } else {
-      console.log("conplete los campos de select");
+      this.notyG.noty("error", "conplete los campos de selecccion", 3000);
       return false;
     }
   }
+
   guardarDatos(auxModal: Adm006[], img: File, contorlAccion: string) {
-    console.log(this.id_login);
     let peticion: Observable<any>;
     if (contorlAccion === "nuevo") {
       peticion = this.adm006S.inAdm006(auxModal, img);
     } else if (contorlAccion === "editar") {
       peticion = this.adm006S.upAdm005(auxModal, this.id_login, img);
+    } else {
+      this.notyG.noty("error", "control Accion Invalido", 2000);
     }
     this.sus = peticion.subscribe(resp => {
-      console.log(resp);
       if (resp["ok"]) {
         this.getAdm006(this.texto);
+        this.notyG.noty("success", resp["mensaje"], 1000);
+      } else {
+        this.notyG.noty("error", resp["mensaje"], 3000);
       }
     });
   }
