@@ -14,9 +14,9 @@
                             [routerLink]="nada()" routerLinkActive="router-link-active">
                             <i class="icon-pencil7 title-icon" data-toggle="tooltip" data-placement="top" title="Editar"> </i>
                         </a>
-                        <a class="list-icons-item"  *ngIf="editar" (click) = "Actualizar()"
+                        <a class="list-icons-item"  *ngIf="editar" (click) = "Guardar()"
                             [routerLink]="nada()" routerLinkActive="router-link-active" >
-                            <i class="icon-floppy-disk title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
+                            <i class="icon-floppy-disk title-icon" data-toggle="tooltip" data-placement="top" title="Guardar"> </i>
                         </a>
                         <a class="list-icons-item" 
                             [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "ModoVista()">
@@ -94,9 +94,9 @@
                             </h5>
                             <div class="header-elements">
                                 <div class="list-icons">
-                                    <a class="list-icons-item"
+                                    <a class="list-icons-item" (click) = "AgregarPlanDeCuentas()"
                                        [routerLink]="nada()" routerLinkActive="router-link-active">
-                                       <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Direccion"> </i>
+                                       <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Plan de Cuentas"> </i>
                                     </a>
                                 </div>
                             </div>
@@ -121,11 +121,11 @@
                                             <input type="text" class="form-control text-center" [(ngModel)]="ed.separador" [value]="ed.separador" [disabled] = "!editar || i == 0">
                                         </div>
                                         <div class="col-sm-3 col-2 p0" style="align-self: center; display: flex;" *ngIf="editar" >
-                                            <a class="list-icons-item" (click) = "ActualizarEd(ed)" *ngIf = "i > 0"
+                                            <a class="list-icons-item" (click) = "ActualizarEd(ed)" *ngIf = "i > 0 && tope > i" 
                                                 [routerLink]="nada()" routerLinkActive="router-link-active" >
-                                                <i class="icon-checkmark-circle title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
+                                                <i class="icon-pencil7 title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
                                             </a>
-                                            <a class="list-icons-item"  *ngIf = "i==estructuraPlanDeCuentas.length-1"
+                                            <a class="list-icons-item"  *ngIf = "i == tope-1 && i > 0 && ed.id_estructura != 0"
                                                [routerLink]="nada()"  routerLinkActive="router-link-active" (click) = "EliminarPlanDeCuenta(ed.id_estructura)">
                                                <i class="icon-cancel-circle2 colorDelete " data-toggle="tooltip" data-placement="top" title="Eliminar"> </i>
                                             </a>
@@ -158,16 +158,16 @@
                                              <input type="text" class="form-control text-center" [(ngModel)]="newEstructura.separador" [value]="newEstructura.separador">
                                         </div>
                                         <div class="col-sm-3 col-2" style="align-self: center;"  >
-                                             <a class="list-icons-item"  
+                                             <!-- <a class="list-icons-item"  
                                                 [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "AddEstructura()">
                                                 <i class="icon-checkmark-circle title-icon " data-toggle="tooltip" data-placement="top" title="Agregar"></i>
-                                             </a>
+                                             </a> -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <p> * Solo Puede crear un maximo de 6 tipos de estructuras de plan de cuenta</p>
-                            <pre>{{newEstructura | json}}</pre>
+                            <!-- <pre>{{newEstructura | json}}</pre> -->
                         </div>
                         <!-- end new Ed -->
                     </div>
@@ -217,7 +217,7 @@
                                     <div class="col-sm-2 col-2" *ngIf="editar" > 
                                         <a class="list-icons-item"  (click) = "ActualizarNat(naturaleza)"
                                             [routerLink]="nada()" routerLinkActive="router-link-active" >
-                                            <i class="icon-checkmark-circle title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
+                                            <i class="icon-pencil7 title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
                                         </a>     
                                         <a class="list-icons-item" *ngIf = "i==Listnaturalezas.length-1"
                                             [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "EliminarNaturaleza(naturaleza.id_codigo)">
@@ -256,8 +256,8 @@
                                 </div>
                             </div>
                             <div class="col-sm-3 col-0"></div>
-                            <pre>{{newNaturaleza | json}}</pre>
-                            <pre>{{idGestion | json}}</pre>
+                            <!-- <pre>{{newNaturaleza | json}}</pre>
+                            <pre>{{idGestion | json}}</pre> -->
                         </div>
                         <!-- end new Naturaleza -->
                     </div>
