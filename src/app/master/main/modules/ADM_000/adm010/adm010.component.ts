@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Adm010Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
+import { element } from 'protractor';
 declare function initLabels ();
 
 @Component({
@@ -29,10 +30,13 @@ export class Adm010Component implements OnInit {
   idGestion : number = 2019;
   idActividad : number = 1;
   tope : number = 0;
+  topeNaturaleza : number = 0;
   totalLargo : number = 0;
   ListUpdatesPlan : any = [];
   ListUpdatesNaturalezas : any = [];
-
+  ListLastStade : any = [];
+  ListaforUpdate : any = [];
+  agregar : boolean = false;
   constructor(
     private _notyG : NotyGlobal,
     private _adm010Service : Adm010Service
@@ -48,14 +52,15 @@ export class Adm010Component implements OnInit {
   }
   ModoEdicion(){
     this.editar = true;
+    this.GuardarEstado();
   }
   Actualizar(){
     this.editar = false;
   }
 
-  Agregar(){
+  // Agregar(){
 
-  }
+  // }
 
   /** */
   nada(){}
@@ -79,6 +84,11 @@ export class Adm010Component implements OnInit {
         }
         this.actividadEmpresarial = this.lista[0]["actividad_empresarial"];
         this.Listnaturalezas = this.lista[0]["naturalezas"];
+        this.topeNaturaleza = this.Listnaturalezas.length;
+        if(this.Listnaturalezas == null){
+          this.Listnaturalezas = [];
+        }
+       
         this.cuentas = this.lista[0]["cuentas"];
         this.allCodigosNaturalezas = this.lista[0]["all_codigos_naturalezas"];
         this.allNaturalezas = this.lista[0]["all_naturalezas"];
@@ -123,14 +133,33 @@ export class Adm010Component implements OnInit {
         this.totalLargo = this.totalLargo - valor;
         this.ultimoElemento.largo = this.totalLargo;
     }
-    console.log(this.estructuraPlanDeCuentas);
-    console.log(this.totalLargo);
-    console.log(this.ultimoElemento);
   }
 
+  RemoverNaturaleza ( id : any ) {
+    let valor = 1;
+    let pos = 1;
+    let v1 : number = 0;
+    // const found = this.estructuraPlanDeCuentas.find(element => element.id_estructura == id);
+    this.Listnaturalezas.forEach( element => {
+      if(element.id_codigo == id){
+        valor = element.largo;
+        console.log("valor: ",element);
+        v1 = pos;
+      }  
+        pos = pos + 1;
+        console.log("pos: ", pos);
+      
+    });
+    console.log("removiendo: ", v1);
+    if ( v1 !== 0 ) {
+        this.Listnaturalezas.splice( (v1-1), 1 );
+    }
+  }
   EliminarNaturaleza(item : number){
     console.log("eliminar naturaleza: ", item);
+    this.RemoverNaturaleza(item);
     this.Eliminar(item);
+    this.topeNaturaleza = this.topeNaturaleza - 1;
   }
   AddEstructura(){
     // this.InicializarListsSend();
@@ -148,11 +177,12 @@ export class Adm010Component implements OnInit {
       if(resp["ok"]){
         this.ModoVista();
         // this.ModoEdicion();
-        this.ObtenerDatos();
+         this.ObtenerDatos();
         this._notyG.noty("success","datos guardados exitosamente",3500);
       }
       else{
         this._notyG.noty("warning","no se pudo guardar los datos",3500);
+        this.InicializarEstructura();
       }
     });
     
@@ -193,6 +223,7 @@ export class Adm010Component implements OnInit {
   }
   InicializarNaturaleza(){
     this.newNaturaleza = {
+      codigo : 0,
       id_codigo : 0,
       id_naturaleza : 0
     }
@@ -202,6 +233,7 @@ export class Adm010Component implements OnInit {
       "estructuras": this.estructuras,
       "naturalezas": this.naturalezas
     }
+
   }
   InicializarListsUpdates(){
     this.listSend = {
@@ -216,7 +248,7 @@ export class Adm010Component implements OnInit {
     .subscribe(resp => {
       if(resp["ok"]){
         this.ModoVista();
-        this.ModoEdicion();
+        // this.ModoEdicion();
         // this.ObtenerDatos();
         this._notyG.noty("success","registro actualizado correctamente",3500);
       }
@@ -227,18 +259,20 @@ export class Adm010Component implements OnInit {
   }
 
   ActualizarEd(item : any){
+
     console.log(item);
+    // this.ListaforUpdate.push(item);
     this.InicializarListsUpdates();
     this.newEstructura.id_estructura = item.id_estructura;
     this.newEstructura.nombre = item.nombre;
     this.newEstructura.largo = +item.largo;
     this.newEstructura.separador = item.separador;
     this.ListUpdatesPlan.push(this.newEstructura);
-    // this.estructuras.push(this.ListUpdatesPlan);
-    console.log(this.ListUpdatesPlan);
+    this.estructuras.push(this.ListUpdatesPlan);
+    console.log(this.ListaforUpdate);
 
-    if(this.CalcularTotal()< 13){
-      this.totalLargo= this.CalcularTotal();
+    if( this.CalcularTotal() < 13 ){
+      this.totalLargo = this.CalcularTotal();
       this.ultimoElemento.largo = this.totalLargo;
       this.Update();
     }else{
@@ -254,8 +288,23 @@ export class Adm010Component implements OnInit {
     this.estructuraPlanDeCuentas.forEach( element => {
       sum = sum + (+element.largo);
     });
+
     return sum;
   }
+
+  CalcularLargo(){
+    let sum: number = 0;
+    this.estructuraPlanDeCuentas.forEach( element => {
+      sum = sum + (+element.largo);
+    });
+    if(sum < 13){
+      this._notyG.noty("success","ok",1200);
+    }else{
+      this._notyG.noty("warning","el total no debe pasar de 12",1200);
+    }
+    
+  }
+
   ActualizarNat(item : any){
     console.log(item);
     this.InicializarListsSend();
@@ -267,29 +316,93 @@ export class Adm010Component implements OnInit {
     this.estructuras = [];
   }
 
-  AgregarPlanDeCuentas(){   
-
-    let suma : number =0 +(+this.totalLargo) + (+(this.newEstructura.largo)) ;
-    if(( this.estructuraPlanDeCuentas.length < 6) && (suma < 13) ){
-      this.estructuraPlanDeCuentas.push(this.newEstructura);
-      this.estructuras.push(this.newEstructura);
+  AgregarPlanDeCuentas(){
+    // this.agregar = true;
+    if(this.CalcularTotal()>11 || this.estructuraPlanDeCuentas.length >6){
+      this._notyG.noty("warning","el total no debe pasar de 12",1200);
+    }
+    else{
       this.InicializarEstructura();
-      this.ultimoElemento.largo = suma ;
-      this.totalLargo = suma;
-      console.log( this.ultimoElemento.largo);
+      this.estructuraPlanDeCuentas.push(this.newEstructura);
+      // this.estructuras.push();
+      this.ultimoElemento.largo = this.CalcularTotal();
     }
-    else {
-      this._notyG.noty("warning","solo puede agregarse 6 elementos",1200);
-      console.log(suma);
-    }
-    // this.tope = this.tope +1;
   }
 
+  // AgregarPlanDeCuentas1(){   
+
+  //   let suma : number =0 +(+this.totalLargo) + (+(this.newEstructura.largo)) ;
+  //   if(( this.estructuraPlanDeCuentas.length < 6) && (suma < 13) ){
+  //     this.estructuraPlanDeCuentas.push(this.newEstructura);
+  //     this.estructuras.push(this.newEstructura);
+  //     this.InicializarEstructura();
+  //     this.ultimoElemento.largo = suma ;
+  //     this.totalLargo = suma;
+  //     console.log( this.ultimoElemento.largo);
+  //   }
+  //   else {
+  //     this._notyG.noty("warning","solo puede agregarse 6 elementos",1200);
+  //     console.log(suma);
+  //   }
+    
+  // }
+
   Guardar(){
-    this.InicializarListsSend();
-    this.Insertar();
+    this.ListarNuevos();
+    // this.ListUpdatesPlan.pop();
+    this.InicializarListsUpdates();
+    this.Update();
+    if(this.estructuras.length>0 || this.naturalezas.length >0){
+      this.InicializarListsSend();
+      this.Insertar();
+    }
+
+    // setTimeout(() => {
+    //   this.ObtenerDatos();
+    // }, 1500);
     this.estructuras = [];
+    this.ListUpdatesPlan = [];
+    this.ListUpdatesNaturalezas = [];
     this.naturalezas = [];
   }
 
+  GuardarEstado(){
+    this.ListLastStade = this.estructuraPlanDeCuentas.slice();
+    console.log(this.ListLastStade);
+  }
+  
+  VolverEstadoAnterior(){
+    this.estructuraPlanDeCuentas = this.ListLastStade.slice();
+  }
+
+  ListarNuevos(){
+    this.estructuraPlanDeCuentas.forEach(element =>{
+      if(element.id_estructura == 0){
+        this.estructuras.push(element);
+      }else{
+        this.ListUpdatesPlan.push(element);
+      }
+    });
+    this.Listnaturalezas.forEach(element => {
+      if(element.codigo == 0){
+        this.naturalezas.push(element);
+      }else{
+        this.ListUpdatesNaturalezas.push(element);
+      }
+    });
+
+  }
+
+  AgregarNaturaleza(){
+  
+  if(this.estructuraPlanDeCuentas.length >8){
+    this._notyG.noty("warning","el total no debe pasar de 9",1200);
+  }
+  else{
+    this.InicializarNaturaleza();
+    this.Listnaturalezas.push(this.newNaturaleza);
+    // this.naturalezas.push();
+   
+  }
+  }
 }
