@@ -44,29 +44,6 @@
     margin-bottom: 0.5em;
 }
 
-/**personalizando switch*/
-/* --------switch desabilitado------- */
-/* .custom-control-input:disabled ~ .custom-control-label::before {
-    background-color: rgb(173, 3, 3);
-  }
-  
-  .custom-switch .custom-control-label::after {
-    background-color: #fff;
-  }
-  
-  .custom-control-label::before {
-    background-color: rgb(173, 3, 3);
-  }
-  
-  /* --------switch habilitado------- */
-  /* .custom-control-input:checked ~ .custom-control-label::before {
-    background-color: rgb(13, 148, 11);
-  } */
-  
-  /**disabled swtich*/
-  /*.custom-control-input:disabled ~ .custom-control-label:before {
-    opacity: 0.5;
-  } */
   .icons-options{
       font-size: 1.5em; /* de esta manera modificas el tamaño de tus iconos.*/
       color: #03a9f4;
@@ -74,6 +51,9 @@
   /* para errores en los campos */
   .ng-invalid.ng-touched:not(form){
       border:1px solid red;
+  }
+  .pt05{
+      padding-top: 0.5em;
   }
   
 @media screen and (max-width: 600px) {

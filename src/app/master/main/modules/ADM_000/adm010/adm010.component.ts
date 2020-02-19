@@ -35,6 +35,7 @@ export class Adm010Component implements OnInit {
   ListUpdatesPlan : any = [];
   ListUpdatesNaturalezas : any = [];
   ListLastStade : any = [];
+  ListLastStadeNaturaleza : any = [];
   ListaforUpdate : any = [];
   agregar : boolean = false;
   constructor(
@@ -45,10 +46,16 @@ export class Adm010Component implements OnInit {
   ngOnInit() {
     this.ObtenerDatos();
   }
-  ModoVista(){
+  ModoVista(id:string){
     this.editar = false;
+    if(id == 'salir'){
+      console.log("entro a volver estado :O");
+      this.VolverEstadoAnterior();
+    }
     this.InicializarEstructura();
     this.InicializarNaturaleza();
+    this.ListLastStade = [];
+    this.ListLastStadeNaturaleza = [];
   }
   ModoEdicion(){
     this.editar = true;
@@ -161,21 +168,21 @@ export class Adm010Component implements OnInit {
     this.Eliminar(item);
     this.topeNaturaleza = this.topeNaturaleza - 1;
   }
-  AddEstructura(){
-    // this.InicializarListsSend();
-    this.estructuras.push(this.newEstructura);
-    console.log(this.newEstructura);
-    console.log(this.listSend);
-    this.Insertar();
-    this.estructuras = [];
-  }
+  // AddEstructura(){
+  //   this.InicializarListsSend();
+  //   this.estructuras.push(this.newEstructura);
+  //   console.log(this.newEstructura);
+  //   console.log(this.listSend);
+  //   this.Insertar();
+  //   this.estructuras = [];
+  // }
 
   Insertar(){
     this._adm010Service
     .Insertar(this.listSend,this.idGestion)
     .subscribe(resp => {
       if(resp["ok"]){
-        this.ModoVista();
+        this.ModoVista('Insert');
         // this.ModoEdicion();
          this.ObtenerDatos();
         this._notyG.noty("success","datos guardados exitosamente",3500);
@@ -204,15 +211,14 @@ export class Adm010Component implements OnInit {
 
     });   
   }
-  AddNaturaleza(){
-    // this.InicializarListsSend();
-    this.naturalezas.push(this.newNaturaleza);
-    console.log(this.newNaturaleza);
-    console.log(this.listSend);
-    this.Insertar();
-    this.naturalezas = [];
+  // AddNaturaleza(){
+  //   this.naturalezas.push(this.newNaturaleza);
+  //   console.log(this.newNaturaleza);
+  //   console.log(this.listSend);
+  //   this.Insertar();
+  //   this.naturalezas = [];
 
-  }
+  // }
   InicializarEstructura(){
     this.newEstructura = {
       id_estructura : 0,
@@ -247,7 +253,7 @@ export class Adm010Component implements OnInit {
     .Actualizar(this.listSend , this.idGestion )
     .subscribe(resp => {
       if(resp["ok"]){
-        this.ModoVista();
+        this.ModoVista('Update');
         // this.ModoEdicion();
         // this.ObtenerDatos();
         this._notyG.noty("success","registro actualizado correctamente",3500);
@@ -258,30 +264,42 @@ export class Adm010Component implements OnInit {
     });
   }
 
-  ActualizarEd(item : any){
+  // ActualizarEd(item : any){
 
-    console.log(item);
-    // this.ListaforUpdate.push(item);
-    this.InicializarListsUpdates();
-    this.newEstructura.id_estructura = item.id_estructura;
-    this.newEstructura.nombre = item.nombre;
-    this.newEstructura.largo = +item.largo;
-    this.newEstructura.separador = item.separador;
-    this.ListUpdatesPlan.push(this.newEstructura);
-    this.estructuras.push(this.ListUpdatesPlan);
-    console.log(this.ListaforUpdate);
+  //   console.log(item);
+    
+  //   this.InicializarListsUpdates();
+  //   this.newEstructura.id_estructura = item.id_estructura;
+  //   this.newEstructura.nombre = item.nombre;
+  //   this.newEstructura.largo = +item.largo;
+  //   this.newEstructura.separador = item.separador;
+  //   this.ListUpdatesPlan.push(this.newEstructura);
+     
+  //   console.log(this.ListaforUpdate);
 
-    if( this.CalcularTotal() < 13 ){
-      this.totalLargo = this.CalcularTotal();
-      this.ultimoElemento.largo = this.totalLargo;
-      this.Update();
-    }else{
-      this._notyG.noty("warning","el valor total del largo no debe pasar de 12 ",1200);
-    }
-    this.ListUpdatesPlan = [];
-    this.InicializarEstructura();
-  
-  }
+  //   if( this.CalcularTotal() < 13 ){
+  //     this.totalLargo = this.CalcularTotal();
+  //     this.ultimoElemento.largo = this.totalLargo;
+  //     this.Update();
+  //   }else{
+  //     this._notyG.noty("warning","el valor total del largo no debe pasar de 12 ",1200);
+  //   }
+  //   this.ListUpdatesPlan = [];
+  //   this.InicializarEstructura();
+  // }
+
+  // ActualizarNat(item : any){
+  //   console.log(item);
+  //   this.newNaturaleza.id_codigo = +item.id_codigo;
+  //   this.newNaturaleza.id_naturaleza = +item.id_naturaleza;
+  //   this.ListUpdatesNaturalezas.push(this.newNaturaleza);
+  //   this.InicializarListsUpdates();
+    
+  //   console.log(this.listSend);
+  //   this.Update();
+  //   this.InicializarNaturaleza;
+   
+  // }
 
   CalcularTotal(){
     let sum: number =0;
@@ -292,39 +310,32 @@ export class Adm010Component implements OnInit {
     return sum;
   }
 
+  actualizarLargo(){
+    this.ultimoElemento.largo = this.CalcularTotal();
+  }
   CalcularLargo(){
     let sum: number = 0;
     this.estructuraPlanDeCuentas.forEach( element => {
       sum = sum + (+element.largo);
     });
     if(sum < 13){
-      this._notyG.noty("success","ok",1200);
+       this._notyG.noty("success","cantidad aceptada",1200);
     }else{
       this._notyG.noty("warning","el total no debe pasar de 12",1200);
     }
-    
+    this.actualizarLargo();
   }
 
-  ActualizarNat(item : any){
-    console.log(item);
-    this.InicializarListsSend();
-    this.newNaturaleza.id_codigo = item.id_codigo;
-    this.newNaturaleza.id_naturaleza = item.id_naturaleza;
-    this.naturalezas.push(this.newNaturaleza);
-    console.log(this.listSend);
-    this.Update();
-    this.estructuras = [];
-  }
+ 
 
   AgregarPlanDeCuentas(){
     // this.agregar = true;
-    if(this.CalcularTotal()>11 || this.estructuraPlanDeCuentas.length >6){
-      this._notyG.noty("warning","el total no debe pasar de 12",1200);
+    if(this.CalcularTotal()>11 || this.estructuraPlanDeCuentas.length >5){
+      this._notyG.noty("warning","el total no debe pasar de 12, la longitud menor igual a 6",1200);
     }
     else{
       this.InicializarEstructura();
       this.estructuraPlanDeCuentas.push(this.newEstructura);
-      // this.estructuras.push();
       this.ultimoElemento.largo = this.CalcularTotal();
     }
   }
@@ -351,28 +362,80 @@ export class Adm010Component implements OnInit {
     this.ListarNuevos();
     // this.ListUpdatesPlan.pop();
     this.InicializarListsUpdates();
+    console.log("lista plans update : ", this.ListUpdatesPlan );
+    console.log("lista plans update : ", this.ListUpdatesNaturalezas );
+    console.log("update: ", this.listSend);
     this.Update();
-    if(this.estructuras.length>0 || this.naturalezas.length >0){
+    if(this.estructuras.length > 0 || this.naturalezas.length > 0){
       this.InicializarListsSend();
+      console.log("insert: ",this.listSend);
       this.Insertar();
     }
-
-    // setTimeout(() => {
-    //   this.ObtenerDatos();
-    // }, 1500);
-    this.estructuras = [];
+   
     this.ListUpdatesPlan = [];
     this.ListUpdatesNaturalezas = [];
-    this.naturalezas = [];
+
   }
 
   GuardarEstado(){
-    this.ListLastStade = this.estructuraPlanDeCuentas.slice();
+
+    this.estructuraPlanDeCuentas.forEach( element => {
+      let AuxEstructura : any =  {
+        id_estructura : 0,
+        nombre : "",
+        largo : 0,
+        separador : ""
+      }
+      AuxEstructura.id_estructura = element.id_estructura;
+      AuxEstructura.nombre = element.nombre;
+      AuxEstructura.largo = element.largo;
+      AuxEstructura.separador = element.separador;
+      this.ListLastStade.push(AuxEstructura);
+    });
+    this.Listnaturalezas.forEach( element => {
+      let AuxNaturaleza = {
+        id_codigo : 0,
+        id_naturaleza : 0,
+      }
+      AuxNaturaleza.id_codigo = element.id_codigo;
+      AuxNaturaleza.id_naturaleza = element.id_naturaleza;
+      this.ListLastStadeNaturaleza.push(AuxNaturaleza);
+    });
     console.log(this.ListLastStade);
+    console.log(this.ListLastStadeNaturaleza);
   }
   
   VolverEstadoAnterior(){
-    this.estructuraPlanDeCuentas = this.ListLastStade.slice();
+    this.estructuraPlanDeCuentas = [];
+    this.Listnaturalezas = [];
+
+    this.ListLastStade.forEach( element => {
+      let AuxEstructura : any =  {
+        id_estructura : 0,
+        nombre : "",
+        largo : 0,
+        separador : ""
+      }
+      AuxEstructura.id_estructura = element.id_estructura;
+      AuxEstructura.nombre = element.nombre;
+      AuxEstructura.largo = element.largo;
+      AuxEstructura.separador = element.separador;
+      this.estructuraPlanDeCuentas.push(AuxEstructura);
+    });
+    console.log(this.ListLastStade);
+    console.log(this.estructuraPlanDeCuentas);
+
+    this.ListLastStadeNaturaleza.forEach( element => {
+      let AuxNaturaleza = {
+        id_codigo : 0,
+        id_naturaleza : 0,
+      }
+      AuxNaturaleza.id_codigo = element.id_codigo;
+      AuxNaturaleza.id_naturaleza = element.id_naturaleza;
+      this.Listnaturalezas.push(AuxNaturaleza);
+    });
+    this.ListLastStadeNaturaleza = [];
+    this.ListLastStade = [];
   }
 
   ListarNuevos(){
@@ -395,14 +458,12 @@ export class Adm010Component implements OnInit {
 
   AgregarNaturaleza(){
   
-  if(this.estructuraPlanDeCuentas.length >8){
-    this._notyG.noty("warning","el total no debe pasar de 9",1200);
-  }
-  else{
-    this.InicializarNaturaleza();
-    this.Listnaturalezas.push(this.newNaturaleza);
-    // this.naturalezas.push();
-   
-  }
+    if(this.estructuraPlanDeCuentas.length >8){
+      this._notyG.noty("warning","el total no debe pasar de 9",1200);
+    }
+    else{
+      this.InicializarNaturaleza();
+      this.Listnaturalezas.push(this.newNaturaleza);
+    }
   }
 }
