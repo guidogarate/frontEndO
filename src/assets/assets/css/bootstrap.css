@@ -2837,7 +2837,7 @@ input[type="button"].btn-block {
     width: 2.1875rem;
     pointer-events: all;
     border-radius: 0.625rem; 
-    background-color: red;
+    background-color:#999;
   }
   .custom-switch .custom-control-label::after {
     top: calc(0.00002rem + 2px);

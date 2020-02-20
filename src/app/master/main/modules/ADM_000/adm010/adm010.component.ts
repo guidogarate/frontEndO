@@ -122,6 +122,7 @@ export class Adm010Component implements OnInit {
   RemoverPlan ( id : any ) {
     let valor = 1;
     let pos = 1;
+    let sum = 0;
     let v1 : number = 0;
     // const found = this.estructuraPlanDeCuentas.find(element => element.id_estructura == id);
     this.estructuraPlanDeCuentas.forEach( element => {
@@ -130,6 +131,7 @@ export class Adm010Component implements OnInit {
         console.log("valor: ",element);
         v1 = pos;
       }  
+      sum = sum + element.largo;
         pos = pos + 1;
         console.log("pos: ", pos);
       
@@ -137,7 +139,7 @@ export class Adm010Component implements OnInit {
     console.log("removiendo: ", v1);
     if ( v1 !== 0 ) {
         this.estructuraPlanDeCuentas.splice( (v1-1), 1 );
-        this.totalLargo = this.totalLargo - valor;
+        this.totalLargo = sum - valor;
         this.ultimoElemento.largo = this.totalLargo;
     }
   }
@@ -168,14 +170,6 @@ export class Adm010Component implements OnInit {
     this.Eliminar(item);
     this.topeNaturaleza = this.topeNaturaleza - 1;
   }
-  // AddEstructura(){
-  //   this.InicializarListsSend();
-  //   this.estructuras.push(this.newEstructura);
-  //   console.log(this.newEstructura);
-  //   console.log(this.listSend);
-  //   this.Insertar();
-  //   this.estructuras = [];
-  // }
 
   Insertar(){
     this._adm010Service
@@ -200,9 +194,6 @@ export class Adm010Component implements OnInit {
     .subscribe( resp => {
       if(resp["ok"]){
           this._notyG.noty("success","datos eliminados correctamente",3500);
-          // this.ObtenerDatos();
-          // this.InicializarEstructura();
-          // this.InicializarNaturaleza();
         }
         else{
           this._notyG.noty("warning","no se pudo eliminar los datos",3500);
@@ -211,14 +202,7 @@ export class Adm010Component implements OnInit {
 
     });   
   }
-  // AddNaturaleza(){
-  //   this.naturalezas.push(this.newNaturaleza);
-  //   console.log(this.newNaturaleza);
-  //   console.log(this.listSend);
-  //   this.Insertar();
-  //   this.naturalezas = [];
 
-  // }
   InicializarEstructura(){
     this.newEstructura = {
       id_estructura : 0,
@@ -264,43 +248,6 @@ export class Adm010Component implements OnInit {
     });
   }
 
-  // ActualizarEd(item : any){
-
-  //   console.log(item);
-    
-  //   this.InicializarListsUpdates();
-  //   this.newEstructura.id_estructura = item.id_estructura;
-  //   this.newEstructura.nombre = item.nombre;
-  //   this.newEstructura.largo = +item.largo;
-  //   this.newEstructura.separador = item.separador;
-  //   this.ListUpdatesPlan.push(this.newEstructura);
-     
-  //   console.log(this.ListaforUpdate);
-
-  //   if( this.CalcularTotal() < 13 ){
-  //     this.totalLargo = this.CalcularTotal();
-  //     this.ultimoElemento.largo = this.totalLargo;
-  //     this.Update();
-  //   }else{
-  //     this._notyG.noty("warning","el valor total del largo no debe pasar de 12 ",1200);
-  //   }
-  //   this.ListUpdatesPlan = [];
-  //   this.InicializarEstructura();
-  // }
-
-  // ActualizarNat(item : any){
-  //   console.log(item);
-  //   this.newNaturaleza.id_codigo = +item.id_codigo;
-  //   this.newNaturaleza.id_naturaleza = +item.id_naturaleza;
-  //   this.ListUpdatesNaturalezas.push(this.newNaturaleza);
-  //   this.InicializarListsUpdates();
-    
-  //   console.log(this.listSend);
-  //   this.Update();
-  //   this.InicializarNaturaleza;
-   
-  // }
-
   CalcularTotal(){
     let sum: number =0;
     this.estructuraPlanDeCuentas.forEach( element => {
@@ -339,24 +286,6 @@ export class Adm010Component implements OnInit {
       this.ultimoElemento.largo = this.CalcularTotal();
     }
   }
-
-  // AgregarPlanDeCuentas1(){   
-
-  //   let suma : number =0 +(+this.totalLargo) + (+(this.newEstructura.largo)) ;
-  //   if(( this.estructuraPlanDeCuentas.length < 6) && (suma < 13) ){
-  //     this.estructuraPlanDeCuentas.push(this.newEstructura);
-  //     this.estructuras.push(this.newEstructura);
-  //     this.InicializarEstructura();
-  //     this.ultimoElemento.largo = suma ;
-  //     this.totalLargo = suma;
-  //     console.log( this.ultimoElemento.largo);
-  //   }
-  //   else {
-  //     this._notyG.noty("warning","solo puede agregarse 6 elementos",1200);
-  //     console.log(suma);
-  //   }
-    
-  // }
 
   Guardar(){
     this.ListarNuevos();
