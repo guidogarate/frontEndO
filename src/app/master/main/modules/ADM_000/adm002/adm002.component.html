@@ -46,8 +46,8 @@
                                         <td class="puntero PRL0" (click) = "VerPeriodos(gestion)">{{gestion.adgtideg}}</td>
                                         <td class="puntero PRL0" (click) = "VerPeriodos(gestion)">{{gestion.adgtdesc}}</td>
                                         <td class="puntero PRL0" (click) = "VerPeriodos(gestion)">{{gestion.adgtesta | estado}}</td>
-                                        <td class="puntero PRL0"> 
-                                            <div class="list-icons"> 
+                                        <td class="puntero PRL0" > 
+                                            <div class="list-icons" *ngIf="editar"> 
                                                 <a class="list-icons-item text-primary-600" (click)="VerGestion(gestion)"
                                                 [routerLink]="nada()" routerLinkActive="router-link-active"
                                                 data-toggle="modal" data-target="#modal_gestion">
@@ -115,7 +115,7 @@
                                         <td class="puntero">{{periodo.adprideg}}</td>
                                         <td class="puntero">{{periodo.adpresta| estado}}</td>
                                         <td class="puntero PRL0"> 
-                                            <div class="list-icons"> 
+                                            <div class="list-icons" *ngIf="editar"> 
                                                 <a class="list-icons-item text-primary-600" (click)="VerPeriodo(periodo)"
                                                 [routerLink]="nada()" routerLinkActive="router-link-active"
                                                 data-toggle="modal" data-target="#modal_periodo_gestion">

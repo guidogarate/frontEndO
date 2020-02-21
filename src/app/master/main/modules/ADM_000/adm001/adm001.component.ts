@@ -39,8 +39,9 @@ export class Adm001Component implements OnInit {
   tipoCambio: any;
   tipoCambioSend: any;
   editar: boolean = false;
-  
+  nuevo : boolean = false;
   fechaMaxima: any;
+  stade : number = 0;
 
   constructor(
     private _adm001Service: Adm001Service,
@@ -145,6 +146,7 @@ export class Adm001Component implements OnInit {
         console.log("Guardando: ", resp);
         this.Limpiar();
         this.cargarLista();
+        this.Cancelar();
       } else {
         console.log("no se pudo guardar", resp);
         return resp;
@@ -194,11 +196,7 @@ export class Adm001Component implements OnInit {
   }
 
   Eliminar(item: any) {
-
-    // if(this.tipoCambio.fecha!=null){
-    //   this.tipoCambio.fecha = item.fecha;
-    // }
-      console.log("eliminando null",item.fecha);
+    console.log("eliminando null",item.fecha);
     let confirmar = confirm("desea eliminar");
     if(confirmar){
       this.loading= true;
@@ -221,11 +219,12 @@ export class Adm001Component implements OnInit {
 
   Cancelar() {
     this.Limpiar();
-    this.editar = false;
+    this.stade = 0;
   }
 
   Editar() {
     this.editar = true;
+    this.stade = 1;
   }
  
   cargarPaginacion(item:string ) {
@@ -280,19 +279,26 @@ export class Adm001Component implements OnInit {
     this.loading= false;
   }
 
+  Nuevo(){
+    // this.editar = true;
+    this.stade = 2;
+    this.Limpiar();
+  }
   Copiar(){
-    this.tipoCambio = {
-      fecha: this.datePipe.transform(this.today, "yyyy-MM-dd"),
-      tc_oficial: this.predeterminado.tc_oficial,
-      tc_compra: this.predeterminado.tc_compra,
-      tc_venta: this.predeterminado.tc_venta,
-      tc_ufv: this.predeterminado.tc_ufv,
-      estado: true,
-      pred: true
-    };
-    setTimeout(() => {
-      initLabels();
-    }, 1000);
+    if(this.stade == 2){
+      this.tipoCambio = {
+        fecha: this.datePipe.transform(this.today, "yyyy-MM-dd"),
+        tc_oficial: this.predeterminado.tc_oficial,
+        tc_compra: this.predeterminado.tc_compra,
+        tc_venta: this.predeterminado.tc_venta,
+        tc_ufv: this.predeterminado.tc_ufv,
+        estado: true,
+        pred: true
+      };
+      setTimeout(() => {
+        initLabels();
+      }, 800);
+    }
   }
   nada(){}
 

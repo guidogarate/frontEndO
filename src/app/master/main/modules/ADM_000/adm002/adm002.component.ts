@@ -18,6 +18,7 @@ export class Adm002Component implements OnInit {
   /* Lista de Datos */
   ListaGestiones: any;
   ListaPeriodos: any;
+  edit : boolean = false;
   ListaEstadosGestionPeriodos: any;
   estado: number;
   ListaTiposEmpresa: any;
