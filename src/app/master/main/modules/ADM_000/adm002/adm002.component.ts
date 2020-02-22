@@ -70,7 +70,6 @@ export class Adm002Component implements OnInit {
 
     setTimeout(() => {
       initLabels();
-      // init_date();
     }, 1000);
   }
 
@@ -206,6 +205,9 @@ export class Adm002Component implements OnInit {
   VerGestion(item: any) {
     this.editGestion = true;
     this.cargarGestion(item);
+    setTimeout(() => {
+      initLabels();
+    }, 500);
   }
 
   EditarGestion(item: any) {
@@ -305,7 +307,7 @@ export class Adm002Component implements OnInit {
     this.CargarPeriodo(item);
     setTimeout(() => {
       initLabels();
-    }, 1000);
+    }, 500);
   }
 
   editarPeriodoModal() {
