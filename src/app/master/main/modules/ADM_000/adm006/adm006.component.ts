@@ -49,10 +49,6 @@ export class Adm006Component implements OnInit {
   nuevoAuxmaModal: Adm006;
   loadingSub = false;
   controlLoginModal = "";
-  estadoUs = [
-    { id: "activo", valor: 1 },
-    { id: "inactivo", valor: 0 }
-  ];
   contorlAccion: string = "";
   id_login = "";
   photoSelected: string | ArrayBuffer;
@@ -273,7 +269,6 @@ export class Adm006Component implements OnInit {
         this.initSelect();
         return;
     }
-
     this.boolBtnGrupo(true, true);
     this.boolBtnGrupo(false, false);
   }
@@ -364,9 +359,4 @@ export class Adm006Component implements OnInit {
       }
     });
   }
-
-  // imagenModal(img: string) {
-  //   console.log(img);
-  //   this.imgModal = img;
-  // }
 }

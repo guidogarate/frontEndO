@@ -9,6 +9,7 @@ import {
   Adm006Service,
   Adm007Service,
   Adm008Service,
+  Adm009Service,
   Adm010Service
 } from "./index.shared.service";
 
@@ -22,6 +23,7 @@ import {
     Adm006Service,
     Adm007Service,
     Adm008Service,
+    Adm009Service,
     Adm010Service
   ]
 })

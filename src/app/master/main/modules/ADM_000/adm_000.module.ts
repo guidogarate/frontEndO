@@ -16,6 +16,7 @@ import { Adm008Component } from "./adm008/adm008.component";
 import { Adm010Component } from "./adm010/adm010.component";
 
 import { PipesModule } from "../../../utils/pipe/pipes.module";
+import { Adm009Component } from "./adm009/adm009.component";
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { PipesModule } from "../../../utils/pipe/pipes.module";
     Adm006Component,
     Adm007Component,
     Adm008Component,
+    Adm009Component,
     Adm010Component
   ],
   providers: [DatePipe],

@@ -1,0 +1,355 @@
+<div class="row haciadentro animaciones superior">
+  <div class="col-xl-12">
+    <div class="card pb0">
+      <div class="card-header header-elements-inline">
+        <h5 class="card-title font-weight-bold">
+          <img
+            src="https://trello-attachments.s3.amazonaws.com/5e00f87a7a953c871e9a19f0/37x37/026b03c4f5a191f167b26d1a634519ca/image.png"
+            alt=""
+          />
+          Registros de paises
+        </h5>
+      </div>
+      <div class="card-body pb0">
+        <div class="row">
+          <div class="col-1 col-sm-1 col-md-3 col-lg-7"></div>
+          <div class="col-8 col-sm-9 col-md-6 col-lg-3">
+            <div
+              class="form-group form-group-feedback form-group-feedback-right"
+            >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Buscar"
+                id="buscarGrupoLupa"
+                #texto
+                [formControl]="textBuscarAdm009"
+              />
+              <div *ngIf="buscar" class="form-control-feedback">
+                <i class="icon-spinner2 spinner"></i>
+              </div>
+              <div *ngIf="!buscar" class="form-control-feedback">
+                <label for="buscarGrupoLupa">
+                  <i class="icon-search4 puntero" title="buscar"></i
+                ></label>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-3 col-sm-2 col-md-3 col-lg-2"
+            style="padding-top: 30px;"
+          >
+            <div class="form-control-feedback">
+              <i
+                data-toggle="modal"
+                data-target="#modal_adm_009"
+                class="icon-diff-added puntero xxl"
+                (click)="nuevoAdm009()"
+                title="agregar"
+              ></i>
+              <!-- routerLink="{{ bienvenido }}" -->
+              <i class="icon-exit xxl puntero" title="Pagina Bienvenido"> </i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+          <div class="table-responsive text-center">
+            <table class="table table-sm table-hover table-bordered">
+              <thead>
+                <tr class="bg-blue">
+                  <th>Codigo</th>
+                  <th>Descripcion</th>
+                  <th>Sigla</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="table-border-double PRL0"
+                  *ngFor="
+                    let adm009 of auxma;
+                    let i = index;
+                    let impar = odd;
+                    let par = even
+                  "
+                  [ngClass]="{ tablaCebradoPar: par, tablaCebradoImpar: impar }"
+                >
+                  <td>{{ adm009.codigo }}</td>
+                  <td class="table-content-center">
+                    {{ adm009.descripcion }}
+                  </td>
+                  <td class="table-content-center">
+                    {{ adm009.sigla }}
+                  </td>
+                  <td>
+                    <div class="custom-control custom-switch">
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        [disabled]="true"
+                        [checked]="adm009.estado"
+                        title="adm009.estado"
+                        id="adm009estado{{ i }}"
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="adm009estado{{ i }}"
+                      ></label>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div class="list-icons">
+                      <i
+                        class="icon-file-eye"
+                        title="visualizar"
+                        (click)="OpcionesTable(adm009, 'visualizar')"
+                        data-toggle="modal"
+                        data-target="#modal_adm_009"
+                        class="icon-file-eye text-primary-600 puntero"
+                      ></i>
+                      <i
+                        class="icon-pencil7"
+                        title="editar"
+                        (click)="OpcionesTable(adm009, 'editar')"
+                        data-toggle="modal"
+                        data-target="#modal_adm_009"
+                        class="icon-pencil7 text-teal-600 puntero"
+                      ></i>
+                      <i
+                        class="icon-trash"
+                        title="eliminar"
+                        (click)="OpcionesTable(adm009, 'eliminar')"
+                        data-toggle="modal"
+                        data-target="#modal_adm_009"
+                        class="icon-trash text-danger-600 puntero"
+                      ></i>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+      <div *ngIf="loading" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div *ngIf="!loading" class="row justify-content-center">
+        <ul class="pagination pagination-flat align-self-center">
+          <li class="page-item puntero">
+            <a (click)="paginacion('000')" class="page-link"
+              >&larr; &nbsp; Atras</a
+            >
+          </li>
+          <ng-container *ngFor="let pg of pagi; let i = index">
+            <li
+              [ngClass]="{
+                'page-item': true,
+                puntero: true,
+                active: numeroPag === i + 1
+              }"
+            >
+              <a (click)="paginacion(pg.pag)" class="page-link">{{ pg.pag }}</a>
+            </li>
+          </ng-container>
+          <li class="page-item puntero">
+            <a (click)="paginacion('999')" class="page-link"
+              >Sig &nbsp; &rarr;</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal_adm_009" class="modal" tabindex="-1">
+  <div class="modal-dialog ">
+    <div class="modal-content animacionmodal haciadentro">
+      <div class="modal-header bg-blue">
+        <h6 class="modal-title">ADM009</h6>
+        <div class="list-icons float-right">
+          <a class="puntero" *ngIf="btnGrupo.BtnCance"
+            ><i
+              class="icon-cancel-circle2 xxl"
+              data-toggle="tooltip"
+              data-placement="top"
+              (click)="OpcionesModal('cancelar')"
+              title="Cancelar"
+            >
+            </i
+          ></a>
+          <a class="puntero" *ngIf="btnGrupo.BtnNuevo">
+            <i
+              data-toggle="tooltip"
+              data-placement="top"
+              class="icon-diff-added xxl"
+              (click)="OpcionesModal('nuevo')"
+              title="nuevo"
+            ></i>
+          </a>
+          <a class="puntero" *ngIf="btnGrupo.BtnGuard"
+            ><i
+              class="icon-floppy-disk xxl"
+              data-toggle="tooltip"
+              data-placement="top"
+              (click)="OpcionesModal('guardar')"
+              title="Guardar"
+            >
+            </i
+          ></a>
+          <a *ngIf="btnGrupo.BtnEdita" class="puntero">
+            <i
+              class="icon-pencil7 xxl"
+              data-toggle="tooltip"
+              data-placement="top"
+              (click)="OpcionesModal('editar')"
+              title="editar"
+            >
+            </i
+          ></a>
+          <a class="puntero" *ngIf="btnGrupo.BtnElimi"
+            ><i
+              class="icon-trash xxl"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Eliminar"
+            >
+            </i
+          ></a>
+          <a class="puntero">
+            <i
+              class="icon-exit xxl"
+              (click)="OpcionesModal('salir')"
+              data-toggle="tooltip"
+              data-placement="top"
+              data-dismiss="modal"
+              title="Salir"
+            >
+            </i
+          ></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <ng-container *ngFor="let auxModal of auxmaModal; let i = index">
+            <div class="col-xl-12">
+              <div class="row text-center">
+                <div class="col-md-6">
+                  <label class="form-group">Division</label>
+                  <select
+                    required
+                    [disabled]="disabled.division"
+                    [(ngModel)]="auxModal.tipo_territorio"
+                    class="form-control selectpicker show-tick"
+                    name="databaseid"
+                  >
+                    <option
+                      *ngFor="let gruac of nuevoAuxmaModal.territorio"
+                      [value]="gruac.id_territorio"
+                    >
+                      {{ gruac.descripcion }}</option
+                    >
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-group">Dependencia Division</label>
+                  <select
+                    required
+                    [disabled]="disabled.dependencia"
+                    [(ngModel)]="auxModal.tipo_territorio"
+                    class="form-control selectpicker show-tick"
+                    name="databaseid"
+                  >
+                    <option
+                      *ngFor="let gruac of nuevoAuxmaModal.territorio"
+                      [value]="gruac.id_territorio"
+                    >
+                      {{ gruac.descripcion }}</option
+                    >
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-12" style="padding-top: 20px;">
+              <div class="row text-center">
+                <div class="col-md-3">
+                  <div class="form-group form-group-float">
+                    <label class="form-group-float-label">Codigo</label>
+                    <input
+                      style="text-align: center;"
+                      type="text"
+                      class="form-control"
+                      [disabled]="disabled.codigo"
+                      placeholder="Introducir Codigo"
+                      [(ngModel)]="auxModal.codigo"
+                      title="{{ auxModal.codigo }}"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group form-group-float">
+                    <label class="form-group-float-label">Descripcion</label>
+                    <input
+                      style="text-align: center;"
+                      type="text"
+                      class="form-control"
+                      [disabled]="disabled.descripci"
+                      placeholder="Introducir Descripcion"
+                      [(ngModel)]="auxModal.descripcion"
+                      title="{{ auxModal.descripcion }}"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group form-group-float">
+                    <label class="form-group-float-label">Sigla</label>
+                    <input
+                      style="text-align: center;"
+                      type="text"
+                      class="form-control"
+                      [disabled]="disabled.sigla"
+                      placeholder="Introducir Sigla"
+                      [(ngModel)]="auxModal.sigla"
+                      title="{{ auxModal.sigla }}"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      [disabled]="true"
+                      [checked]="auxModal.estado"
+                      title="auxModal.estado"
+                      id="auxModalestado{{ i }}"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="auxModalestado{{ i }}"
+                      >Estado</label
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div *ngIf="loadingSub" class="d-flex justify-content-center">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
