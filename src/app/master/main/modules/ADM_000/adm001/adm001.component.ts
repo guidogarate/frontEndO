@@ -5,6 +5,7 @@ import { Adm001Service } from "src/app/master/utils/service/main/modules/adm_000
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
 
 declare function initLabels();
+declare function init_validations();
 
 @Component({
   selector: "app-adm001",
@@ -59,6 +60,7 @@ export class Adm001Component implements OnInit {
         this.cargarLista();
         this.Paginacion();
         initLabels();
+        init_validations();
       }, 1500);
     }, 1500);
 
@@ -146,6 +148,9 @@ export class Adm001Component implements OnInit {
         console.log("Guardando: ", resp);
         this.Limpiar();
         this.cargarLista();
+        if(this.tipoCambioSend.adtcpred == "1"){
+           this.cargarPredeterminado(); 
+        }
         this.Cancelar();
       } else {
         console.log("no se pudo guardar", resp);
@@ -174,7 +179,9 @@ export class Adm001Component implements OnInit {
         this.notyG.noty("success", "Actualizando ..", 3500);
         console.log("Actualizando: ", resp);
         this.cargarLista();
-        this.cargarPredeterminado();
+        if(this.tipoCambioSend.adtcpred == "1"){
+          this.cargarPredeterminado(); 
+        }
         this.Cancelar();
       } else {
         console.log("no se pudo guardar", resp);

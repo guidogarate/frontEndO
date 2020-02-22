@@ -191,6 +191,13 @@ export class Adm002Component implements OnInit {
     }
   }
 
+  ModoEdicion(){
+    this.edit = true;
+  }
+  ModoVista(){
+    this.edit = false;
+  }
+
   editar() {
     this.editGestion = false;
     this.nuevo = false;
