@@ -146,7 +146,7 @@
                                     *ngFor="let periodo of ListaPeriodos;let impar = odd;let par = even;" 
                                     [ngClass]="{ tablaCebradoPar:par , tablaCebradoImpar:impar}">
                                         <td class="puntero">{{periodo.adpridep | formatonumeroperiodo }}</td>
-                                        <td class="puntero">{{periodo.adprmesp | nombremes}}</td>
+                                        <td class="puntero text-left">{{periodo.adprmesp | nombremes}}</td>
                                         <td class="puntero">{{periodo.adprdesc}}</td>
                                         <td class="puntero">{{periodo.adprideg}}</td>
                                         <td class="puntero">{{periodo.adpresta| estado}}</td>

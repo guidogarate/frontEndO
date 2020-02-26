@@ -39,7 +39,7 @@ export class Adm002Component implements OnInit {
   tipoEmpresaPredeterminado: string = "";
 
   listaMeses = [
-    { id: 0, name: "Seleccione Mes" },
+    { id: 0, name: "Periodo Inicial" },
     { id: 1, name: "Enero" },
     { id: 2, name: "Febrero" },
     { id: 3, name: "Marzo" },
@@ -51,7 +51,8 @@ export class Adm002Component implements OnInit {
     { id: 9, name: "Septiembre" },
     { id: 10, name: "Octubre" },
     { id: 11, name: "Noviembre" },
-    { id: 12, name: "Diciembre" }
+    { id: 12, name: "Diciembre" },
+    { id: 13, name: "Periodo de Cierre" },
   ];
   // gestionModel : Gestion;
   gestionModelo: any;
@@ -84,7 +85,7 @@ export class Adm002Component implements OnInit {
         this.ListaEstadosGestionPeriodos = resp["EstGestion"];
         this.ListaTiposEmpresa = resp["ActiEmpres"];
         this.estadoPredeterminado = this.ListaEstadosGestionPeriodos[0].adampred;
-        console.warn("predeterminados : ", this.estadoPredeterminado);
+        console.info("predeterminados : ", this.estadoPredeterminado);
         this.tipoEmpresaPredeterminado = this.ListaTiposEmpresa[0].adampred;
       } else {
         console.log("No se cargo gestiones ni periodos");

@@ -12,7 +12,7 @@ export class FormatoNumeroPeriodo implements PipeTransform {
 
     switch(formatonumeroperiodo){
         case 0: 
-          return 'Elige Mes';
+          return '00';
         case 1: 
           return "01";
         case 2: 
@@ -37,6 +37,8 @@ export class FormatoNumeroPeriodo implements PipeTransform {
           return "11";
         case 12: 
           return "12";
+        case 13: 
+          return "13";
         default:
           return 'S/F';
       }

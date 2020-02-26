@@ -13,7 +13,7 @@ export class NombreMes implements PipeTransform {
     
     switch(numeromes){
         case 0: 
-          return 'Elige Mes';
+          return 'Periodo Inicial';
         case 1: 
           return 'Enero';
         case 2: 
@@ -38,6 +38,8 @@ export class NombreMes implements PipeTransform {
           return 'Noviembre';
         case 12: 
           return 'Diciembre';
+        case 13: 
+          return 'Cierre';
         default:
           return 'S/M';
       }
