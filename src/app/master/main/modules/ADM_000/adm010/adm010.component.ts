@@ -91,9 +91,10 @@ export class Adm010Component implements OnInit {
         }
         this.actividadEmpresarial = this.lista[0]["actividad_empresarial"];
         this.Listnaturalezas = this.lista[0]["naturalezas"];
-        this.topeNaturaleza = this.Listnaturalezas.length;
         if(this.Listnaturalezas == null){
           this.Listnaturalezas = [];
+        }else{
+          this.topeNaturaleza = this.Listnaturalezas.length;
         }
        
         this.cuentas = this.lista[0]["cuentas"];
@@ -120,28 +121,36 @@ export class Adm010Component implements OnInit {
   }
 
   RemoverPlan ( id : any ) {
-    let valor = 1;
-    let pos = 1;
-    let sum = 0;
-    let v1 : number = 0;
-    // const found = this.estructuraPlanDeCuentas.find(element => element.id_estructura == id);
-    this.estructuraPlanDeCuentas.forEach( element => {
-      if(element.id_estructura == id){
-        valor = element.largo;
-        console.log("valor: ",element);
-        v1 = pos;
-      }  
-      sum = sum + element.largo;
-        pos = pos + 1;
-        console.log("pos: ", pos);
+    // let valor = 1;
+    // let pos = 1;
+    // let sum = 0;
+    // let v1 : number = 0;
+    // // const found = this.estructuraPlanDeCuentas.find(element => element.id_estructura == id);
+    // this.estructuraPlanDeCuentas.forEach( element => {
+    //   if(element.id_estructura == id){
+    //     valor = element.largo;
+    //     console.log("valor: ",element);
+    //     v1 = pos;
+    //   }  
+    //   sum = sum + element.largo;
+    //     pos = pos + 1;
+    //     console.log("pos: ", pos);
       
-    });
-    console.log("removiendo: ", v1);
-    if ( v1 !== 0 ) {
-        this.estructuraPlanDeCuentas.splice( (v1-1), 1 );
-        this.totalLargo = sum - valor;
-        this.ultimoElemento.largo = this.totalLargo;
-    }
+    // });
+    // console.log("removiendo: ", v1);
+    // var i = this.estructuraPlanDeCuentas.indexOf( id );
+    // if ( i !== -1 ) {
+    //     this.estructuraPlanDeCuentas.splice( i, 1 );
+    // }
+    
+    let newEd = this.estructuraPlanDeCuentas.filter(x => {x.id_estructura == id; console.log("compare: ", x.id_estructura, id)});
+    this.actualizarLargo();
+    console.log("lista filtarada ED: ",id , newEd);
+    // if ( v1 !== 0 ) {
+    //     this.estructuraPlanDeCuentas.splice( (v1-1), 1 );
+    //     this.totalLargo = sum - valor;
+    //     this.ultimoElemento.largo = this.totalLargo;
+    // }
   }
 
   RemoverNaturaleza ( id : any ) {
@@ -199,7 +208,6 @@ export class Adm010Component implements OnInit {
           this._notyG.noty("warning","no se pudo eliminar los datos",3500);
           console.log(resp);
       }
-
     });   
   }
 
