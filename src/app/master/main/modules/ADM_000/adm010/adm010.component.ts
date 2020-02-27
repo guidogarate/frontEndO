@@ -65,11 +65,6 @@ export class Adm010Component implements OnInit {
     this.editar = false;
   }
 
-  // Agregar(){
-
-  // }
-
-  /** */
   nada(){}
 
   ObtenerDatos(){
@@ -114,50 +109,45 @@ export class Adm010Component implements OnInit {
 
   EliminarPlanDeCuenta( item :number){
     console.log("Eliminar plan de cuentas: " , item);
-    console.log(" count List: ", this.estructuraPlanDeCuentas.length);
+    console.log(" count List: ", this.estructuraPlanDeCuentas, this.estructuraPlanDeCuentas.length);
     this.RemoverPlan(item);
     this.Eliminar(item);
     this.tope = this.tope - 1;
   }
 
   RemoverPlan ( id : any ) {
-    // let valor = 1;
-    // let pos = 1;
-    // let sum = 0;
-    // let v1 : number = 0;
-    // // const found = this.estructuraPlanDeCuentas.find(element => element.id_estructura == id);
-    // this.estructuraPlanDeCuentas.forEach( element => {
-    //   if(element.id_estructura == id){
-    //     valor = element.largo;
-    //     console.log("valor: ",element);
-    //     v1 = pos;
-    //   }  
-    //   sum = sum + element.largo;
-    //     pos = pos + 1;
-    //     console.log("pos: ", pos);
+    let valor = 1;
+    let pos = 1;
+    let sum : number = 0;
+    let v1 : number = -1;
+    // const found = this.estructuraPlanDeCuentas.find(element => element.id_estructura == id);
+    this.estructuraPlanDeCuentas.forEach( element => {
+      if(element.id_estructura == id){
+        valor = element.largo;
+        console.error("id a eliminar, elemento, largo: ",id,element,valor);
+        v1 = pos;
+      }  
+      sum = Number (sum) + Number(element.largo);
+      pos = pos + 1;
+      console.log("posicion recorrido del elemento: ", pos);
+      console.log("valor del largo actual: ", sum);
       
-    // });
-    // console.log("removiendo: ", v1);
-    // var i = this.estructuraPlanDeCuentas.indexOf( id );
-    // if ( i !== -1 ) {
-    //     this.estructuraPlanDeCuentas.splice( i, 1 );
-    // }
+    });
     
-    let newEd = this.estructuraPlanDeCuentas.filter(x => {x.id_estructura == id; console.log("compare: ", x.id_estructura, id)});
-    this.actualizarLargo();
-    console.log("lista filtarada ED: ",id , newEd);
-    // if ( v1 !== 0 ) {
-    //     this.estructuraPlanDeCuentas.splice( (v1-1), 1 );
-    //     this.totalLargo = sum - valor;
-    //     this.ultimoElemento.largo = this.totalLargo;
-    // }
+    console.log("lista antes de eliminar: ",this.estructuraPlanDeCuentas );
+    if ( v1 !== -1 ) {
+        console.error("removiendo Posicion v1-1: ", (v1-1));
+        this.estructuraPlanDeCuentas.splice( (v1-1), 1 );
+        this.totalLargo = sum - valor;
+        this.ultimoElemento.largo = this.totalLargo;
+        console.info("valor del largo: ", this.ultimoElemento.largo);
+    }
   }
 
   RemoverNaturaleza ( id : any ) {
     let valor = 1;
     let pos = 1;
-    let v1 : number = 0;
-    // const found = this.estructuraPlanDeCuentas.find(element => element.id_estructura == id);
+    let v1 : number = -1;
     this.Listnaturalezas.forEach( element => {
       if(element.id_codigo == id){
         valor = element.largo;
@@ -169,7 +159,7 @@ export class Adm010Component implements OnInit {
       
     });
     console.log("removiendo: ", v1);
-    if ( v1 !== 0 ) {
+    if ( v1 !== -1 ) {
         this.Listnaturalezas.splice( (v1-1), 1 );
     }
   }
@@ -246,8 +236,6 @@ export class Adm010Component implements OnInit {
     .subscribe(resp => {
       if(resp["ok"]){
         this.ModoVista('Update');
-        // this.ModoEdicion();
-        // this.ObtenerDatos();
         this._notyG.noty("success","registro actualizado correctamente",3500);
       }
       else{
@@ -281,10 +269,7 @@ export class Adm010Component implements OnInit {
     this.actualizarLargo();
   }
 
- 
-
   AgregarPlanDeCuentas(){
-    // this.agregar = true;
     if(this.CalcularTotal()>11 || this.estructuraPlanDeCuentas.length >5){
       this._notyG.noty("warning","el total no debe pasar de 12, la longitud menor igual a 6",1200);
     }
@@ -297,21 +282,20 @@ export class Adm010Component implements OnInit {
 
   Guardar(){
     this.ListarNuevos();
-    // this.ListUpdatesPlan.pop();
     this.InicializarListsUpdates();
     console.log("lista plans update : ", this.ListUpdatesPlan );
-    console.log("lista plans update : ", this.ListUpdatesNaturalezas );
+    console.log("lista naturalezas update : ", this.ListUpdatesNaturalezas );
     console.log("update: ", this.listSend);
     this.Update();
     if(this.estructuras.length > 0 || this.naturalezas.length > 0){
       this.InicializarListsSend();
-      console.log("insert: ",this.listSend);
-      this.Insertar();
+      console.log("lista para Insert: ",  this.listSend);
+      setTimeout(() => {
+        this.Insertar();
+      }, 1000);
     }
-   
     this.ListUpdatesPlan = [];
     this.ListUpdatesNaturalezas = [];
-
   }
 
   GuardarEstado(){
@@ -379,14 +363,18 @@ export class Adm010Component implements OnInit {
     this.estructuraPlanDeCuentas.forEach(element =>{
       if(element.id_estructura == 0){
         this.estructuras.push(element);
+        console.log("para insert: ",element);
       }else{
+        console.log("para update: ",element);
         this.ListUpdatesPlan.push(element);
       }
     });
     this.Listnaturalezas.forEach(element => {
       if(element.codigo == 0){
+        console.log("para insert: ",element.codigo);
         this.naturalezas.push(element);
       }else{
+        console.log("para update: ",element);
         this.ListUpdatesNaturalezas.push(element);
       }
     });
