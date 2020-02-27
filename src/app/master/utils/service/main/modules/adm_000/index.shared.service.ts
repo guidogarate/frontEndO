@@ -6,4 +6,5 @@ export { Adm005Service } from "./adm005.service";
 export { Adm006Service } from "./adm006.service";
 export { Adm007Service } from "./adm007.service";
 export { Adm008Service } from "./adm008.service";
+export { Adm009Service } from "./adm009.service";
 export { Adm010Service } from "./adm010.service";

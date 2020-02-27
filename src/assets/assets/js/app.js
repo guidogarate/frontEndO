@@ -1,6 +1,37 @@
 // Setup module
 // ------------------------------
 function init_plugins() {
+  var revertBottomMenus = function() {
+    $(".sidebar-main")
+      .find(".nav-sidebar")
+      .children(".nav-item-submenu")
+      .hover(function() {
+        var totalHeight = 0,
+          $this = $(this),
+          navSubmenuClass = "nav-group-sub",
+          navSubmenuReversedClass = "nav-item-submenu-reversed";
+
+        totalHeight += $this
+          .find("." + navSubmenuClass)
+          .filter(":visible")
+          .outerHeight();
+        if ($this.children("." + navSubmenuClass).length) {
+          if (
+            $this.children("." + navSubmenuClass).offset().top +
+              $this
+                .find("." + navSubmenuClass)
+                .filter(":visible")
+                .outerHeight() >
+            document.body.clientHeight
+          ) {
+            $this.addClass(navSubmenuReversedClass);
+          } else {
+            $this.removeClass(navSubmenuReversedClass);
+          }
+        }
+      });
+  };
+
   $("body").addClass("no-transitions");
 
   // Enable all transitions
