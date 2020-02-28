@@ -26,18 +26,37 @@ export class Adm009Service {
       );
   }
 
-  upAdm009(adm_006: Adm009[], login: string, img: File) {
-    const url1 = `${url.prod}${adm009.upAdm009}${login}`;
-    const fd = "hjh";
-    return this.httpClient.put(url1, fd, {
-      headers: new HttpHeaders({
-        authorization: this.token
-      })
+  upAdm009(adm_009: Adm009, id_cod: string) {
+    const url1 = `${url.prod}${adm009.upAdm009}${id_cod}`;
+    let estado: string = "";
+    if (adm_009.estado) {
+      estado = "1";
+    } else {
+      estado = "0";
+    }
+    const json = JSON.stringify({
+      division: adm_009.tipo_territorio,
+      dependencia: adm_009.dependencia,
+      descripcion: adm_009.descripcion,
+      sigla: adm_009.sigla,
+      estado
     });
+    return this.httpClient
+      .put(url1, json, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
   }
 
-  deAdm009(login: string) {
-    const url1 = `${url.prod}${adm009.deAdm009}${login}`;
+  deAdm009(id_cod: string) {
+    const url1 = `${url.prod}${adm009.deAdm009}${id_cod}`;
     return this.httpClient
       .delete(url1, {
         headers: new HttpHeaders({
@@ -52,13 +71,35 @@ export class Adm009Service {
       );
   }
 
-  inAdm009(adm_006: Adm009[], img: File) {
+  inAdm009(adm_009: Adm009) {
     const url1 = `${url.prod}${adm009.inAdm009}`;
-    const fd = "hjh";
-    return this.httpClient.post(url1, fd, {
-      headers: new HttpHeaders({
-        authorization: this.token
-      })
+    let estado: string = "";
+    if (adm_009.estado === undefined) {
+      adm_009.estado = false;
+    }
+    if (adm_009.estado) {
+      estado = "1";
+    } else {
+      estado = "0";
+    }
+    const json = JSON.stringify({
+      division: adm_009.tipo_territorio,
+      dependencia: adm_009.dependencia,
+      descripcion: adm_009.descripcion,
+      sigla: adm_009.sigla,
+      estado
     });
+    return this.httpClient
+      .post(url1, json, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          return resp;
+        })
+      );
   }
 }
