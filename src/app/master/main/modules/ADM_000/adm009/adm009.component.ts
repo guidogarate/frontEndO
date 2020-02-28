@@ -252,7 +252,7 @@ export class Adm009Component implements OnInit {
   }
 
   resetDatos(forma: NgForm) {
-    if (forma.value.tipo_territorio === undefined) {
+    if (this.auxmaModal[0].tipo_territorio === undefined) {
       return;
     }
     forma.controls.tipo_territorio.setValue(this.auxmaModal[0].tipo_territorio);
