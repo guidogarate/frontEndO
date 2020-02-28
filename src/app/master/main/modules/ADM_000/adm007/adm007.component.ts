@@ -65,7 +65,6 @@ export class Adm007Component implements OnInit {
     setTimeout(() => {
       initLabels();
     }, 1500);
-
   }
 
   ObtenerDatos(){
