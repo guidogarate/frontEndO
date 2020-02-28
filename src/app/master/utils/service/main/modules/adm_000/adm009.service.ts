@@ -89,7 +89,6 @@ export class Adm009Service {
       sigla: adm_009.sigla,
       estado
     });
-    console.log(JSON.parse(json));
     return this.httpClient
       .post(url1, json, {
         headers: new HttpHeaders({

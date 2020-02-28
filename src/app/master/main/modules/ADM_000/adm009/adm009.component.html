@@ -255,7 +255,7 @@
                       required
                       [disabled]="disabled.division"
                       [ngModel]="auxModal.tipo_territorio"
-                      (change)="cargarDependencia2($event.target.value)"
+                      (change)="cargarDependencia2($event.target.value, forma)"
                       class="form-control selectpicker show-tick"
                       name="tipo_territorio"
                     >

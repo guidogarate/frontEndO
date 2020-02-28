@@ -83,11 +83,10 @@ export class Adm009Component implements OnInit {
     }
     this.sus = peticion.subscribe(resp => {
       this.numeroPag = 1;
+      this.nuevoAuxmaModal = resp.usr[0];
       if (resp["ok"]) {
-        console.log(resp);
         this.auxma = resp.usr[0].paises;
         this.pagi = resp["cant"];
-        this.nuevoAuxmaModal = resp.usr[0];
       } else {
         this.notyG.noty("error", resp["messagge"], 5000);
       }
@@ -196,9 +195,9 @@ export class Adm009Component implements OnInit {
     this.btnGrupo.BtnNuevo = editNuevo;
   }
 
-  paginacion(numero: string) {
+  paginacion(numero: string, eliminar = true) {
     const nume = Number(numero);
-    if (this.numeroPag === nume) {
+    if (this.numeroPag === nume && eliminar) {
       return;
     }
     const total = this.pagi.length;
@@ -243,23 +242,29 @@ export class Adm009Component implements OnInit {
     }
     this.sus = peticion.subscribe(resp => {
       if (resp["ok"]) {
-        this.auxma = resp.usr[0].registros;
+        this.auxma = resp.usr[0].paises;
         this.pagi = resp["cant"];
         this.nuevoAuxmaModal = resp.usr[0];
       } else {
-        // this.notyG.noty("error", resp["mensaje"], 5000);
+        this.notyG.noty("error", resp["mensaje"], 5000);
       }
     });
   }
 
   resetDatos(forma: NgForm) {
+    if (forma.value.codigo === undefined) {
+      return;
+    }
     forma.controls.tipo_territorio.setValue(this.auxmaModal[0].tipo_territorio);
     forma.controls.dependencia.setValue(this.auxmaModal[0].dependencia);
     forma.controls.codigo.setValue(this.auxmaModal[0].codigo);
     forma.controls.descripcion.setValue(this.auxmaModal[0].descripcion);
     forma.controls.sigla.setValue(this.auxmaModal[0].sigla);
     forma.controls.estado.setValue(this.auxmaModal[0].estado);
-    this.cargarDependencia2(this.auxmaModal[0].tipo_territorio.toString());
+    this.cargarDependencia2(
+      this.auxmaModal[0].tipo_territorio.toString(),
+      forma
+    );
   }
 
   cargarDependencia(codigo: string) {
@@ -296,7 +301,7 @@ export class Adm009Component implements OnInit {
     this.initSelect();
   }
 
-  cargarDependencia2(id: string) {
+  cargarDependencia2(id: string, forma: NgForm) {
     this.dependenciaAdm009 = [];
     const id_terr = Number(id);
     if (id_terr === 1) {
@@ -305,6 +310,9 @@ export class Adm009Component implements OnInit {
         descripcion: "null"
       };
       this.dependenciaAdm009.push(dato);
+      forma.controls.dependencia.setValue(
+        this.dependenciaAdm009[0].dependencia
+      );
       this.initSelect();
       return;
     }
@@ -317,12 +325,11 @@ export class Adm009Component implements OnInit {
         this.dependenciaAdm009.push(dato);
       }
     }
-
+    forma.controls.dependencia.setValue(this.dependenciaAdm009[0].dependencia);
     this.initSelect();
   }
 
   guardarDatos(auxModal: Adm009, contorlAccion: string) {
-    console.log(auxModal);
     let peticion: Observable<any>;
     if (contorlAccion === "nuevo") {
       peticion = this.adm009S.inAdm009(auxModal);
@@ -351,7 +358,7 @@ export class Adm009Component implements OnInit {
     peticion = this.adm009S.deAdm009(id_cod);
     this.sus = peticion.subscribe(resp => {
       if (resp["ok"]) {
-        this.getAdm009(this.texto);
+        this.paginacion(this.numeroPag.toString(), false);
         this.id_cod = "";
         this.notyG.noty("success", resp["mensaje"], 3000);
       } else {
