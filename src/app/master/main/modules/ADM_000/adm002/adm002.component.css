@@ -26,7 +26,7 @@
 }
 
 .xxl-title {
-  font-size: 1.5em;
+  font-size: 1.3em;
 /* padding-right: 1.5em; */
   color: #03a9f4;
 }
@@ -65,6 +65,17 @@ h6 {
 }
 .pb0 {
   padding: 0;
+}
+.title-head{
+  font-size: 14px;
+}
+.font-tittle{
+  font-size: 1.0em;
+  font-weight: 700;
+}
+.title-icon{
+  font-size: 1.8em;
+  color: #03a9f4;
 }
 
 @media screen and (max-width: 380px) {

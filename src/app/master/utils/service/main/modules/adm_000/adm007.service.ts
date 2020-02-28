@@ -49,5 +49,22 @@ export class Adm007Service {
       );
   }
 
-  
+  Eliminar(tipo: number,id : number){
+    console.log("service Actualizar data: ",tipo, id);
+    const url1 = `${url.prod}${adm0007.delete_datos_empresa}`+tipo+'/'+id;
+    console.log(url1);
+    return this.httpClient
+      .delete(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          console.log(resp);
+          return resp;
+        })
+      );
+  }
 }

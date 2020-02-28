@@ -4,27 +4,63 @@
     <div class="col-xl-12">
         <!-- contenido posts -->
         <div class="card pb0 height-container" style="margin-bottom: 0%;">
-            <div class="card-header header-elements-inline">  
+            <div class="header-elements-inline padding-title">
+                <h5 class="card-title title-head font-tittle m0">
+                    <i class="icon-cog title-icon align-vertical-icon-0"></i>
+                    REGISTRO DE GESTIONES
+                </h5>
+                <div class="header-elements">
+                    <div class="list-icons" *ngIf="edit">
+                        <a class="list-icons-item text-primary-600 float-right" (click)="AgregarGestion()"
+                            [routerLink]="nada()" routerLinkActive="router-link-active"
+                            data-toggle="modal" data-target="#modal_gestion">
+                            <i class="icon-diff-added title-icon" data-toggle="tooltip" data-placement="top" title="Ver Gestion"> </i>
+                        </a>
+                        <a class="list-icons-item text-primary-600 float-right" (click)="ModoVista()"
+                            [routerLink]="nada()" routerLinkActive="router-link-active">
+                            <i class="icon-exit title-icon" data-toggle="tooltip" data-placement="top" title="Salir"></i>
+                        </a>
+                    </div>
+                    <div class="list-icons" *ngIf="!edit">
+                        <a class="list-icons-item text-primary-600 float-right" (click)="ModoEdicion()"
+                            [routerLink]="nada()" routerLinkActive="router-link-active">
+                            <i class="icon-pencil7 title-icon" data-toggle="tooltip" data-placement="top" title="Editar"> </i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="card-header header-elements-inline">  
                 <div class="col-md-12 col-12">
-                    <h2 class="card-title font-weight-bold xxl-mobileH2 text-center">REGISTRO DE GESTIONES
+                    <h2 *ngIf="edit" class="card-title font-weight-bold xxl-mobileH2 text-center">REGISTRO DE GESTIONES
+                        <a class="list-icons-item text-primary-600 float-right" (click)="ModoVista()"
+                        [routerLink]="nada()" routerLinkActive="router-link-active">
+                        <i class="icon-exit xxl-title" data-toggle="tooltip" data-placement="top" title="Salir"></i>
+                        </a>
                         <a class="list-icons-item text-primary-600 float-right" (click)="AgregarGestion()"
                         [routerLink]="nada()" routerLinkActive="router-link-active"
                         data-toggle="modal" data-target="#modal_gestion">
                         <i class="icon-diff-added xxl-title" data-toggle="tooltip" data-placement="top" title="Ver Gestion"> </i>
                         </a>
                     </h2>
+                    <h2 *ngIf="!edit" class="card-title font-weight-bold xxl-mobileH2 text-center">REGISTRO DE GESTIONES
+                        <a class="list-icons-item text-primary-600 float-right" (click)="ModoEdicion()"
+                        [routerLink]="nada()" routerLinkActive="router-link-active"
+                        >
+                        <i class="icon-pencil7 xxl-title" data-toggle="tooltip" data-placement="top" title="Editar"> </i>
+                        </a>
+                    </h2>
                 </div>
-            </div>
+            </div> -->
             <div class="card-body pb0">
                 <div class="row mLR0">
                     <div class="col-md-12 col-12">
-                        <h3 class="text-left">
+                        <h4 class="text-left">
                             <i class="icon-calendar22 xxl-title float-left plIcon"></i>
                             <!-- <i class="icon-cogs" aria-hidden="true"></i> -->
                             <span class="font-weight-semibold" style="margin-left: 2em;"> 
                                 Gestion
                             </span>
-                        </h3>
+                        </h4>
                     </div>
                 </div>
                 <div class="row mLR0">
@@ -46,8 +82,8 @@
                                         <td class="puntero PRL0" (click) = "VerPeriodos(gestion)">{{gestion.adgtideg}}</td>
                                         <td class="puntero PRL0" (click) = "VerPeriodos(gestion)">{{gestion.adgtdesc}}</td>
                                         <td class="puntero PRL0" (click) = "VerPeriodos(gestion)">{{gestion.adgtesta | estado}}</td>
-                                        <td class="puntero PRL0"> 
-                                            <div class="list-icons"> 
+                                        <td class="puntero PRL0" > 
+                                            <div class="list-icons" *ngIf="edit"> 
                                                 <a class="list-icons-item text-primary-600" (click)="VerGestion(gestion)"
                                                 [routerLink]="nada()" routerLinkActive="router-link-active"
                                                 data-toggle="modal" data-target="#modal_gestion">
@@ -82,12 +118,12 @@
                 <!-- TODO:  segunda tabla -->
                 <div class="row mLR0">
                     <div class="col-md-12 col-12">
-                        <h3 class="text-left">
+                        <h4 class="text-left">
                             <i class="icon-calendar22 xxl-title float-left plIcon"></i>
                             <span class="font-weight-semibold" style="margin-left: 2em;">
                                 Periodos de Gestion
                             </span>
-                        </h3>
+                        </h4>
                     </div>
                 </div>
                 <div class="row mLR0 pb05"
@@ -110,12 +146,12 @@
                                     *ngFor="let periodo of ListaPeriodos;let impar = odd;let par = even;" 
                                     [ngClass]="{ tablaCebradoPar:par , tablaCebradoImpar:impar}">
                                         <td class="puntero">{{periodo.adpridep | formatonumeroperiodo }}</td>
-                                        <td class="puntero">{{periodo.adprmesp | nombremes}}</td>
+                                        <td class="puntero text-left">{{periodo.adprmesp | nombremes}}</td>
                                         <td class="puntero">{{periodo.adprdesc}}</td>
                                         <td class="puntero">{{periodo.adprideg}}</td>
                                         <td class="puntero">{{periodo.adpresta| estado}}</td>
                                         <td class="puntero PRL0"> 
-                                            <div class="list-icons"> 
+                                            <div class="list-icons" *ngIf="edit"> 
                                                 <a class="list-icons-item text-primary-600" (click)="VerPeriodo(periodo)"
                                                 [routerLink]="nada()" routerLinkActive="router-link-active"
                                                 data-toggle="modal" data-target="#modal_periodo_gestion">

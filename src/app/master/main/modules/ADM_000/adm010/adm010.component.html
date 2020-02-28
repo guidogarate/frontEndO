@@ -19,7 +19,7 @@
                             <i class="icon-floppy-disk title-icon" data-toggle="tooltip" data-placement="top" title="Guardar"> </i>
                         </a>
                         <a class="list-icons-item" 
-                            [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "ModoVista()">
+                            [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "ModoVista('salir')">
                             <i class="icon-exit title-icon " data-toggle="tooltip" data-placement="top" title="Salir"> </i>
                         </a>
                     </div>
@@ -115,7 +115,7 @@
                                             <input type="text" [(ngModel)]="ed.nombre" [value]="ed.nombre" required [disabled]="!editar || i == 0" class="form-control">
                                         </div>
                                         <div class="col-sm-3 col-3">
-                                            <input type="text" class="form-control text-center" [(ngModel)]="ed.largo" [value] = "ed.largo" [disabled] = "!editar || i == 0">
+                                            <input type="text" class="form-control text-center" (blur)="CalcularLargo()" [(ngModel)]="ed.largo" [value] = "ed.largo" [disabled] = "!editar || i == 0">
                                         </div>
                                         <div class="col-sm-3 col-2">
                                             <input type="text" class="form-control text-center" [(ngModel)]="ed.separador" [value]="ed.separador" [disabled] = "!editar || i == 0">
@@ -169,7 +169,6 @@
                                 </div>
                             </div> -->
                             <p> * Solo Puede crear un maximo de 6 tipos de estructuras de plan de cuenta</p>
-                            <!-- <pre>{{newEstructura | json}}</pre> -->
                         </div>
                         <!-- end new Ed -->
                     </div>
@@ -227,8 +226,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <!-- <pre>{{Listnaturalezas | json}}</pre>
-                                <pre>{{newNaturaleza | json}}</pre> -->
+                                <!-- <pre>{{Listnaturalezas | json}}</pre> -->
                             </div>
                             <div class="col-sm-3 col-0"></div>
                         </div>
@@ -276,12 +274,12 @@
                             </h5>
                             <div class="header-elements">
                                 <div class="list-icons">
-                                    <a class="list-icons-item"> 
+                                    <!-- <a class="list-icons-item"> 
                                         <i class="icon-arrow-down12" data-toggle="tooltip" data-placement="top" title="Ocultar" ></i> 
                                     </a>
                                     <a class="list-icons-item"> 
                                         <i class="icon-arrow-up12" data-toggle="tooltip" data-placement="top" title="Mostrar"></i> 
-                                    </a>
+                                    </a> -->
                                 </div>
                             </div>
                         </div>
@@ -295,3 +293,12 @@
                                         class="form-control text-center" [disabled] = "true">    
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </div>
+                </div>            
+            </div>
+        </div>
+    </div>
+</div>         
