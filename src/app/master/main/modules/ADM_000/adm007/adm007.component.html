@@ -29,9 +29,25 @@
             <div class="row p0 m0">
                 <div class="col-sm-2 col-12">
                      <div class="card card-padding margin-botton-card ">
-                          <img src="https://thumbs.dreamstime.com/b/icono-del-usuario-46707697.jpg" 
+                        <input
+                        type="file"
+                        class="d-none"
+                        (change)="onPhotoSelected($event)"
+                        #photoInput
+                      />
+                      <!-- [disabled]="disabled.foto" -->
+                      <img
+                        [src]="
+                          photoSelected || 'assets/subir_img.png'
+                        "
+                        class="img-fluid img-preview rounded puntero"
+                        alt="No existe imagen, seleccione una imagen"
+                        (click)="photoInput.click()"
+                      />
+
+                          <!-- <img src="https://thumbs.dreamstime.com/b/icono-del-usuario-46707697.jpg" 
                                alt="imagen no encontrada" class="img-responsive rounded img-fluid"
-                               style="height: 116px;width: 100px; align-self: center;">
+                               style="height: 116px;width: 100px; align-self: center;"> -->
                      </div>
                 </div>
                 <div class="col-sm-10 col-12">

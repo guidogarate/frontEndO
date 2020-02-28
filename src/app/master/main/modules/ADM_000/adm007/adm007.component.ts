@@ -3,6 +3,10 @@ import { Adm007Service } from "src/app/master/utils/service/main/modules/adm_000
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
 declare function initLabels ();
 
+interface HtmlInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
+}
+
 @Component({
   selector: 'app-adm007',
   templateUrl: './adm007.component.html',
@@ -54,6 +58,9 @@ export class Adm007Component implements OnInit {
     "estado": true,
     "tipo": "Fijo"
   };
+
+  photoSelected: string | ArrayBuffer;
+  file: File;
 
   constructor( private _adm007Service : Adm007Service,
               private _notyG: NotyGlobal) { 
@@ -202,6 +209,7 @@ export class Adm007Component implements OnInit {
       "sigla": this.lista[0].sigla,
       "id_actividad": this.lista[0].id_actividad_empresarial,
       "nit": this.lista[0].nit,
+      "foto":"" ,
       "direcciones": this.direcciones,
       "contactos" : this.contactos
       };
@@ -366,5 +374,22 @@ export class Adm007Component implements OnInit {
   }
   Eliminar(){
 
+  }
+
+  onPhotoSelected(event: HtmlInputEvent): void {
+    const extensionesValidas = ["image/png", "image/jpg", "image/jpeg"];
+    const extensionArchivo = event.target.files[0].type;
+    if (extensionesValidas.indexOf(extensionArchivo) === -1) {
+      this._notyG.noty("error", "Formato novalido, Solo formato imagen", 5000);
+      return;
+    }
+    if (event.target.files && event.target.files[0]) {
+      this.file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = e => (this.photoSelected = reader.result);
+      reader.readAsDataURL(this.file);
+    } else {
+      return;
+    }
   }
 }
