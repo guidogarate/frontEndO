@@ -5,7 +5,6 @@ import { NgModule } from "@angular/core";
 import { APP_ROUTES } from "./app.routes";
 
 import { SocketIoModule, SocketIoConfig } from "ngx-socket-io";
-import { environment } from "src/environments/environment";
 const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
 import { DeviceDetectorModule } from "ngx-device-detector";
 
@@ -19,14 +18,16 @@ import { IndexGlobalModule } from "./master/utils/global/index.global.module";
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./master/login/login.component";
 import { NopagefoundComponent } from "./master/nopagefound/nopagefound.component";
-import { from } from 'rxjs';
+import { from } from "rxjs";
 
 // para cambiar idioma de fechas a español
-import es from '@angular/common/locales/es';
-import { registerLocaleData } from '@angular/common';
+import es from "@angular/common/locales/es";
+import { registerLocaleData } from "@angular/common";
 
 registerLocaleData(es);
-import {LOCALE_ID} from '@angular/core';
+import { LOCALE_ID } from "@angular/core";
+import { ServiceWorkerModule } from "@angular/service-worker";
+import { environment } from "../environments/environment";
 @NgModule({
   declarations: [AppComponent, LoginComponent, NopagefoundComponent],
   imports: [
@@ -40,11 +41,12 @@ import {LOCALE_ID} from '@angular/core';
     MainModule,
     SocketIoModule.forRoot(config),
     IndexGlobalModule,
-    DeviceDetectorModule.forRoot()
+    DeviceDetectorModule.forRoot(),
+    ServiceWorkerModule.register("ngsw-worker.js", {
+      enabled: environment.production
+    })
   ],
-  providers: [
-    {  provide: LOCALE_ID, useValue: 'es-ES' } 
-  ],
+  providers: [{ provide: LOCALE_ID, useValue: "es-ES" }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
