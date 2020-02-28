@@ -18,7 +18,6 @@ import { IndexGlobalModule } from "./master/utils/global/index.global.module";
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./master/login/login.component";
 import { NopagefoundComponent } from "./master/nopagefound/nopagefound.component";
-import { from } from "rxjs";
 
 // para cambiar idioma de fechas a español
 import es from "@angular/common/locales/es";
