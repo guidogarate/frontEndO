@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 import { CommonModule, DatePipe } from "@angular/common";
 import { IndexAdm000Module } from "src/app/master/utils/service/main/modules/adm_000/index.adm000.module";
 
@@ -13,7 +13,6 @@ import { Cont003Component } from "./cont003/cont003.component";
     CommonModule,
     CONT_000_MODULES_ROUTES,
     FormsModule,
-    ReactiveFormsModule,
     IndexAdm000Module
   ]
 })
