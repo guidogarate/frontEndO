@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Adm010Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
-import { element } from 'protractor';
 declare function initLabels ();
 
 @Component({

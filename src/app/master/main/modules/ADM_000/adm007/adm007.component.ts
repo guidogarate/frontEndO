@@ -9,7 +9,8 @@ declare function initLabels ();
   styleUrls: ['./adm007.component.css']
 })
 export class Adm007Component implements OnInit {
-
+  indiceContact : number = 0;
+  indiceDirection : number = 0;
   editar : boolean = false;
   ocultarSeccion : boolean = false;
   ocultarSeccionContactos : boolean = false;
@@ -45,7 +46,7 @@ export class Adm007Component implements OnInit {
   };
 
   newContacto : any =   {
-    "id_tipo_contacto": 33,
+    "id_tipo_contacto": 0,
     "id_subtipo_contacto": 2,
     "id_contacto": "33-2",
     "codigo_contacto": "",
@@ -76,7 +77,9 @@ export class Adm007Component implements OnInit {
         this.ListActividadEmpresarial = this.lista[0]["actividad_empresarial"];
         this.ListTipoDirecciones = this.lista[0]["tipo_direcciones"];
         this.ListDirecciones = this.lista[0]["direcciones"];
-        this.CambiarTipoEstado();
+        if(this.ListDirecciones != null){
+          this.CambiarTipoEstado();
+        }
         this.ListContactos = this.lista[0]["contactos"];
         this.ListTipoContactos = this.lista[0]["tipo_contactos"];
         this.AgregarId();
@@ -153,6 +156,7 @@ export class Adm007Component implements OnInit {
     console.log("afrenado");
     switch (newData) {
       case 'contactos':
+        this.indiceContact = this.indiceContact + 1;
         this.newContacto.estado = this.newContacto.estado == true ? 1 : 0
         // if(!this.ValidarContacto()){
         //   this._notyG.noty("warning", "rellene todos datos de contacto", 3500);
@@ -163,6 +167,7 @@ export class Adm007Component implements OnInit {
         // }
         break;
       case 'direccion':
+        this.indiceDirection = this.indiceDirection +1;
         this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
         // if(!this.ValidarDireccion()){
         //   this._notyG.noty("warning", "rellene todos los datos de la nueva direccion", 3500);  
@@ -325,11 +330,13 @@ export class Adm007Component implements OnInit {
   }
   MostrarCiudad(data : any){
     if(this.editar){
+        console.log("editar: ", data);
           this.BuscarDepartamento(this.ObtenerDepartamento(this.idCiudad));
           this.BuscarPais(this.ObtenerPais(this.idCiudad));
           this.newDirection.id_ciudad = this.idCiudad;
           this.BuscarNombreCiudad(this.idCiudad);
     }else{
+      console.log("No editar: ", data);
       this.ListCiudades.forEach(element => {
         if(element.nombre_pais == data.ciudad){
           this.idCiudad = element.id_pais;

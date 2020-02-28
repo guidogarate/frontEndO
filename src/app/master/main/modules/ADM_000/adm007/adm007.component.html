@@ -108,26 +108,27 @@
                             <div class="col-sm-12 p0 m0"  *ngFor="let item of ListDirecciones; let i = index">
                                 <div class="row p0 m0" (click) = "MostrarCiudad(item)">
                                     <div class="col-sm-3 col-6">
-                                            <select class="form-control p0 selectCenter alturaInputs" [disabled]= "ListDirecciones.lenght > i"
+                                            <select class="form-control p0 selectCenter alturaInputs" [disabled]= "!editar || !(ListDirecciones.length > (ListDirecciones.length - indiceDirection))"
                                                     [(ngModel)]="item.id_tipo_direccion" (change)="nada()" name="direccionSelect">
                                                     <option *ngFor="let dir of ListTipoDirecciones"
                                                             [value]="dir.id_tipo_direccion"> {{dir.tipo_direccion}}</option>
                                             </select> 
                                     </div>
                                     <div class="col-sm-7 col-12">
-                                        <input type="text" class="form-control text-center" [disabled]= "ListDirecciones.lenght > i" [(ngModel)]="item.direccion" [value] = "item.direccion" >
+                                        <input type="text" class="form-control text-center" [disabled]= "!editar || !(ListDirecciones.length > (ListDirecciones.length - indiceDirection))" 
+                                        [(ngModel)]="item.direccion" [value] = "item.direccion" >
                                     </div>
                                     <div class="col-sm-2 col-12" style="align-self: flex-end;">
                                         <div class="custom-control custom-switch switch-float">
-                                            <input type="checkbox" class="custom-control-input" id="direccion{{i}}" name="estados}}" [disabled]= "ListDirecciones.lenght > i"
-                                                [checked]="item.estado == 'true'" data-fouc [(ngModel)]="item.estado" >
+                                            <input type="checkbox" class="custom-control-input" id="direccion{{i}}" name="estados}}" [disabled]= "!editar || !(ListDirecciones.length > (ListDirecciones.length - indiceDirection))"
+                                                   [checked]="item.estado == 'true'" data-fouc [(ngModel)]="item.estado" >
                                             <label *ngIf="item.estado == 'true' || item.estado == 1" class="custom-control-label h30" for="direccion{{i}}">Activo</label>
                                             <label *ngIf="!(item.estado == 'true'|| item.estado == 1)" class="custom-control-label h30" for="direccion{{i}}">Inactivo</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <pre>{{ListDirecciones | json}}</pre>
+                            
                             <!-- <div class="col-sm-12 p0 m0">
                                 <div class="row p0 m0" style="padding-top: 0.5em;">
                                     <div class="col-sm-3">
@@ -170,45 +171,45 @@
                                 </div>
                             </div> -->
                         </div>
-                           <!-- prueba inputs paises -->
+                           <!-- prueba inputs direcciones -->
                            <div class="row p0 m0" style="padding-top: 0.5em;">
-                            <div class="col-sm-3">
-                                <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-4 col-6">Pais</label>
-                                    <div class="col-lg-8 col-6">
-                                        <div class="input-group" style="justify-content: center;" >
-                                            <input type="text" name="pais" class="text-center" [(ngModel)]="newDirection.pais"
-                                                   [value]="textPais" disabled
-                                            >   
+                                <div class="col-sm-3">
+                                    <div class="form-group row mb0">
+                                        <label class="col-form-label col-lg-4 col-6">Pais</label>
+                                        <div class="col-lg-8 col-6">
+                                            <div class="input-group" style="justify-content: center;" >
+                                                <input type="text" name="pais" class="text-center" [(ngModel)]="newDirection.pais"
+                                                    [value]="textPais" disabled>   
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-4 col-6">Departamento</label>
-                                    <div class="col-lg-8 col-6">
-                                        <div class="input-group" style="justify-content: center;" >
-                                            <input type="text" name="departamento"  class="text-center" disabled
-                                                   [value]="textDepartamento"  [(ngModel)]="newDirection.departamento">   
+                                <div class="col-sm-4">
+                                    <div class="form-group row mb0">
+                                        <label class="col-form-label col-lg-4 col-6">Departamento</label>
+                                        <div class="col-lg-8 col-6">
+                                            <div class="input-group" style="justify-content: center;" >
+                                                <input type="text" name="departamento"  class="text-center" disabled
+                                                    [value]="textDepartamento"  [(ngModel)]="newDirection.departamento">   
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-4 col-6">Ciudad</label>
-                                    <div class="col-lg-8 col-6">
-                                        <select class="form-control p0 selectCenter alturaInputs"
-                                                [(ngModel)]="idCiudad" (change) = "MostrarCiudad(newDirection)">
-                                                <option *ngFor="let ciudad of ListCiudades" 
-                                                [value]="ciudad.id_pais">{{ciudad.nombre_pais}}</option>
-                                        </select>
+                                <div class="col-sm-3">
+                                    <div class="form-group row mb0">
+                                        <label class="col-form-label col-lg-4 col-6">Ciudad</label>
+                                        <div class="col-lg-8 col-6">
+                                            <select class="form-control p0 selectCenter alturaInputs"
+                                                    [(ngModel)]="idCiudad" (change) = "MostrarCiudad(newDirection)">
+                                                    <option *ngFor="let ciudad of ListCiudades" 
+                                                    [value]="ciudad.id_pais">{{ciudad.nombre_pais}}</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-2 col-0"></div>
+                                <div class="col-sm-2 col-0"></div>
                         </div>
+                        <pre>{{ListDirecciones | json}}</pre>
                         <!-- NuevoElemento -->
                         <!-- <div class="row p0 m0" *ngIf="editar">
                             <div class="col-sm-12 p0 m0">
@@ -309,7 +310,7 @@
                                 <div class="row p0 m0">
                                     <div class="col-sm-2 col-0"></div>
                                     <div class="col-sm-2 col-8">
-                                        <select class="form-control p0 selectCenter alturaInputs" disabled
+                                        <select class="form-control p0 selectCenter alturaInputs" [disabled] = "!editar || (ListContactos.length > (i + indiceContact))"
                                                 [(ngModel)]="item.id_contacto" name="ContactosSelect">
                                                 <option *ngFor="let element of ListTipoContactos"
                                                 [value]="element.id_contacto">{{element.tipo}}</option>
@@ -317,25 +318,29 @@
                                     </div>
                                     <div class="col-sm-2 col-6">
                                         <div class="form-group row mb0">
-                                            <label *ngIf="item.id_tipo_contacto == 33" class="col-form-label col-lg-3 col-1"><i class="icon-flag3"></i> </label>
-                                            <label *ngIf="item.id_contacto === '34-1'" class="col-form-label col-lg-3 col-1"><i class="icon-facebook2"></i> </label>
-                                            <label *ngIf="item.id_contacto === '34-2'" class="col-form-label col-lg-3 col-1"><i class="icon-instagram"></i> </label>
-                                            <label *ngIf="item.id_contacto === '34-3'" class="col-form-label col-lg-3 col-1"><i class="icon-twitter2"></i> </label>
-                                            <label *ngIf="item.id_tipo_contacto == 35" class="col-form-label col-lg-3 col-1"><i class="icon-mail5"></i> </label>
+                                            <label *ngIf="item.id_contacto == '33-1'" class="col-form-label col-lg-3 col-1"><i class="icon-flag3"></i> </label>
+                                            <label *ngIf="item.id_contacto == '33-2'" class="col-form-label col-lg-3 col-1"><i class="icon-flag3"></i> </label>
+                                            <label *ngIf="item.id_contacto == '34-1'" class="col-form-label col-lg-3 col-1"><i class="icon-facebook2"></i> </label>
+                                            <label *ngIf="item.id_contacto == '34-2'" class="col-form-label col-lg-3 col-1"><i class="icon-instagram"></i> </label>
+                                            <label *ngIf="item.id_contacto == '34-3'" class="col-form-label col-lg-3 col-1"><i class="icon-twitter2"></i> </label>
+                                            <label *ngIf="item.id_contacto == '35-1'" class="col-form-label col-lg-3 col-1"><i class="icon-mail5"></i> </label>
+                                            <label *ngIf="item.id_contacto == '35-2'" class="col-form-label col-lg-3 col-1"><i class="icon-mail5"></i> </label>
                                             <div class="col-lg-9 col-9">
                                                 <div class="input-group" style="justify-content: center;" >
-                                                    <input type="text" class="form-control text-center" disabled [(ngModel)]="item.codigo_contacto" [value]="item.codigo_contacto" >
+                                                    <input type="text" class="form-control text-center" [disabled] = "!editar || (ListContactos.length > (i + indiceContact))"
+                                                           [(ngModel)]="item.codigo_contacto" [value]="item.codigo_contacto" >
                                                 </div>
                                             </div>
                                         </div>                                
                                     </div>
                                     <div class="col-sm-2 col-6 input-group">
-                                        <input type="text" class="form-control text-center" disabled [(ngModel)]="item.contacto" [value]="item.contacto" >
+                                        <input type="text" class="form-control text-center" [disabled] = "!editar || (ListContactos.length > (i + indiceContact))"
+                                               [(ngModel)]="item.contacto" [value]="item.contacto" >
                                     </div>
                                     <div class="col-sm-2 col-12" style="align-self: flex-end;">
                                         <div class="custom-control custom-switch switch-float">
-                                            <input type="checkbox" class="custom-control-input" id="phones{{i}}" name="phones" disabled
-                                            [checked]="item.estado == 'true'" data-fouc [(ngModel)]="item.estado" >
+                                            <input type="checkbox" class="custom-control-input" id="phones{{i}}" name="phones" [disabled] = "!editar || (ListContactos.length > (i + indiceContact))"
+                                                    [checked]="item.estado == 'true'" data-fouc [(ngModel)]="item.estado" >
                                             <label *ngIf="item.estado == 'true' || item.estado == 1" class="custom-control-label h30" for="phones{{i}}">Activo</label>
                                             <label *ngIf="!(item.estado == 'true'|| item.estado == 1)" class="custom-control-label h30" for="phones{{i}}">Inactivo</label>
                                         </div>
@@ -343,11 +348,16 @@
                                     <div class="col-sm-2 col-0">
                                     </div>
                                 </div>
+                                <!-- <pre>{{item | json}}</pre> -->
                             </div>
+                            <!-- <pre>editar: {{!editar | json}}</pre> -->
+                            <!-- <pre>ListContactos: {{ListContactos | json}}</pre> -->
+                            <!-- <pre *ngIf="ListContactos != undefined">ListContactos cant: {{ListContactos.length | json}}</pre> -->
+                            <!-- <pre>indiceContact: {{indiceContact | json}}</pre> -->
                         </div>
                         <!-- adicion contacto -->
                         
-                        <div class="row p0 m0" *ngIf="editar">
+                        <!-- <div class="row p0 m0" *ngIf="editar">
                             <div class="col-sm-12 col-12 p0 m0">
                                 <div class="row p0 m0">
                                     <div class="col-sm-2 col-0"></div>
@@ -390,7 +400,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- Fin contacto -->
                     </div>
                 </div>
