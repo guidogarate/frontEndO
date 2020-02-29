@@ -121,8 +121,16 @@ export class Adm007Component implements OnInit {
   }
   /* metodos auxiliares*/
   nada(){}
+  PrepareSend(){
+    this.ListDirecciones.forEach(element => {
+      if(element.id_ciudad != undefined){
+        this.direcciones.push(element);
+      }
+    });
+  }
 
   Actualizar( seccion : string){
+    this.PrepareSend();
     this.pasarDatosDireccion();
     switch(seccion){
 
@@ -130,18 +138,19 @@ export class Adm007Component implements OnInit {
         // this.AgregarDireccion();
         // this.Agregar('contactos');
         // this.Agregar('direccion');
-        this.ActualizarDatos();
+        // this.ActualizarDatos();
+        this.ActualizarDatos1(this.file);
         this.ModoVista();
         console.log('entro por all');
         break;
-      case 'direccion' :
-        this.Agregar(seccion);
-        console.log('entro por direccion');
-        break;
-      case 'contactos' :
-        this.Agregar(seccion);
-        console.log('entro por contactos');
-        break;
+      // case 'direccion' :
+      //   this.Agregar(seccion);
+      //   console.log('entro por direccion');
+      //   break;
+      // case 'contactos' :
+      //   this.Agregar(seccion);
+      //   console.log('entro por contactos');
+      //   break;
     };
     // this.AgregarDireccion();
     //this.ActualizarDatos();
@@ -159,11 +168,11 @@ export class Adm007Component implements OnInit {
 
   Agregar(newData : string){
     // this.pasarDatosDireccion();
-    console.log("afrenado");
+    console.log("agregando: ", newData);
     switch (newData) {
       case 'contactos':
         this.indiceContact = this.indiceContact + 1;
-        this.newContacto.estado = this.newContacto.estado == true ? 1 : 0
+        //this.newContacto.estado = this.newContacto.estado == true ? 1 : 0
         // if(!this.ValidarContacto()){
         //   this._notyG.noty("warning", "rellene todos datos de contacto", 3500);
         // }else{
@@ -173,13 +182,14 @@ export class Adm007Component implements OnInit {
         // }
         break;
       case 'direccion':
-        this.indiceDirection = this.indiceDirection +1;
-        this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
+        this.indiceDirection = this.indiceDirection + 1;
+       // this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
         // if(!this.ValidarDireccion()){
         //   this._notyG.noty("warning", "rellene todos los datos de la nueva direccion", 3500);  
         // }
         // else{
           // this.direcciones.push(this.newDirection);
+
           this.ListDirecciones.push(this.newDirection); 
           this._notyG.noty("success", "direccion añadida", 3500);  
           this.LimpiarData();
@@ -209,7 +219,7 @@ export class Adm007Component implements OnInit {
       "sigla": this.lista[0].sigla,
       "id_actividad": this.lista[0].id_actividad_empresarial,
       "nit": this.lista[0].nit,
-      "foto":"" ,
+      "logo_empresa":this.lista[0].logo_empresa ,
       "direcciones": this.direcciones,
       "contactos" : this.contactos
       };
@@ -219,7 +229,7 @@ export class Adm007Component implements OnInit {
     this.idCiudad="";
     this.newDirection  = {
       "id_tipo_direccion": 1,
-      "estado": true,
+      "estado": 1,
       "direccion": "",
       "id_direccion": 0,
       "tipo_direccion": "Propietario",
@@ -239,7 +249,7 @@ export class Adm007Component implements OnInit {
       "id_contacto" : "33-2",
       "codigo_contacto" : "",
       "contacto" : "",
-      "estado" : true,
+      "estado" : 1,
       "tipo": "Fijo"
     };
   }
@@ -314,6 +324,7 @@ export class Adm007Component implements OnInit {
     this.ListPaises.forEach(element => {
       if (element.id_pais == codigo){
         this.newDirection.pais = element.nombre_pais;
+        this.textPais = element.nombre_pais;
       }
     });
   }
@@ -325,6 +336,7 @@ export class Adm007Component implements OnInit {
     this.ListDepartamentos.forEach( element => {
       if(element.id_pais == codigo){
         this.newDirection.departamento = element.nombre_pais;
+        this.textDepartamento = element.nombre_pais;
       }
     });
   }
@@ -337,11 +349,15 @@ export class Adm007Component implements OnInit {
   }
   MostrarCiudad(data : any){
     if(this.editar){
-        console.log("editar: ", data);
+        console.log("editar ciudad: ", data);
           this.BuscarDepartamento(this.ObtenerDepartamento(this.idCiudad));
           this.BuscarPais(this.ObtenerPais(this.idCiudad));
           this.newDirection.id_ciudad = this.idCiudad;
           this.BuscarNombreCiudad(this.idCiudad);
+          this.ListDirecciones[this.ListDirecciones.length-1].pais= this.textPais; 
+          this.ListDirecciones[this.ListDirecciones.length-1].departamento= this.textDepartamento; 
+          this.ListDirecciones[this.ListDirecciones.length-1].ciudad= this.newDirection.ciudad; 
+          this.ListDirecciones[this.ListDirecciones.length-1].id_ciudad= this.idCiudad; 
     }else{
       console.log("No editar: ", data);
       this.ListCiudades.forEach(element => {
@@ -376,6 +392,22 @@ export class Adm007Component implements OnInit {
 
   }
 
+  ActualizarDatos1(img : File){
+    console.log("lista para guardar: ", this.ListSend);
+    this._adm007Service
+    .ActualizarDatos1(this.ListSend,img)
+    .subscribe(resp => {
+      if(resp["ok"]){
+        // console.log("datos actualizados component");
+        this._notyG.noty("success", "datos actualizados", 3500);
+      }
+      else {
+        this._notyG.noty("error", "no se pudo actualizar", 3500);
+        console.log("error al guardar los datos");
+        console.log(resp);
+      }
+    });
+  }
   onPhotoSelected(event: HtmlInputEvent): void {
     const extensionesValidas = ["image/png", "image/jpg", "image/jpeg"];
     const extensionArchivo = event.target.files[0].type;
@@ -384,6 +416,7 @@ export class Adm007Component implements OnInit {
       return;
     }
     if (event.target.files && event.target.files[0]) {
+      console.log("Elemento Event",event);
       this.file = event.target.files[0];
       const reader = new FileReader();
       reader.onload = e => (this.photoSelected = reader.result);

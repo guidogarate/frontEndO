@@ -38,7 +38,7 @@
                       <!-- [disabled]="disabled.foto" -->
                       <img
                         [src]="
-                          photoSelected || 'assets/subir_img.png'
+                          photoSelected || 'assets/subir_img.png' || lista[0].logo_empresa 
                         "
                         class="img-fluid img-preview rounded puntero"
                         alt="No existe imagen, seleccione una imagen"
@@ -124,19 +124,19 @@
                             <div class="col-sm-12 p0 m0"  *ngFor="let item of ListDirecciones; let i = index">
                                 <div class="row p0 m0" (click) = "MostrarCiudad(item)">
                                     <div class="col-sm-3 col-6">
-                                            <select class="form-control p0 selectCenter alturaInputs" [disabled]= "!editar || !(ListDirecciones.length > (ListDirecciones.length - indiceDirection))"
+                                            <select class="form-control p0 selectCenter alturaInputs" [disabled]= "!editar || (ListDirecciones.length > (i + indiceDirection))"
                                                     [(ngModel)]="item.id_tipo_direccion" (change)="nada()" name="direccionSelect">
                                                     <option *ngFor="let dir of ListTipoDirecciones"
                                                             [value]="dir.id_tipo_direccion"> {{dir.tipo_direccion}}</option>
                                             </select> 
                                     </div>
                                     <div class="col-sm-7 col-12">
-                                        <input type="text" class="form-control text-center" [disabled]= "!editar || !(ListDirecciones.length > (ListDirecciones.length - indiceDirection))" 
-                                        [(ngModel)]="item.direccion" [value] = "item.direccion" >
+                                        <input type="text" class="form-control text-center" [disabled]= "!editar || (ListDirecciones.length > (i + indiceDirection))"
+                                               [(ngModel)]="item.direccion" [value] = "item.direccion" >
                                     </div>
                                     <div class="col-sm-2 col-12" style="align-self: flex-end;">
                                         <div class="custom-control custom-switch switch-float">
-                                            <input type="checkbox" class="custom-control-input" id="direccion{{i}}" name="estados}}" [disabled]= "!editar || !(ListDirecciones.length > (ListDirecciones.length - indiceDirection))"
+                                            <input type="checkbox" class="custom-control-input" id="direccion{{i}}" name="estados}}" [disabled]= "!editar || (ListDirecciones.length > (i + indiceDirection))"
                                                    [checked]="item.estado == 'true'" data-fouc [(ngModel)]="item.estado" >
                                             <label *ngIf="item.estado == 'true' || item.estado == 1" class="custom-control-label h30" for="direccion{{i}}">Activo</label>
                                             <label *ngIf="!(item.estado == 'true'|| item.estado == 1)" class="custom-control-label h30" for="direccion{{i}}">Inactivo</label>
@@ -188,37 +188,37 @@
                             </div> -->
                         </div>
                            <!-- prueba inputs direcciones -->
-                           <div class="row p0 m0" style="padding-top: 0.5em;">
+                           <div class="row p0 m0" style="padding-top: 0.5em;" *ngIf="!editar">
                                 <div class="col-sm-3">
                                     <div class="form-group row mb0">
-                                        <label class="col-form-label col-lg-4 col-6">Pais</label>
+                                        <label class="col-form-label col-lg-4 col-6">PaisA</label>
                                         <div class="col-lg-8 col-6">
                                             <div class="input-group" style="justify-content: center;" >
                                                 <input type="text" name="pais" class="text-center" [(ngModel)]="newDirection.pais"
-                                                    [value]="textPais" disabled>   
+                                                       [value]="textPais" disabled>   
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group row mb0">
-                                        <label class="col-form-label col-lg-4 col-6">Departamento</label>
+                                        <label class="col-form-label col-lg-4 col-6">DepartamentoA</label>
                                         <div class="col-lg-8 col-6">
                                             <div class="input-group" style="justify-content: center;" >
                                                 <input type="text" name="departamento"  class="text-center" disabled
-                                                    [value]="textDepartamento"  [(ngModel)]="newDirection.departamento">   
+                                                       [value]="textDepartamento"  [(ngModel)]="newDirection.departamento">   
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group row mb0">
-                                        <label class="col-form-label col-lg-4 col-6">Ciudad</label>
+                                        <label class="col-form-label col-lg-4 col-6">CiudadA</label>
                                         <div class="col-lg-8 col-6">
                                             <select class="form-control p0 selectCenter alturaInputs"
-                                                    [(ngModel)]="idCiudad" (change) = "MostrarCiudad(newDirection)">
+                                                    [(ngModel)]="idCiudad" (change) = "MostrarCiudad(ListContactos[ListContactos.length-1])">
                                                     <option *ngFor="let ciudad of ListCiudades" 
-                                                    [value]="ciudad.id_pais">{{ciudad.nombre_pais}}</option>
+                                                            [value]="ciudad.id_pais">{{ciudad.nombre_pais}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -232,21 +232,21 @@
                                 <div class="row p0 m0">
                                     <div class="col-sm-3 col-6">
                                             <select class="form-control p0 selectCenter alturaInputs" required
-                                                    [(ngModel)]="newDirection.id_tipo_direccion" (change)="nada()" name="newDirection">
+                                                    [(ngModel)]="ListDirecciones[ListDirecciones.length-1].id_tipo_direccion" (change)="nada()" name="newDirection">
                                                     <option *ngFor="let dir of ListTipoDirecciones"
-                                                        [value]="dir.id_tipo_direccion"> {{dir.tipo_direccion}}</option>
+                                                        [value]="ListDirecciones[ListDirecciones.length-1].id_tipo_direccion"> {{ListDirecciones[ListDirecciones.length-1].tipo_direccion}}</option>
                                             </select> 
                                     </div>
                                     <div class="col-sm-7 col-12">
                                         <input type="text" class="form-control text-center" placeholder="ingrese su direccion" required
-                                                [(ngModel)]="newDirection.direccion" [value] = "newDirection.direccion" >
+                                                [(ngModel)]="ListDirecciones[ListDirecciones.length-1].direccion" [value] = "ListDirecciones[ListDirecciones.length-1].direccion" >
                                     </div>
                                     <div class="col-sm-2 col-12" style="align-self: flex-end;">
                                         <div class="custom-control custom-switch switch-float">
                                             <input type="checkbox" class="custom-control-input" id="newDirectionSwitch" name="estados"
-                                                   [checked]="newDirection.estado == 'true'" data-fouc [(ngModel)]="newDirection.estado" >
-                                            <label *ngIf="newDirection.estado == 'true' || newDirection.estado == 1" class="custom-control-label h30" for="newDirectionSwitch">Activo</label>
-                                            <label *ngIf="!(newDirection.estado == 'true'|| newDirection.estado == 1)" class="custom-control-label h30" for="newDirectionSwitch">Inactivo</label>
+                                                   [checked]="ListDirecciones[ListDirecciones.length-1].estado == 'true'" data-fouc [(ngModel)]="ListDirecciones[ListDirecciones.length-1].estado" >
+                                            <label *ngIf="ListDirecciones[ListDirecciones.length-1].estado == 'true' || ListDirecciones[ListDirecciones.length-1].estado == 1" class="custom-control-label h30" for="newDirectionSwitch">Activo</label>
+                                            <label *ngIf="!(ListDirecciones[ListDirecciones.length-1].estado == 'true'|| ListDirecciones[ListDirecciones.length-1].estado == 1)" class="custom-control-label h30" for="newDirectionSwitch">Inactivo</label>
                                         </div>
                                     </div>
                                 </div>
@@ -255,10 +255,10 @@
                         <!-- End New Element -->
 
                       
-                        <!-- <div class="row p0 m0" *ngIf="!editar" style="padding-top: 0.5em;">
+                        <div class="row p0 m0" *ngIf="editar" style="padding-top: 0.5em;">
                             <div class="col-sm-3">
                                 <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-4 col-6">Pais</label>
+                                    <label class="col-form-label col-lg-4 col-6">PaisE</label>
                                     <div class="col-lg-8 col-6">
                                         <div class="input-group" style="justify-content: center;" >
                                             <input disabled type="text" name="pais" disabled class="text-center"
@@ -269,7 +269,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-4 col-6">Departamento</label>
+                                    <label class="col-form-label col-lg-4 col-6">DepartamentoE</label>
                                     <div class="col-lg-8 col-6">
                                         <div class="input-group" style="justify-content: center;" >
                                             <input disabled type="text" name="departamento" disabled class="text-center"
@@ -280,9 +280,9 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-4 col-6">Ciudad</label>
+                                    <label class="col-form-label col-lg-4 col-6">CiudadE</label>
                                     <div class="col-lg-8 col-6">
-                                        <select class="form-control p0 selectCenter alturaInputs" disabled
+                                        <select class="form-control p0 selectCenter alturaInputs" (change) = "MostrarCiudad(newDirection)"
                                                 [(ngModel)]="idCiudad">
                                                 <option *ngFor="let ciudad of ListCiudades" 
                                                         [value]="ciudad.id_pais">{{ciudad.nombre_pais}}</option>
@@ -291,7 +291,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-2 col-0"></div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
