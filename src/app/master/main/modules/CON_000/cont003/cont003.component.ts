@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { NgForm } from "@angular/forms";
 
 declare function init_select();
 declare function initLabels();
@@ -9,7 +11,19 @@ declare function initLabels();
   styleUrls: ["./cont003.component.css"]
 })
 export class Cont003Component implements OnInit {
-  constructor() {}
+  form: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.crearForm();
+  }
+
+  crearForm() {
+    this.form = this.fb.group({
+      descripcion: ["", [Validators.minLength(3)]],
+      sigla: ["", [Validators.required]],
+      estado: [""]
+    });
+  }
 
   ngOnInit() {
     this.initLabels();
@@ -24,5 +38,19 @@ export class Cont003Component implements OnInit {
     setTimeout(() => {
       init_select();
     }, 5);
+  }
+
+  guardarDatos() {
+    console.log(this.form);
+    if (this.form.invalid) {
+      return;
+    }
+  }
+
+  guardarDatos2(formu: NgForm) {
+    console.log(formu);
+    if (formu.invalid) {
+      return;
+    }
   }
 }
