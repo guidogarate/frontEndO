@@ -10,8 +10,8 @@ export class Cont003Service {
   token = sessionStorage.getItem("id");
   constructor(private httpClient: HttpClient) {}
 
-  geCont003(modulo: string, indice: string, texto: string) {
-    const url1 = `${url.prod}${cont003.geCont003}${modulo}/${indice}/${texto}`;
+  geCont003(modulo: string, indice: string, gestion: string, texto: string) {
+    const url1 = `${url.prod}${cont003.geCont003}${modulo}/${indice}/${gestion}/${texto}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
