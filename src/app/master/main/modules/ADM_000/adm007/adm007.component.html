@@ -123,14 +123,14 @@
                         <div class="row p0 m0" *ngIf="!ocultarSeccionDirecciones">
                             <div class="col-sm-12 p0 m0"  *ngFor="let item of ListDirecciones; let i = index">
                                 <div class="row p0 m0" (click) = "MostrarCiudad(item)">
-                                    <div class="col-sm-3 col-6">
+                                    <div class="col-sm-2 col-6">
                                             <select class="form-control p0 selectCenter alturaInputs" [disabled]= "!editar || (ListDirecciones.length > (i + indiceDirection))"
                                                     [(ngModel)]="item.id_tipo_direccion" (change)="nada()" name="direccionSelect">
                                                     <option *ngFor="let dir of ListTipoDirecciones"
                                                             [value]="dir.id_tipo_direccion"> {{dir.tipo_direccion}}</option>
                                             </select> 
                                     </div>
-                                    <div class="col-sm-7 col-12">
+                                    <div class="col-sm-6 col-12">
                                         <input type="text" class="form-control text-center" [disabled]= "!editar || (ListDirecciones.length > (i + indiceDirection))"
                                                [(ngModel)]="item.direccion" [value] = "item.direccion" >
                                     </div>
@@ -141,6 +141,12 @@
                                             <label *ngIf="item.estado == 'true' || item.estado == 1" class="custom-control-label h30" for="direccion{{i}}">Activo</label>
                                             <label *ngIf="!(item.estado == 'true'|| item.estado == 1)" class="custom-control-label h30" for="direccion{{i}}">Inactivo</label>
                                         </div>
+                                    </div>
+                                    <div class="col-sm-2" *ngIf="editar">
+                                        <a class="list-icons-item" *ngIf = "i == CantidadDirecciones - 1"
+                                            [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "Eliminar('direccion',item.id_direccion)">
+                                            <i class="icon-cancel-circle2 colorDelete" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+                                        </a>   
                                     </div>
                                 </div>
                             </div>
@@ -191,7 +197,7 @@
                            <div class="row p0 m0" style="padding-top: 0.5em;" *ngIf="!editar">
                                 <div class="col-sm-3">
                                     <div class="form-group row mb0">
-                                        <label class="col-form-label col-lg-4 col-6">PaisA</label>
+                                        <label class="col-form-label col-lg-4 col-6">Pais</label>
                                         <div class="col-lg-8 col-6">
                                             <div class="input-group" style="justify-content: center;" >
                                                 <input type="text" name="pais" class="text-center" [(ngModel)]="newDirection.pais"
@@ -202,7 +208,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group row mb0">
-                                        <label class="col-form-label col-lg-4 col-6">DepartamentoA</label>
+                                        <label class="col-form-label col-lg-4 col-6">Departamento</label>
                                         <div class="col-lg-8 col-6">
                                             <div class="input-group" style="justify-content: center;" >
                                                 <input type="text" name="departamento"  class="text-center" disabled
@@ -213,7 +219,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group row mb0">
-                                        <label class="col-form-label col-lg-4 col-6">CiudadA</label>
+                                        <label class="col-form-label col-lg-4 col-6">Ciudad</label>
                                         <div class="col-lg-8 col-6">
                                             <select class="form-control p0 selectCenter alturaInputs"
                                                     [(ngModel)]="idCiudad" (change) = "MostrarCiudad(ListContactos[ListContactos.length-1])">
@@ -225,7 +231,7 @@
                                 </div>
                                 <div class="col-sm-2 col-0"></div>
                         </div>
-                        <pre>{{ListDirecciones | json}}</pre>
+                        <!-- <pre>{{ListDirecciones | json}}</pre> -->
                         <!-- NuevoElemento -->
                         <!-- <div class="row p0 m0" *ngIf="editar">
                             <div class="col-sm-12 p0 m0">
@@ -253,12 +259,10 @@
                             </div>
                         </div> -->
                         <!-- End New Element -->
-
-                      
                         <div class="row p0 m0" *ngIf="editar" style="padding-top: 0.5em;">
                             <div class="col-sm-3">
                                 <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-4 col-6">PaisE</label>
+                                    <label class="col-form-label col-lg-4 col-6">Pais</label>
                                     <div class="col-lg-8 col-6">
                                         <div class="input-group" style="justify-content: center;" >
                                             <input disabled type="text" name="pais" disabled class="text-center"
@@ -269,7 +273,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-4 col-6">DepartamentoE</label>
+                                    <label class="col-form-label col-lg-4 col-6">Departamento</label>
                                     <div class="col-lg-8 col-6">
                                         <div class="input-group" style="justify-content: center;" >
                                             <input disabled type="text" name="departamento" disabled class="text-center"
@@ -280,7 +284,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-4 col-6">CiudadE</label>
+                                    <label class="col-form-label col-lg-4 col-6">Ciudad</label>
                                     <div class="col-lg-8 col-6">
                                         <select class="form-control p0 selectCenter alturaInputs" (change) = "MostrarCiudad(newDirection)"
                                                 [(ngModel)]="idCiudad">
@@ -306,7 +310,7 @@
                             </h5>
                             <div class="header-elements">
                                 <div class="list-icons">
-                                    <a class="list-icons-item" *ngIf = "editar" (click)="Actualizar('contactos')"
+                                    <a class="list-icons-item" *ngIf = "editar" (click)="Agregar('contactos')"
                                         [routerLink]="nada()" routerLinkActive="router-link-active">
                                         <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Contacto"> </i>
                                     </a>
@@ -324,7 +328,7 @@
                         <div class="row p0 m0" *ngIf="!ocultarSeccionContactos">
                             <div class="col-sm-12 col-12 p0 m0" *ngFor="let item of ListContactos; let i = index">
                                 <div class="row p0 m0">
-                                    <div class="col-sm-2 col-0"></div>
+                                    <div class="col-sm-1 col-0"></div>
                                     <div class="col-sm-2 col-8">
                                         <select class="form-control p0 selectCenter alturaInputs" [disabled] = "!editar || (ListContactos.length > (i + indiceContact))"
                                                 [(ngModel)]="item.id_contacto" name="ContactosSelect">
@@ -361,7 +365,13 @@
                                             <label *ngIf="!(item.estado == 'true'|| item.estado == 1)" class="custom-control-label h30" for="phones{{i}}">Inactivo</label>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2 col-0">
+                                    <div class="col-sm-2" *ngIf="editar">
+                                        <a class="list-icons-item" *ngIf = "i == CantidadContactos - 1"
+                                            [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "Eliminar('contactos',i+1)">
+                                            <i class="icon-cancel-circle2 colorDelete" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+                                        </a>   
+                                    </div>
+                                    <div class="col-sm-1 col-0">
                                     </div>
                                 </div>
                                 <!-- <pre>{{item | json}}</pre> -->

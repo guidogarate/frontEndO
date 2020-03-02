@@ -119,7 +119,6 @@ export class Adm010Component implements OnInit {
     let pos = 1;
     let sum : number = 0;
     let v1 : number = -1;
-    // const found = this.estructuraPlanDeCuentas.find(element => element.id_estructura == id);
     this.estructuraPlanDeCuentas.forEach( element => {
       if(element.id_estructura == id){
         valor = element.largo;

@@ -35,6 +35,8 @@ export class Adm007Component implements OnInit {
   ListPaises : any ;
   direcciones : any  = [];
   contactos : any = [];
+  CantidadDirecciones : number =0;
+  CantidadContactos : number =0;
   // nueva direccion a adicionar
   ListSend : any = {}; 
   newDirection : any = {
@@ -56,7 +58,8 @@ export class Adm007Component implements OnInit {
     "codigo_contacto": "",
     "contacto": "",
     "estado": true,
-    "tipo": "Fijo"
+    "tipo": "Fijo",
+    "id":0
   };
 
   photoSelected: string | ArrayBuffer;
@@ -84,9 +87,13 @@ export class Adm007Component implements OnInit {
         this.ListTipoDirecciones = this.lista[0]["tipo_direcciones"];
         this.ListDirecciones = this.lista[0]["direcciones"];
         if(this.ListDirecciones != null){
+          this.CantidadDirecciones = this.ListDirecciones.length;
           this.CambiarTipoEstado();
         }
         this.ListContactos = this.lista[0]["contactos"];
+        if(this.ListContactos != null){
+          this.CantidadContactos = this.ListContactos.length;  
+        }
         this.ListTipoContactos = this.lista[0]["tipo_contactos"];
         this.AgregarId();
         this.ListModulos = this.lista[0]["modulos"];
@@ -127,34 +134,24 @@ export class Adm007Component implements OnInit {
         this.direcciones.push(element);
       }
     });
+    this.ListContactos.forEach(element => {
+      if(element.id == 0){
+        this.contactos.push(element);
+      }
+    });
+
   }
 
   Actualizar( seccion : string){
     this.PrepareSend();
     this.pasarDatosDireccion();
     switch(seccion){
-
       case 'all':
-        // this.AgregarDireccion();
-        // this.Agregar('contactos');
-        // this.Agregar('direccion');
-        // this.ActualizarDatos();
         this.ActualizarDatos1(this.file);
         this.ModoVista();
         console.log('entro por all');
         break;
-      // case 'direccion' :
-      //   this.Agregar(seccion);
-      //   console.log('entro por direccion');
-      //   break;
-      // case 'contactos' :
-      //   this.Agregar(seccion);
-      //   console.log('entro por contactos');
-      //   break;
     };
-    // this.AgregarDireccion();
-    //this.ActualizarDatos();
-    //this.ModoVista();
   }
   ModoEdicion(){
     this.editar = true;
@@ -167,51 +164,27 @@ export class Adm007Component implements OnInit {
   }
 
   Agregar(newData : string){
-    // this.pasarDatosDireccion();
+  
     console.log("agregando: ", newData);
     switch (newData) {
       case 'contactos':
-        this.indiceContact = this.indiceContact + 1;
-        //this.newContacto.estado = this.newContacto.estado == true ? 1 : 0
-        // if(!this.ValidarContacto()){
-        //   this._notyG.noty("warning", "rellene todos datos de contacto", 3500);
-        // }else{
-          // this.contactos.push(this.newContacto);
+          this.indiceContact = this.indiceContact + 1;
           this.ListContactos.push(this.newContacto);
+          this._notyG.noty("success", "contacto añadido", 3500);  
           this.limpiarDataContacto();
-        // }
-        break;
+          console.log("Direccion añadida ", this.ListContactos);
+          break;
       case 'direccion':
-        this.indiceDirection = this.indiceDirection + 1;
-       // this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
-        // if(!this.ValidarDireccion()){
-        //   this._notyG.noty("warning", "rellene todos los datos de la nueva direccion", 3500);  
-        // }
-        // else{
-          // this.direcciones.push(this.newDirection);
-
+          this.indiceDirection = this.indiceDirection + 1;
           this.ListDirecciones.push(this.newDirection); 
           this._notyG.noty("success", "direccion añadida", 3500);  
           this.LimpiarData();
           console.log("Lista añadida ", this.ListDirecciones);
-        // }
-        break;
+          break;
       default:
-        break;
+              break;
     }
-  }
-  // Agregar(){
-  //   this.pasarDatosDireccion();
-   
-  //   this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
-  //   this.direcciones.push(this.newDirection);
-  
-  //   this.ListDirecciones.push(this.newDirection); 
-    
-  //   this.LimpiarData();
-     
-  // }
-  
+  } 
 
   pasarDatosDireccion (){
     this.ListSend ={
@@ -388,8 +361,74 @@ export class Adm007Component implements OnInit {
   ValidarDatosEmpresa(){
 
   }
-  Eliminar(){
 
+  verTipo(tipo : string){
+    let valor : number = 0
+    switch (tipo) {
+      case 'contactos': 
+          valor = 2;
+          break;
+      case 'direccion': 
+          valor = 1;
+          break;
+      default:
+          console.log('invalid number');
+    }
+    return valor;
+  }
+  Eliminar(tipo: string, id : number){
+    let aux : number = 0;
+    aux = this.verTipo(tipo);
+    this.EliminarService(aux,id);
+  }
+
+  EliminarService(tipo: number , id: number){
+    this._adm007Service
+    .Eliminar(tipo, id)
+    .subscribe(resp => {
+      if(resp["ok"]){
+        this.CantidadDirecciones = this.CantidadDirecciones -1;
+        this.Remover(tipo,id);
+        this._notyG.noty("success", "datos Eliminados", 3500);
+      }
+      else {
+        this._notyG.noty("error", "no se pudo Eliminar datos", 3500);
+        console.log("error al Eliminar los datos");
+        console.log(resp);
+      }
+    });
+  }
+
+  Remover(idTipo: number, id : any ) {
+    
+    let pos = 1;
+    let v1 : number = -1;
+    if(idTipo == 1){
+      this.ListDirecciones.forEach( element => {
+        if(element.id_direccion == id){
+          v1 = pos;
+        }  
+        pos = pos + 1;
+        console.log("posicion recorrido del elemento: ", pos);
+      });
+      if ( v1 !== -1 ) {
+          console.log("removiendo Posicion v1-1: ", (v1-1));
+          this.ListDirecciones.splice( (v1-1), 1 );
+      }
+    }
+    if(idTipo == 2){
+      this.ListContactos.forEach( element => {
+        if(element.id_contacto != undefined){
+          v1 = pos;
+        }  
+        pos = pos + 1;
+        console.log("posicion recorrido del elemento: ", pos);
+      });
+      if ( v1 !== -1 ) {
+          console.error("removiendo Posicion v1-1: ", (v1-1));
+          this.ListContactos.splice( (v1-1), 1 );
+      }
+    }
   }
 
   ActualizarDatos1(img : File){
@@ -398,7 +437,6 @@ export class Adm007Component implements OnInit {
     .ActualizarDatos1(this.ListSend,img)
     .subscribe(resp => {
       if(resp["ok"]){
-        // console.log("datos actualizados component");
         this._notyG.noty("success", "datos actualizados", 3500);
       }
       else {
