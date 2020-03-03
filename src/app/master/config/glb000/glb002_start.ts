@@ -3,6 +3,7 @@ const glb002 = {
   startText: "all_data",
   startLoad: true,
   startTabl: false,
+  startCont: false,
   startNumP: 1
 };
 

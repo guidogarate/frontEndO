@@ -1,5 +1,5 @@
 <!-- height-container -->
-<div class="card">
+<div class="card haciadentro animaciones superior" *ngIf="start.startCont">
   <div class="card-body pb-0" style="padding-bottom: 0px;">
     <div class="card-header header-elements-inline" style="padding: 0px;">
       <h5 class="card-title font-weight-bold">
@@ -15,7 +15,7 @@
         <div class="card card-padding margin-botton-card ">
           <img
             src="{{ data.logo_empresa | imagenpipe }}"
-            alt="imagen no encontrada"
+            alt="sin imagen"
             class="img-responsive rounded img-fluid"
             style="height: 116px;width: 100px; align-self: center;"
           />
@@ -86,7 +86,7 @@
         </div>
       </div>
     </div>
-    <!-- <div class="row">
+    <div class="row">
       <div class="col-1 col-sm-1 col-md-3 col-lg-8"></div>
       <div class="col-8 col-sm-9 col-md-6 col-lg-3">
         <div class="form-group form-group-feedback form-group-feedback-right">
@@ -98,10 +98,10 @@
             #texto
             [formControl]="textBuscarAdm009"
           />
-          <div *ngIf="buscar" class="form-control-feedback">
+          <div *ngIf="start.startBusc" class="form-control-feedback">
             <i class="icon-spinner2 spinner"></i>
           </div>
-          <div *ngIf="!buscar" class="form-control-feedback">
+          <div *ngIf="!start.startBusc" class="form-control-feedback">
             <label for="buscarGrupoLupa">
               <i class="icon-search4 puntero" title="buscar"></i
             ></label>
@@ -110,16 +110,16 @@
       </div>
       <div class="col-3 col-sm-2 col-md-3 col-lg-1" style="padding-top: 30px;">
         <div class="form-control-feedback">
+          <!-- (click)="nuevoAdm009()" -->
           <i
             data-toggle="modal"
             data-target="#modal_adm_009"
             class="icon-diff-added puntero xxl"
-            (click)="nuevoAdm009()"
             title="agregar"
           ></i>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
   <div class="row p0 m0">
     <div class="col-sm-12">
@@ -174,26 +174,26 @@
               </td>
               <td class="text-center">
                 <div class="list-icons">
+                  <!-- (click)="OpcionesTable(cont003, 'visualizar')" -->
                   <i
                     class="icon-file-eye"
                     title="visualizar"
-                    (click)="OpcionesTable(cont003, 'visualizar')"
                     data-toggle="modal"
                     data-target="#modal_adm_009"
                     class="icon-file-eye text-primary-600 puntero"
                   ></i>
+                  <!-- (click)="OpcionesTable(cont003, 'editar')" -->
                   <i
                     class="icon-pencil7"
                     title="editar"
-                    (click)="OpcionesTable(cont003, 'editar')"
                     data-toggle="modal"
                     data-target="#modal_adm_009"
                     class="icon-pencil7 text-teal-600 puntero"
                   ></i>
+                  <!-- (click)="OpcionesTable(cont003, 'eliminar')" -->
                   <i
                     class="icon-trash"
                     title="eliminar"
-                    (click)="OpcionesTable(cont003, 'eliminar')"
                     data-toggle="modal"
                     data-target="#modal_adm_009_eliminar"
                     class="icon-trash text-danger-600 puntero"
@@ -217,7 +217,7 @@
               [ngClass]="{
                 'page-item': true,
                 puntero: true,
-                active: numeroPag === i + 1
+                active: start.startNumP === i + 1
               }"
             >
               <a (click)="paginacion(pg.pag)" class="page-link">{{ pg.pag }}</a>
@@ -230,10 +230,11 @@
           </li>
         </ul>
       </div>
+      <br />
     </div>
   </div>
 </div>
-
+<app-cargacontent *ngIf="!start.startCont"></app-cargacontent>
 <!-- 
 <div class="card ">
   <div class="card-body pb-0">
