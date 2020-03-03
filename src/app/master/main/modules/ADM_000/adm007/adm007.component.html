@@ -140,13 +140,11 @@
                                                    [checked]="item.estado == 'true'" data-fouc [(ngModel)]="item.estado" >
                                             <label *ngIf="item.estado == 'true' || item.estado == 1" class="custom-control-label h30" for="direccion{{i}}">Activo</label>
                                             <label *ngIf="!(item.estado == 'true'|| item.estado == 1)" class="custom-control-label h30" for="direccion{{i}}">Inactivo</label>
+                                            <a class="list-icons-item" *ngIf = "(i == CantidadDirecciones - 1) && editar" style="float: right;padding: 0em;"
+                                            [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "Eliminar('direccion',i+1)">
+                                            <i class="icon-cancel-circle2 colorDelete" style="padding-left: 0.5em;" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+                                        </a>  
                                         </div>
-                                    </div>
-                                    <div class="col-sm-2" *ngIf="editar">
-                                        <a class="list-icons-item" *ngIf = "i == CantidadDirecciones - 1"
-                                            [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "Eliminar('direccion',item.id_direccion)">
-                                            <i class="icon-cancel-circle2 colorDelete" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
-                                        </a>   
                                     </div>
                                 </div>
                             </div>
@@ -357,23 +355,17 @@
                                         <input type="text" class="form-control text-center" [disabled] = "!editar || (ListContactos.length > (i + indiceContact))"
                                                [(ngModel)]="item.contacto" [value]="item.contacto" >
                                     </div>
-                                    <div class="col-sm-2 col-10" style="align-self: flex-end;">
+                                    <div class="col-sm-2 col-12" style="align-self: flex-end;">
                                         <div class="custom-control custom-switch switch-float">
                                             <input type="checkbox" class="custom-control-input" id="phones{{i}}" name="phones" [disabled] = "!editar || (ListContactos.length > (i + indiceContact))"
                                                     [checked]="item.estado == 'true'" data-fouc [(ngModel)]="item.estado" >
                                             <label *ngIf="item.estado == 'true' || item.estado == 1" class="custom-control-label h30" for="phones{{i}}">Activo</label>
                                             <label *ngIf="!(item.estado == 'true'|| item.estado == 1)" class="custom-control-label h30" for="phones{{i}}">Inactivo</label>
-                                            <a class="list-icons-item" *ngIf = "i == CantidadContactos - 1"
+                                            <a class="list-icons-item" *ngIf = "(i == CantidadContactos - 1) && editar" style="float: right;padding: 0em;"
                                                 [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "Eliminar('contactos',i+1)">
-                                                <i class="icon-cancel-circle2 colorDelete" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+                                                <i class="icon-cancel-circle2 colorDelete" style="padding-left: 0.5em;" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
                                             </a>   
                                         </div>
-                                        <!-- <div class="col-sm-2" *ngIf="editar">
-                                            <a class="list-icons-item" *ngIf = "i == CantidadContactos - 1"
-                                                [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "Eliminar('contactos',i+1)">
-                                                <i class="icon-cancel-circle2 colorDelete" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
-                                            </a>   
-                                        </div> -->
                                     </div>
                                     <!-- <div class="col-sm-2" *ngIf="editar">
                                         <a class="list-icons-item" *ngIf = "i == CantidadContactos - 1"
