@@ -19,14 +19,14 @@ import { IndexGlobalModule } from "./master/utils/global/index.global.module";
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./master/login/login.component";
 import { NopagefoundComponent } from "./master/nopagefound/nopagefound.component";
-import { from } from 'rxjs';
+import { from } from "rxjs";
 
 // para cambiar idioma de fechas a español
-import es from '@angular/common/locales/es';
-import { registerLocaleData } from '@angular/common';
+import es from "@angular/common/locales/es";
+import { registerLocaleData } from "@angular/common";
 
 registerLocaleData(es);
-import {LOCALE_ID} from '@angular/core';
+import { LOCALE_ID } from "@angular/core";
 @NgModule({
   declarations: [AppComponent, LoginComponent, NopagefoundComponent],
   imports: [
@@ -42,9 +42,7 @@ import {LOCALE_ID} from '@angular/core';
     IndexGlobalModule,
     DeviceDetectorModule.forRoot()
   ],
-  providers: [
-    {  provide: LOCALE_ID, useValue: 'es-ES' } 
-  ],
+  providers: [{ provide: LOCALE_ID, useValue: "es-ES" }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
