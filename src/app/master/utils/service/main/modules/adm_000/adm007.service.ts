@@ -69,10 +69,9 @@ export class Adm007Service {
   }
 
   ActualizarDatos1(item: any,img: File) {
-    console.log("service Actualizar data: ", item, img);
-    console.log("contactos: ", item.contactos);
+    // console.log("service Actualizar data: ", item, img);
+    // console.log("contactos: ", item.contactos);
     const url1 = `${url.prod}${adm0007.insert_datos_empresa}`;
-    
     const fd = new FormData();
     fd.append("razon_social", item.razon_social);
     fd.append("sigla", item.sigla);

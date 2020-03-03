@@ -357,20 +357,30 @@
                                         <input type="text" class="form-control text-center" [disabled] = "!editar || (ListContactos.length > (i + indiceContact))"
                                                [(ngModel)]="item.contacto" [value]="item.contacto" >
                                     </div>
-                                    <div class="col-sm-2 col-12" style="align-self: flex-end;">
+                                    <div class="col-sm-2 col-10" style="align-self: flex-end;">
                                         <div class="custom-control custom-switch switch-float">
                                             <input type="checkbox" class="custom-control-input" id="phones{{i}}" name="phones" [disabled] = "!editar || (ListContactos.length > (i + indiceContact))"
                                                     [checked]="item.estado == 'true'" data-fouc [(ngModel)]="item.estado" >
                                             <label *ngIf="item.estado == 'true' || item.estado == 1" class="custom-control-label h30" for="phones{{i}}">Activo</label>
                                             <label *ngIf="!(item.estado == 'true'|| item.estado == 1)" class="custom-control-label h30" for="phones{{i}}">Inactivo</label>
+                                            <a class="list-icons-item" *ngIf = "i == CantidadContactos - 1"
+                                                [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "Eliminar('contactos',i+1)">
+                                                <i class="icon-cancel-circle2 colorDelete" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+                                            </a>   
                                         </div>
+                                        <!-- <div class="col-sm-2" *ngIf="editar">
+                                            <a class="list-icons-item" *ngIf = "i == CantidadContactos - 1"
+                                                [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "Eliminar('contactos',i+1)">
+                                                <i class="icon-cancel-circle2 colorDelete" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
+                                            </a>   
+                                        </div> -->
                                     </div>
-                                    <div class="col-sm-2" *ngIf="editar">
+                                    <!-- <div class="col-sm-2" *ngIf="editar">
                                         <a class="list-icons-item" *ngIf = "i == CantidadContactos - 1"
                                             [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "Eliminar('contactos',i+1)">
                                             <i class="icon-cancel-circle2 colorDelete" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
                                         </a>   
-                                    </div>
+                                    </div> -->
                                     <div class="col-sm-1 col-0">
                                     </div>
                                 </div>
@@ -381,53 +391,6 @@
                             <!-- <pre *ngIf="ListContactos != undefined">ListContactos cant: {{ListContactos.length | json}}</pre> -->
                             <!-- <pre>indiceContact: {{indiceContact | json}}</pre> -->
                         </div>
-                        <!-- adicion contacto -->
-                        
-                        <!-- <div class="row p0 m0" *ngIf="editar">
-                            <div class="col-sm-12 col-12 p0 m0">
-                                <div class="row p0 m0">
-                                    <div class="col-sm-2 col-0"></div>
-                                    <div class="col-sm-2 col-8">
-                                        <select class="form-control p0 selectCenter alturaInputs" (change) = "ColocarCodigoContacto()"
-                                                [(ngModel)]="newContacto.id_contacto" name="NewContactosSelect" required>
-                                                <option *ngFor="let element of ListTipoContactos"
-                                                [value]="element.id_contacto">{{element.tipo}}</option>
-                                        </select> 
-                                    </div>
-                                    <div class="col-sm-2 col-6">
-                                        <div class="form-group row mb0">
-                                            <label *ngIf="newContacto.id_tipo_contacto == '33'" class="col-form-label col-lg-3 col-1"><i class="icon-flag3 icon-color"></i> </label>
-                                            <label *ngIf="newContacto.id_contacto === '34-1'" class="col-form-label col-lg-3 col-1"><i class="icon-facebook2 icon-color"></i> </label>
-                                            <label *ngIf="newContacto.id_contacto === '34-2'" class="col-form-label col-lg-3 col-1"><i class="icon-instagram icon-color"></i> </label>
-                                            <label *ngIf="newContacto.id_contacto === '34-3'" class="col-form-label col-lg-3 col-1"><i class="icon-twitter2 icon-color"></i> </label>
-                                            <label *ngIf="newContacto.id_tipo_contacto == 35" class="col-form-label col-lg-3 col-1"><i class="icon-mail5 icon-color"></i> </label>
-                                            <div class="col-lg-9 col-9" *ngIf="newContacto.id_tipo_contacto === '33'">
-                                                <div class="input-group" style="justify-content: center;" >
-                                                    <input [disabled] = "newContacto.id_tipo_contacto !== '33'" type="text" class="form-control text-center" 
-                                                            [(ngModel)]="newContacto.codigo_contacto" [value]="newContacto.codigo_contacto" 
-                                                            placeholder="codigo de pais" required>
-                                                </div>
-                                            </div>
-                                        </div>                       
-                                    </div>
-                                    <div class="col-sm-2 col-6 input-group">
-                                        <input type="text" class="form-control text-center"  [(ngModel)]="newContacto.contacto" [value]="newContacto.contacto"
-                                                placeholder="ingrese sus datos" required >
-                                    </div>
-                                    <div class="col-sm-2 col-12" style="align-self: flex-end;">
-                                        <div class="custom-control custom-switch switch-float">
-                                            <input type="checkbox" class="custom-control-input" id="newContacto" name="newContacto" required
-                                            [checked]="newContacto.estado == 'true'" data-fouc [(ngModel)]="newContacto.estado" >
-                                            <label *ngIf="newContacto.estado == 'true' || newContacto.estado == 1" class="custom-control-label h30" for="newContacto">Activo</label>
-                                            <label *ngIf="!(newContacto.estado == 'true'|| newContacto.estado == 1)" class="custom-control-label h30" for="newContacto">Inactivo</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2 col-0">
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!-- Fin contacto -->
                     </div>
                 </div>
             </div>

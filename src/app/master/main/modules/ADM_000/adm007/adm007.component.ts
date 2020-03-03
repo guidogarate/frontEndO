@@ -89,10 +89,14 @@ export class Adm007Component implements OnInit {
         if(this.ListDirecciones != null){
           this.CantidadDirecciones = this.ListDirecciones.length;
           this.CambiarTipoEstado();
+        }else{
+          this.CantidadDirecciones = 0;
         }
         this.ListContactos = this.lista[0]["contactos"];
         if(this.ListContactos != null){
           this.CantidadContactos = this.ListContactos.length;  
+        }else{
+          this.CantidadContactos = 0;  
         }
         this.ListTipoContactos = this.lista[0]["tipo_contactos"];
         this.AgregarId();
@@ -169,6 +173,9 @@ export class Adm007Component implements OnInit {
     switch (newData) {
       case 'contactos':
           this.indiceContact = this.indiceContact + 1;
+          if(this.ListContactos == null ){
+             this.ListContactos= []; 
+          }
           this.ListContactos.push(this.newContacto);
           this._notyG.noty("success", "contacto añadido", 3500);  
           this.limpiarDataContacto();
@@ -176,6 +183,9 @@ export class Adm007Component implements OnInit {
           break;
       case 'direccion':
           this.indiceDirection = this.indiceDirection + 1;
+          if(this.ListDirecciones == null ){
+            this.ListDirecciones= []; 
+         }
           this.ListDirecciones.push(this.newDirection); 
           this._notyG.noty("success", "direccion añadida", 3500);  
           this.LimpiarData();
@@ -266,12 +276,16 @@ export class Adm007Component implements OnInit {
   }
 
   AgregarId(){
-    this.ListContactos.forEach(element => {
-      element.id_contacto = ""+element.id_tipo_contacto+"-"+element.id_subtipo_contacto;
-    });
-    this.ListTipoContactos.forEach(element => {
-      element.id_contacto = ""+element.id_tipo_contacto+"-"+element.id_tipo;
-    });
+    if(this.ListContactos!= null){
+      this.ListContactos.forEach(element => {
+        element.id_contacto = ""+element.id_tipo_contacto+"-"+element.id_subtipo_contacto;
+      });
+    }
+    if(this.ListTipoContactos != null){
+      this.ListTipoContactos.forEach(element => {
+        element.id_contacto = ""+element.id_tipo_contacto+"-"+element.id_tipo;
+      });
+    }
   }
 
   ColocarCodigoContacto( ){
@@ -382,6 +396,20 @@ export class Adm007Component implements OnInit {
     this.EliminarService(aux,id);
   }
 
+  EliminarDeLista(tipo : number){
+
+    switch (tipo) {
+      case 2: 
+            this.CantidadDirecciones = this.CantidadDirecciones -1;
+          break;
+      case 1: 
+            this.CantidadContactos = this.CantidadContactos -1;
+          break;
+      default:
+          console.log('invalid number');
+    }
+  }
+
   EliminarService(tipo: number , id: number){
     this._adm007Service
     .Eliminar(tipo, id)
@@ -389,6 +417,7 @@ export class Adm007Component implements OnInit {
       if(resp["ok"]){
         this.CantidadDirecciones = this.CantidadDirecciones -1;
         this.Remover(tipo,id);
+        //this.EliminarDeLista(tipo);
         this._notyG.noty("success", "datos Eliminados", 3500);
       }
       else {
@@ -409,11 +438,12 @@ export class Adm007Component implements OnInit {
           v1 = pos;
         }  
         pos = pos + 1;
-        console.log("posicion recorrido del elemento: ", pos);
+        console.log("posicion recorrido Direcciones: ", pos);
       });
       if ( v1 !== -1 ) {
           console.log("removiendo Posicion v1-1: ", (v1-1));
           this.ListDirecciones.splice( (v1-1), 1 );
+          this.CantidadDirecciones = this.CantidadDirecciones - 1;
       }
     }
     if(idTipo == 2){
@@ -422,11 +452,12 @@ export class Adm007Component implements OnInit {
           v1 = pos;
         }  
         pos = pos + 1;
-        console.log("posicion recorrido del elemento: ", pos);
+        console.log("posicion recorrido Contactos: ", pos);
       });
-      if ( v1 !== -1 ) {
+      if( v1 !== -1 ) {
           console.error("removiendo Posicion v1-1: ", (v1-1));
           this.ListContactos.splice( (v1-1), 1 );
+          this.CantidadContactos = this.CantidadContactos - 1;
       }
     }
   }
