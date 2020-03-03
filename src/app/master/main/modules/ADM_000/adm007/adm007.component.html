@@ -34,6 +34,7 @@
                         class="d-none"
                         (change)="onPhotoSelected($event)"
                         #photoInput
+                        [disabled]= "!editar"
                       />
                       <!-- [disabled]="disabled.foto" -->
                       <img
@@ -43,6 +44,7 @@
                         class="img-fluid img-preview rounded puntero"
                         alt="No existe imagen, seleccione una imagen"
                         (click)="photoInput.click()"
+                        
                       />
 
                           <!-- <img src="https://thumbs.dreamstime.com/b/icono-del-usuario-46707697.jpg" 
