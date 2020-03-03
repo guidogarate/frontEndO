@@ -1,5 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import {
+  FormControl,
+  FormGroup,
+  FormBuilder,
+  Validators
+} from "@angular/forms";
 import { Cont003Service } from "src/app/master/utils/service/main/modules/cont_000/index.shared.service";
 import {
   NotyGlobal,
@@ -12,8 +17,8 @@ import {
 import glb001 from "src/app/master/config/glb000/glb001_btn";
 import glb002 from "src/app/master/config/glb000/glb002_start";
 import { Observable, Subscription } from "rxjs";
-
 import { Cont003 } from "src/app/master/utils/models/main/cont_000/index.models";
+import { debounceTime } from "rxjs/operators";
 
 @Component({
   selector: "app-cont003",
@@ -29,7 +34,7 @@ export class Cont003Component implements OnInit {
   auxma: Cont003[];
   auxmaModal: Cont003[];
   dataEmpres: DataEmpresa[];
-  numeroPag = 1;
+  textBuscarAdm009 = new FormControl("", []);
 
   constructor(
     private fb: FormBuilder,
@@ -38,6 +43,16 @@ export class Cont003Component implements OnInit {
     private initG: InitGlobal
   ) {
     this.getCont003(this.start.startText);
+    this.textBuscarAdm009.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe(value => {
+        if (value.length > 1) {
+          this.getCont003(value);
+        } else {
+          this.start.startText = "all_data";
+          this.getCont003(this.start.startText);
+        }
+      });
   }
 
   crearForm() {
@@ -61,10 +76,13 @@ export class Cont003Component implements OnInit {
       peticion = this.cont003S.geCont003("10", "1", gst, this.start.startText);
     }
     this.sus = peticion.subscribe(resp => {
-      console.log(resp);
+      if (!this.start.startCont) {
+        this.start.startCont = true;
+      }
+      if (this.dataEmpres === undefined) {
+        this.dataEmpres = resp.usr[0].datos_empresa;
+      }
       this.start.startNumP = 1;
-      this.dataEmpres = resp.usr[0].datos_empresa;
-      //  this.nuevoAuxmaModal = resp.usr[0];
       if (resp["ok"]) {
         this.auxma = resp.usr[0].unidades_division;
         this.pagi = resp["cant"];
@@ -80,7 +98,6 @@ export class Cont003Component implements OnInit {
   }
 
   guardarDatos() {
-    console.log(this.form);
     if (this.form.invalid) {
       return;
     }
@@ -88,54 +105,53 @@ export class Cont003Component implements OnInit {
 
   paginacion(numero: string, eliminar = true) {
     const nume = Number(numero);
-    if (this.numeroPag === nume && eliminar) {
+    if (this.start.startNumP === nume && eliminar) {
       return;
     }
     const total = this.pagi.length;
     let peticion: Observable<any>;
     if (nume > 0 && nume <= total) {
-      this.numeroPag = nume;
+      this.start.startNumP = nume;
       peticion = this.cont003S.geCont003(
         "10",
-        this.numeroPag.toString(),
+        this.start.startNumP.toString(),
         "0",
         this.start.startText
       );
     } else {
       if (numero === "000") {
-        if (this.numeroPag === 1) {
+        if (this.start.startNumP === 1) {
           return;
         }
-        if (this.numeroPag === 1) {
-          this.numeroPag = 1;
+        if (this.start.startNumP === 1) {
+          this.start.startNumP = 1;
         } else {
-          this.numeroPag--;
+          this.start.startNumP--;
         }
         peticion = this.cont003S.geCont003(
           "10",
-          this.numeroPag.toString(),
+          this.start.startNumP.toString(),
           "0",
           this.start.startText
         );
       } else if (numero === "999") {
-        if (this.numeroPag === total) {
+        if (this.start.startNumP === total) {
           return;
         }
-        if (this.numeroPag === total) {
-          this.numeroPag = total;
+        if (this.start.startNumP === total) {
+          this.start.startNumP = total;
         } else {
-          this.numeroPag++;
+          this.start.startNumP++;
         }
         peticion = this.cont003S.geCont003(
           "10",
-          this.numeroPag.toString(),
+          this.start.startNumP.toString(),
           "0",
           this.start.startText
         );
       }
     }
     this.sus = peticion.subscribe(resp => {
-      console.log(resp);
       if (resp["ok"]) {
         this.auxma = resp.usr[0].unidades_division;
         this.pagi = resp["cant"];

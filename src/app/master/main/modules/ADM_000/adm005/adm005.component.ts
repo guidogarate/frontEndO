@@ -120,7 +120,7 @@ export class Adm005Component implements OnInit, OnDestroy {
     }
     this.sus = peticion.subscribe(resp => {
       if (resp["ok"]) {
-        this.auxma = resp["auxma"];
+        this.auxma = resp["usr"];
         this.pagi = resp["cant"];
       } else {
         // this.notyG.noty("error", resp["mensaje"], 5000);
