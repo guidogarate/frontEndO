@@ -10,6 +10,13 @@ const componente = [
       import("./ADM_000/adm_000.module").then(mod => mod.ADM00Module)
   },
   {
+    // path: "90",
+    path: "mod-cont",
+    component: ModulesComponent,
+    loadChildren: () =>
+      import("./CON_000/con_000.module").then(mod => mod.CONT00Module)
+  },
+  {
     path: "11",
     component: ModulesComponent,
     loadChildren: () =>

@@ -100,9 +100,12 @@
                       {{ adm006.login }}
                     </td>
                     <td>
+                      <!-- data-toggle="modal"
+                        data-target="#modal_adm_006_img"
+                        (click)="imagenModal(adm006.foto)" -->
                       <img
                         src="{{ adm006.foto | imagenpipe }}"
-                        class="img-fluid rounded-circle"
+                        class="img-fluid rounded-circle puntero"
                         width="20"
                         height="20"
                         alt=""
@@ -153,9 +156,6 @@
                           class="icon-pencil7 text-teal-600 puntero"
                           title="Editar"
                         ></i>
-                        <!-- (click)="OpcionesTable(adm006, 'eliminar')"
-                         (click)="OpcionesTable(adm006, 'eliminar')"
-                        -->
                         <i
                           class="icon-trash text-danger-600 puntero"
                           data-toggle="modal"

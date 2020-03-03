@@ -5,6 +5,7 @@ import { Adm001Service } from "src/app/master/utils/service/main/modules/adm_000
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
 
 declare function initLabels();
+declare function init_validations();
 
 @Component({
   selector: "app-adm001",
@@ -39,8 +40,9 @@ export class Adm001Component implements OnInit {
   tipoCambio: any;
   tipoCambioSend: any;
   editar: boolean = false;
-  
+  nuevo : boolean = false;
   fechaMaxima: any;
+  stade : number = 0;
 
   constructor(
     private _adm001Service: Adm001Service,
@@ -58,6 +60,7 @@ export class Adm001Component implements OnInit {
         this.cargarLista();
         this.Paginacion();
         initLabels();
+        init_validations();
       }, 1500);
     }, 1500);
 
@@ -145,6 +148,10 @@ export class Adm001Component implements OnInit {
         console.log("Guardando: ", resp);
         this.Limpiar();
         this.cargarLista();
+        if(this.tipoCambioSend.adtcpred == "1"){
+           this.cargarPredeterminado(); 
+        }
+        this.Cancelar();
       } else {
         console.log("no se pudo guardar", resp);
         return resp;
@@ -172,7 +179,9 @@ export class Adm001Component implements OnInit {
         this.notyG.noty("success", "Actualizando ..", 3500);
         console.log("Actualizando: ", resp);
         this.cargarLista();
-        this.cargarPredeterminado();
+        if(this.tipoCambioSend.adtcpred == "1"){
+          this.cargarPredeterminado(); 
+        }
         this.Cancelar();
       } else {
         console.log("no se pudo guardar", resp);
@@ -194,11 +203,7 @@ export class Adm001Component implements OnInit {
   }
 
   Eliminar(item: any) {
-
-    // if(this.tipoCambio.fecha!=null){
-    //   this.tipoCambio.fecha = item.fecha;
-    // }
-      console.log("eliminando null",item.fecha);
+    console.log("eliminando null",item.fecha);
     let confirmar = confirm("desea eliminar");
     if(confirmar){
       this.loading= true;
@@ -221,11 +226,12 @@ export class Adm001Component implements OnInit {
 
   Cancelar() {
     this.Limpiar();
-    this.editar = false;
+    this.stade = 0;
   }
 
   Editar() {
     this.editar = true;
+    this.stade = 1;
   }
  
   cargarPaginacion(item:string ) {
@@ -280,19 +286,26 @@ export class Adm001Component implements OnInit {
     this.loading= false;
   }
 
+  Nuevo(){
+    // this.editar = true;
+    this.stade = 2;
+    this.Limpiar();
+  }
   Copiar(){
-    this.tipoCambio = {
-      fecha: this.datePipe.transform(this.today, "yyyy-MM-dd"),
-      tc_oficial: this.predeterminado.tc_oficial,
-      tc_compra: this.predeterminado.tc_compra,
-      tc_venta: this.predeterminado.tc_venta,
-      tc_ufv: this.predeterminado.tc_ufv,
-      estado: true,
-      pred: true
-    };
-    setTimeout(() => {
-      initLabels();
-    }, 1000);
+    if(this.stade == 2){
+      this.tipoCambio = {
+        fecha: this.datePipe.transform(this.today, "yyyy-MM-dd"),
+        tc_oficial: this.predeterminado.tc_oficial,
+        tc_compra: this.predeterminado.tc_compra,
+        tc_venta: this.predeterminado.tc_venta,
+        tc_ufv: this.predeterminado.tc_ufv,
+        estado: true,
+        pred: true
+      };
+      setTimeout(() => {
+        initLabels();
+      }, 800);
+    }
   }
   nada(){}
 

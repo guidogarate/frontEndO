@@ -49,15 +49,12 @@ export class Adm006Component implements OnInit {
   nuevoAuxmaModal: Adm006;
   loadingSub = false;
   controlLoginModal = "";
-  estadoUs = [
-    { id: "activo", valor: 1 },
-    { id: "inactivo", valor: 0 }
-  ];
   contorlAccion: string = "";
   id_login = "";
   photoSelected: string | ArrayBuffer;
   file: File;
   eliminAdm_006: string = "";
+  imgModal: string = "";
 
   constructor(private adm006S: Adm006Service, private notyG: NotyGlobal) {
     this.getAdm006(this.texto);
@@ -173,7 +170,6 @@ export class Adm006Component implements OnInit {
       case "eliminar":
         this.eliminAdm_006 = adm_006.login;
         return;
-        break;
       default:
         this.notyG.noty("error", "Operacion incorrecta", 5000);
         break;
@@ -221,11 +217,10 @@ export class Adm006Component implements OnInit {
     let peticion: Observable<any>;
     peticion = this.adm006S.deAdm006(login);
     this.sus = peticion.subscribe(resp => {
-      console.log("eliminar", resp);
       if (resp["ok"]) {
         this.getAdm006(this.texto);
         this.eliminAdm_006 = "";
-        this.notyG.noty("success", resp[" mensaje"], 3000);
+        this.notyG.noty("success", resp["mensaje"], 3000);
       } else {
         this.notyG.noty("error", resp["mensaje"], 3000);
       }
@@ -272,7 +267,6 @@ export class Adm006Component implements OnInit {
         this.initSelect();
         return;
     }
-
     this.boolBtnGrupo(true, true);
     this.boolBtnGrupo(false, false);
   }
@@ -350,7 +344,7 @@ export class Adm006Component implements OnInit {
     if (contorlAccion === "nuevo") {
       peticion = this.adm006S.inAdm006(auxModal, img);
     } else if (contorlAccion === "editar") {
-      peticion = this.adm006S.upAdm005(auxModal, this.id_login, img);
+      peticion = this.adm006S.upAdm006(auxModal, this.id_login, img);
     } else {
       this.notyG.noty("error", "control Accion Invalido", 2000);
     }

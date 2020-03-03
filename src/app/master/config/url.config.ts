@@ -17,7 +17,7 @@ const url = {
   eliminarFto: "sys_000/sys_002/eliminar-favoritos",
   agregarFto: "sys_000/sys_002/agregar-favoritos",
   fotoDefecto:
-    "https://cdn0.iconfinder.com/data/icons/business-4-4/97/197-512.png"
+    "https://jumboargentina.vteximg.com.br/arquivos/ids/562659-750-750/Pantalon-Mujer-Velvet-Negro---I20-1-842345.jpg?v=637117606178670000"
 };
 
 export default url;

@@ -42,7 +42,7 @@ export class Adm006Service {
       );
   }
 
-  upAdm005(adm_006: Adm006[], login: string, img: File) {
+  upAdm006(adm_006: Adm006[], login: string, img: File) {
     const url1 = `${url.prod}${adm006.upAdm006}${login}`;
     const fd = new FormData();
     fd.append("login", adm_006[0].login);

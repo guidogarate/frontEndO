@@ -114,7 +114,6 @@ export class Adm007Component implements OnInit {
   nada(){}
 
   Actualizar( seccion : string){
-
     this.pasarDatosDireccion();
     switch(seccion){
 
@@ -141,7 +140,6 @@ export class Adm007Component implements OnInit {
   }
   ModoEdicion(){
     this.editar = true;
-     
     this.LimpiarData();
   }
   ModoVista(){
@@ -152,35 +150,36 @@ export class Adm007Component implements OnInit {
 
   Agregar(newData : string){
     // this.pasarDatosDireccion();
+    console.log("afrenado");
     switch (newData) {
       case 'contactos':
         this.newContacto.estado = this.newContacto.estado == true ? 1 : 0
-        if(!this.ValidarContacto()){
-          this._notyG.noty("warning", "rellene todos datos de contacto", 3500);
-        }else{
-          this.contactos.push(this.newContacto);
+        // if(!this.ValidarContacto()){
+        //   this._notyG.noty("warning", "rellene todos datos de contacto", 3500);
+        // }else{
+          // this.contactos.push(this.newContacto);
           this.ListContactos.push(this.newContacto);
           this.limpiarDataContacto();
-        }
+        // }
         break;
       case 'direccion':
         this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
-        if(!this.ValidarDireccion()){
-          this._notyG.noty("warning", "rellene todos los datos de la nueva direccion", 3500);  
-        }
-        else{
-          this.direcciones.push(this.newDirection);
+        // if(!this.ValidarDireccion()){
+        //   this._notyG.noty("warning", "rellene todos los datos de la nueva direccion", 3500);  
+        // }
+        // else{
+          // this.direcciones.push(this.newDirection);
           this.ListDirecciones.push(this.newDirection); 
           this._notyG.noty("success", "direccion añadida", 3500);  
           this.LimpiarData();
-        }
+          console.log("Lista añadida ", this.ListDirecciones);
+        // }
         break;
       default:
         break;
     }
-
   }
-  // AgregarDireccion(){
+  // Agregar(){
   //   this.pasarDatosDireccion();
    
   //   this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
@@ -210,7 +209,7 @@ export class Adm007Component implements OnInit {
       "id_tipo_direccion": 1,
       "estado": true,
       "direccion": "",
-      "id_direccion": 1,
+      "id_direccion": 0,
       "tipo_direccion": "Propietario",
       "pais": "",
       "departamento": "",
@@ -357,6 +356,9 @@ export class Adm007Component implements OnInit {
   }
   // por implements 
   ValidarDatosEmpresa(){
+
+  }
+  Eliminar(){
 
   }
 }
