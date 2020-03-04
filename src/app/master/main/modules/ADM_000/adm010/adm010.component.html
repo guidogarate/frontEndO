@@ -28,8 +28,8 @@
             <!-- primer card -->
             <div class="row p0 m0">
                 <div class="col-sm-2 col-12 m0 p0">
-                    <div class="card card-padding margin-botton-card ">
-                        <img src="https://thumbs.dreamstime.com/b/icono-del-usuario-46707697.jpg" 
+                    <div class="card card-padding margin-botton-card " *ngIf="lista!= undefined">
+                        <img src="{{lista[0].logo_empresa}}" 
                             alt="imagen no encontrada" class="img-responsive rounded img-fluid"
                             style="height: 116px;width: 100px; align-self: center;">
                     </div>
