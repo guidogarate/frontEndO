@@ -146,7 +146,7 @@ export class Adm007Component implements OnInit {
     this.pasarDatosDireccion();
     switch (seccion) {
       case "all":
-        if (this.direcciones.length != null && this.contactos.length != 0) {
+        if (this.direcciones.length != null || this.contactos.length != 0) {
           this.ActualizarDatos();
         }
         if (this.file) {
