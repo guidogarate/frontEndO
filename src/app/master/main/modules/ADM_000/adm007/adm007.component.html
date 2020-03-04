@@ -1,157 +1,315 @@
 <div class="row haciadentro animaciones height-container">
-    <div class="col-xl-12 height-container">
-      <!-- card principal -->
-        <div class="card card-padding m0 height-container">
-            <!-- secction titulo -->
-            <div class="header-elements-inline padding-title">
-                <h5 class="card-title  title-head font-tittle m0">
-                    <i class="icon-cog title-icon align-vertical-icon-0"></i>
-                    PERSONALIZACION DE EMPRESA
-                </h5>
-                <div class="header-elements">
-                    <div class="list-icons">
-                        <a class="list-icons-item" *ngIf="!editar" (click) = "ModoEdicion()"
-                            [routerLink]="nada()" routerLinkActive="router-link-active">
-                            <i class="icon-pencil7 title-icon" data-toggle="tooltip" data-placement="top" title="Editar"> </i>
-                        </a>
-                        <a class="list-icons-item" *ngIf = "editar" (click) = "Actualizar('all')"
-                            [routerLink]="nada()" routerLinkActive="router-link-active" >
-                            <i class="icon-floppy-disk title-icon" data-toggle="tooltip" data-placement="top" title="Guardar"> </i>
-                        </a>
-                        <a class="list-icons-item" *ngIf = "editar" (click) = "ModoVista()"
-                            [routerLink]="nada()" routerLinkActive="router-link-active" >
-                            <i class="icon-exit title-icon" data-toggle="tooltip" data-placement="top" title="Salir"> </i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- primer card -->
-            <div class="row p0 m0">
-                <div class="col-sm-2 col-12">
-                     <div class="card card-padding margin-botton-card ">
-                        <input
-                        type="file"
-                        class="d-none"
-                        (change)="onPhotoSelected($event)"
-                        #photoInput
-                        [disabled]= "!editar"
-                      />
-                      <!-- [disabled]="disabled.foto" -->
-                      <img
-                        [src]="
-                          photoSelected || 'assets/subir_img.png' || lista[0].logo_empresa 
-                        "
-                        class="img-fluid img-preview rounded puntero"
-                        alt="No existe imagen, seleccione una imagen"
-                        (click)="photoInput.click()"
-                        
-                      />
+  <div class="col-xl-12 height-container">
+    <!-- card principal -->
+    <div class="card card-padding m0 height-container">
+      <!-- secction titulo -->
+      <div class="header-elements-inline padding-title">
+        <h5 class="card-title  title-head font-tittle m0">
+          <i class="icon-cog title-icon align-vertical-icon-0"></i>
+          PERSONALIZACION DE EMPRESA
+        </h5>
+        <div class="header-elements">
+          <div class="list-icons">
+            <a
+              class="list-icons-item"
+              *ngIf="!editar"
+              (click)="ModoEdicion()"
+              [routerLink]="nada()"
+              routerLinkActive="router-link-active"
+            >
+              <i
+                class="icon-pencil7 title-icon"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Editar"
+              >
+              </i>
+            </a>
+            <a
+              class="list-icons-item"
+              *ngIf="editar"
+              (click)="Actualizar('all')"
+              [routerLink]="nada()"
+              routerLinkActive="router-link-active"
+            >
+              <i
+                class="icon-floppy-disk title-icon"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Guardar"
+              >
+              </i>
+            </a>
+            <a
+              class="list-icons-item"
+              *ngIf="editar"
+              (click)="ModoVista()"
+              [routerLink]="nada()"
+              routerLinkActive="router-link-active"
+            >
+              <i
+                class="icon-exit title-icon"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Salir"
+              >
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- primer card -->
+      <div class="row p0 m0">
+        <div class="col-sm-2 col-12" *ngIf="lista != undefined">
+          <div
+            class="card card-padding margin-botton-card "
+            style="align-items: center;"
+          >
+            <input
+              type="file"
+              class="d-none"
+              (change)="onPhotoSelected($event)"
+              #photoInput
+              [disabled]="!editar"
+            />
+            <!-- [disabled]="disabled.foto" -->
+            <img
+              [src]="
+                photoSelected || lista[0].logo_empresa || 'assets/subir_img.png'
+              "
+              class="img-fluid rounded puntero"
+              alt="No existe imagen, seleccione una imagen"
+              (click)="photoInput.click()"
+              style="height: 116px;
+                               width: fit-content;
+                               padding: 0.5em;"
+            />
 
-                          <!-- <img src="https://thumbs.dreamstime.com/b/icono-del-usuario-46707697.jpg" 
+            <!-- <img src="https://thumbs.dreamstime.com/b/icono-del-usuario-46707697.jpg" 
                                alt="imagen no encontrada" class="img-responsive rounded img-fluid"
                                style="height: 116px;width: 100px; align-self: center;"> -->
-                     </div>
-                </div>
-                <div class="col-sm-10 col-12">
-                    <div class="card card-padding margin-botton-card ">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group form-group-feedback m0">
-                                    <div class="row text-center m0" *ngIf="lista != undefined">
-                                        <i class="icon-clipboard5 icon-head"> </i>
-                                        <div class="col-sm-6 col-5 form-group form-group-float m0">
-                                            <label class="form-group-float-label m0 p0">Nombre </label>
-                                            <input type="text" class="form-control text-center p0 alturaInputs" placeholder="Nombre" required
-                                                   [value]="lista[0].razon_social" [(ngModel)]="lista[0].razon_social" [disabled] ="!editar" >
-                                        </div>
-                                        <div class="col-sm-5 col-5 form-group form-group-float m0">
-                                            <label class="form-group-float-label m0 p0">Sigla </label>
-                                            <input type="text" class="form-control text-center p0 alturaInputs" placeholder="sigla" required
-                                                   [value]="lista[0].sigla" [(ngModel)]="lista[0].sigla" [disabled] ="!editar">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12" *ngIf="lista != undefined">
-                                        <div class="row text-center m0">
-                                            <div class="col-sm-1 col-0"></div>
-                                            <div class="col-sm-6 col-7 form-group form-group-float m0">
-                                                <label class="form-group-float-label m0 p0" >Actividad de la Empresa</label>
-                                                       <select class="form-control p0 selectCenter alturaInputs" [disabled] ="!editar" 
-                                                                [(ngModel)]="lista[0].id_actividad_empresarial" name="actEmp" required>
-                                                                <option *ngFor="let contents of ListActividadEmpresarial"
-                                                                        [value]="contents.id_actividad_empresarial">{{contents.actividad_empresa}}
-                                                                </option>
-                                                       </select> 
-                                            </div>
-                                            <div class="col-sm-5 col-5 form-group form-group-float m0">
-                                                <label class="form-group-float-label m0 p0">Nit </label>
-                                                <input type="text" class="form-control text-center p0 alturaInputs" placeholder="Nit" 
-                                                        value="{{lista[0].nit}}" [(ngModel)]="lista[0].nit" [disabled] ="!editar" required>
-                                            </div>  
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+          </div>
+        </div>
+        <div class="col-sm-10 col-12">
+          <div class="card card-padding margin-botton-card ">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group form-group-feedback m0">
+                  <div class="row text-center m0" *ngIf="lista != undefined">
+                    <i class="icon-clipboard5 icon-head"> </i>
+                    <div class="col-sm-6 col-5 form-group form-group-float m0">
+                      <label class="form-group-float-label m0 p0"
+                        >Nombre
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control text-center p0 alturaInputs"
+                        placeholder="Nombre"
+                        required
+                        [value]="lista[0].razon_social"
+                        [(ngModel)]="lista[0].razon_social"
+                        [disabled]="!editar"
+                      />
                     </div>
+                    <div class="col-sm-5 col-5 form-group form-group-float m0">
+                      <label class="form-group-float-label m0 p0">Sigla </label>
+                      <input
+                        type="text"
+                        class="form-control text-center p0 alturaInputs"
+                        placeholder="sigla"
+                        required
+                        [value]="lista[0].sigla"
+                        [(ngModel)]="lista[0].sigla"
+                        [disabled]="!editar"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-sm-12" *ngIf="lista != undefined">
+                    <div class="row text-center m0">
+                      <div class="col-sm-1 col-0"></div>
+                      <div
+                        class="col-sm-6 col-7 form-group form-group-float m0"
+                      >
+                        <label class="form-group-float-label m0 p0"
+                          >Actividad de la Empresa</label
+                        >
+                        <select
+                          class="form-control p0 selectCenter alturaInputs"
+                          [disabled]="!editar"
+                          [(ngModel)]="lista[0].id_actividad_empresarial"
+                          name="actEmp"
+                          required
+                        >
+                          <option
+                            *ngFor="let contents of ListActividadEmpresarial"
+                            [value]="contents.id_actividad_empresarial"
+                            >{{ contents.actividad_empresa }}
+                          </option>
+                        </select>
+                      </div>
+                      <div
+                        class="col-sm-5 col-5 form-group form-group-float m0"
+                      >
+                        <label class="form-group-float-label m0 p0">Nit </label>
+                        <input
+                          type="text"
+                          class="form-control text-center p0 alturaInputs"
+                          placeholder="Nit"
+                          value="{{ lista[0].nit }}"
+                          [(ngModel)]="lista[0].nit"
+                          [disabled]="!editar"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-            <!-- segundo card -->
-            <div class="row p0 m0">
-                <div class="col-sm-12">
-                    <div class="card card-padding margin-botton-card " style="padding-bottom: 0.5em;">
-                        <div class="header-elements-inline padding-title plr0">
-                            <h5 class="card-title  title-head font-tittle m0">
-                                <i class="icon-location4 title-icon align-vertical-icon-0 mr-2"></i>
-                                Direcciones
-                            </h5>
-                            <div class="header-elements">
-                                <div class="list-icons">
-                                    <!-- Actualizar('direccion') -->
-                                    <a class="list-icons-item" *ngIf = "editar" (click) = "Agregar('direccion')"
-                                        [routerLink]="nada()" routerLinkActive="router-link-active">
-                                        <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Direccion"> </i>
-                                    </a>
-                                    <a class="list-icons-item" *ngIf="!ocultarSeccionDirecciones" 
-                                       (click)="OcultarSeccion('direcciones')" > 
-                                       <i class="icon-arrow-down12" data-toggle="tooltip" data-placement="top" title="Ocultar" ></i> 
-                                    </a>
-                                    <a class="list-icons-item" *ngIf="ocultarSeccionDirecciones" 
-                                        (click)="MostrarSeccion('direcciones')" > 
-                                        <i class="icon-arrow-up12" data-toggle="tooltip" data-placement="top" title="Mostrar"></i> 
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row p0 m0" *ngIf="!ocultarSeccionDirecciones">
-                            <div class="col-sm-12 p0 m0"  *ngFor="let item of ListDirecciones; let i = index">
-                                <div class="row p0 m0" (click) = "MostrarCiudad(item)">
-                                    <div class="col-sm-2 col-6">
-                                            <select class="form-control p0 selectCenter alturaInputs" [disabled]= "!editar || (ListDirecciones.length > (i + indiceDirection))"
-                                                    [(ngModel)]="item.id_tipo_direccion" (change)="nada()" name="direccionSelect">
-                                                    <option *ngFor="let dir of ListTipoDirecciones"
-                                                            [value]="dir.id_tipo_direccion"> {{dir.tipo_direccion}}</option>
-                                            </select> 
-                                    </div>
-                                    <div class="col-sm-6 col-12">
-                                        <input type="text" class="form-control text-center" [disabled]= "!editar || (ListDirecciones.length > (i + indiceDirection))"
-                                               [(ngModel)]="item.direccion" [value] = "item.direccion" >
-                                    </div>
-                                    <div class="col-sm-2 col-12" style="align-self: flex-end;">
-                                        <div class="custom-control custom-switch switch-float">
-                                            <input type="checkbox" class="custom-control-input" id="direccion{{i}}" name="estados}}" [disabled]= "!editar || (ListDirecciones.length > (i + indiceDirection))"
-                                                   [checked]="item.estado == 'true'" data-fouc [(ngModel)]="item.estado" >
-                                            <label *ngIf="item.estado == 'true' || item.estado == 1" class="custom-control-label h30" for="direccion{{i}}">Activo</label>
-                                            <label *ngIf="!(item.estado == 'true'|| item.estado == 1)" class="custom-control-label h30" for="direccion{{i}}">Inactivo</label>
-                                            <a class="list-icons-item" *ngIf = "(i == CantidadDirecciones - 1) && editar" style="float: right;padding: 0em;"
-                                            [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "Eliminar('direccion',i+1)">
-                                            <i class="icon-cancel-circle2 colorDelete" style="padding-left: 0.5em;" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
-                                        </a>  
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- <div class="col-sm-12 p0 m0">
+          </div>
+        </div>
+      </div>
+      <!-- segundo card -->
+      <div class="row p0 m0">
+        <div class="col-sm-12">
+          <div
+            class="card card-padding margin-botton-card "
+            style="padding-bottom: 0.5em;"
+          >
+            <div class="header-elements-inline padding-title plr0">
+              <h5 class="card-title  title-head font-tittle m0">
+                <i
+                  class="icon-location4 title-icon align-vertical-icon-0 mr-2"
+                ></i>
+                Direcciones
+              </h5>
+              <div class="header-elements">
+                <div class="list-icons">
+                  <!-- Actualizar('direccion') -->
+                  <a
+                    class="list-icons-item"
+                    *ngIf="editar"
+                    (click)="Agregar('direccion')"
+                    [routerLink]="nada()"
+                    routerLinkActive="router-link-active"
+                  >
+                    <i
+                      class="icon-plus22 title-icon"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Agregar Direccion"
+                    >
+                    </i>
+                  </a>
+                  <a
+                    class="list-icons-item"
+                    *ngIf="!ocultarSeccionDirecciones"
+                    (click)="OcultarSeccion('direcciones')"
+                  >
+                    <i
+                      class="icon-arrow-down12"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Ocultar"
+                    ></i>
+                  </a>
+                  <a
+                    class="list-icons-item"
+                    *ngIf="ocultarSeccionDirecciones"
+                    (click)="MostrarSeccion('direcciones')"
+                  >
+                    <i
+                      class="icon-arrow-up12"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Mostrar"
+                    ></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row p0 m0" *ngIf="!ocultarSeccionDirecciones">
+              <div
+                class="col-sm-12 p0 m0"
+                *ngFor="let item of ListDirecciones; let i = index"
+              >
+                <div class="row p0 m0" (click)="MostrarCiudad(item)">
+                  <div class="col-sm-2 col-6">
+                    <select
+                      class="form-control p0 selectCenter alturaInputs"
+                      [disabled]="
+                        !editar || ListDirecciones.length > i + indiceDirection
+                      "
+                      [(ngModel)]="item.id_tipo_direccion"
+                      (change)="nada()"
+                      name="direccionSelect"
+                    >
+                      <option
+                        *ngFor="let dir of ListTipoDirecciones"
+                        [value]="dir.id_tipo_direccion"
+                      >
+                        {{ dir.tipo_direccion }}</option
+                      >
+                    </select>
+                  </div>
+                  <div class="col-sm-6 col-12">
+                    <input
+                      type="text"
+                      class="form-control text-center"
+                      disabled
+                      [(ngModel)]="item.direccion"
+                      [value]="item.direccion"
+                    />
+                  </div>
+                  <div class="col-sm-2 col-12" style="align-self: flex-end;">
+                    <div class="custom-control custom-switch switch-float">
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        id="direccion{{ i }}"
+                        name="estados}}"
+                        [disabled]="
+                          !editar ||
+                          ListDirecciones.length > i + indiceDirection
+                        "
+                        [checked]="item.estado == 'true'"
+                        data-fouc
+                        [(ngModel)]="item.estado"
+                      />
+                      <label
+                        *ngIf="item.estado == 'true' || item.estado == 1"
+                        class="custom-control-label h30"
+                        for="direccion{{ i }}"
+                        >Activo</label
+                      >
+                      <label
+                        *ngIf="!(item.estado == 'true' || item.estado == 1)"
+                        class="custom-control-label h30"
+                        for="direccion{{ i }}"
+                        >Inactivo</label
+                      >
+                      <a
+                        class="list-icons-item"
+                        *ngIf="i == CantidadDirecciones - 1 && editar"
+                        style="float: right;padding: 0em;"
+                        [routerLink]="nada()"
+                        routerLinkActive="router-link-active"
+                        (click)="Eliminar('direccion', i + 1, item)"
+                      >
+                        <i
+                          class="icon-cancel-circle2 colorDelete"
+                          style="padding-left: 0.5em;"
+                          data-toggle="tooltip"
+                          data-placement="top"
+                          title="Eliminar"
+                        ></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="col-sm-12 p0 m0">
                                 <div class="row p0 m0" style="padding-top: 0.5em;">
                                     <div class="col-sm-3">
                                         <div class="form-group row mb0">
@@ -192,257 +350,422 @@
                                     <div class="col-sm-2 col-0"></div>
                                 </div>
                             </div> -->
-                        </div>
-                           <!-- prueba inputs direcciones -->
-                           <div class="row p0 m0" style="padding-top: 0.5em;" *ngIf="!editar">
-                                <div class="col-sm-3">
-                                    <div class="form-group row mb0">
-                                        <label class="col-form-label col-lg-4 col-6">Pais</label>
-                                        <div class="col-lg-8 col-6">
-                                            <div class="input-group" style="justify-content: center;" >
-                                                <input type="text" name="pais" class="text-center" [(ngModel)]="newDirection.pais"
-                                                       [value]="textPais" disabled>   
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group row mb0">
-                                        <label class="col-form-label col-lg-4 col-6">Departamento</label>
-                                        <div class="col-lg-8 col-6">
-                                            <div class="input-group" style="justify-content: center;" >
-                                                <input type="text" name="departamento"  class="text-center" disabled
-                                                       [value]="textDepartamento"  [(ngModel)]="newDirection.departamento">   
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group row mb0">
-                                        <label class="col-form-label col-lg-4 col-6">Ciudad</label>
-                                        <div class="col-lg-8 col-6">
-                                            <select class="form-control p0 selectCenter alturaInputs"
-                                                    [(ngModel)]="idCiudad" (change) = "MostrarCiudad(ListContactos[ListContactos.length-1])">
-                                                    <option *ngFor="let ciudad of ListCiudades" 
-                                                            [value]="ciudad.id_pais">{{ciudad.nombre_pais}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 col-0"></div>
-                        </div>
-                        <!-- <pre>{{ListDirecciones | json}}</pre> -->
-                        <!-- NuevoElemento -->
-                        <!-- <div class="row p0 m0" *ngIf="editar">
-                            <div class="col-sm-12 p0 m0">
-                                <div class="row p0 m0">
-                                    <div class="col-sm-3 col-6">
-                                            <select class="form-control p0 selectCenter alturaInputs" required
-                                                    [(ngModel)]="ListDirecciones[ListDirecciones.length-1].id_tipo_direccion" (change)="nada()" name="newDirection">
-                                                    <option *ngFor="let dir of ListTipoDirecciones"
-                                                        [value]="ListDirecciones[ListDirecciones.length-1].id_tipo_direccion"> {{ListDirecciones[ListDirecciones.length-1].tipo_direccion}}</option>
-                                            </select> 
-                                    </div>
-                                    <div class="col-sm-7 col-12">
-                                        <input type="text" class="form-control text-center" placeholder="ingrese su direccion" required
-                                                [(ngModel)]="ListDirecciones[ListDirecciones.length-1].direccion" [value] = "ListDirecciones[ListDirecciones.length-1].direccion" >
-                                    </div>
-                                    <div class="col-sm-2 col-12" style="align-self: flex-end;">
-                                        <div class="custom-control custom-switch switch-float">
-                                            <input type="checkbox" class="custom-control-input" id="newDirectionSwitch" name="estados"
-                                                   [checked]="ListDirecciones[ListDirecciones.length-1].estado == 'true'" data-fouc [(ngModel)]="ListDirecciones[ListDirecciones.length-1].estado" >
-                                            <label *ngIf="ListDirecciones[ListDirecciones.length-1].estado == 'true' || ListDirecciones[ListDirecciones.length-1].estado == 1" class="custom-control-label h30" for="newDirectionSwitch">Activo</label>
-                                            <label *ngIf="!(ListDirecciones[ListDirecciones.length-1].estado == 'true'|| ListDirecciones[ListDirecciones.length-1].estado == 1)" class="custom-control-label h30" for="newDirectionSwitch">Inactivo</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!-- End New Element -->
-                        <div class="row p0 m0" *ngIf="editar" style="padding-top: 0.5em;">
-                            <div class="col-sm-3">
-                                <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-4 col-6">Pais</label>
-                                    <div class="col-lg-8 col-6">
-                                        <div class="input-group" style="justify-content: center;" >
-                                            <input disabled type="text" name="pais" disabled class="text-center"
-                                                   [value]="textPais" >   
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-4 col-6">Departamento</label>
-                                    <div class="col-lg-8 col-6">
-                                        <div class="input-group" style="justify-content: center;" >
-                                            <input disabled type="text" name="departamento" disabled class="text-center"
-                                                   [value]="textDepartamento" >   
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group row mb0">
-                                    <label class="col-form-label col-lg-4 col-6">Ciudad</label>
-                                    <div class="col-lg-8 col-6">
-                                        <select class="form-control p0 selectCenter alturaInputs" (change) = "MostrarCiudad(newDirection)"
-                                                [(ngModel)]="idCiudad">
-                                                <option *ngFor="let ciudad of ListCiudades" 
-                                                        [value]="ciudad.id_pais">{{ciudad.nombre_pais}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-2 col-0"></div>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <!-- tercer card -->
-            <div class="row p0 m0">
-                <div class="col-sm-12">
-                    <div class="card card-padding margin-botton-card " style="padding-bottom: 0.5em;">
-                        <div class="header-elements-inline padding-title plr0">
-                            <h5 class="card-title  title-head font-tittle m0">
-                                <i class="icon-phone-wave title-icon align-vertical-icon-0 mr-2"></i>
-                                Contactos
-                            </h5>
-                            <div class="header-elements">
-                                <div class="list-icons">
-                                    <a class="list-icons-item" *ngIf = "editar" (click)="Agregar('contactos')"
-                                        [routerLink]="nada()" routerLinkActive="router-link-active">
-                                        <i class="icon-plus22 title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Contacto"> </i>
-                                    </a>
-                                    <a class="list-icons-item" *ngIf="!ocultarSeccionContactos" 
-                                       (click)="OcultarSeccion('contactos')" > 
-                                       <i class="icon-arrow-down12" data-toggle="tooltip" data-placement="top" title="Ocultar" ></i> 
-                                    </a>
-                                    <a class="list-icons-item" *ngIf="ocultarSeccionContactos" 
-                                       (click)="MostrarSeccion('contactos')" > 
-                                       <i class="icon-arrow-up12" data-toggle="tooltip" data-placement="top" title="Mostrar"></i> 
-                                    </a>
-                                </div>
-                            </div>
+            <!-- prueba inputs direcciones -->
+            <div class="row p0 m0" style="padding-top: 0.5em;" *ngIf="!editar">
+              <div class="col-sm-3">
+                <div class="form-group row mb0">
+                  <label class="col-form-label col-lg-4 col-6">Pais</label>
+                  <div class="col-lg-8 col-6">
+                    <div class="input-group" style="justify-content: center;">
+                      <input
+                        type="text"
+                        name="pais"
+                        class="text-center"
+                        [(ngModel)]="newDirection.pais"
+                        [value]="textPais"
+                        disabled
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group row mb0">
+                  <label class="col-form-label col-lg-4 col-6"
+                    >Departamento</label
+                  >
+                  <div class="col-lg-8 col-6">
+                    <div class="input-group" style="justify-content: center;">
+                      <input
+                        type="text"
+                        name="departamento"
+                        class="text-center"
+                        disabled
+                        [value]="textDepartamento"
+                        [(ngModel)]="newDirection.departamento"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group row mb0">
+                  <label class="col-form-label col-lg-4 col-6">Ciudad</label>
+                  <div class="col-lg-8 col-6">
+                    <select
+                      class="form-control p0 selectCenter alturaInputs"
+                      [(ngModel)]="idCiudad"
+                      (change)="
+                        MostrarCiudad(ListContactos[ListContactos.length - 1])
+                      "
+                    >
+                      <option
+                        *ngFor="let ciudad of ListCiudades"
+                        [value]="ciudad.id_pais"
+                        >{{ ciudad.nombre_pais }}</option
+                      >
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2 col-0"></div>
+            </div>
+            <div class="row p0 m0" *ngIf="editar" style="padding-top: 0.5em;">
+              <div class="col-sm-3">
+                <div class="form-group row mb0">
+                  <label class="col-form-label col-lg-4 col-6">Pais</label>
+                  <div class="col-lg-8 col-6">
+                    <div class="input-group" style="justify-content: center;">
+                      <input
+                        disabled
+                        type="text"
+                        name="pais"
+                        disabled
+                        class="text-center"
+                        [value]="textPais"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group row mb0">
+                  <label class="col-form-label col-lg-4 col-6"
+                    >Departamento</label
+                  >
+                  <div class="col-lg-8 col-6">
+                    <div class="input-group" style="justify-content: center;">
+                      <input
+                        disabled
+                        type="text"
+                        name="departamento"
+                        disabled
+                        class="text-center"
+                        [value]="textDepartamento"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group row mb0">
+                  <label class="col-form-label col-lg-4 col-6">Ciudad</label>
+                  <div class="col-lg-8 col-6">
+                    <select
+                      class="form-control p0 selectCenter alturaInputs"
+                      (change)="MostrarCiudad(newDirection)"
+                      [(ngModel)]="idCiudad"
+                    >
+                      <option
+                        *ngFor="let ciudad of ListCiudades"
+                        [value]="ciudad.id_pais"
+                        >{{ ciudad.nombre_pais }}</option
+                      >
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2 col-0"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- tercer card -->
+      <div class="row p0 m0">
+        <div class="col-sm-12">
+          <div
+            class="card card-padding margin-botton-card "
+            style="padding-bottom: 0.5em;"
+          >
+            <div class="header-elements-inline padding-title plr0">
+              <h5 class="card-title  title-head font-tittle m0">
+                <i
+                  class="icon-phone-wave title-icon align-vertical-icon-0 mr-2"
+                ></i>
+                Contactos
+              </h5>
+              <div class="header-elements">
+                <div class="list-icons">
+                  <a
+                    class="list-icons-item"
+                    *ngIf="editar"
+                    (click)="Agregar('contactos')"
+                    [routerLink]="nada()"
+                    routerLinkActive="router-link-active"
+                  >
+                    <i
+                      class="icon-plus22 title-icon"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Agregar Contacto"
+                    >
+                    </i>
+                  </a>
+                  <a
+                    class="list-icons-item"
+                    *ngIf="!ocultarSeccionContactos"
+                    (click)="OcultarSeccion('contactos')"
+                  >
+                    <i
+                      class="icon-arrow-down12"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Ocultar"
+                    ></i>
+                  </a>
+                  <a
+                    class="list-icons-item"
+                    *ngIf="ocultarSeccionContactos"
+                    (click)="MostrarSeccion('contactos')"
+                  >
+                    <i
+                      class="icon-arrow-up12"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Mostrar"
+                    ></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row p0 m0" *ngIf="!ocultarSeccionContactos">
+              <div
+                class="col-sm-12 col-12 p0 m0"
+                *ngFor="let item of ListContactos; let i = index"
+              >
+                <div class="row p0 m0">
+                  <div class="col-sm-1 col-0"></div>
+                  <div class="col-sm-2 col-8">
+                    <select
+                      class="form-control p0 selectCenter alturaInputs"
+                      [disabled]="
+                        !editar || ListContactos.length > i + indiceContact
+                      "
+                      [(ngModel)]="item.id_contacto"
+                      name="ContactosSelect"
+                      (change)="ColocarCodigoContacto()"
+                    >
+                      <option
+                        *ngFor="let element of ListTipoContactos"
+                        [value]="element.id_contacto"
+                        >{{ element.tipo }}</option
+                      >
+                    </select>
+                  </div>
+                  <div class="col-sm-2 col-6">
+                    <div class="form-group row mb0">
+                      <label
+                        *ngIf="item.id_contacto == '33-1'"
+                        class="col-form-label col-lg-3 col-1"
+                        ><i class="icon-flag3"></i>
+                      </label>
+                      <label
+                        *ngIf="item.id_contacto == '33-2'"
+                        class="col-form-label col-lg-3 col-1"
+                        ><i class="icon-flag3"></i>
+                      </label>
+                      <label
+                        *ngIf="item.id_contacto == '34-1'"
+                        class="col-form-label col-lg-3 col-1"
+                        ><i class="icon-facebook2"></i>
+                      </label>
+                      <label
+                        *ngIf="item.id_contacto == '34-2'"
+                        class="col-form-label col-lg-3 col-1"
+                        ><i class="icon-instagram"></i>
+                      </label>
+                      <label
+                        *ngIf="item.id_contacto == '34-3'"
+                        class="col-form-label col-lg-3 col-1"
+                        ><i class="icon-twitter2"></i>
+                      </label>
+                      <label
+                        *ngIf="item.id_contacto == '35-1'"
+                        class="col-form-label col-lg-3 col-1"
+                        ><i class="icon-mail5"></i>
+                      </label>
+                      <label
+                        *ngIf="item.id_contacto == '35-2'"
+                        class="col-form-label col-lg-3 col-1"
+                        ><i class="icon-mail5"></i>
+                      </label>
+                      <div class="col-lg-9 col-9">
+                        <div
+                          class="input-group"
+                          style="justify-content: center;"
+                        >
+                          <input
+                            type="text"
+                            class="form-control text-center"
+                            [disabled]="
+                              !editar ||
+                              ListContactos.length > i + indiceContact
+                            "
+                            [(ngModel)]="item.codigo_contacto"
+                            [value]="item.codigo_contacto"
+                          />
                         </div>
-                        <div class="row p0 m0" *ngIf="!ocultarSeccionContactos">
-                            <div class="col-sm-12 col-12 p0 m0" *ngFor="let item of ListContactos; let i = index">
-                                <div class="row p0 m0">
-                                    <div class="col-sm-1 col-0"></div>
-                                    <div class="col-sm-2 col-8">
-                                        <select class="form-control p0 selectCenter alturaInputs" [disabled] = "!editar || (ListContactos.length > (i + indiceContact))"
-                                                [(ngModel)]="item.id_contacto" name="ContactosSelect">
-                                                <option *ngFor="let element of ListTipoContactos"
-                                                [value]="element.id_contacto">{{element.tipo}}</option>
-                                        </select> 
-                                    </div>
-                                    <div class="col-sm-2 col-6">
-                                        <div class="form-group row mb0">
-                                            <label *ngIf="item.id_contacto == '33-1'" class="col-form-label col-lg-3 col-1"><i class="icon-flag3"></i> </label>
-                                            <label *ngIf="item.id_contacto == '33-2'" class="col-form-label col-lg-3 col-1"><i class="icon-flag3"></i> </label>
-                                            <label *ngIf="item.id_contacto == '34-1'" class="col-form-label col-lg-3 col-1"><i class="icon-facebook2"></i> </label>
-                                            <label *ngIf="item.id_contacto == '34-2'" class="col-form-label col-lg-3 col-1"><i class="icon-instagram"></i> </label>
-                                            <label *ngIf="item.id_contacto == '34-3'" class="col-form-label col-lg-3 col-1"><i class="icon-twitter2"></i> </label>
-                                            <label *ngIf="item.id_contacto == '35-1'" class="col-form-label col-lg-3 col-1"><i class="icon-mail5"></i> </label>
-                                            <label *ngIf="item.id_contacto == '35-2'" class="col-form-label col-lg-3 col-1"><i class="icon-mail5"></i> </label>
-                                            <div class="col-lg-9 col-9">
-                                                <div class="input-group" style="justify-content: center;" >
-                                                    <input type="text" class="form-control text-center" [disabled] = "!editar || (ListContactos.length > (i + indiceContact))"
-                                                           [(ngModel)]="item.codigo_contacto" [value]="item.codigo_contacto" >
-                                                </div>
-                                            </div>
-                                        </div>                                
-                                    </div>
-                                    <div class="col-sm-2 col-6 input-group">
-                                        <input type="text" class="form-control text-center" [disabled] = "!editar || (ListContactos.length > (i + indiceContact))"
-                                               [(ngModel)]="item.contacto" [value]="item.contacto" >
-                                    </div>
-                                    <div class="col-sm-2 col-12" style="align-self: flex-end;">
-                                        <div class="custom-control custom-switch switch-float">
-                                            <input type="checkbox" class="custom-control-input" id="phones{{i}}" name="phones" [disabled] = "!editar || (ListContactos.length > (i + indiceContact))"
-                                                    [checked]="item.estado == 'true'" data-fouc [(ngModel)]="item.estado" >
-                                            <label *ngIf="item.estado == 'true' || item.estado == 1" class="custom-control-label h30" for="phones{{i}}">Activo</label>
-                                            <label *ngIf="!(item.estado == 'true'|| item.estado == 1)" class="custom-control-label h30" for="phones{{i}}">Inactivo</label>
-                                            <a class="list-icons-item" *ngIf = "(i == CantidadContactos - 1) && editar" style="float: right;padding: 0em;"
-                                                [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "Eliminar('contactos',i+1)">
-                                                <i class="icon-cancel-circle2 colorDelete" style="padding-left: 0.5em;" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
-                                            </a>   
-                                        </div>
-                                    </div>
-                                    <!-- <div class="col-sm-2" *ngIf="editar">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 col-6 input-group">
+                    <input
+                      type="text"
+                      class="form-control text-center"
+                      [disabled]="
+                        !editar || ListContactos.length > i + indiceContact
+                      "
+                      [(ngModel)]="item.contacto"
+                      [value]="item.contacto"
+                    />
+                  </div>
+                  <div class="col-sm-2 col-12" style="align-self: flex-end;">
+                    <div class="custom-control custom-switch switch-float">
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        id="phones{{ i }}"
+                        name="phones"
+                        [disabled]="
+                          !editar || ListContactos.length > i + indiceContact
+                        "
+                        [checked]="item.estado == 'true'"
+                        data-fouc
+                        [(ngModel)]="item.estado"
+                      />
+                      <label
+                        *ngIf="item.estado == 'true' || item.estado == 1"
+                        class="custom-control-label h30"
+                        for="phones{{ i }}"
+                        >Activo</label
+                      >
+                      <label
+                        *ngIf="!(item.estado == 'true' || item.estado == 1)"
+                        class="custom-control-label h30"
+                        for="phones{{ i }}"
+                        >Inactivo</label
+                      >
+                      <a
+                        class="list-icons-item"
+                        *ngIf="i == CantidadContactos - 1 && editar"
+                        style="float: right;padding: 0em;"
+                        [routerLink]="nada()"
+                        routerLinkActive="router-link-active"
+                        (click)="Eliminar('contactos', i + 1, item)"
+                      >
+                        <i
+                          class="icon-cancel-circle2 colorDelete"
+                          style="padding-left: 0.5em;"
+                          data-toggle="tooltip"
+                          data-placement="top"
+                          title="Eliminar"
+                        ></i>
+                      </a>
+                    </div>
+                  </div>
+                  <!-- <div class="col-sm-2" *ngIf="editar">
                                         <a class="list-icons-item" *ngIf = "i == CantidadContactos - 1"
                                             [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "Eliminar('contactos',i+1)">
                                             <i class="icon-cancel-circle2 colorDelete" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
                                         </a>   
                                     </div> -->
-                                    <div class="col-sm-1 col-0">
-                                    </div>
-                                </div>
-                                <!-- <pre>{{item | json}}</pre> -->
-                            </div>
-                            <!-- <pre>editar: {{!editar | json}}</pre> -->
-                            <!-- <pre>ListContactos: {{ListContactos | json}}</pre> -->
-                            <!-- <pre *ngIf="ListContactos != undefined">ListContactos cant: {{ListContactos.length | json}}</pre> -->
-                            <!-- <pre>indiceContact: {{indiceContact | json}}</pre> -->
-                        </div>
-                    </div>
+                  <div class="col-sm-1 col-0"></div>
                 </div>
+                <!-- <pre>{{item | json}}</pre> -->
+              </div>
+              <!-- <pre>editar: {{!editar | json}}</pre> -->
+              <pre>ListContactos: {{ ListContactos | json }}</pre>
+              <!-- <pre *ngIf="ListContactos != undefined">ListContactos cant: {{ListContactos.length | json}}</pre> -->
+              <!-- <pre>indiceContact: {{indiceContact | json}}</pre> -->
             </div>
-            <!--  cuarto card -->
-            <div class="row p0 m0">
-                <div class="col-sm-12">
-                    <div class="card card-padding margin-botton-card " style="padding-bottom: 0.5em;">
-                        <div class="header-elements-inline padding-title plr0">
-                            <h5 class="card-title  title-head font-tittle m0">
-                                <i class="icon-cogs title-icon align-vertical-icon-0 mr-2"></i>
-                                Modulos 
-                            </h5>
-                            <div class="header-elements">
-                                <div class="list-icons">
-                                    <a class="list-icons-item" *ngIf="!ocultarSeccion" 
-                                        (click)="OcultarSeccion('modulos')" > 
-                                        <i class="icon-arrow-down12" data-toggle="tooltip" data-placement="top" title="Ocultar" ></i> 
-                                    </a>
-                                    <a class="list-icons-item" *ngIf="ocultarSeccion" 
-                                        (click)="MostrarSeccion('modulos')" > 
-                                        <i class="icon-arrow-up12" data-toggle="tooltip" data-placement="top" title="Mostrar"></i> 
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row p0 m0" *ngIf="!ocultarSeccion" id="data-toggle">
-                            <div class="col-sm-2 col-12">
-                                <div>
-                                    <p>SAGESOFT</p> <br>
-                                    <p>VERSION 1.0</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-9 col-12">
-                                <div class="col-sm-12 ">
-                                    <div class="table-responsive text-left">
-                                        <table class="table table-sm table-hover">
-                                            <thead>
-                                                <th scope="col" class="ptb0">Descripcion</th>
-                                                <th scope="col" class="ptb0">Version</th>
-                                                <th scope="col" class="ptb0">SoLTec</th>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="table-border-double" 
-                                                    *ngFor="let mod of ListModulos;let impar = odd;let par = even;" 
-                                                    [ngClass]="{ tablaCebradoPar:par , tablaCebradoImpar:impar}">
-                                                    <td class="puntero ptb0">{{mod.modulo}} </td>
-                                                    <td class="puntero ptb0">{{mod.version_modulo}}</td>
-                                                    <td class="puntero ptb0">{{mod.sol_tec}}</td>
-                                                </tr>                                                  
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
+      <!--  cuarto card -->
+      <div class="row p0 m0">
+        <div class="col-sm-12">
+          <div
+            class="card card-padding margin-botton-card "
+            style="padding-bottom: 0.5em;"
+          >
+            <div class="header-elements-inline padding-title plr0">
+              <h5 class="card-title  title-head font-tittle m0">
+                <i class="icon-cogs title-icon align-vertical-icon-0 mr-2"></i>
+                Modulos
+              </h5>
+              <div class="header-elements">
+                <div class="list-icons">
+                  <a
+                    class="list-icons-item"
+                    *ngIf="!ocultarSeccion"
+                    (click)="OcultarSeccion('modulos')"
+                  >
+                    <i
+                      class="icon-arrow-down12"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Ocultar"
+                    ></i>
+                  </a>
+                  <a
+                    class="list-icons-item"
+                    *ngIf="ocultarSeccion"
+                    (click)="MostrarSeccion('modulos')"
+                  >
+                    <i
+                      class="icon-arrow-up12"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Mostrar"
+                    ></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row p0 m0" *ngIf="!ocultarSeccion" id="data-toggle">
+              <div class="col-sm-2 col-12">
+                <div>
+                  <p>SAGESOFT</p>
+                  <br />
+                  <p>VERSION 1.0</p>
+                </div>
+              </div>
+              <div class="col-sm-9 col-12">
+                <div class="col-sm-12 ">
+                  <div class="table-responsive text-left">
+                    <table class="table table-sm table-hover">
+                      <thead>
+                        <th scope="col" class="ptb0">Descripcion</th>
+                        <th scope="col" class="ptb0">Version</th>
+                        <th scope="col" class="ptb0">SoLTec</th>
+                      </thead>
+                      <tbody>
+                        <tr
+                          class="table-border-double"
+                          *ngFor="
+                            let mod of ListModulos;
+                            let impar = odd;
+                            let par = even
+                          "
+                          [ngClass]="{
+                            tablaCebradoPar: par,
+                            tablaCebradoImpar: impar
+                          }"
+                        >
+                          <td class="puntero ptb0">{{ mod.modulo }}</td>
+                          <td class="puntero ptb0">{{ mod.version_modulo }}</td>
+                          <td class="puntero ptb0">{{ mod.sol_tec }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>        
+  </div>
+</div>
