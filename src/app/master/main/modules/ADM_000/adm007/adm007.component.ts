@@ -38,9 +38,19 @@ export class Adm007Component implements OnInit {
   CantidadDirecciones: number = 0;
   CantidadContactos: number = 0;
   ListSend: any = {};
-  newDirection: any = {};
+  newDirection: any = {
+    id_tipo_direccion: 1,
+    estado: 1,
+    direccion: "",
+    id_direccion: 0,
+    tipo_direccion: "Propietario",
+    pais: "",
+    departamento: "",
+    ciudad: "",
+    id_ciudad: ""
+  };
 
-  newContacto: any = {};
+  newContacto: any;
 
   photoSelected: string | ArrayBuffer;
   file: File;
@@ -144,8 +154,8 @@ export class Adm007Component implements OnInit {
           console.log("insertando Imagen");
         }
         if (
-          this.direcciones.length != null &&
-          this.contactos.length !== 0 &&
+          this.direcciones.length != null ||
+          this.contactos.length != null ||
           this.file
         ) {
           setTimeout(() => {
@@ -192,6 +202,7 @@ export class Adm007Component implements OnInit {
         }
         this.LimpiarData();
         this.ListDirecciones.push(this.newDirection);
+        this.MostrarCiudad(this.idCiudad);
         this._notyG.noty("success", "direccion añadida", 3500);
         console.log("Lista añadida ", this.ListDirecciones);
         break;
@@ -213,7 +224,6 @@ export class Adm007Component implements OnInit {
   }
 
   LimpiarData() {
-    this.idCiudad = this.ListCiudades[0].id_pais;
     this.newDirection = {
       id_tipo_direccion: 1,
       estado: 1,
@@ -225,7 +235,7 @@ export class Adm007Component implements OnInit {
       ciudad: "",
       id_ciudad: this.ListCiudades[0].id_pais
     };
-    this.MostrarCiudad(this.idCiudad);
+    this.idCiudad = this.ListCiudades[0].id_pais;
   }
 
   limpiarDataContacto() {
@@ -354,24 +364,27 @@ export class Adm007Component implements OnInit {
     });
   }
   MostrarCiudad(data: any) {
+    console.log("mostrando: ", data);
     if (this.editar) {
       console.log("editar ciudad: ", data);
       this.BuscarDepartamento(this.ObtenerDepartamento(this.idCiudad));
       this.BuscarPais(this.ObtenerPais(this.idCiudad));
       this.newDirection.id_ciudad = this.idCiudad;
       this.BuscarNombreCiudad(this.idCiudad);
-      this.ListDirecciones[
-        this.ListDirecciones.length - 1
-      ].pais = this.textPais;
-      this.ListDirecciones[
-        this.ListDirecciones.length - 1
-      ].departamento = this.textDepartamento;
-      this.ListDirecciones[
-        this.ListDirecciones.length - 1
-      ].ciudad = this.newDirection.ciudad;
-      this.ListDirecciones[
-        this.ListDirecciones.length - 1
-      ].id_ciudad = this.idCiudad;
+      if (this.ListDirecciones != null) {
+        this.ListDirecciones[
+          this.ListDirecciones.length - 1
+        ].pais = this.textPais;
+        this.ListDirecciones[
+          this.ListDirecciones.length - 1
+        ].departamento = this.textDepartamento;
+        this.ListDirecciones[
+          this.ListDirecciones.length - 1
+        ].ciudad = this.newDirection.ciudad;
+        this.ListDirecciones[
+          this.ListDirecciones.length - 1
+        ].id_ciudad = this.idCiudad;
+      }
     } else {
       console.log("No editar: ", data);
       this.ListCiudades.forEach(element => {

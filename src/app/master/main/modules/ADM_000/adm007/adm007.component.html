@@ -256,7 +256,9 @@
                     <input
                       type="text"
                       class="form-control text-center"
-                      disabled
+                      [disabled]="
+                        !editar || ListDirecciones.length > i + indiceDirection
+                      "
                       [(ngModel)]="item.direccion"
                       [value]="item.direccion"
                     />
@@ -352,7 +354,11 @@
                             </div> -->
             </div>
             <!-- prueba inputs direcciones -->
-            <div class="row p0 m0" style="padding-top: 0.5em;" *ngIf="!editar">
+            <div
+              class="row p0 m0"
+              style="padding-top: 0.5em;"
+              *ngIf="!editar && ListDirecciones != null"
+            >
               <div class="col-sm-3">
                 <div class="form-group row mb0">
                   <label class="col-form-label col-lg-4 col-6">Pais</label>
@@ -411,7 +417,11 @@
               </div>
               <div class="col-sm-2 col-0"></div>
             </div>
-            <div class="row p0 m0" *ngIf="editar" style="padding-top: 0.5em;">
+            <div
+              class="row p0 m0"
+              *ngIf="editar && ListDirecciones != null"
+              style="padding-top: 0.5em;"
+            >
               <div class="col-sm-3">
                 <div class="form-group row mb0">
                   <label class="col-form-label col-lg-4 col-6">Pais</label>
@@ -664,18 +674,12 @@
                       </a>
                     </div>
                   </div>
-                  <!-- <div class="col-sm-2" *ngIf="editar">
-                                        <a class="list-icons-item" *ngIf = "i == CantidadContactos - 1"
-                                            [routerLink]="nada()" routerLinkActive="router-link-active" (click) = "Eliminar('contactos',i+1)">
-                                            <i class="icon-cancel-circle2 colorDelete" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
-                                        </a>   
-                                    </div> -->
                   <div class="col-sm-1 col-0"></div>
                 </div>
                 <!-- <pre>{{item | json}}</pre> -->
               </div>
               <!-- <pre>editar: {{!editar | json}}</pre> -->
-              <pre>ListContactos: {{ ListContactos | json }}</pre>
+              <!-- <pre>ListContactos: {{ ListContactos | json }}</pre> -->
               <!-- <pre *ngIf="ListContactos != undefined">ListContactos cant: {{ListContactos.length | json}}</pre> -->
               <!-- <pre>indiceContact: {{indiceContact | json}}</pre> -->
             </div>
