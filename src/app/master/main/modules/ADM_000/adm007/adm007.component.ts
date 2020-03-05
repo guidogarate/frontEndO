@@ -579,6 +579,8 @@ export class Adm007Component implements OnInit {
 
   /// guardar estado - volver al estado anterior
   GuardarEstado() {
+    this.ListLastStadeDirecciones = [];
+    this.ListLastStadeContactos = [];
     this.ListDirecciones.forEach(element => {
       const direcciones: any = {
         id_tipo_direccion: 1,
@@ -630,7 +632,7 @@ export class Adm007Component implements OnInit {
   VolverEstadoAnterior() {
     this.ListDirecciones = [];
     this.ListLastStadeDirecciones.forEach(element => {
-      const direcciones: any = {
+      let direcciones: any = {
         id_tipo_direccion: 1,
         id_direccion: 0,
         direccion: "",
@@ -672,8 +674,6 @@ export class Adm007Component implements OnInit {
     });
     console.log("direcciones Recuperar contactos : ", this.ListContactos);
     console.log("direcciones recuperar direcciones : ", this.ListDirecciones);
-    this.ListLastStadeContactos = [];
-    this.ListLastStadeDirecciones = [];
 
     // this.estructuraPlanDeCuentas = [];
     // this.Listnaturalezas = [];

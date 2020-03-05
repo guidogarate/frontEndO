@@ -223,7 +223,10 @@
                 </div>
               </div>
             </div>
-            <div class="row p0 m0" *ngIf="!ocultarSeccionDirecciones">
+            <div
+              class="row p0 m0"
+              *ngIf="!ocultarSeccionDirecciones && ListDirecciones != undefined"
+            >
               <div
                 class="col-sm-12 p0 m0"
                 *ngFor="let item of ListDirecciones; let i = index"
