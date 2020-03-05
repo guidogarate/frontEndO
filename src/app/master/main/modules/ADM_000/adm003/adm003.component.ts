@@ -1,5 +1,8 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { NotyGlobal } from "src/app/master/utils/global/index.global";
+import { Component, OnDestroy } from "@angular/core";
+import {
+  NotyGlobal,
+  InitGlobal
+} from "src/app/master/utils/global/index.global";
 import { Adm003Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { Observable, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
@@ -7,14 +10,13 @@ import { FormControl } from "@angular/forms";
 import { Adm003Models } from "src/app/master/utils/models/main/adm_000/index.models";
 import { Paginacion } from "src/app/master/utils/models/main/global/index.models";
 import url from "src/app/master/config/url.config";
-declare function initLabels();
 
 @Component({
   selector: "app-adm003",
   templateUrl: "./adm003.component.html",
   styleUrls: ["./adm003.component.css"]
 })
-export class Adm003Component implements OnInit, OnDestroy {
+export class Adm003Component implements OnDestroy {
   // this.amd003 ==== Grupo
   // this.auxmaSub==== SubGrupo
   bienvenido: string = url.bienvenido;
@@ -53,7 +55,11 @@ export class Adm003Component implements OnInit, OnDestroy {
   };
   amd003: Adm003Models = new Adm003Models("1", "1", true, "1");
 
-  constructor(private adm003S: Adm003Service, private notyG: NotyGlobal) {
+  constructor(
+    private adm003S: Adm003Service,
+    private notyG: NotyGlobal,
+    private initG: InitGlobal
+  ) {
     this.buscarAdm003(this.texto);
     this.textBuscarAdm003.valueChanges
       .pipe(debounceTime(500))
@@ -67,11 +73,6 @@ export class Adm003Component implements OnInit, OnDestroy {
       });
   }
 
-  ngOnInit() {
-    setTimeout(() => {
-      initLabels();
-    }, 1000);
-  }
   ngOnDestroy() {
     this.sus.unsubscribe();
     this.textBuscarAdm003 = null;
@@ -175,9 +176,7 @@ export class Adm003Component implements OnInit, OnDestroy {
         this.auxmaSub = [];
         // this.notyG.noty("error", resp["mensaje"], 5000);
       }
-      setTimeout(() => {
-        initLabels();
-      }, 5);
+      this.initG.labels();
     });
   }
 
@@ -207,9 +206,7 @@ export class Adm003Component implements OnInit, OnDestroy {
         this.auxmaSub = [];
         // this.notyG.noty("error", resp["mensaje"], 5000);
       }
-      setTimeout(() => {
-        initLabels();
-      }, 5);
+      this.initG.labels();
     });
   }
 
@@ -372,9 +369,7 @@ export class Adm003Component implements OnInit, OnDestroy {
         }
         this.auxmaSub.push(data);
         this.habiCampo.SubGrupHab = true;
-        setTimeout(() => {
-          initLabels();
-        }, 5);
+        this.initG.labels();
         this.habiCampo.ElimSubGru = false;
         this.habiCampo.codigo = true;
 

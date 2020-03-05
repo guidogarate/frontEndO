@@ -1,14 +1,15 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models";
 import { Adm006 } from "src/app/master/utils/models/main/adm_000/index.models";
-import { NotyGlobal } from "src/app/master/utils/global/noty.global";
+import {
+  NotyGlobal,
+  InitGlobal
+} from "src/app/master/utils/global/index.global";
 import { Adm006Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { Observable, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { FormControl } from "@angular/forms";
-import url from "src/app/master/config/url.config";
-declare function init_select();
-declare function initLabels();
+import glb001 from "src/app/master/config/glb000/glb001_btn";
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -19,8 +20,7 @@ interface HtmlInputEvent extends Event {
   templateUrl: "./adm006.component.html",
   styleUrls: ["./adm006.component.css"]
 })
-export class Adm006Component implements OnInit {
-  bienvenido: string = url.bienvenido;
+export class Adm006Component {
   textBuscarAdm006 = new FormControl("", []);
   buscar = true;
   texto = "all_auxma";
@@ -29,13 +29,7 @@ export class Adm006Component implements OnInit {
   auxma: Adm006[];
   pagi: Paginacion[];
   loading = true;
-  btnGrupo = {
-    BtnCance: false,
-    BtnEdita: false,
-    BtnElimi: false,
-    BtnGuard: false,
-    BtnNuevo: false
-  };
+  btnGrupo = glb001;
   disabled = {
     descripci: true,
     foto: true,
@@ -56,7 +50,11 @@ export class Adm006Component implements OnInit {
   eliminAdm_006: string = "";
   imgModal: string = "";
 
-  constructor(private adm006S: Adm006Service, private notyG: NotyGlobal) {
+  constructor(
+    private adm006S: Adm006Service,
+    private notyG: NotyGlobal,
+    private initG: InitGlobal
+  ) {
     this.getAdm006(this.texto);
     this.textBuscarAdm006.valueChanges
       .pipe(debounceTime(500))
@@ -69,8 +67,6 @@ export class Adm006Component implements OnInit {
         }
       });
   }
-
-  ngOnInit() {}
 
   getAdm006(texto: string) {
     this.buscar = true;
@@ -158,14 +154,14 @@ export class Adm006Component implements OnInit {
       case "visualizar":
         this.btnGrupo.BtnEdita = true;
         this.btnGrupo.BtnNuevo = true;
-        this.initSelect();
+        this.initG.select();
         break;
       case "editar":
         this.btnGrupo.BtnCance = true;
         this.btnGrupo.BtnGuard = true;
 
         this.boolDisabled(false);
-        this.initSelect();
+        this.initG.select();
         break;
       case "eliminar":
         this.eliminAdm_006 = adm_006.login;
@@ -188,8 +184,8 @@ export class Adm006Component implements OnInit {
       this.loadingSub = false;
       if (resp["ok"]) {
         setTimeout(() => {
-          initLabels();
-          init_select();
+          this.initG.labels();
+          this.initG.select();
         }, 10);
         this.auxmaModal = resp["usr"];
       } else {
@@ -207,10 +203,8 @@ export class Adm006Component implements OnInit {
     this.nuevoAuxmaModal.descripcion = "";
     this.auxmaModal = [this.nuevoAuxmaModal];
     this.contorlAccion = "nuevo";
-    setTimeout(() => {
-      initLabels();
-    }, 5);
-    this.initSelect();
+    this.initG.labels();
+    this.initG.select();
   }
 
   eliminarAdm006(login: string) {
@@ -242,18 +236,18 @@ export class Adm006Component implements OnInit {
         this.auxmaModal[0].tipos_usuario = this.nuevoAuxmaModal.tipos_usuario;
         this.auxmaModal[0].personas = this.nuevoAuxmaModal.personas;
 
-        this.initSelect();
+        this.initG.select();
         return;
       case "editar":
         this.contorlAccion = tipo;
         this.boolDisabled(false);
         this.boolBtnGrupo(false, true);
-        this.initSelect();
+        this.initG.select();
         return;
       case "cancelar":
         this.boolDisabled(true);
         this.boolBtnGrupo(true, false);
-        this.initSelect();
+        this.initG.select();
         return;
       case "salir":
         this.photoSelected = undefined;
@@ -264,17 +258,11 @@ export class Adm006Component implements OnInit {
         if (b) {
           this.guardarDatos(this.auxmaModal, this.file, this.contorlAccion);
         }
-        this.initSelect();
+        this.initG.select();
         return;
     }
     this.boolBtnGrupo(true, true);
     this.boolBtnGrupo(false, false);
-  }
-
-  initSelect() {
-    setTimeout(() => {
-      init_select();
-    }, 5);
   }
 
   boolDisabled(bool: boolean) {

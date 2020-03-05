@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { debounceTime } from "rxjs/operators";
 import { Observable, Subscription } from "rxjs";
@@ -6,15 +6,13 @@ import { Adm008Service } from "src/app/master/utils/service/main/modules/adm_000
 import { Adm005 } from "src/app/master/utils/models/main/adm_000/index.models";
 import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models";
 import { NotyGlobal } from "src/app/master/utils/global/noty.global";
-import url from "src/app/master/config/url.config";
 
 @Component({
   selector: "app-adm008",
   templateUrl: "./adm008.component.html",
   styleUrls: ["./adm008.component.css"]
 })
-export class Adm008Component implements OnInit, OnDestroy {
-  bienvenido: string = url.bienvenido;
+export class Adm008Component implements OnDestroy {
   textBuscar = new FormControl("", []);
   sus: Subscription;
   texto = "all_auxma";
@@ -22,6 +20,7 @@ export class Adm008Component implements OnInit, OnDestroy {
   auxma: Adm005[];
   pagi: Paginacion[];
   loading = true;
+  loadguardar = "";
   buscar = true;
   habiCampo = {
     editar: true,
@@ -41,24 +40,22 @@ export class Adm008Component implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {}
-
   ngOnDestroy() {
     this.textBuscar = null;
   }
 
-  buscarAdm008(texto: string) {
+  buscarAdm008(texto: string, numePag = "1") {
     this.buscar = true;
     let peticion: Observable<any>;
     if (texto.length === 0 || texto === "all_auxma") {
       this.texto = "all_auxma";
-      peticion = this.adm008S.buscarAdm008("90", "1", this.texto);
+      peticion = this.adm008S.buscarAdm008("90", numePag, this.texto);
     } else {
       this.texto = texto;
-      peticion = this.adm008S.buscarAdm008("90", "1", this.texto);
+      peticion = this.adm008S.buscarAdm008("90", numePag, this.texto);
     }
     this.sus = peticion.subscribe(resp => {
-      this.numeroPag = 1;
+      this.numeroPag = Number(numePag);
       if (resp["ok"]) {
         this.auxma = resp["usr"];
         this.pagi = resp["cant"];
@@ -142,18 +139,18 @@ export class Adm008Component implements OnInit, OnDestroy {
     }
   }
 
-  reset(str: Adm005) {
+  reset(str: Adm005, index = "") {
     if (str.estado) {
+      this.loadguardar = index;
       this.adm008S.editaAdm008(str.login).subscribe(resp => {
-        console.log(resp);
         str.estado = false;
         if (resp["ok"]) {
-          this.buscarAdm008(this.texto);
+          this.buscarAdm008(this.texto, this.numeroPag.toString());
           this.notyG.noty("info", resp["mensaje"], 5000);
         } else {
           this.notyG.noty("error", resp["mensaje"], 5000);
-          //  console.log(resp["mensaje"]);
         }
+        this.loadguardar = "";
       });
     } else {
       str.estado = false;

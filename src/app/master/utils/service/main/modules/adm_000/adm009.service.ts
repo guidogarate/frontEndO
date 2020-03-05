@@ -82,12 +82,16 @@ export class Adm009Service {
     } else {
       estado = "0";
     }
+    if (adm_009.codigo === "" || adm_009.codigo === undefined) {
+      adm_009.codigo = "auto";
+    }
     const json = JSON.stringify({
       division: adm_009.tipo_territorio,
       dependencia: adm_009.dependencia,
       descripcion: adm_009.descripcion,
       sigla: adm_009.sigla,
-      estado
+      estado,
+      codigo: adm_009.codigo
     });
     return this.httpClient
       .post(url1, json, {

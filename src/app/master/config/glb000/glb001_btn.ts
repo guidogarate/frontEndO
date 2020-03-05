@@ -3,7 +3,8 @@ const glb001 = {
   BtnEdita: false,
   BtnElimi: false,
   BtnGuard: false,
-  BtnNuevo: false
+  BtnNuevo: false,
+  BtnLoadi: false
 };
 
 export default glb001;

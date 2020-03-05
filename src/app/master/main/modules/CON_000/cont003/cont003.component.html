@@ -70,7 +70,10 @@
                     <label class="form-group" style="margin-bottom: .25rem;"
                       >Gestion</label
                     >
-                    <select class="form-control selectpicker show-tick">
+                    <select
+                      class="form-control selectpicker show-tick"
+                      (change)="cont003Selectgest($event.target.value)"
+                    >
                       <option
                         *ngFor="let gruac of data.gestiones"
                         [value]="gruac.gestion"
@@ -149,7 +152,7 @@
                 tablaCebradoImpar: impar
               }"
             >
-              <td>{{ cont003.id_unidad_division }}</td>
+              <td>{{ cont003.idunidaddivision }}</td>
               <td class="table-content-center">
                 {{ cont003.descripcion }}
               </td>
@@ -174,12 +177,13 @@
               </td>
               <td class="text-center">
                 <div class="list-icons">
-                  <!-- (click)="OpcionesTable(cont003, 'visualizar')" -->
+                  <!-- -->
                   <i
                     class="icon-file-eye"
                     title="visualizar"
                     data-toggle="modal"
-                    data-target="#modal_adm_009"
+                    data-target="#modal_cont_003"
+                    (click)="OpcionesTable(cont003, 'visualizar')"
                     class="icon-file-eye text-primary-600 puntero"
                   ></i>
                   <!-- (click)="OpcionesTable(cont003, 'editar')" -->
@@ -187,7 +191,7 @@
                     class="icon-pencil7"
                     title="editar"
                     data-toggle="modal"
-                    data-target="#modal_adm_009"
+                    data-target="#modal_cont_003"
                     class="icon-pencil7 text-teal-600 puntero"
                   ></i>
                   <!-- (click)="OpcionesTable(cont003, 'eliminar')" -->
@@ -195,7 +199,7 @@
                     class="icon-trash"
                     title="eliminar"
                     data-toggle="modal"
-                    data-target="#modal_adm_009_eliminar"
+                    data-target="#modal_cont_003_eliminar"
                     class="icon-trash text-danger-600 puntero"
                   ></i>
                 </div>
@@ -235,59 +239,228 @@
   </div>
 </div>
 <app-cargacontent *ngIf="!start.startCont"></app-cargacontent>
-<!-- 
-<div class="card ">
-  <div class="card-body pb-0">
-    <div class="row p0 m0">
-      <form
-        ngNativeValidate
-        autocomplete="off"
-        [formGroup]="form"
-        (ngSubmit)="guardarDatos()"
-      >
-        <div class="form-group">
-          <label for="exampleInputEmail1">Descripcion</label>
-          <input
-            type="text"
-            class="form-control"
-            aria-describedby="emailHelp"
-            placeholder="Enter email"
-            formControlName="descripcion"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Sigla</label>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Sigla"
-            formControlName="sigla"
-            oninvalid="this.setCustomValidity('Descripcion')"
-            oninput="setCustomValidity('')"
-            required
-          />
-        </div>
 
-        <div class="form-group form-check">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            formControlName="estado"
-          />
-          <label class="form-check-label" for="exampleCheck1">Estado</label>
+<div id="modal_cont_003" class="modal" tabindex="-1">
+  <div class="modal-dialog ">
+    <div class="modal-content animacionmodal haciadentro">
+      <form #forma="ngForm" ngNativeValidate autocomplete="off" class="form">
+        <div class="modal-header bg-blue">
+          <h6 class="modal-title">CONT003</h6>
+          <div class="list-icons float-right">
+            <a class="puntero" *ngIf="btnGrupo.BtnCance"
+              ><i
+                class="icon-cancel-circle2 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal(forma, 'cancelar')"
+                title="Cancelar"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnGrupo.BtnNuevo">
+              <i
+                data-toggle="tooltip"
+                data-placement="top"
+                class="icon-diff-added xxl"
+                (click)="OpcionesModal(forma, 'nuevo')"
+                title="nuevo"
+              ></i>
+            </a>
+            <button
+              *ngIf="btnGrupo.BtnGuard"
+              style="padding: 1px;color: white;"
+              type="submit"
+              (click)="OpcionesModal(forma, 'guardar')"
+              class="btn text-warning-600 btn-flat btn-icon btn-rounded"
+            >
+              <i
+                class="icon-floppy-disk xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+              ></i>
+            </button>
+            <a *ngIf="btnGrupo.BtnEdita" class="puntero">
+              <i
+                class="icon-pencil7 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal(forma, 'editar')"
+                title="editar"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnGrupo.BtnElimi"
+              ><i
+                class="icon-trash xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Eliminar"
+              >
+              </i
+            ></a>
+            <a class="puntero">
+              <i
+                class="icon-exit xxl"
+                (click)="OpcionesModal(forma, 'salir')"
+                data-toggle="tooltip"
+                data-placement="top"
+                data-dismiss="modal"
+                title="Salir"
+              >
+              </i
+            ></a>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary">FormReactivos</button>
+        <div class="modal-body">
+          <div class="row">
+            <ng-container *ngFor="let auxModal of auxmaModal; let i = index">
+              <div class="col-xl-12">
+                <div class="row text-center">
+                  <!-- <div class="col-md-6">
+                    <label class="form-group">Division</label>
+                    <select
+                      required
+                      [disabled]="disabled.division"
+                      [ngModel]="auxModal.division"
+                      (change)="cargarDependencia2($event.target.value, forma)"
+                      class="form-control selectpicker show-tick"
+                      name="division"
+                    >
+                      <option
+                        *ngFor="
+                          let gruac of nuevoAuxmaModal.niveles_unidades_negocio
+                        "
+                        [value]="gruac.id_division"
+                      >
+                        {{ gruac.descripcion }}</option
+                      >
+                    </select>
+                  </div> -->
+                  <div class="col-md-6">
+                    <label class="form-group">Dependencia Division</label>
+                    <select
+                      [disabled]="disabled.dependencia"
+                      [ngModel]="auxModal.dependencia"
+                      class="form-control selectpicker show-tick"
+                      name="dependencia"
+                    >
+                      <option
+                        *ngFor="let gruac of dependenciaCont003"
+                        [value]="gruac.dependencia"
+                      >
+                        {{ gruac.descripcion }}</option
+                      >
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-12" style="padding-top: 20px;">
+                <div class="row text-center">
+                  <!-- <div class="col-md-3">
+                    <div class="form-group form-group-float">
+                      <label class="form-group-float-label">borrar</label>
+                      <input
+                        style="text-align: center;"
+                        type="text"
+                        class="form-control"
+                        oninvalid="this.setCustomValidity('Introducir Descripcion')"
+                        oninput="setCustomValidity('')"
+                        [disabled]="disabled.descripci"
+                        placeholder="Introducir Descripcion"
+                        [ngModel]="auxModal.idunidaddivision"
+                        name="borrar"
+                        title="{{ auxModal.idunidaddivision }}"
+                        required
+                      />
+                    </div>
+                  </div> -->
+                  <div class="col-md-3">
+                    <div class="form-group form-group-float">
+                      <label class="form-group-float-label">Codigo</label>
+                      <!-- <input
+                        style="text-align: center;"
+                        type="text"
+                        class="form-control"
+                        [disabled]="true"
+                        placeholder="Introducir Codigo"
+                        [ngModel]="auxModal.idunidaddivision"
+                        name="idunidaddivision"
+                        title="{{ auxModal.id_unidad_division }}"
+                      /> -->
+                      <!-- <input
+                        style="text-align: center;"
+                        type="text"
+                        class="form-control"
+                        [disabled]="true"
+                        [value]="division"
+                        placeholder="Introducir Division"
+                        [ngModel]="iddivision"
+                        name="iddivision"
+                        title="iddivision"
+                      /> -->
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group form-group-float">
+                      <label class="form-group-float-label">Descripcion</label>
+                      <input
+                        style="text-align: center;"
+                        type="text"
+                        class="form-control"
+                        oninvalid="this.setCustomValidity('Introducir Descripcion')"
+                        oninput="setCustomValidity('')"
+                        [disabled]="disabled.descripci"
+                        placeholder="Introducir Descripcion"
+                        [ngModel]="auxModal.descripcion"
+                        name="descripcion"
+                        title="{{ auxModal.descripcion }}"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group form-group-float">
+                      <label class="form-group-float-label">Sigla</label>
+                      <input
+                        style="text-align: center;"
+                        type="text"
+                        class="form-control"
+                        oninvalid="this.setCustomValidity('Introducir Sigla')"
+                        oninput="setCustomValidity('')"
+                        [disabled]="disabled.sigla"
+                        placeholder="Introducir Sigla"
+                        [ngModel]="auxModal.sigla"
+                        name="sigla"
+                        title="{{ auxModal.sigla }}"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="custom-control custom-switch">
+                      <input
+                        type="checkbox"
+                        required="false"
+                        class="custom-control-input"
+                        [disabled]="disabled.estado"
+                        [ngModel]="auxModal.estado"
+                        title="auxModal.estado"
+                        name="estado"
+                        id="auxModalestado{{ i }}"
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="auxModalestado{{ i }}"
+                        >Estado</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
       </form>
-      <pre>
-      status: {{ form.status }}
-    </pre
-      >
-
-      <pre>
-      {{ form.value | json }}
-    </pre
-      >
     </div>
   </div>
-</div> -->
+</div>

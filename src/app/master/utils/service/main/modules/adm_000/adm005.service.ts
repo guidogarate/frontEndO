@@ -25,9 +25,8 @@ export class Adm005Service {
       );
   }
 
-  editaAdm005(codigo: string, estado: boolean) {
+  editaAdm005(codigo: string) {
     const json = JSON.stringify({
-      estado,
       codigo
     });
     const url1 = `${url.prod}${adm0005.resetContra}`;
