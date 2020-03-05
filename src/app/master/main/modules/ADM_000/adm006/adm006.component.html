@@ -45,12 +45,6 @@
                 (click)="nuevoAdm006()"
                 title="agregar"
               ></i>
-              <i
-                routerLink="{{ bienvenido }}"
-                class="icon-exit xxl puntero"
-                title="Pagina Bienvenido"
-              >
-              </i>
             </div>
           </div>
         </div>
@@ -64,9 +58,8 @@
               <thead>
                 <tr class="bg-blue">
                   <th data-hide="phone">Login</th>
-                  <th data-hide="phone">Foto</th>
                   <th data-toggle="true" class="table-content-center">
-                    Descripcion
+                    _______Descripcion_______
                   </th>
                   <th data-hide="phone,tablet">
                     Grupo_de_acceso
@@ -100,29 +93,30 @@
                       {{ adm006.login }}
                     </td>
                     <td>
-                      <!-- data-toggle="modal"
-                        data-target="#modal_adm_006_img"
-                        (click)="imagenModal(adm006.foto)" -->
-                      <img
-                        src="{{ adm006.foto | imagenpipe }}"
-                        class="img-fluid rounded-circle puntero"
-                        width="20"
-                        height="20"
-                        alt=""
-                      />
-                    </td>
-                    <td class="table-content-center">
-                      {{ adm006.descripcion }}
-                      <div>
-                        Activo
-                        <i
-                          *ngIf="adm006.activo === 1"
-                          class="icon-primitive-dot verde"
-                        ></i>
-                        <i
-                          *ngIf="adm006.activo === 0"
-                          class="icon-primitive-dot rojo"
-                        ></i>
+                      <div class="d-flex align-items-center">
+                        <div class="mr-3">
+                          <img
+                            src="{{ adm006.foto | imagenpipe }}"
+                            class="img-fluid rounded-circle"
+                            width="30"
+                            height="30"
+                            alt=""
+                          />
+                        </div>
+                        <div>
+                          {{ adm006.descripcion }}
+                          <div class="text-muted font-size-sm">
+                            Activo
+                            <i
+                              *ngIf="adm006.activo === 1"
+                              class="icon-primitive-dot verde"
+                            ></i>
+                            <i
+                              *ngIf="adm006.activo === 0"
+                              class="icon-primitive-dot gris"
+                            ></i>
+                          </div>
+                        </div>
                       </div>
                     </td>
                     <td class="table-content-center">

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { Observable, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { FormControl } from "@angular/forms";
@@ -13,7 +13,7 @@ import url from "src/app/master/config/url.config";
   templateUrl: "./adm005.component.html",
   styleUrls: ["./adm005.component.css"]
 })
-export class Adm005Component implements OnInit, OnDestroy {
+export class Adm005Component implements OnDestroy {
   bienvenido: string = url.bienvenido;
   textBuscarAdm005 = new FormControl("", []);
   texto = "all_auxma";
@@ -22,6 +22,7 @@ export class Adm005Component implements OnInit, OnDestroy {
   auxma: Adm005[];
   pagi: Paginacion[];
   loading = true;
+  loadguardar = "";
   buscar = true;
   habiCampo = {
     editar: true,
@@ -45,23 +46,21 @@ export class Adm005Component implements OnInit, OnDestroy {
       });
   }
 
-  ngOnInit() {}
-
   ngOnDestroy() {
     this.textBuscarAdm005 = null;
   }
-  buscarAdm005(texto: string) {
+  buscarAdm005(texto: string, numePag = "1") {
     this.buscar = true;
     let peticion: Observable<any>;
     if (texto.length === 0 || texto === "all_auxma") {
       this.texto = "all_auxma";
-      peticion = this.adm005S.buscarAdm005("90", "1", this.texto);
+      peticion = this.adm005S.buscarAdm005("90", numePag, this.texto);
     } else {
       this.texto = texto;
-      peticion = this.adm005S.buscarAdm005("90", "1", this.texto);
+      peticion = this.adm005S.buscarAdm005("90", numePag, this.texto);
     }
     this.sus = peticion.subscribe(resp => {
-      this.numeroPag = 1;
+      this.numeroPag = Number(numePag);
       if (resp["ok"]) {
         this.auxma = resp["usr"];
         this.pagi = resp["cant"];
@@ -146,20 +145,22 @@ export class Adm005Component implements OnInit, OnDestroy {
     }
   }
 
-  reset(str: Adm005) {
+  reset(str: Adm005, index = "") {
     if (str.estado) {
       if (str.activo) {
         this.notyG.noty("error", "Usuario debe estar fuera de sesion", 5000);
         return;
       } else {
-        this.adm005S.editaAdm005(str.login, str.estado).subscribe(resp => {
+        this.loadguardar = index;
+        this.adm005S.editaAdm005(str.login).subscribe(resp => {
           str.estado = false;
           if (resp["ok"]) {
-            this.buscarAdm005(this.texto);
+            this.buscarAdm005(this.texto, this.numeroPag.toString());
             this.notyG.noty("info", resp["mensaje"], 5000);
           } else {
-            //  console.log(resp["mensaje"]);
+            this.notyG.noty("error", resp["mensaje"], 5000);
           }
+          this.loadguardar = "";
         });
       }
     } else {

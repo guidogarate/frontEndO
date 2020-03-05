@@ -46,12 +46,6 @@
                 (click)="nuevElemGrup()"
                 title="agregar"
               ></i>
-              <i
-                routerLink="{{ bienvenido }}"
-                class="icon-exit xxl puntero"
-                title="Pagina Bienvenido"
-              >
-              </i>
             </div>
           </div>
         </div>
@@ -61,9 +55,7 @@
         <div class="col-md-10">
           <div class="table-responsive text-center">
             <!-- <table class="table table-togglable table-xs table-hover"> -->
-            <table
-              class="table table-sm table-hover table-bordered"
-            >
+            <table class="table table-sm table-hover table-bordered">
               <thead>
                 <tr class="bg-blue">
                   <th data-hide="phone">Codigo</th>
@@ -78,89 +70,89 @@
               </thead>
               <tbody>
                 <tr
-                    class="table-border-double PRL0"
-                    *ngFor="
-                      let adm003 of auxma;
-                      let i = index;
-                      let impar = odd;
-                      let par = even
-                    "
-                    [ngClass]="{ tablaCebradoPar: par, tablaCebradoImpar: impar }"
-                    (dblclick)="myFunction()"
-                  >
-                    <td>{{ adm003.adamtipa }}</td>
-                    <td class="table-content-center">
-                      {{ adm003.adamdesc }}
-                    </td>
-                    <td>
-                      <div
-                        *ngIf="
-                          adm003.adamesta === '1' || adm003.adamesta === true
-                        "
-                        class="custom-control custom-switch"
-                      >
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          [disabled]="true"
-                          [checked]="true"
-                          title="adm003.adamesta"
-                          id="GrupEst{{ i }}"
-                        />
-                        <label
-                          class="custom-control-label"
-                          for="GrupEst{{ i }}"
-                        ></label>
-                      </div>
-                      <div
-                        *ngIf="
-                          adm003.adamesta === '0' || adm003.adamesta === false
-                        "
-                        class="custom-control custom-switch"
-                      >
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          [disabled]="true"
-                          [checked]="false"
-                          title="adm003.adamesta"
-                          id="GrupEst{{ i }}"
-                        />
-                        <label
-                          class="custom-control-label"
-                          for="GrupEst{{ i }}"
-                        ></label>
-                      </div>
-                    </td>
-                    <td class="text-center">
-                      <div class="list-icons">
-                        <a
-                          href="#"
-                          (click)="actualizar(adm003)"
-                          data-toggle="modal"
-                          data-target="#modal_theme_info"
-                          class="list-icons-item text-primary-600"
-                          ><i class="icon-file-eye" title="visualizar"></i
-                        ></a>
-                        <a
-                          href="#"
-                          (click)="editar(adm003, 'editar')"
-                          data-toggle="modal"
-                          data-target="#modal_theme_info"
-                          class="list-icons-item text-teal-600"
-                          ><i class="icon-pencil7" title="editar"></i
-                        ></a>
-                        <a
-                          (click)="eliminar(adm003, 'eliminar')"
-                          data-toggle="modal"
-                          data-target="#modal_theme_info"
-                          href="#"
-                          class="list-icons-item text-danger-600"
-                          ><i class="icon-trash" title="eliminar"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
+                  class="table-border-double PRL0"
+                  *ngFor="
+                    let adm003 of auxma;
+                    let i = index;
+                    let impar = odd;
+                    let par = even
+                  "
+                  [ngClass]="{ tablaCebradoPar: par, tablaCebradoImpar: impar }"
+                  (dblclick)="myFunction()"
+                >
+                  <td>{{ adm003.adamtipa }}</td>
+                  <td class="table-content-center">
+                    {{ adm003.adamdesc }}
+                  </td>
+                  <td>
+                    <div
+                      *ngIf="
+                        adm003.adamesta === '1' || adm003.adamesta === true
+                      "
+                      class="custom-control custom-switch"
+                    >
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        [disabled]="true"
+                        [checked]="true"
+                        title="adm003.adamesta"
+                        id="GrupEst{{ i }}"
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="GrupEst{{ i }}"
+                      ></label>
+                    </div>
+                    <div
+                      *ngIf="
+                        adm003.adamesta === '0' || adm003.adamesta === false
+                      "
+                      class="custom-control custom-switch"
+                    >
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        [disabled]="true"
+                        [checked]="false"
+                        title="adm003.adamesta"
+                        id="GrupEst{{ i }}"
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="GrupEst{{ i }}"
+                      ></label>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div class="list-icons">
+                      <a
+                        href="#"
+                        (click)="actualizar(adm003)"
+                        data-toggle="modal"
+                        data-target="#modal_theme_info"
+                        class="list-icons-item text-primary-600"
+                        ><i class="icon-file-eye" title="visualizar"></i
+                      ></a>
+                      <a
+                        href="#"
+                        (click)="editar(adm003, 'editar')"
+                        data-toggle="modal"
+                        data-target="#modal_theme_info"
+                        class="list-icons-item text-teal-600"
+                        ><i class="icon-pencil7" title="editar"></i
+                      ></a>
+                      <a
+                        (click)="eliminar(adm003, 'eliminar')"
+                        data-toggle="modal"
+                        data-target="#modal_theme_info"
+                        href="#"
+                        class="list-icons-item text-danger-600"
+                        ><i class="icon-trash" title="eliminar"></i
+                      ></a>
+                    </div>
+                  </td>
+                </tr>
               </tbody>
             </table>
             <br />
@@ -491,4 +483,3 @@
     </div>
   </div>
 </div>
-
