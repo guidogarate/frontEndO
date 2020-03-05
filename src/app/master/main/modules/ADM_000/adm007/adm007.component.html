@@ -72,7 +72,6 @@
               #photoInput
               [disabled]="!editar"
             />
-            <!-- [disabled]="disabled.foto" -->
             <img
               [src]="
                 photoSelected || lista[0].logo_empresa || 'assets/subir_img.png'
@@ -84,10 +83,6 @@
                                width: fit-content;
                                padding: 0.5em;"
             />
-
-            <!-- <img src="https://thumbs.dreamstime.com/b/icono-del-usuario-46707697.jpg" 
-                               alt="imagen no encontrada" class="img-responsive rounded img-fluid"
-                               style="height: 116px;width: 100px; align-self: center;"> -->
           </div>
         </div>
         <div class="col-sm-10 col-12">
@@ -310,50 +305,7 @@
                   </div>
                 </div>
               </div>
-
-              <!-- <div class="col-sm-12 p0 m0">
-                                <div class="row p0 m0" style="padding-top: 0.5em;">
-                                    <div class="col-sm-3">
-                                        <div class="form-group row mb0">
-                                            <label class="col-form-label col-lg-4 col-6">Pais</label>
-                                            <div class="col-lg-8 col-6">
-                                                <div class="input-group" style="justify-content: center;" >
-                                                    <input type="text" name="pais" class="text-center" [(ngModel)]="newDirection.pais"
-                                                           [value]="textPais" disabled
-                                                    >   
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group row mb0">
-                                            <label class="col-form-label col-lg-4 col-6">Departamento</label>
-                                            <div class="col-lg-8 col-6">
-                                                <div class="input-group" style="justify-content: center;" >
-                                                    <input type="text" name="departamento"  class="text-center" disabled
-                                                           [value]="textDepartamento"  [(ngModel)]="newDirection.departamento"
-                                                    >   
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group row mb0">
-                                            <label class="col-form-label col-lg-4 col-6">Ciudad</label>
-                                            <div class="col-lg-8 col-6">
-                                                <select class="form-control p0 selectCenter alturaInputs"
-                                                        [(ngModel)]="idCiudad" (change) = "MostrarCiudad(newDirection)">
-                                                        <option *ngFor="let ciudad of ListCiudades" 
-                                                        [value]="ciudad.id_pais">{{ciudad.nombre_pais}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2 col-0"></div>
-                                </div>
-                            </div> -->
             </div>
-            <!-- prueba inputs direcciones -->
             <div
               class="row p0 m0"
               style="padding-top: 0.5em;"

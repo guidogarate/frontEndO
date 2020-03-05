@@ -146,21 +146,23 @@ export class Adm007Component implements OnInit {
     this.pasarDatosDireccion();
     switch (seccion) {
       case "all":
-        if (this.direcciones.length != null || this.contactos.length != 0) {
+        if (this.direcciones.length > 0 || this.contactos.length > 0) {
           this.ActualizarDatos();
+          console.log(this.direcciones.length);
+          console.log(this.contactos.length);
         }
         if (this.file) {
           this.InsertarImagen(this.file);
           console.log("insertando Imagen");
         }
         if (
-          this.direcciones.length != null ||
-          this.contactos.length != null ||
+          this.direcciones.length > 0 ||
+          this.contactos.length > 0 ||
           this.file
         ) {
           setTimeout(() => {
             this.ObtenerDatos();
-          }, 800);
+          }, 1000);
         }
         this.ModoVista();
         console.log("entro por all");
@@ -192,7 +194,6 @@ export class Adm007Component implements OnInit {
         this.limpiarDataContacto();
         this.ListContactos.push(this.newContacto);
         this._notyG.noty("success", "contacto añadido", 3500);
-        // this.limpiarDataContacto();
         console.log("Direccion añadida ", this.ListContactos);
         break;
       case "direccion":
@@ -396,7 +397,6 @@ export class Adm007Component implements OnInit {
       });
     }
   }
-  /**metodos auxiliares del tab */
   // validadores
   ValidarDireccion() {
     if (
