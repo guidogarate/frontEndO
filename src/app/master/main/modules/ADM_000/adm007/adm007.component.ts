@@ -594,6 +594,7 @@ export class Adm007Component implements OnInit {
       };
       direcciones.id_tipo_direccion = element.id_tipo_direccion;
       direcciones.id_direccion = element.id_direccion;
+      direcciones.direccion = element.direccion;
       direcciones.estado = element.estado;
       direcciones.tipo_direccion = element.tipo_direccion;
       direcciones.pais = element.pais;
@@ -644,6 +645,7 @@ export class Adm007Component implements OnInit {
       };
       direcciones.id_tipo_direccion = element.id_tipo_direccion;
       direcciones.id_direccion = element.id_direccion;
+      direcciones.direccion = element.direccion;
       direcciones.estado = element.estado;
       direcciones.tipo_direccion = element.tipo_direccion;
       direcciones.pais = element.pais;
