@@ -60,13 +60,6 @@
       </div>
       <!-- primer card -->
       <div class="row p0 m0">
-        <!-- <div class="col-sm-2 col-12 m0 p0">
-                    <div class="card card-padding margin-botton-card " *ngIf="lista!= undefined">
-                        <img src="{{lista[0].logo_empresa}}" 
-                            alt="imagen no encontrada" class="img-responsive rounded img-fluid"
-                            style="height: 116px;width: 100px; align-self: center;">
-                    </div>
-                </div> -->
         <div class="col-sm-2 col-12" *ngIf="lista != undefined">
           <div
             class="card card-padding margin-botton-card "
@@ -261,10 +254,6 @@
                       style="align-self: center; display: flex;"
                       *ngIf="editar"
                     >
-                      <!-- <a class="list-icons-item" (click) = "ActualizarEd(ed)" *ngIf = "i > 0 && tope > i" 
-                                                [routerLink]="nada()" routerLinkActive="router-link-active" >
-                                                <i class="icon-pencil7 title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
-                                            </a> -->
                       <a
                         class="list-icons-item"
                         *ngIf="i == tope - 1 && i > 0 && ed.id_estructura != 0"
@@ -311,27 +300,6 @@
             </div>
             <!-- new estructura -->
             <div class="row p0 m0" *ngIf="agregar">
-              <!-- <div class="col-sm-8">
-                                <div class="col-sm-12 col-12 m0 p0">
-                                    <div class="form-group row mb0">
-                                        <div class="col-sm-3 col-5">
-                                             <input type="text" [(ngModel)]="newEstructura.nombre" [value]="newEstructura.nombre" required class="form-control">
-                                        </div>
-                                        <div class="col-sm-3 col-3">
-                                             <input type="text" class="form-control text-center" (blur) = "CalcularLargo()" [(ngModel)]="newEstructura.largo" [value] = "newEstructura.largo">
-                                        </div>
-                                        <div class="col-sm-3 col-2">
-                                             <input type="text" class="form-control text-center" [(ngModel)]="newEstructura.separador" [value]="newEstructura.separador">
-                                        </div>
-                                        <div class="col-sm-3 col-2" style="align-self: center;"  >
-                                             <a class="list-icons-item"  
-                                                [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "AddEstructura()">
-                                                <i class="icon-checkmark-circle title-icon " data-toggle="tooltip" data-placement="top" title="Agregar"></i>
-                                             </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
               <p>
                 * Solo Puede crear un maximo de 6 tipos de estructuras de plan
                 de cuenta
@@ -421,10 +389,6 @@
                     </select>
                   </div>
                   <div class="col-sm-2 col-2" *ngIf="editar">
-                    <!-- <a class="list-icons-item"  (click) = "ActualizarNat(naturaleza)"
-                                            [routerLink]="nada()" routerLinkActive="router-link-active" >
-                                            <i class="icon-pencil7 title-icon" data-toggle="tooltip" data-placement="top" title="Actualizar"> </i>
-                                        </a>      -->
                     <a
                       class="list-icons-item"
                       *ngIf="i == topeNaturaleza - 1"
@@ -445,36 +409,6 @@
               </div>
               <div class="col-sm-3 col-0"></div>
             </div>
-            <!-- new naturaleza -->
-            <!-- <div class="row p0 m0" *ngIf="editar">
-                            <div class="col-sm-3 col-0"></div>
-                            <div class="col-sm-6 col-12">
-                                <div class="form-group row mb0">
-                                    <div class="col-sm-5 col-5" >
-                                        <select class="form-control p0 selectCenter alturaInputs" [(ngModel)]="newNaturaleza.id_codigo" [disabled] = "!editar">
-                                                <option [value]="codNaturaleza.id_codigo" *ngFor="let codNaturaleza of allCodigosNaturalezas">
-                                                        {{codNaturaleza.codigo}}
-                                                </option>
-                                        </select>
-                                    </div> 
-                                    <div class="col-sm-5 col-5" >      
-                                        <select class="form-control p0 selectCenter alturaInputs" [(ngModel)]="newNaturaleza.id_naturaleza" [disabled] = "!editar">
-                                                <option [value]="oneNaturaleza.id_naturaleza" *ngFor="let oneNaturaleza of allNaturalezas">
-                                                        {{oneNaturaleza.naturaleza}}
-                                                </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-2 col-2">      
-                                        <a class="list-icons-item"
-                                            [routerLink]="nada()" *ngIf="editar" routerLinkActive="router-link-active" (click) = "AddNaturaleza()">
-                                            <i class="icon-checkmark-circle title-icon" data-toggle="tooltip" data-placement="top" title="Agregar Naturaleza"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-0"></div>
-                        </div> -->
-            <!-- end new Naturaleza -->
           </div>
         </div>
       </div>

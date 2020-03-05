@@ -54,6 +54,8 @@ export class Adm007Component implements OnInit {
 
   photoSelected: string | ArrayBuffer;
   file: File;
+  ListLastStadeDirecciones: any = [];
+  ListLastStadeContactos: any = [];
 
   constructor(
     private _adm007Service: Adm007Service,
@@ -73,13 +75,6 @@ export class Adm007Component implements OnInit {
         this.lista = resp["datos"];
         this.ListActividadEmpresarial = this.lista[0]["actividad_empresarial"];
         this.ListTipoDirecciones = this.lista[0]["tipo_direcciones"];
-        this.ListDirecciones = this.lista[0]["direcciones"];
-        if (this.ListDirecciones != null) {
-          this.CantidadDirecciones = this.ListDirecciones.length;
-          this.CambiarTipoEstado();
-        } else {
-          this.CantidadDirecciones = 0;
-        }
         this.ListContactos = this.lista[0]["contactos"];
         if (this.ListContactos != null) {
           this.CantidadContactos = this.ListContactos.length;
@@ -93,6 +88,16 @@ export class Adm007Component implements OnInit {
         this.ListDepartamentos = this.lista[0]["departamentos"];
         this.ListCiudades = this.lista[0]["ciudades"];
         this.idCiudad = this.ListCiudades[0].id_pais;
+        this.ListDirecciones = this.lista[0]["direcciones"];
+        if (this.ListDirecciones != null && this.ListDirecciones != undefined) {
+          this.CantidadDirecciones = this.ListDirecciones.length;
+          this.MostrarCiudad(
+            this.ListDirecciones[this.ListDirecciones.length - 1]
+          );
+          this.CambiarTipoEstado();
+        } else {
+          this.CantidadDirecciones = 0;
+        }
         setTimeout(() => {
           initLabels();
         }, 800);
@@ -171,6 +176,7 @@ export class Adm007Component implements OnInit {
   }
   ModoEdicion() {
     this.editar = true;
+    this.GuardarEstado();
     this.LimpiarData();
   }
   ModoVista() {
@@ -181,37 +187,76 @@ export class Adm007Component implements OnInit {
     this.photoSelected = null;
     this.indiceContact = 0;
     this.indiceDirection = 0;
+    this.VolverEstadoAnterior();
   }
-
-  Agregar(newData: string) {
-    console.log("agregando: ", newData);
-    switch (newData) {
+  ValidarCantidad(tipo: string) {
+    const max: number = 10;
+    switch (tipo) {
       case "contactos":
-        this.indiceContact = this.indiceContact + 1;
         if (this.ListContactos == null) {
           this.ListContactos = [];
         }
-        this.limpiarDataContacto();
-        this.ListContactos.push(this.newContacto);
-        this._notyG.noty("success", "contacto añadido", 3500);
-        console.log("Direccion añadida ", this.ListContactos);
+        return this.ListContactos.length < max;
         break;
       case "direccion":
-        this.indiceDirection = this.indiceDirection + 1;
         if (this.ListDirecciones == null) {
           this.ListDirecciones = [];
         }
-        this.LimpiarData();
-        this.ListDirecciones.push(this.newDirection);
-        this.MostrarCiudad(this.idCiudad);
-        this._notyG.noty("success", "direccion añadida", 3500);
-        console.log("Lista añadida ", this.ListDirecciones);
+        return this.ListDirecciones.length < max;
         break;
       default:
         break;
     }
   }
 
+  Agregar(newData: string) {
+    console.log("agregando: ", newData);
+    switch (newData) {
+      case "contactos":
+        if (this.ValidarCantidad("contactos")) {
+          this.indiceContact = this.indiceContact + 1;
+          // if (this.ListContactos == null) {
+          //   this.ListContactos = [];
+          // }
+          this.limpiarDataContacto();
+          this.ListContactos.push(this.newContacto);
+          this._notyG.noty("success", "contacto", 3500);
+          console.log("Direccion añadida ", this.ListContactos);
+          break;
+        } else {
+          this._notyG.noty(
+            "warning",
+            "solo se puede ingresar 10 contactos",
+            3500
+          );
+          console.log("Direccion añadida", this.ListContactos);
+        }
+        break;
+      case "direccion":
+        if (this.ValidarCantidad("direccion")) {
+          this.indiceDirection = this.indiceDirection + 1;
+          // if (this.ListDirecciones == null) {
+          //   this.ListDirecciones = [];
+          // }
+          this.LimpiarData();
+          this.ListDirecciones.push(this.newDirection);
+          this.MostrarCiudad(this.idCiudad);
+          this._notyG.noty("success", "direccion añadida", 3500);
+          console.log("Lista añadida ", this.ListDirecciones);
+        } else {
+          this._notyG.noty(
+            "warning",
+            "solo se puede ingresar 10 direcciones",
+            3500
+          );
+          console.log("Direccion añadida", this.ListContactos);
+        }
+        break;
+      default:
+        break;
+    }
+  }
+  // code ctrl x
   pasarDatosDireccion() {
     this.ListSend = {
       razon_social: this.lista[0].razon_social,
@@ -237,6 +282,8 @@ export class Adm007Component implements OnInit {
       id_ciudad: this.ListCiudades[0].id_pais
     };
     this.idCiudad = this.ListCiudades[0].id_pais;
+    this.textDepartamento = "";
+    this.textPais = "";
   }
 
   limpiarDataContacto() {
@@ -467,7 +514,7 @@ export class Adm007Component implements OnInit {
     });
   }
 
-  Remover(idTipo: number, id: any) {
+  Remover(idTipo: number, id: number) {
     let pos = 1;
     let v1: number = -1;
     if (idTipo == 1) {
@@ -528,5 +575,133 @@ export class Adm007Component implements OnInit {
         this._notyG.noty("warning", "la imagen no pudo ser actualizada", 2500);
       }
     });
+  }
+
+  /// guardar estado - volver al estado anterior
+  GuardarEstado() {
+    this.ListDirecciones.forEach(element => {
+      const direcciones: any = {
+        id_tipo_direccion: 1,
+        id_direccion: 0,
+        direccion: "",
+        estado: 1,
+        tipo_direccion: "Propietario",
+        pais: "Bolivia",
+        departamento: "Santa cruz",
+        ciudad: "Santa Cruz de la Sierra"
+      };
+      direcciones.id_tipo_direccion = element.id_tipo_direccion;
+      direcciones.id_direccion = element.id_direccion;
+      direcciones.estado = element.estado;
+      direcciones.tipo_direccion = element.tipo_direccion;
+      direcciones.pais = element.pais;
+      direcciones.departamento = element.departamento;
+      direcciones.ciudad = element.ciudad;
+      this.ListLastStadeDirecciones.push(direcciones);
+    });
+
+    this.ListContactos.forEach(element => {
+      let contactos = {
+        id_tipo_contacto: 0,
+        id_subtipo_contacto: 0,
+        id_contacto: 0,
+        codigo_contacto: "",
+        contacto:
+          "mario                                                                                               ",
+        estado: 1,
+        tipo: "Instagram"
+      };
+      contactos.id_tipo_contacto = element.id_tipo_contacto;
+      contactos.id_subtipo_contacto = element.id_subtipo_contacto;
+      contactos.id_contacto = element.id_contacto;
+      contactos.codigo_contacto = element.codigo_contacto;
+      contactos.contacto = element.contacto;
+      contactos.estado = element.estado;
+      contactos.tipo = element.tipo;
+      this.ListLastStadeContactos.push(contactos);
+    });
+    console.log("direcciones save contactos : ", this.ListLastStadeContactos);
+    console.log(
+      "direcciones save direcciones : ",
+      this.ListLastStadeDirecciones
+    );
+  }
+
+  VolverEstadoAnterior() {
+    this.ListDirecciones = [];
+    this.ListLastStadeDirecciones.forEach(element => {
+      const direcciones: any = {
+        id_tipo_direccion: 1,
+        id_direccion: 0,
+        direccion: "",
+        estado: 1,
+        tipo_direccion: "Propietario",
+        pais: "Bolivia",
+        departamento: "Santa cruz",
+        ciudad: "Santa Cruz de la Sierra"
+      };
+      direcciones.id_tipo_direccion = element.id_tipo_direccion;
+      direcciones.id_direccion = element.id_direccion;
+      direcciones.estado = element.estado;
+      direcciones.tipo_direccion = element.tipo_direccion;
+      direcciones.pais = element.pais;
+      direcciones.departamento = element.departamento;
+      direcciones.ciudad = element.ciudad;
+      this.ListDirecciones.push(direcciones);
+    });
+    this.ListContactos = [];
+    this.ListLastStadeContactos.forEach(element => {
+      let contactos = {
+        id_tipo_contacto: 0,
+        id_subtipo_contacto: 0,
+        id_contacto: 0,
+        codigo_contacto: "",
+        contacto:
+          "mario                                                                                               ",
+        estado: 1,
+        tipo: "Instagram"
+      };
+      contactos.id_tipo_contacto = element.id_tipo_contacto;
+      contactos.id_subtipo_contacto = element.id_subtipo_contacto;
+      contactos.id_contacto = element.id_contacto;
+      contactos.codigo_contacto = element.codigo_contacto;
+      contactos.contacto = element.contacto;
+      contactos.estado = element.estado;
+      contactos.tipo = element.tipo;
+      this.ListContactos.push(contactos);
+    });
+    console.log("direcciones Recuperar contactos : ", this.ListContactos);
+    console.log("direcciones recuperar direcciones : ", this.ListDirecciones);
+    this.ListLastStadeContactos = [];
+    this.ListLastStadeDirecciones = [];
+
+    // this.estructuraPlanDeCuentas = [];
+    // this.Listnaturalezas = [];
+    // this.ListLastStade.forEach(element => {
+    //   let AuxEstructura: any = {
+    //     id_estructura: 0,
+    //     nombre: "",
+    //     largo: 0,
+    //     separador: ""
+    //   };
+    //   AuxEstructura.id_estructura = element.id_estructura;
+    //   AuxEstructura.nombre = element.nombre;
+    //   AuxEstructura.largo = element.largo;
+    //   AuxEstructura.separador = element.separador;
+    //   this.estructuraPlanDeCuentas.push(AuxEstructura);
+    // });
+    // console.log(this.ListLastStade);
+    // console.log(this.estructuraPlanDeCuentas);
+    // this.ListLastStadeNaturaleza.forEach(element => {
+    //   let AuxNaturaleza = {
+    //     id_codigo: 0,
+    //     id_naturaleza: 0
+    //   };
+    //   AuxNaturaleza.id_codigo = element.id_codigo;
+    //   AuxNaturaleza.id_naturaleza = element.id_naturaleza;
+    //   this.Listnaturalezas.push(AuxNaturaleza);
+    // });
+    // this.ListLastStadeNaturaleza = [];
+    // this.ListLastStade = [];
   }
 }

@@ -313,14 +313,13 @@
             >
               <div class="col-sm-3">
                 <div class="form-group row mb0">
-                  <label class="col-form-label col-lg-4 col-6">Pais</label>
+                  <label class="col-form-label col-lg-4 col-6">PaisNE</label>
                   <div class="col-lg-8 col-6">
                     <div class="input-group" style="justify-content: center;">
                       <input
                         type="text"
                         name="pais"
                         class="text-center"
-                        [(ngModel)]="newDirection.pais"
                         [value]="textPais"
                         disabled
                       />
@@ -341,7 +340,6 @@
                         class="text-center"
                         disabled
                         [value]="textDepartamento"
-                        [(ngModel)]="newDirection.departamento"
                       />
                     </div>
                   </div>
@@ -357,6 +355,7 @@
                       (change)="
                         MostrarCiudad(ListContactos[ListContactos.length - 1])
                       "
+                      [disabled]="!editar"
                     >
                       <option
                         *ngFor="let ciudad of ListCiudades"
@@ -371,12 +370,14 @@
             </div>
             <div
               class="row p0 m0"
-              *ngIf="editar && ListDirecciones != null"
+              *ngIf="
+                editar && ListDirecciones != null && ListDirecciones.length > 0
+              "
               style="padding-top: 0.5em;"
             >
               <div class="col-sm-3">
                 <div class="form-group row mb0">
-                  <label class="col-form-label col-lg-4 col-6">Pais</label>
+                  <label class="col-form-label col-lg-4 col-6">PaisE</label>
                   <div class="col-lg-8 col-6">
                     <div class="input-group" style="justify-content: center;">
                       <input
@@ -562,7 +563,9 @@
                             class="form-control text-center"
                             [disabled]="
                               !editar ||
-                              ListContactos.length > i + indiceContact
+                              ListContactos.length > i + indiceContact ||
+                              item.id_contacto != '33-1' ||
+                              item.id_contacto != '33-2'
                             "
                             [(ngModel)]="item.codigo_contacto"
                             [value]="item.codigo_contacto"
@@ -628,7 +631,7 @@
                   </div>
                   <div class="col-sm-1 col-0"></div>
                 </div>
-                <!-- <pre>{{item | json}}</pre> -->
+                <!-- <pre>{{ item | json }}</pre> -->
               </div>
               <!-- <pre>editar: {{!editar | json}}</pre> -->
               <!-- <pre>ListContactos: {{ ListContactos | json }}</pre> -->
