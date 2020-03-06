@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Adm010Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
+import { element } from "protractor";
 declare function initLabels();
 
 @Component({
@@ -17,6 +18,8 @@ export class Adm010Component implements OnInit {
   Listnaturalezas: any = [];
   cuentas: any = [];
   allCodigosNaturalezas: any = [];
+  UsedAllCodigosNaturalezas: any = [];
+  filterAllCodigosNaturalezas: any = [];
   allNaturalezas: any = [];
   gestiones: any = [];
   ultimoElemento: any;
@@ -46,9 +49,13 @@ export class Adm010Component implements OnInit {
   }
   ModoVista(id: string) {
     this.editar = false;
-    if (id == "salir") {
-      console.log("entro a volver estado :O");
-      this.VolverEstadoAnterior();
+    switch (id) {
+      case "salir":
+        this.VolverEstadoAnterior();
+        console.log("entro a volver estado Anterior");
+        break;
+      default:
+        break;
     }
     this.InicializarEstructura();
     this.InicializarNaturaleza();
@@ -86,18 +93,17 @@ export class Adm010Component implements OnInit {
             this.ultimoElemento = null;
           }
           this.actividadEmpresarial = this.lista[0]["actividad_empresarial"];
+          this.cuentas = this.lista[0]["cuentas"];
+          this.allCodigosNaturalezas = this.lista[0]["all_codigos_naturalezas"];
+          this.allNaturalezas = this.lista[0]["all_naturalezas"];
+          this.gestiones = this.lista[0]["gestiones"];
           this.Listnaturalezas = this.lista[0]["naturalezas"];
           if (this.Listnaturalezas == null) {
             this.Listnaturalezas = [];
           } else {
             this.topeNaturaleza = this.Listnaturalezas.length;
+            this.CargarListasNaturalezas();
           }
-
-          this.cuentas = this.lista[0]["cuentas"];
-          this.allCodigosNaturalezas = this.lista[0]["all_codigos_naturalezas"];
-          this.allNaturalezas = this.lista[0]["all_naturalezas"];
-          this.gestiones = this.lista[0]["gestiones"];
-
           setTimeout(() => {
             initLabels();
           }, 800);
@@ -290,12 +296,10 @@ export class Adm010Component implements OnInit {
     console.log("lista naturalezas update : ", this.ListUpdatesNaturalezas);
     console.log("update: ", this.listSend);
     this.Update();
+    this.InicializarListsSend();
     if (this.estructuras.length > 0 || this.naturalezas.length > 0) {
-      this.InicializarListsSend();
       console.log("lista para Insert: ", this.listSend);
-      // setTimeout(() => {
       this.Insertar();
-      // }, 1000);
     }
     setTimeout(() => {
       this.ObtenerDatos();
@@ -368,18 +372,18 @@ export class Adm010Component implements OnInit {
     this.estructuraPlanDeCuentas.forEach(element => {
       if (element.id_estructura == 0) {
         this.estructuras.push(element);
-        console.log("para insert: ", element);
+        console.log("ED para insert : ", element);
       } else {
-        console.log("para update: ", element);
+        console.log("ED para update: ", element);
         this.ListUpdatesPlan.push(element);
       }
     });
     this.Listnaturalezas.forEach(element => {
       if (element.codigo == 0) {
-        console.log("para insert: ", element.codigo);
+        console.log("NAT para insert: ", element.codigo);
         this.naturalezas.push(element);
       } else {
-        console.log("para update: ", element);
+        console.log("NAT para update: ", element);
         this.ListUpdatesNaturalezas.push(element);
       }
     });
@@ -392,5 +396,51 @@ export class Adm010Component implements OnInit {
       this.InicializarNaturaleza();
       this.Listnaturalezas.push(this.newNaturaleza);
     }
+  }
+  // Metodo para Filtar Listas para que no se repitan en las opciones de Select
+
+  ObtenerListaUsedNaturalezas() {
+    if (this.Listnaturalezas != undefined && this.Listnaturalezas.length > 0) {
+      this.Listnaturalezas.forEach(element => {
+        let AuxNaturaleza = {
+          id_codigo: 0,
+          codigo: 0
+        };
+        AuxNaturaleza.id_codigo = element.id_codigo;
+        AuxNaturaleza.codigo = element.codigo;
+        this.UsedAllCodigosNaturalezas.push(AuxNaturaleza);
+      });
+    }
+    console.log("Lista USados: ", this.UsedAllCodigosNaturalezas);
+  }
+
+  ObtenerListaNaturalezasDisponibles() {
+    console.log("used: ", this.UsedAllCodigosNaturalezas);
+    console.log("all: ", this.allCodigosNaturalezas);
+
+    if (
+      this.UsedAllCodigosNaturalezas != undefined &&
+      this.UsedAllCodigosNaturalezas.length > 0
+    ) {
+      this.allCodigosNaturalezas.forEach(element => {
+        let val: boolean = false;
+        this.UsedAllCodigosNaturalezas.forEach(oneNature => {
+          console.log("compare: ", element, oneNature);
+          if (oneNature.id_codigo == element.id_codigo) {
+            val = true;
+          }
+        });
+        console.log("elemento: ", val, element);
+        if (val == false) {
+          this.filterAllCodigosNaturalezas.push(element);
+        }
+      });
+    }
+    console.log("lista Filtrada:", this.filterAllCodigosNaturalezas);
+  }
+
+  CargarListasNaturalezas() {
+    this.ObtenerListaUsedNaturalezas();
+    this.ObtenerListaNaturalezasDisponibles();
   }
 }

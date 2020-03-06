@@ -1,296 +1,636 @@
 <!-- Page content -->
 <div class="row haciadentro animaciones height-container">
   <div class="col-xl-12">
-      <div class="card height-container m0"> 
-        <div class="card-header header-elements-inline" style="padding: 0.1em;">  
-            <div class="col-md-12 col-12" style="padding: 0.1em;">
-                <div class="row p0 m0">
-                    <div class="col-md-8 col-5 ptitulo" style="align-self: center;">
-                        <h2 class="card-title font-weight-bold PLR0-1em pt05 text-left title-head">
-                            <i class="icon-calendar mr-2"></i>
-                              Fecha del dia  
-                        </h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-header header-elements-inline p0">  
-          <div class="col-md-12 col-12 p0">
-                  <div class="col-md-12 col-12 ptitulo">
-                      <div class="row p0 m0">
-                          <div class="col-sm-7 ">
-                          </div>  
-                          <div class="col-md-2 col-4 ptitulo form-group-feedback form-group-feedback-right">
-                              <select class="form-control float-left selectCenter p0" [(ngModel)]="mes" (change)="ActualizarLista()">
-                                    <option *ngFor="let item of listaMeses" [value]="item.id">{{item.name}}</option>
-                            </select>
-                          </div>
-                          <div class="form-group-feedback form-group-feedback-right col-md-1 col-4 ptitulo">
-                              <select  class="form-control float-left selectCenter p0"  [(ngModel)]="anho" (change)="ActualizarLista()">
-                                      <option *ngFor="let item of listaAnhos" [value]="item.fecha">{{item.fecha}}</option>
-                              </select> 
-                          </div>
-                          <div class="col-md-2 col-4 list-icons float-right"> 
-                              <a  *ngIf="stade == 0" [routerLink]="" routerLinkActive="router-link-active"
-                                (click) ="Editar()" class="list-icons-item">
-                                  <i class="icon-pencil7 icons-options" data-toggle="tooltip" data-placement="top" title="Editar"></i>
-                              </a>
-                              <a  *ngIf="stade == 0" [routerLink]="" routerLinkActive="router-link-active"
-                                (click) ="Nuevo()" class="list-icons-item">
-                                  <i class="icon-file-plus icons-options" data-toggle="tooltip" data-placement="top" title="Nuevo"></i>
-                              </a>
-                              <a *ngIf="stade == 2 "  [routerLink]="" routerLinkActive="router-link-active" 
-                                (click) ="Guardar()" class="list-icons-item">
-                                  <i class="icon-floppy-disk icons-options" data-toggle="tooltip" data-placement="top" title="Guardar"></i>
-                              </a>
-                              <a *ngIf="stade == 1"  [routerLink]="" routerLinkActive="router-link-active" 
-                                  (click) ="nada()" class="list-icons-item">
-                                  <i class="icon-printer2 icons-options" data-toggle="tooltip" data-placement="top" title="Imprimir"></i>
-                              </a>
-                              <a *ngIf="stade == 1"  [routerLink]="" routerLinkActive="router-link-active" (click) ="Actualizar()" class="list-icons-item">
-                                <i class="icon-floppy-disk icons-options" data-toggle="tooltip" data-placement="top" title="Actualizar"></i>
-                              </a>
-                              <a *ngIf="(stade == 1) || (stade == 2)" [routerLink]="" routerLinkActive="router-link-active"
-                              (click) ="Cancelar()" class="list-icons-item" >
-                              <i class="icon-exit icons-options" data-toggle="tooltip" data-placement="top" title="Cancelar"></i>
-                            </a>
-                          </div>
-                      </div>
-                  </div>
-               
-          </div>      
-        </div>
-        <div class="card-body" 
-                  style="padding-left: 0;
-                  padding-right: 0;
-                  padding-bottom: 0.5em;">
-          <div class="row p0 m0" >
-              <div class="col-md-6">
-                  <div class="card mb05">
-                      <div class="card-header p0"
-                            style="padding-left: 2.3em;">
-                          <h6 class="card-title text-center title-negrita">Fecha de Proceso</h6>
-                      </div>
-                      <div class="card-body p0 pb1" *ngIf="predeterminado!=undefined">
-                          <div class="text-left" style="display: flex;">
-                              <div class="col-md-6 col-6">
-                                  <label class="col-form-label col-lg-6 p0 m0 title-negrita" style="padding-left: 0.8em;">Fecha</label>
-                                  <div class="col-lg-12 col-12">
-                                    <input  *ngIf="predeterminado!=undefined" type="text" readonly class="form-control h30 text-center"  value="{{predeterminado.fecha |date:'dd-MM-yyyy'}}">
-                                    <input  *ngIf="predeterminado== undefined" type="text" readonly class="form-control h30 "  value="">
-                                  </div>
-                              </div>
-                              <div class="col-md-6 col-6">
-                                  <div class="form-group" style="margin-bottom: 0.1em;">
-                                        <div class="custom-control custom-switch" style="margin-bottom: 0.2em;">
-                                            <input type="checkbox" class="custom-control-input" id="pred" name="pred" disabled
-                                                    checked="predeterminado.estado == 'true'" data-fouc >
-                                            <label *ngIf="predeterminado.estado" class="custom-control-label h30" for="pred">Abierto</label>
-                                            <label *ngIf="!predeterminado.estado" class="custom-control-label h30" for="pred">Cerrado</label>
-                                        </div>
-                                        <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input h30" disabled id="tipo" name="tipo" checked="true">
-                                            <label class="custom-control-label h30" for="tipo">Predeterminado</label>
-                                        </div>
-                                  </div>
-                              </div>
-                         </div>
-                        <div class="row p0 m0" style="padding-top: 0.3em;">
-                            <div class="col-md-6 col-6 text-left">
-                                <label class="col-lg-12 col-12 m0 title-negrita">Tipo de Cambio Oficial</label>
-                                <div class="col-lg-12 col-12">
-                                    <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center" value={{predeterminado.tc_oficial}}>
-                                    <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value="">
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-6 text-left"></div>
-                         </div>
-                        <div class="row p0 m0">
-                            <div class="col-md-6 col-6 text-left">
-                                <label class="col-lg-12 m0 title-negrita">Tipo de Cambio Compras</label>
-                                <div class="col-lg-12">
-                                    <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center" value={{predeterminado.tc_compra}}>
-                                    <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value="">
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-6 text-left">
-                                <label class="col-lg-12 m0 title-negrita">Tipo de Cambio UFV</label>
-                                <div class="col-lg-12">
-                                    <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center" value= {{predeterminado.tc_ufv}}>
-                                    <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value= "">
-                                </div>
-                            </div>
-                        </div> 
-                        <div class="row p0 m0">
-                            <div class="col-md-6 col-6 text-left">
-                                <label class="col-lg-12 m0 title-negrita">Tipo de Cambio Ventas</label>
-                                <div class="col-lg-12">
-                                    <input *ngIf="predeterminado!=undefined" type="number" readonly class="form-control h30 text-center" value={{predeterminado.tc_venta}}>
-                                    <input *ngIf="predeterminado==undefined" type="number" readonly class="form-control h30" value="">
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-6 text-left" style="align-self : flex-end;">
-                                <div class="col-lg-6 col-6 text-right">
-                                    <a [routerLink]="nada()" routerLinkActive="router-link-active"
-                                        class="list-icons-item text-danger-600" (click)="Copiar()" >
-                                          <i style="font-size: 2.2em;" class="icon-copy3" data-toggle="tooltip" data-placement="top" title="Copiar"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-6">
-                  <div class="card mb05">
-                      <div class="card-body p0 pb1" >
-                        <div class="row p0 m0 ptcard">
-                            <div class="col-md-6 col-6">
-                                <div class="form-group form-group-feedback form-group-feedback-right  form-group-float text-left m0">
-                                    <label class="form-group-float-label m0 title-negrita">Fecha</label>
-                                    <input [disabled]="stade == 0" type="date" name="Fecha" required class="form-control text-center h30"
-                                          value="{{tipoCambio.fecha |date:'yyyy-MM-dd'}}" [(ngModel)]="tipoCambio.fecha" placeholder="Fecha"
-                                          data-date="" data-date-format="dd-mm-yyyy" max="{{fechaMaxima}}">
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-6">
-                                <div class="form-group" style="margin-bottom: 0.1em;">
-                                    <div class="custom-control custom-switch" style="margin-bottom: 0.2em;">
-                                        <input type="checkbox" class="custom-control-input" id="switch1" name="sw1" [disabled]="stade == 0"
-                                        [checked]="tipoCambio.estado == 'true'" data-fouc [(ngModel)]="tipoCambio.estado ">
-                                        <label *ngIf="tipoCambio.estado" class="custom-control-label h30 title-negrita" for="switch1">Abierto</label>
-                                        <label *ngIf="!tipoCambio.estado" class="custom-control-label h30 title-negrita" for="switch1">Cerrado</label>
-                                    </div>
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input h30" id="switch2" name="sw2"
-                                        [checked]="tipoCambio.pred" [(ngModel)]="tipoCambio.pred" [disabled]="stade == 0" >
-                                        <label class="custom-control-label title-negrita" for="switch2">Predeterminado</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row p0 m0"> 
-                            <div class="col-sm-6 col-6 text-left">
-                                <div class="form-group form-group-float m02">
-                                    <label class="col-sm-12 form-group-float-label m0 title-negrita">Tipo de Cambio Oficial</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control text-center h30 validar" pattern="^[0-9]+(.[0-9]+)?$" name="tcOficial" [disabled]="stade == 0"
-                                                placeholder="T/C Oficial" value="{{tipoCambio.tc_oficial}}" [(ngModel)]="tipoCambio.tc_oficial">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-0"></div>
-                        </div>
-                        <div class="row m0 p0">
-                            <div class="col-md-6 col-6 text-left">
-                                <div class="form-group form-group-float m02">
-                                    <label class="col-lg-12 form-group-float-label m0 title-negrita">Tipo de Cambio Compras</label>
-                                    <div class="col-sm-12">
-                                          <input type="text" class="form-control text-center h30 validar" pattern="^[0-9]+(.[0-9]+)?$" name="tcCompras" [disabled]="stade == 0" 
-                                                placeholder="T/C Compras" value="{{tipoCambio.tc_compra}}" [(ngModel)]="tipoCambio.tc_compra">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-6 text-left">
-                                <div class="form-group form-group-float m02">
-                                    <label class="col-lg-12 form-group-float-label m0 title-negrita">Tipo de Cambio UFV</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control text-center h30 validar" pattern="^[0-9]+(.[0-9]+)?$" name="tcUfv" [disabled]="stade == 0"
-                                                placeholder="T/C UFV" value="{{tipoCambio.tc_ufv}}" [(ngModel)]="tipoCambio.tc_ufv">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row p0 m0">
-                            <div class="col-md-6 col-6 text-left m0" >
-                                <div class="form-group form-group-float m02">
-                                    <label class="col-lg-12 form-group-float-label m0 title-negrita">Tipo de Cambio Ventas</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control text-center h30 validar" pattern="^[0-9]+(.[0-9]+)?$" name="tcVentas" [disabled]="stade == 0"
-                                                placeholder="T/C Ventas" value="{{tipoCambio.tc_venta}}" [(ngModel)]="tipoCambio.tc_venta">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                      </div>
-                  </div>
-                </div>
-          </div>
+    <div class="card height-container m0">
+      <div class="card-header header-elements-inline" style="padding: 0.1em;">
+        <div class="col-md-12 col-12" style="padding: 0.1em;">
           <div class="row p0 m0">
-            <div class="col-md-12">
-              <div class="table-responsive text-center" *ngIf="ListTipoCambio!= undefined">
-                  <table class="table table-sm table-hover table-bordered table-striped">
-                    <thead  class="bg-blue">
-                      <tr class="table-border-double">
-                        <th class="p0">Fecha</th>
-                        <th class="p0">Tipo Cambio Oficial</th>
-                        <th class="p0">Tipo Cambio Compra</th>
-                        <th class="p0">Tipo Cambio Venta</th>
-                        <th class="p0">Tipo Cambio UFV</th>
-                        <th class="p0">Estado</th>
-                        <th class="p0">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody >
-                      <tr *ngFor="let item of ListTipoCambio ; let i = index"  class=" p0 puntero">
-                        <td class="p0">{{item.fecha | date:'mediumDate':'+0400'}} </td>
-                        <td class="p0">{{item.tc_oficial}}</td>
-                        <td class="p0">{{item.tc_compra}}</td>
-                        <td class="p0">{{item.tc_venta}}</td>
-                        <td class="p0">{{ item.tc_ufv }} </td>
-                        <td class="p0">
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="{{i+1}}" name="stade1"
-                                        [checked]="item.estado == true" data-fouc disabled>
-                                <label class="custom-control-label h30" for="{{i+1}}"></label>
-                            </div>
-                          
-                        </td>
-                        <td class="pTB0">
-                            <div class="list-icons" *ngIf="stade == 1"> 
-                                <a class="list-icons-item text-teal-600"  (click)="cargarEdicion(item)"
-                                  [routerLink]="nada()" routerLinkActive="router-link-active" 
-                                >
-                                    <i class="icon-pencil7 xl" data-toggle="tooltip" data-placement="top" title="Editar fecha"> </i>
-                                </a>
-                                <a class="list-icons-item text-danger-600" (click) ="Eliminar(item)"
-                                  [routerLink]="nada()" routerLinkActive="router-link-active">
-                                    <i class="icon-trash xl " data-toggle="tooltip" data-placement="top" title="Eliminar fecha"> </i>
-                                </a>
-                            </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>               
-              <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                  <li class="page-item">
-                    <a class="page-link" [routerLink]="nada()" routerLinkActive="router-link-active"  aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-
-                  <li *ngFor="let item of totalPaginacion; let i = index" class="page-item" >
-                    <a class="page-link" (click)="cargarPaginacion(item.pag)" 
-                    [routerLink]="" routerLinkActive="router-link-active">
-                     {{ i + 1}}
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" [routerLink]="nada()" routerLinkActive="router-link-active" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-              
+            <div class="col-md-8 col-5 ptitulo" style="align-self: center;">
+              <h2
+                class="card-title font-weight-bold PLR0-1em pt05 text-left title-head"
+              >
+                <i class="icon-calendar mr-2"></i>
+                Fecha del dia
+              </h2>
             </div>
           </div>
+        </div>
       </div>
+      <div class="card-header header-elements-inline p0">
+        <div class="col-md-12 col-12 p0">
+          <div class="col-md-12 col-12 ptitulo">
+            <div class="row p0 m0">
+              <div class="col-sm-7 "></div>
+              <div
+                class="col-md-2 col-4 ptitulo form-group-feedback form-group-feedback-right"
+              >
+                <select
+                  class="form-control float-left selectCenter p0"
+                  [(ngModel)]="mes"
+                  (change)="ActualizarLista()"
+                >
+                  <option *ngFor="let item of listaMeses" [value]="item.id">{{
+                    item.name
+                  }}</option>
+                </select>
+              </div>
+              <div
+                class="form-group-feedback form-group-feedback-right col-md-1 col-4 ptitulo"
+              >
+                <select
+                  class="form-control float-left selectCenter p0"
+                  [(ngModel)]="anho"
+                  (change)="ActualizarLista()"
+                >
+                  <option
+                    *ngFor="let item of listaAnhos"
+                    [value]="item.fecha"
+                    >{{ item.fecha }}</option
+                  >
+                </select>
+              </div>
+              <div class="col-md-2 col-4 list-icons float-right">
+                <a
+                  *ngIf="stade == 0"
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="Editar()"
+                  class="list-icons-item"
+                >
+                  <i
+                    class="icon-pencil7 icons-options"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Editar"
+                  ></i>
+                </a>
+                <a
+                  *ngIf="stade == 0"
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="Nuevo()"
+                  class="list-icons-item"
+                >
+                  <i
+                    class="icon-file-plus icons-options"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Nuevo"
+                  ></i>
+                </a>
+                <a
+                  *ngIf="stade == 2"
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="Guardar()"
+                  class="list-icons-item"
+                >
+                  <i
+                    class="icon-floppy-disk icons-options"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Guardar"
+                  ></i>
+                </a>
+                <a
+                  *ngIf="stade == 1"
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="nada()"
+                  class="list-icons-item"
+                >
+                  <i
+                    class="icon-printer2 icons-options"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Imprimir"
+                  ></i>
+                </a>
+                <a
+                  *ngIf="stade == 1"
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="Actualizar()"
+                  class="list-icons-item"
+                >
+                  <i
+                    class="icon-floppy-disk icons-options"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Actualizar"
+                  ></i>
+                </a>
+                <a
+                  *ngIf="stade == 1 || stade == 2"
+                  [routerLink]=""
+                  routerLinkActive="router-link-active"
+                  (click)="Cancelar()"
+                  class="list-icons-item"
+                >
+                  <i
+                    class="icon-exit icons-options"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Cancelar"
+                  ></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <div
+        class="card-body"
+        style="padding-left: 0;
+                  padding-right: 0;
+                  padding-bottom: 0.5em;"
+      >
+        <div class="row p0 m0">
+          <div class="col-md-6">
+            <div class="card mb05">
+              <div class="card-header p0" style="padding-left: 2.3em;">
+                <h6 class="card-title text-center title-negrita">
+                  Fecha de Proceso
+                </h6>
+              </div>
+              <div class="card-body p0 pb1" *ngIf="predeterminado != undefined">
+                <div class="text-left" style="display: flex;">
+                  <div class="col-md-6 col-6">
+                    <label
+                      class="col-form-label col-lg-6 p0 m0 title-negrita"
+                      style="padding-left: 0.8em;"
+                      >Fecha</label
+                    >
+                    <div class="col-lg-12 col-12">
+                      <input
+                        *ngIf="predeterminado != undefined"
+                        type="text"
+                        readonly
+                        class="form-control h30 text-center"
+                        value="{{ predeterminado.fecha | date: 'dd-MM-yyyy' }}"
+                      />
+                      <input
+                        *ngIf="predeterminado == undefined"
+                        type="text"
+                        readonly
+                        class="form-control h30 "
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-6">
+                    <div class="form-group" style="margin-bottom: 0.1em;">
+                      <div
+                        class="custom-control custom-switch"
+                        style="margin-bottom: 0.2em;"
+                      >
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          id="pred"
+                          name="pred"
+                          disabled
+                          checked="predeterminado.estado == 'true'"
+                          data-fouc
+                        />
+                        <label
+                          *ngIf="predeterminado.estado"
+                          class="custom-control-label h30"
+                          for="pred"
+                          >Abierto</label
+                        >
+                        <label
+                          *ngIf="!predeterminado.estado"
+                          class="custom-control-label h30"
+                          for="pred"
+                          >Cerrado</label
+                        >
+                      </div>
+                      <div class="custom-control custom-switch">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input h30"
+                          disabled
+                          id="tipo"
+                          name="tipo"
+                          checked="true"
+                        />
+                        <label class="custom-control-label h30" for="tipo"
+                          >Predeterminado</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row p0 m0" style="padding-top: 0.3em;">
+                  <div class="col-md-6 col-6 text-left">
+                    <label class="col-lg-12 col-12 m0 title-negrita"
+                      >Tipo de Cambio Oficial</label
+                    >
+                    <div class="col-lg-12 col-12">
+                      <input
+                        *ngIf="predeterminado != undefined"
+                        type="number"
+                        readonly
+                        class="form-control h30 text-center"
+                        value="{{ predeterminado.tc_oficial }}"
+                      />
+                      <input
+                        *ngIf="predeterminado == undefined"
+                        type="number"
+                        readonly
+                        class="form-control h30"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-6 text-left"></div>
+                </div>
+                <div class="row p0 m0">
+                  <div class="col-md-6 col-6 text-left">
+                    <label class="col-lg-12 m0 title-negrita"
+                      >Tipo de Cambio Compras</label
+                    >
+                    <div class="col-lg-12">
+                      <input
+                        *ngIf="predeterminado != undefined"
+                        type="number"
+                        readonly
+                        class="form-control h30 text-center"
+                        value="{{ predeterminado.tc_compra }}"
+                      />
+                      <input
+                        *ngIf="predeterminado == undefined"
+                        type="number"
+                        readonly
+                        class="form-control h30"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-6 text-left">
+                    <label class="col-lg-12 m0 title-negrita"
+                      >Tipo de Cambio UFV</label
+                    >
+                    <div class="col-lg-12">
+                      <input
+                        *ngIf="predeterminado != undefined"
+                        type="number"
+                        readonly
+                        class="form-control h30 text-center"
+                        value="{{ predeterminado.tc_ufv }}"
+                      />
+                      <input
+                        *ngIf="predeterminado == undefined"
+                        type="number"
+                        readonly
+                        class="form-control h30"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row p0 m0">
+                  <div class="col-md-6 col-6 text-left">
+                    <label class="col-lg-12 m0 title-negrita"
+                      >Tipo de Cambio Ventas</label
+                    >
+                    <div class="col-lg-12">
+                      <input
+                        *ngIf="predeterminado != undefined"
+                        type="number"
+                        readonly
+                        class="form-control h30 text-center"
+                        value="{{ predeterminado.tc_venta }}"
+                      />
+                      <input
+                        *ngIf="predeterminado == undefined"
+                        type="number"
+                        readonly
+                        class="form-control h30"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="col-md-6 col-6 text-left"
+                    style="align-self : flex-end;"
+                  >
+                    <div class="col-lg-6 col-6 text-right">
+                      <a
+                        [routerLink]="nada()"
+                        routerLinkActive="router-link-active"
+                        class="list-icons-item text-danger-600"
+                        (click)="Copiar()"
+                      >
+                        <i
+                          style="font-size: 2.2em;"
+                          class="icon-copy3"
+                          data-toggle="tooltip"
+                          data-placement="top"
+                          title="Copiar"
+                        ></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card mb05">
+              <div class="card-body p0 pb1">
+                <div class="row p0 m0 ptcard">
+                  <div class="col-md-6 col-6">
+                    <div
+                      class="form-group form-group-feedback form-group-feedback-right  form-group-float text-left m0"
+                    >
+                      <label class="form-group-float-label m0 title-negrita"
+                        >Fecha</label
+                      >
+                      <input
+                        [disabled]="stade == 0"
+                        type="date"
+                        name="Fecha"
+                        required
+                        class="form-control text-center h30"
+                        value="{{ tipoCambio.fecha | date: 'yyyy-MM-dd' }}"
+                        [(ngModel)]="tipoCambio.fecha"
+                        placeholder="Fecha"
+                        data-date=""
+                        data-date-format="dd-mm-yyyy"
+                        max="{{ fechaMaxima }}"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-6">
+                    <div class="form-group" style="margin-bottom: 0.1em;">
+                      <div
+                        class="custom-control custom-switch"
+                        style="margin-bottom: 0.2em;"
+                      >
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          id="switch1"
+                          name="sw1"
+                          [disabled]="stade == 0"
+                          [checked]="tipoCambio.estado == 'true'"
+                          data-fouc
+                          [(ngModel)]="tipoCambio.estado"
+                        />
+                        <label
+                          *ngIf="tipoCambio.estado"
+                          class="custom-control-label h30 title-negrita"
+                          for="switch1"
+                          >Abierto</label
+                        >
+                        <label
+                          *ngIf="!tipoCambio.estado"
+                          class="custom-control-label h30 title-negrita"
+                          for="switch1"
+                          >Cerrado</label
+                        >
+                      </div>
+                      <div class="custom-control custom-switch">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input h30"
+                          id="switch2"
+                          name="sw2"
+                          [checked]="tipoCambio.pred"
+                          [(ngModel)]="tipoCambio.pred"
+                          [disabled]="stade == 0"
+                        />
+                        <label
+                          class="custom-control-label title-negrita"
+                          for="switch2"
+                          >Predeterminado</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row p0 m0">
+                  <div class="col-sm-6 col-6 text-left">
+                    <div class="form-group form-group-float m02">
+                      <label
+                        class="col-sm-12 form-group-float-label m0 title-negrita"
+                        >Tipo de Cambio Oficial</label
+                      >
+                      <div class="col-sm-12">
+                        <input
+                          type="text"
+                          class="form-control text-center h30 validar"
+                          pattern="^[0-9]+(.[0-9]+)?$"
+                          name="tcOficial"
+                          [disabled]="stade == 0"
+                          placeholder="T/C Oficial"
+                          value="{{ tipoCambio.tc_oficial }}"
+                          [(ngModel)]="tipoCambio.tc_oficial"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-0"></div>
+                </div>
+                <div class="row m0 p0">
+                  <div class="col-md-6 col-6 text-left">
+                    <div class="form-group form-group-float m02">
+                      <label
+                        class="col-lg-12 form-group-float-label m0 title-negrita"
+                        >Tipo de Cambio Compras</label
+                      >
+                      <div class="col-sm-12">
+                        <input
+                          type="text"
+                          class="form-control text-center h30 validar"
+                          pattern="^[0-9]+(.[0-9]+)?$"
+                          name="tcCompras"
+                          [disabled]="stade == 0"
+                          placeholder="T/C Compras"
+                          value="{{ tipoCambio.tc_compra }}"
+                          [(ngModel)]="tipoCambio.tc_compra"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-6 text-left">
+                    <div class="form-group form-group-float m02">
+                      <label
+                        class="col-lg-12 form-group-float-label m0 title-negrita"
+                        >Tipo de Cambio UFV</label
+                      >
+                      <div class="col-sm-12">
+                        <input
+                          type="text"
+                          class="form-control text-center h30 validar"
+                          pattern="^[0-9]+(.[0-9]+)?$"
+                          name="tcUfv"
+                          [disabled]="stade == 0"
+                          placeholder="T/C UFV"
+                          value="{{ tipoCambio.tc_ufv }}"
+                          [(ngModel)]="tipoCambio.tc_ufv"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row p0 m0">
+                  <div class="col-md-6 col-6 text-left m0">
+                    <div class="form-group form-group-float m02">
+                      <label
+                        class="col-lg-12 form-group-float-label m0 title-negrita"
+                        >Tipo de Cambio Ventas</label
+                      >
+                      <div class="col-sm-12">
+                        <input
+                          type="text"
+                          class="form-control text-center h30 validar"
+                          pattern="^[0-9]+(.[0-9]+)?$"
+                          name="tcVentas"
+                          [disabled]="stade == 0"
+                          placeholder="T/C Ventas"
+                          value="{{ tipoCambio.tc_venta }}"
+                          [(ngModel)]="tipoCambio.tc_venta"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row p0 m0">
+          <div class="col-md-12">
+            <div
+              class="table-responsive text-center"
+              *ngIf="ListTipoCambio != undefined"
+            >
+              <table
+                class="table table-sm table-hover table-bordered table-striped"
+              >
+                <thead class="bg-blue">
+                  <tr class="table-border-double">
+                    <th class="p0">Fecha</th>
+                    <th class="p0">Tipo Cambio Oficial</th>
+                    <th class="p0">Tipo Cambio Compra</th>
+                    <th class="p0">Tipo Cambio Venta</th>
+                    <th class="p0">Tipo Cambio UFV</th>
+                    <th class="p0">Estado</th>
+                    <th class="p0">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let item of ListTipoCambio; let i = index"
+                    class=" p0 puntero"
+                  >
+                    <td class="p0">
+                      {{ item.fecha | date: "mediumDate":"+0400" }}
+                    </td>
+                    <td class="p0">{{ item.tc_oficial }}</td>
+                    <td class="p0">{{ item.tc_compra }}</td>
+                    <td class="p0">{{ item.tc_venta }}</td>
+                    <td class="p0">{{ item.tc_ufv }}</td>
+                    <td class="p0">
+                      <div class="custom-control custom-switch">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          id="{{ i + 1 }}"
+                          name="stade1"
+                          [checked]="item.estado == true"
+                          data-fouc
+                          disabled
+                        />
+                        <label
+                          class="custom-control-label h30"
+                          for="{{ i + 1 }}"
+                        ></label>
+                      </div>
+                    </td>
+                    <td class="pTB0">
+                      <div class="list-icons" *ngIf="stade == 1">
+                        <a
+                          class="list-icons-item text-teal-600"
+                          (click)="cargarEdicion(item)"
+                          [routerLink]="nada()"
+                          routerLinkActive="router-link-active"
+                        >
+                          <i
+                            class="icon-pencil7 xl"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Editar fecha"
+                          >
+                          </i>
+                        </a>
+                        <a
+                          class="list-icons-item text-danger-600"
+                          (click)="Eliminar(item)"
+                          [routerLink]="nada()"
+                          routerLinkActive="router-link-active"
+                        >
+                          <i
+                            class="icon-trash xl "
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Eliminar fecha"
+                          >
+                          </i>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-center">
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    [routerLink]="nada()"
+                    routerLinkActive="router-link-active"
+                    aria-label="Previous"
+                  >
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+
+                <li
+                  *ngFor="let item of totalPaginacion; let i = index"
+                  class="page-item"
+                >
+                  <a
+                    class="page-link"
+                    (click)="cargarPaginacion(item.pag)"
+                    [routerLink]=""
+                    routerLinkActive="router-link-active"
+                  >
+                    {{ i + 1 }}
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    [routerLink]="nada()"
+                    routerLinkActive="router-link-active"
+                    aria-label="Next"
+                  >
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Footer -->
     <div class="navbar navbar-expand-lg navbar-light" style="display: none;">
@@ -305,7 +645,7 @@
           Footer
         </button>
       </div>
-  
+
       <div class="navbar-collapse collapse" id="navbar-footer">
         <span class="navbar-text">
           &copy; 2015 - 2018. <a href="#">Limitless Web App Kit</a> by
@@ -313,7 +653,7 @@
             >Eugene Kopyov</a
           >
         </span>
-  
+
         <ul class="navbar-nav ml-lg-auto">
           <li class="nav-item">
             <a
@@ -345,6 +685,5 @@
     </div>
     <!-- /footer -->
   </div>
-  </div>
-  <!-- /main content -->
- 
+</div>
+<!-- /main content -->

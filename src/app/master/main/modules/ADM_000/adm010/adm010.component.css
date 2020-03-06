@@ -1,47 +1,56 @@
-.title-head{
-    font-size: 14px;
+.title-head {
+  font-size: 14px;
 }
-.font-tittle{
-    font-size: 1.0em;
-    font-weight: 700;
+.font-tittle {
+  font-size: 1em;
+  font-weight: 700;
 }
-.title-icon{
-    font-size: 1.8em;
-    color: #03a9f4;
+.title-icon {
+  font-size: 1.8em;
+  color: #03a9f4;
 }
-.colorDelete{
-    color: red;
-    font-size: 1.8em;
+.colorDelete {
+  color: red;
+  font-size: 1.8em;
 }
-.plr0{
-    padding-left: 0%;
-    padding-right: 0%;
+.plr0 {
+  padding-left: 0%;
+  padding-right: 0%;
 }
-.icon-head{
-    font-size: 2em;
-    color: #03a9f4;
+.icon-head {
+  font-size: 2em;
+  color: #03a9f4;
 }
-.mb0{
-    margin-bottom: 0em;
+.mb0 {
+  margin-bottom: 0em;
 }
-
+.img-width {
+  width: -webkit-fill-available;
+}
 
 @media screen and (max-width: 600px) {
-    .title-icon{
-        font-size: 1.5em;
-    }
-    .centrarCheckdesktop{
-        text-align: left;
-    }
-    .card-padding{
-        padding-left: 0.5em;
-        padding-right: 0.5em;
-    }
-    .switch-float{
-        float: right;
-        bottom: 5em;
-    }  
-    .colorDelete{
-        font-size: 1.5em;
-    }
+  .title-icon {
+    font-size: 1.5em;
+  }
+  .centrarCheckdesktop {
+    text-align: left;
+  }
+  .card-padding {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  .switch-float {
+    float: right;
+    bottom: 5em;
+  }
+  .colorDelete {
+    font-size: 1.5em;
+  }
+  .img-position {
+    width: fit-content;
+    margin: auto;
+  }
+  .img-width {
+    width: auto;
+  }
 }
