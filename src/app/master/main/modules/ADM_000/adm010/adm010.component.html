@@ -368,6 +368,7 @@
                       <option
                         [value]="codNaturaleza.id_codigo"
                         [disabled]="codNaturaleza.estado == 1"
+                        [ngClass]="{ noDisponible: codNaturaleza.estado == 1 }"
                         *ngFor="let codNaturaleza of allCodigosNaturalezas"
                       >
                         {{ codNaturaleza.codigo }}
