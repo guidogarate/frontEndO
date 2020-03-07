@@ -363,9 +363,11 @@
                       class="form-control p0 selectCenter alturaInputs"
                       [(ngModel)]="naturaleza.id_codigo"
                       [disabled]="!editar"
+                      (change)="ActualizarEstadoNaturaleza(naturaleza)"
                     >
                       <option
                         [value]="codNaturaleza.id_codigo"
+                        [disabled]="codNaturaleza.estado == 1"
                         *ngFor="let codNaturaleza of allCodigosNaturalezas"
                       >
                         {{ codNaturaleza.codigo }}
@@ -403,7 +405,7 @@
                     </a>
                   </div>
                 </div>
-                <!-- <pre>{{Listnaturalezas | json}}</pre> -->
+                <!-- <pre>{{ Listnaturalezas | json }}</pre> -->
               </div>
               <div class="col-sm-3 col-0"></div>
             </div>

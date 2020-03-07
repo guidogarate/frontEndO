@@ -102,7 +102,7 @@ export class Adm010Component implements OnInit {
             this.Listnaturalezas = [];
           } else {
             this.topeNaturaleza = this.Listnaturalezas.length;
-            this.CargarListasNaturalezas();
+            // this.CargarListasNaturalezas();
           }
           setTimeout(() => {
             initLabels();
@@ -442,5 +442,25 @@ export class Adm010Component implements OnInit {
   CargarListasNaturalezas() {
     this.ObtenerListaUsedNaturalezas();
     this.ObtenerListaNaturalezasDisponibles();
+  }
+
+  ActualizarEstadoNaturaleza(data: any) {
+    console.log(data);
+    let valor: string = data.codigo;
+    this.allCodigosNaturalezas.forEach(elemento => {
+      if (elemento.id_codigo == data.id_codigo) {
+        elemento.estado = 1;
+        data.codigo = elemento.codigo;
+        console.log(elemento);
+        console.log(valor);
+      }
+    });
+    this.allCodigosNaturalezas.forEach(elemento => {
+      if (elemento.codigo == valor) {
+        elemento.estado = 0;
+        console.log(elemento);
+        console.log(valor);
+      }
+    });
   }
 }
