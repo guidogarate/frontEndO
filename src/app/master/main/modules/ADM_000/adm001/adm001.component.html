@@ -9,7 +9,7 @@
               <h2
                 class="card-title font-weight-bold PLR0-1em pt05 text-left title-head"
               >
-                <i class="icon-calendar mr-2"></i>
+                <i class="icon-calendar mr-2 icons-options"></i>
                 Fecha del dia
               </h2>
             </div>
@@ -316,16 +316,16 @@
                     class="col-md-6 col-6 text-left"
                     style="align-self : flex-end;"
                   >
-                    <div class="col-lg-6 col-6 text-right">
+                    <div class="col-lg-12 col-6 text-right" *ngIf="stade == 2">
                       <a
                         [routerLink]="nada()"
                         routerLinkActive="router-link-active"
-                        class="list-icons-item text-danger-600"
+                        class="list-icons-item"
                         (click)="Copiar()"
                       >
                         <i
                           style="font-size: 2.2em;"
-                          class="icon-copy3"
+                          class="icon-copy3 icons-options"
                           data-toggle="tooltip"
                           data-placement="top"
                           title="Copiar"
