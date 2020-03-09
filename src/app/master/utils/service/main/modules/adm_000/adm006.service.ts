@@ -42,20 +42,20 @@ export class Adm006Service {
       );
   }
 
-  upAdm006(adm_006: Adm006[], login: string, img: File) {
+  upAdm006(adm_006: Adm006, login: string, img: File, foto_url: string) {
     const url1 = `${url.prod}${adm006.upAdm006}${login}`;
     const fd = new FormData();
-    fd.append("login", adm_006[0].login);
-    fd.append("descripcion", adm_006[0].descripcion);
-    fd.append("estado", adm_006[0].id_estado.toString());
-    fd.append("id_grupo_acceso", adm_006[0].id_grupo_acceso);
-    fd.append("id_grupo_perfil", adm_006[0].id_grupo_perfil.toString());
-    fd.append("id_tipo_usuario", adm_006[0].id_tipo_usuario);
-    fd.append("id_persona", adm_006[0].codigo_persona);
+    fd.append("login", adm_006.login);
+    fd.append("descripcion", adm_006.descripcion);
+    fd.append("estado", adm_006.id_estado.toString());
+    fd.append("id_grupo_acceso", adm_006.id_grupo_acceso);
+    fd.append("id_grupo_perfil", adm_006.id_grupo_perfil.toString());
+    fd.append("id_tipo_usuario", adm_006.id_tipo_usuario);
+    fd.append("id_persona", adm_006.codigo_persona);
     if (img) {
       fd.append("foto", img, img.name);
     } else {
-      fd.append("foto_url", adm_006[0].foto);
+      fd.append("foto_url", foto_url);
     }
     return this.httpClient.put(url1, fd, {
       headers: new HttpHeaders({
@@ -80,16 +80,16 @@ export class Adm006Service {
       );
   }
 
-  inAdm006(adm_006: Adm006[], img: File) {
+  inAdm006(adm_006: Adm006, img: File) {
     const url1 = `${url.prod}${adm006.inAdm006}`;
     const fd = new FormData();
-    fd.append("login", adm_006[0].login);
-    fd.append("descripcion", adm_006[0].descripcion);
-    fd.append("estado", adm_006[0].id_estado.toString());
-    fd.append("id_grupo_acceso", adm_006[0].id_grupo_acceso);
-    fd.append("id_grupo_perfil", adm_006[0].id_grupo_perfil.toString());
-    fd.append("id_tipo_usuario", adm_006[0].id_tipo_usuario);
-    fd.append("id_persona", adm_006[0].codigo_persona);
+    fd.append("login", adm_006.login);
+    fd.append("descripcion", adm_006.descripcion);
+    fd.append("estado", adm_006.id_estado.toString());
+    fd.append("id_grupo_acceso", adm_006.id_grupo_acceso);
+    fd.append("id_grupo_perfil", adm_006.id_grupo_perfil.toString());
+    fd.append("id_tipo_usuario", adm_006.id_tipo_usuario);
+    fd.append("id_persona", adm_006.codigo_persona);
     if (img) {
       fd.append("foto", img, img.name);
     }

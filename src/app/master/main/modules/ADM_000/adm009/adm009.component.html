@@ -78,15 +78,15 @@
                   [ngClass]="{ tablaCebradoPar: par, tablaCebradoImpar: impar }"
                 >
                   <td *ngIf="adm009.codigo.length === 3">
-                    {{ adm009.codigo }} &nbsp; {{ adm009.descripcion }}
+                    {{ adm009.id_vista }} &nbsp; {{ adm009.descripcion }}
                   </td>
                   <td *ngIf="adm009.codigo.length === 5">
-                    &nbsp; &nbsp;&nbsp; {{ adm009.codigo }} &nbsp;
+                    &nbsp; &nbsp;&nbsp; {{ adm009.id_vista }} &nbsp;
                     {{ adm009.descripcion }}
                   </td>
                   <td *ngIf="adm009.codigo.length === 7">
                     &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;{{
-                      adm009.codigo
+                      adm009.id_vista
                     }}
                     &nbsp;{{ adm009.descripcion }}
                   </td>

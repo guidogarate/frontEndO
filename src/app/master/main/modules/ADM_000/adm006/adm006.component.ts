@@ -8,7 +8,7 @@ import {
 import { Adm006Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { Observable, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
-import { FormControl } from "@angular/forms";
+import { FormControl, NgForm } from "@angular/forms";
 import glb001 from "src/app/master/config/glb000/glb001_btn";
 
 interface HtmlInputEvent extends Event {
@@ -68,18 +68,18 @@ export class Adm006Component {
       });
   }
 
-  getAdm006(texto: string) {
+  getAdm006(texto: string, numePag = "1") {
     this.buscar = true;
     let peticion: Observable<any>;
     if (texto.length === 0 || texto === "all_auxma") {
       this.texto = "all_auxma";
-      peticion = this.adm006S.geAdm006("90", "1", this.texto);
+      peticion = this.adm006S.geAdm006("90", numePag, this.texto);
     } else {
       this.texto = texto;
-      peticion = this.adm006S.geAdm006("90", "1", this.texto);
+      peticion = this.adm006S.geAdm006("90", numePag, this.texto);
     }
     this.sus = peticion.subscribe(resp => {
-      this.numeroPag = 1;
+      this.numeroPag = Number(numePag);
       if (resp["ok"]) {
         this.auxma = resp.usr[0].registros;
         this.pagi = resp["cant"];
@@ -92,9 +92,141 @@ export class Adm006Component {
     });
   }
 
-  paginacion(numero: string) {
+  nuevoAdm006() {
+    this.boolBtnGrupo(false, true);
+    this.btnGrupo.BtnCance = false;
+    this.boolDisabled(false);
+    this.auxmaModal = [this.nuevoAuxmaModal];
+    this.contorlAccion = "nuevo";
+    this.initG.labels();
+    this.initG.select();
+  }
+
+  OpcionesTable(adm_006: Adm006, tipo: string) {
+    this.id_login = adm_006.login;
+    switch (tipo) {
+      case "visualizar":
+        this.btnGrupo.BtnEdita = true;
+        this.btnGrupo.BtnNuevo = true;
+        this.initG.select();
+        break;
+      case "editar":
+        this.btnGrupo.BtnCance = true;
+        this.btnGrupo.BtnGuard = true;
+
+        this.boolDisabled(false);
+        this.initG.select();
+        break;
+      case "eliminar":
+        this.eliminAdm_006 = adm_006.login;
+        return;
+      default:
+        this.notyG.noty("error", "Operacion incorrecta", 5000);
+        break;
+    }
+    this.contorlAccion = tipo;
+    this.controlLoginModal = adm_006.login;
+
+    this.auxmaModal = null;
+    this.loadingSub = true;
+    let peticion: Observable<any>;
+    peticion = this.adm006S.geAdm006getUser("90", adm_006.login);
+    this.sus = peticion.subscribe(resp => {
+      this.loadingSub = false;
+      if (resp["ok"]) {
+        setTimeout(() => {
+          this.initG.labels();
+          this.initG.select();
+        }, 10);
+        this.auxmaModal = resp["usr"];
+      } else {
+        // this.notyG.noty("error", resp["messagge"], 5000);
+      }
+    });
+  }
+
+  OpcionesModal(forma: NgForm, tipo: string) {
+    switch (tipo) {
+      case "nuevo":
+        this.contorlAccion = tipo;
+        this.boolBtnGrupo(false, true);
+        this.btnGrupo.BtnCance = true;
+        this.boolDisabled(false);
+        forma.reset();
+        this.initG.labels();
+        this.initG.select();
+        return;
+      case "editar":
+        this.contorlAccion = tipo;
+        this.boolDisabled(false);
+        this.boolBtnGrupo(false, true);
+        this.initG.select();
+        return;
+      case "salir":
+        this.photoSelected = undefined;
+        this.file = null;
+        this.resetDatos(forma);
+        this.boolDisabled(true);
+        break;
+      case "cancelar":
+        this.resetDatos(forma);
+        this.boolDisabled(true);
+        this.boolBtnGrupo(true, false);
+        this.initG.select();
+        return;
+      case "guardar":
+        if (forma.invalid) {
+          return;
+        }
+        this.btnGrupo.BtnLoadi = true;
+        this.btnGrupo.BtnCance = false;
+        const foto_url = this.auxmaModal[0].foto;
+        this.guardarDatos(forma.value, this.file, foto_url, this.contorlAccion);
+        this.initG.select();
+        return;
+    }
+    this.boolBtnGrupo(true, true);
+    this.boolBtnGrupo(false, false);
+  }
+
+  boolDisabled(bool: boolean) {
+    this.disabled.descripci = bool;
+    this.disabled.GrupoAcce = bool;
+    this.disabled.GrupoPerf = bool;
+    this.disabled.login = bool;
+    this.disabled.TipoUsuar = bool;
+    this.disabled.TipoCodRe = bool;
+    this.disabled.foto = bool;
+  }
+
+  boolBtnGrupo(editNuevo: boolean, cancelGuardar: boolean) {
+    this.btnGrupo.BtnCance = cancelGuardar;
+    this.btnGrupo.BtnEdita = editNuevo;
+    this.btnGrupo.BtnElimi = false;
+    this.btnGrupo.BtnGuard = cancelGuardar;
+    this.btnGrupo.BtnNuevo = editNuevo;
+  }
+
+  onPhotoSelected(event: HtmlInputEvent): void {
+    const extensionesValidas = ["image/png", "image/jpg", "image/jpeg"];
+    const extensionArchivo = event.target.files[0].type;
+    if (extensionesValidas.indexOf(extensionArchivo) === -1) {
+      this.notyG.noty("error", "Formato novalido, Solo formato imagen", 5000);
+      return;
+    }
+    if (event.target.files && event.target.files[0]) {
+      this.file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = e => (this.photoSelected = reader.result);
+      reader.readAsDataURL(this.file);
+    } else {
+      return;
+    }
+  }
+
+  paginacion(numero: string, eliminar = true) {
     const nume = Number(numero);
-    if (this.numeroPag === nume) {
+    if (this.numeroPag === nume && eliminar) {
       return;
     }
     const total = this.pagi.length;
@@ -148,198 +280,62 @@ export class Adm006Component {
     });
   }
 
-  OpcionesTable(adm_006: Adm006, tipo: string) {
-    this.id_login = adm_006.login;
-    switch (tipo) {
-      case "visualizar":
-        this.btnGrupo.BtnEdita = true;
-        this.btnGrupo.BtnNuevo = true;
-        this.initG.select();
-        break;
-      case "editar":
-        this.btnGrupo.BtnCance = true;
-        this.btnGrupo.BtnGuard = true;
+  resetDatos(forma: NgForm) {
+    forma.controls.id_estado.setValue(this.auxmaModal[0].id_estado);
+    forma.controls.login.setValue(this.auxmaModal[0].login);
+    forma.controls.descripcion.setValue(this.auxmaModal[0].descripcion);
+    forma.controls.id_grupo_acceso.setValue(this.auxmaModal[0].id_grupo_acceso);
+    forma.controls.id_grupo_perfil.setValue(this.auxmaModal[0].id_grupo_perfil);
+    forma.controls.id_tipo_usuario.setValue(this.auxmaModal[0].id_tipo_usuario);
+    forma.controls.codigo_persona.setValue(this.auxmaModal[0].codigo_persona);
 
-        this.boolDisabled(false);
-        this.initG.select();
-        break;
-      case "eliminar":
-        this.eliminAdm_006 = adm_006.login;
-        return;
-      default:
-        this.notyG.noty("error", "Operacion incorrecta", 5000);
-        break;
-    }
-    this.contorlAccion = tipo;
-    if (this.controlLoginModal === adm_006.login) {
-      return;
-    }
-    this.controlLoginModal = adm_006.login;
+    this.photoSelected = undefined;
 
-    this.auxmaModal = null;
-    this.loadingSub = true;
-    let peticion: Observable<any>;
-    peticion = this.adm006S.geAdm006getUser("90", adm_006.login);
-    this.sus = peticion.subscribe(resp => {
-      this.loadingSub = false;
-      if (resp["ok"]) {
-        setTimeout(() => {
-          this.initG.labels();
-          this.initG.select();
-        }, 10);
-        this.auxmaModal = resp["usr"];
-      } else {
-        // this.notyG.noty("error", resp["messagge"], 5000);
-      }
-    });
-  }
-
-  nuevoAdm006() {
-    this.boolBtnGrupo(false, true);
-    this.btnGrupo.BtnCance = false;
-    this.boolDisabled(false);
-
-    this.nuevoAuxmaModal.login = "";
-    this.nuevoAuxmaModal.descripcion = "";
-    this.auxmaModal = [this.nuevoAuxmaModal];
-    this.contorlAccion = "nuevo";
     this.initG.labels();
     this.initG.select();
   }
 
-  eliminarAdm006(login: string) {
+  guardarDatos(
+    auxModal: Adm006,
+    img: File,
+    foto_url: string,
+    contorlAccion: string
+  ) {
     let peticion: Observable<any>;
-    peticion = this.adm006S.deAdm006(login);
+    if (contorlAccion === "nuevo") {
+      peticion = this.adm006S.inAdm006(auxModal, img);
+    } else if (contorlAccion === "editar") {
+      peticion = this.adm006S.upAdm006(auxModal, this.id_login, img, foto_url);
+    } else {
+      this.notyG.noty("error", "control Accion Invalido", 2000);
+    }
     this.sus = peticion.subscribe(resp => {
+      this.btnGrupo.BtnLoadi = false;
+      this.boolDisabled(true);
+      this.boolBtnGrupo(true, false);
       if (resp["ok"]) {
-        this.getAdm006(this.texto);
-        this.eliminAdm_006 = "";
-        this.notyG.noty("success", resp["mensaje"], 3000);
+        this.getAdm006(this.texto, this.numeroPag.toString());
+        this.notyG.noty("success", resp["mensaje"], 1000);
       } else {
+        this.boolBtnGrupo(false, true);
+        this.boolDisabled(false);
         this.notyG.noty("error", resp["mensaje"], 3000);
       }
     });
   }
 
-  OpcionesModal(tipo: string) {
-    switch (tipo) {
-      case "nuevo":
-        this.contorlAccion = tipo;
-        this.boolBtnGrupo(false, true);
-        this.btnGrupo.BtnCance = false;
-        this.boolDisabled(false);
-
-        this.auxmaModal[0].login = "";
-        this.auxmaModal[0].descripcion = "";
-        this.auxmaModal[0].grupos_acceso = this.nuevoAuxmaModal.grupos_acceso;
-        this.auxmaModal[0].grupos_perfil = this.nuevoAuxmaModal.grupos_perfil;
-        this.auxmaModal[0].tipos_usuario = this.nuevoAuxmaModal.tipos_usuario;
-        this.auxmaModal[0].personas = this.nuevoAuxmaModal.personas;
-
-        this.initG.select();
-        return;
-      case "editar":
-        this.contorlAccion = tipo;
-        this.boolDisabled(false);
-        this.boolBtnGrupo(false, true);
-        this.initG.select();
-        return;
-      case "cancelar":
-        this.boolDisabled(true);
-        this.boolBtnGrupo(true, false);
-        this.initG.select();
-        return;
-      case "salir":
-        this.photoSelected = undefined;
-        this.file = null;
-        break;
-      case "guardar":
-        const b: boolean = this.validandoDatos(this.auxmaModal, this.file);
-        if (b) {
-          this.guardarDatos(this.auxmaModal, this.file, this.contorlAccion);
-        }
-        this.initG.select();
-        return;
-    }
-    this.boolBtnGrupo(true, true);
-    this.boolBtnGrupo(false, false);
-  }
-
-  boolDisabled(bool: boolean) {
-    this.disabled.descripci = bool;
-    this.disabled.GrupoAcce = bool;
-    this.disabled.GrupoPerf = bool;
-    this.disabled.login = bool;
-    this.disabled.TipoUsuar = bool;
-    this.disabled.TipoCodRe = bool;
-    this.disabled.foto = bool;
-  }
-
-  boolBtnGrupo(editNuevo: boolean, cancelGuardar: boolean) {
-    this.btnGrupo.BtnCance = cancelGuardar;
-    this.btnGrupo.BtnEdita = editNuevo;
-    this.btnGrupo.BtnElimi = false;
-    this.btnGrupo.BtnGuard = cancelGuardar;
-    this.btnGrupo.BtnNuevo = editNuevo;
-  }
-
-  onPhotoSelected(event: HtmlInputEvent): void {
-    const extensionesValidas = ["image/png", "image/jpg", "image/jpeg"];
-    const extensionArchivo = event.target.files[0].type;
-    if (extensionesValidas.indexOf(extensionArchivo) === -1) {
-      this.notyG.noty("error", "Formato novalido, Solo formato imagen", 5000);
-      return;
-    }
-    if (event.target.files && event.target.files[0]) {
-      this.file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = e => (this.photoSelected = reader.result);
-      reader.readAsDataURL(this.file);
-    } else {
-      return;
-    }
-  }
-
-  validandoDatos(auxModal: Adm006[], img: File): boolean {
-    if (
-      auxModal[0].id_estado !== undefined &&
-      auxModal[0].id_grupo_acceso !== undefined &&
-      auxModal[0].id_grupo_acceso !== undefined &&
-      auxModal[0].id_tipo_usuario !== undefined &&
-      auxModal[0].codigo_persona !== undefined
-    ) {
-      //  if (img !== undefined) {
-      if (auxModal[0].login && auxModal[0].descripcion) {
-        this.boolDisabled(true);
-        this.boolBtnGrupo(true, false);
-        return true;
-      } else {
-        this.notyG.noty("error", "conplete los campos de input", 3000);
-        return false;
-      }
-      // } else {
-      //   console.log("seleccione una imagen");
-      //   return;
-      // }
-    } else {
-      this.notyG.noty("error", "conplete los campos de selecccion", 3000);
-      return false;
-    }
-  }
-
-  guardarDatos(auxModal: Adm006[], img: File, contorlAccion: string) {
+  eliminarAdm006(login: string) {
     let peticion: Observable<any>;
-    if (contorlAccion === "nuevo") {
-      peticion = this.adm006S.inAdm006(auxModal, img);
-    } else if (contorlAccion === "editar") {
-      peticion = this.adm006S.upAdm006(auxModal, this.id_login, img);
-    } else {
-      this.notyG.noty("error", "control Accion Invalido", 2000);
-    }
+    peticion = this.adm006S.deAdm006(login);
+    let numPag = this.numeroPag;
     this.sus = peticion.subscribe(resp => {
       if (resp["ok"]) {
-        this.getAdm006(this.texto);
-        this.notyG.noty("success", resp["mensaje"], 1000);
+        if (this.auxma.length === 1) {
+          numPag--;
+        }
+        this.paginacion(numPag.toString(), false);
+        this.eliminAdm_006 = "";
+        this.notyG.noty("success", resp["mensaje"], 3000);
       } else {
         this.notyG.noty("error", resp["mensaje"], 3000);
       }

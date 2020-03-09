@@ -61,18 +61,18 @@ export class Adm009Component {
       });
   }
 
-  getAdm009(texto: string) {
+  getAdm009(texto: string, numePag = "1") {
     this.buscar = true;
     let peticion: Observable<any>;
     if (texto.length === 0 || texto === "all_auxma") {
       this.texto = "all_paise";
-      peticion = this.adm009S.geAdm009("90", "1", this.texto);
+      peticion = this.adm009S.geAdm009("90", numePag, this.texto);
     } else {
       this.texto = texto;
-      peticion = this.adm009S.geAdm009("90", "1", this.texto);
+      peticion = this.adm009S.geAdm009("90", numePag, this.texto);
     }
     this.sus = peticion.subscribe(resp => {
-      this.numeroPag = 1;
+      this.numeroPag = Number(numePag);
       this.nuevoAuxmaModal = resp.usr[0];
       if (resp["ok"]) {
         this.auxma = resp.usr[0].paises;
@@ -110,8 +110,8 @@ export class Adm009Component {
       case "editar":
         this.btnGrupo.BtnCance = true;
         this.btnGrupo.BtnGuard = true;
-
         this.boolDisabled(false);
+        this.disabled.codigo = true;
         this.initG.select();
         break;
       case "eliminar":
@@ -141,6 +141,7 @@ export class Adm009Component {
         this.contorlAccion = tipo;
         this.boolDisabled(false);
         this.boolBtnGrupo(false, true);
+        this.disabled.codigo = true;
         return;
       case "salir":
         this.resetDatos(forma);
@@ -336,7 +337,7 @@ export class Adm009Component {
         if (contorlAccion === "nuevo") {
           this.id_cod = resp["id_registro"];
         }
-        this.getAdm009(this.texto);
+        this.getAdm009(this.texto, this.numeroPag.toString());
         this.notyG.noty("success", resp["mensaje"], 1000);
       } else {
         this.boolBtnGrupo(false, true);
@@ -349,9 +350,13 @@ export class Adm009Component {
   eliminarAdm006(id_cod: string) {
     let peticion: Observable<any>;
     peticion = this.adm009S.deAdm009(id_cod);
+    let numPag = this.numeroPag;
     this.sus = peticion.subscribe(resp => {
       if (resp["ok"]) {
-        this.paginacion(this.numeroPag.toString(), false);
+        if (this.auxma.length === 1) {
+          numPag--;
+        }
+        this.paginacion(numPag.toString(), false);
         this.id_cod = "";
         this.notyG.noty("success", resp["mensaje"], 3000);
       } else {
