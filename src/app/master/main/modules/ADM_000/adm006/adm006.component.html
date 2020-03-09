@@ -207,253 +207,282 @@
 <div id="modal_adm_006" class="modal" tabindex="-1">
   <div class="modal-dialog ">
     <div class="modal-content animacionmodal haciadentro">
-      <div class="modal-header bg-blue">
-        <h6 class="modal-title">ADM006</h6>
-        <div class="list-icons float-right">
-          <a class="puntero" *ngIf="btnGrupo.BtnCance"
-            ><i
-              class="icon-cancel-circle2 xxl"
-              data-toggle="tooltip"
-              data-placement="top"
-              (click)="OpcionesModal('cancelar')"
-              title="Cancelar"
+      <form #forma="ngForm" ngNativeValidate autocomplete="off" class="form">
+        <div class="modal-header bg-blue">
+          <h6 class="modal-title">ADM006</h6>
+          <div class="list-icons float-right">
+            <a class="puntero" *ngIf="btnGrupo.BtnCance"
+              ><i
+                class="icon-cancel-circle2 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal(forma, 'cancelar')"
+                title="Cancelar"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnGrupo.BtnNuevo">
+              <i
+                data-toggle="tooltip"
+                data-placement="top"
+                class="icon-diff-added xxl"
+                (click)="OpcionesModal(forma, 'nuevo')"
+                title="nuevo"
+              ></i>
+            </a>
+            <button
+              *ngIf="btnGrupo.BtnGuard"
+              style="padding: 1px;color: white;"
+              type="submit"
+              (click)="OpcionesModal(forma, 'guardar')"
+              class="btn text-warning-600 btn-flat btn-icon btn-rounded"
             >
-            </i
-          ></a>
-          <a class="puntero" *ngIf="btnGrupo.BtnNuevo">
+              <i
+                *ngIf="!btnGrupo.BtnLoadi"
+                class="icon-floppy-disk xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+              ></i>
+            </button>
             <i
-              data-toggle="tooltip"
-              data-placement="top"
-              class="icon-diff-added xxl"
-              (click)="OpcionesModal('nuevo')"
-              title="nuevo"
-            ></i>
-          </a>
-          <a class="puntero" *ngIf="btnGrupo.BtnGuard"
-            ><i
-              class="icon-floppy-disk xxl"
-              data-toggle="tooltip"
-              data-placement="top"
-              (click)="OpcionesModal('guardar')"
-              title="Guardar"
+              *ngIf="btnGrupo.BtnLoadi"
+              class="icon-spinner spinner position-left"
+              title="Guardando..."
             >
-            </i
-          ></a>
-          <a *ngIf="btnGrupo.BtnEdita" class="puntero">
-            <i
-              class="icon-pencil7 xxl"
-              data-toggle="tooltip"
-              data-placement="top"
-              (click)="OpcionesModal('editar')"
-              title="editar"
-            >
-            </i
-          ></a>
-          <a class="puntero" *ngIf="btnGrupo.BtnElimi"
-            ><i
-              class="icon-trash xxl"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Eliminar"
-            >
-            </i
-          ></a>
-          <a class="puntero">
-            <i
-              class="icon-exit xxl"
-              (click)="OpcionesModal('salir')"
-              data-toggle="tooltip"
-              data-placement="top"
-              data-dismiss="modal"
-              title="Salir"
-            >
-            </i
-          ></a>
+            </i>
+            <a *ngIf="btnGrupo.BtnEdita" class="puntero">
+              <i
+                class="icon-pencil7 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal(forma, 'editar')"
+                title="editar"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnGrupo.BtnElimi"
+              ><i
+                class="icon-trash xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Eliminar"
+              >
+              </i
+            ></a>
+            <a class="puntero">
+              <i
+                class="icon-exit xxl"
+                (click)="OpcionesModal(forma, 'salir')"
+                data-toggle="tooltip"
+                data-placement="top"
+                data-dismiss="modal"
+                title="Salir"
+              >
+              </i
+            ></a>
+          </div>
         </div>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <ng-container *ngFor="let auxModal of auxmaModal; let i = index">
-            <div class="col-xl-12">
-              <div class="media flex-column flex-sm-row mt-0 mb-3">
-                <div
-                  class="mr-sm-3 mb-2 mb-sm-0 text-center"
-                  style="margin-top: 20px;"
-                >
-                  <div class="card-img-actions">
-                    <input
-                      type="file"
-                      class="d-none"
-                      [disabled]="disabled.foto"
-                      (change)="onPhotoSelected($event)"
-                      #photoInput
-                    />
-                    <img
-                      [src]="
-                        photoSelected || auxModal.foto || 'assets/subir_img.png'
-                      "
-                      class="img-fluid img-preview rounded puntero"
-                      alt="No existe imagen, seleccione una imagen"
-                      (click)="photoInput.click()"
-                    />
-                  </div>
-                  <label>Estado</label>
-                  <div>
-                    <select
-                      required
-                      [disabled]="disabled.TipoUsuar"
-                      [(ngModel)]="auxModal.id_estado"
-                      class="form-control selectpicker show-tick"
-                      name="databaseid"
-                    >
-                      <option
-                        *ngFor="let gruac of auxModal.estados"
-                        [value]="gruac.id_estado"
-                      >
-                        {{ gruac.tipo_estado }}</option
-                      >
-                    </select>
-                  </div>
-                </div>
-                <div class="media-body  text-center">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group form-group-float">
-                        <label class="form-group-float-label">Login</label>
-                        <input
-                          style="text-align: center;"
-                          type="text"
-                          class="form-control"
-                          [disabled]="disabled.login"
-                          placeholder="Introducir Login"
-                          [(ngModel)]="auxModal.login"
-                          title="{{ auxModal.login }}"
+        <div class="modal-body">
+          <div class="row">
+            <ng-container *ngFor="let auxModal of auxmaModal; let i = index">
+              <div class="col-xl-12">
+                <div class="media flex-column flex-sm-row mt-0 mb-3">
+                  <div
+                    class="mr-sm-3 mb-2 mb-sm-0 text-center"
+                    style="margin-top: 20px;"
+                  >
+                    <div class="card-img-actions">
+                      <input
+                        type="file"
+                        class="d-none"
+                        [disabled]="disabled.foto"
+                        (change)="onPhotoSelected($event)"
+                        #photoInput
+                      />
+                      <img
+                        *ngIf="photoSelected === undefined; else phselect"
+                        src="{{ auxModal.foto | imagenpipe }}"
+                        class="img-fluid img-preview rounded puntero"
+                        alt="seleccione una imagen p1"
+                        (click)="photoInput.click()"
+                      />
+                      <ng-template #phselect>
+                        <img
+                          [src]="photoSelected || 'assets/subir_img.png'"
+                          class="img-fluid img-preview rounded puntero"
+                          alt="seleccione una imagen p2"
+                          (click)="photoInput.click()"
                         />
-                      </div>
+                      </ng-template>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group form-group-float">
-                        <label class="form-group-float-label"
-                          >Descripcion</label
-                        >
-                        <input
-                          style="text-align: center;"
-                          type="text text-align-center;"
-                          class="form-control"
-                          [disabled]="disabled.descripci"
-                          placeholder="Introducir descripcion"
-                          [(ngModel)]="auxModal.descripcion"
-                          title="{{ auxModal.descripcion }}"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <label class="form-group">Grupo Acceso</label>
-                      <select
-                        required
-                        [disabled]="disabled.GrupoAcce"
-                        [(ngModel)]="auxModal.id_grupo_acceso"
-                        class="form-control selectpicker show-tick"
-                        name="databaseid"
-                      >
-                        <option
-                          *ngFor="let gruac of auxModal.grupos_acceso"
-                          [value]="gruac.id_grupos_acceso"
-                        >
-                          {{ gruac.descripcion }}</option
-                        >
-                      </select>
-                    </div>
-                    <div class="col-md-6">
-                      <label class="form-group">Grupo Perfil</label>
-                      <select
-                        required
-                        [disabled]="disabled.GrupoPerf"
-                        [(ngModel)]="auxModal.id_grupo_perfil"
-                        class="form-control selectpicker show-tick"
-                        name="databaseid"
-                      >
-                        <option
-                          *ngFor="let gruac of auxModal.grupos_perfil"
-                          [value]="gruac.id_grupos_perfil"
-                        >
-                          {{ gruac.descripcion }}</option
-                        >
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <label class="form-group">Tipo de Usuario</label>
+                    <label>Estado</label>
+                    <div>
                       <select
                         required
                         [disabled]="disabled.TipoUsuar"
-                        [(ngModel)]="auxModal.id_tipo_usuario"
+                        [ngModel]="auxModal.id_estado"
                         class="form-control selectpicker show-tick"
-                        name="databaseid"
+                        name="id_estado"
                       >
                         <option
-                          *ngFor="let gruac of auxModal.tipos_usuario"
-                          [value]="gruac.id_grupos_perfil"
+                          *ngFor="let gruac of auxModal.estados"
+                          [value]="gruac.id_estado"
                         >
-                          {{ gruac.descripcion }}</option
-                        >
-                      </select>
-                    </div>
-                    <div class="col-md-6 ">
-                      <label class="form-group">Codigo relacion persona</label>
-                      <select
-                        required
-                        [disabled]="disabled.TipoCodRe"
-                        [(ngModel)]="auxModal.codigo_persona"
-                        class="form-control selectpicker show-tick"
-                        name="databaseid"
-                      >
-                        <option
-                          *ngFor="let gruac of auxModal.personas"
-                          [value]="gruac.id_persona"
-                        >
-                          {{ gruac.id_persona }}</option
+                          {{ gruac.tipo_estado }}</option
                         >
                       </select>
                     </div>
                   </div>
+                  <div class="media-body  text-center">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group form-group-float">
+                          <label class="form-group-float-label">Login</label>
+                          <input
+                            style="text-align: center;"
+                            type="text"
+                            class="form-control"
+                            [disabled]="disabled.login"
+                            placeholder="Introducir Login"
+                            [ngModel]="auxModal.login"
+                            title="{{ auxModal.login }}"
+                            name="login"
+                            required
+                            oninvalid="this.setCustomValidity('Introducir Login')"
+                            oninput="setCustomValidity('')"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group form-group-float">
+                          <label class="form-group-float-label"
+                            >Descripcion</label
+                          >
+                          <input
+                            style="text-align: center;"
+                            type="text text-align-center;"
+                            class="form-control"
+                            [disabled]="disabled.descripci"
+                            placeholder="Introducir descripcion"
+                            [ngModel]="auxModal.descripcion"
+                            name="descripcion"
+                            title="{{ auxModal.descripcion }}"
+                            required
+                            oninvalid="this.setCustomValidity('Introducir Descripcion')"
+                            oninput="setCustomValidity('')"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label class="form-group">Grupo Acceso</label>
+                        <select
+                          required
+                          [disabled]="disabled.GrupoAcce"
+                          [ngModel]="auxModal.id_grupo_acceso"
+                          class="form-control selectpicker show-tick"
+                          name="id_grupo_acceso"
+                        >
+                          <option
+                            *ngFor="let gruac of auxModal.grupos_acceso"
+                            [value]="gruac.id_grupos_acceso"
+                          >
+                            {{ gruac.descripcion }}</option
+                          >
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-group">Grupo Perfil</label>
+                        <select
+                          required
+                          [disabled]="disabled.GrupoPerf"
+                          [ngModel]="auxModal.id_grupo_perfil"
+                          class="form-control selectpicker show-tick"
+                          name="id_grupo_perfil"
+                        >
+                          <option
+                            *ngFor="let gruac of auxModal.grupos_perfil"
+                            [value]="gruac.id_grupos_perfil"
+                          >
+                            {{ gruac.descripcion }}</option
+                          >
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label class="form-group">Tipo de Usuario</label>
+                        <select
+                          required
+                          [disabled]="disabled.TipoUsuar"
+                          [ngModel]="auxModal.id_tipo_usuario"
+                          class="form-control selectpicker show-tick"
+                          name="id_tipo_usuario"
+                        >
+                          <option
+                            *ngFor="let gruac of auxModal.tipos_usuario"
+                            [value]="gruac.id_grupos_perfil"
+                          >
+                            {{ gruac.descripcion }}</option
+                          >
+                        </select>
+                      </div>
+                      <div class="col-md-6 ">
+                        <label class="form-group"
+                          >Codigo relacion persona</label
+                        >
+                        <select
+                          required
+                          [disabled]="disabled.TipoCodRe"
+                          [ngModel]="auxModal.codigo_persona"
+                          class="form-control selectpicker show-tick"
+                          name="codigo_persona"
+                        >
+                          <option
+                            *ngFor="let gruac of auxModal.personas"
+                            [value]="gruac.id_persona"
+                          >
+                            {{ gruac.id_persona }}</option
+                          >
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="separadorh"></div>
+              </div>
+              <div class="col-xl-12">
+                <div class="row text-center">
+                  <div class="col-md-4">
+                    <span><b>Fecha de registro</b></span>
+                    <div style="background-color: #f5f5f5;">
+                      <p>{{ auxModal.fecha_registro | datos }}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <span><b>Fecha de ultimo ingreso</b></span>
+                    <div style="background-color: #f5f5f5;">
+                      <p>{{ auxModal.fecha_registro | datos }}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <span><b>Fecha de ultimo reset</b></span>
+                    <div style="background-color: #f5f5f5;">
+                      <p>{{ auxModal.fecha_registro | datos }}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="separadorh"></div>
+            </ng-container>
+          </div>
+          <div *ngIf="loadingSub" class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
             </div>
-            <div class="col-xl-12">
-              <div class="row text-center">
-                <div class="col-md-4">
-                  <span><b>Fecha de registro</b></span>
-                  <div style="background-color: #f5f5f5;">
-                    <p>{{ auxModal.fecha_registro | datos }}</p>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <span><b>Fecha de ultimo ingreso</b></span>
-                  <div style="background-color: #f5f5f5;">
-                    <p>{{ auxModal.fecha_registro | datos }}</p>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <span><b>Fecha de ultimo reset</b></span>
-                  <div style="background-color: #f5f5f5;">
-                    <p>{{ auxModal.fecha_registro | datos }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ng-container>
-        </div>
-        <div *ngIf="loadingSub" class="d-flex justify-content-center">
-          <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>
