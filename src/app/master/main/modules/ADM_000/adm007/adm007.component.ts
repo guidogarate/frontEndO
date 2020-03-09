@@ -56,6 +56,7 @@ export class Adm007Component implements OnInit {
   file: File;
   ListLastStadeDirecciones: any = [];
   ListLastStadeContactos: any = [];
+  ListLastStadeEmpresa: any = [];
 
   constructor(
     private _adm007Service: Adm007Service,
@@ -108,13 +109,13 @@ export class Adm007Component implements OnInit {
   }
 
   ActualizarDatos() {
-    console.log("lista para guardar: ", this.ListSend);
+    console.log("lista para Insertar: ", this.ListSend);
     this._adm007Service.ActualizarDatos(this.ListSend).subscribe(resp => {
       if (resp["ok"]) {
-        this._notyG.noty("success", "datos actualizados", 3500);
+        this._notyG.noty("success", "contactos guardados", 3500);
       } else {
-        this._notyG.noty("error", "no se pudo actualizar", 3500);
-        console.log("error al guardar los datos");
+        this._notyG.noty("error", "no se pudo guardar contactos", 3500);
+        console.log("error al guardar los contactos");
         console.log(resp);
       }
     });
@@ -133,6 +134,8 @@ export class Adm007Component implements OnInit {
           this.direcciones.push(element);
         }
       });
+    }
+    if (this.ListContactos != null) {
       this.ListContactos.forEach(element => {
         if (element.id == 0) {
           if (element.estado) {
@@ -215,9 +218,6 @@ export class Adm007Component implements OnInit {
       case "contactos":
         if (this.ValidarCantidad("contactos")) {
           this.indiceContact = this.indiceContact + 1;
-          // if (this.ListContactos == null) {
-          //   this.ListContactos = [];
-          // }
           this.limpiarDataContacto();
           this.ListContactos.push(this.newContacto);
           this._notyG.noty("success", "contacto", 3500);
@@ -235,9 +235,6 @@ export class Adm007Component implements OnInit {
       case "direccion":
         if (this.ValidarCantidad("direccion")) {
           this.indiceDirection = this.indiceDirection + 1;
-          // if (this.ListDirecciones == null) {
-          //   this.ListDirecciones = [];
-          // }
           this.LimpiarData();
           this.ListDirecciones.push(this.newDirection);
           this.MostrarCiudad(this.idCiudad);
@@ -412,7 +409,7 @@ export class Adm007Component implements OnInit {
     });
   }
   MostrarCiudad(data: any) {
-    console.log("mostrando: ", data);
+    // console.log("mostrando: ", data);
     if (this.editar) {
       console.log("editar ciudad: ", data);
       this.BuscarDepartamento(this.ObtenerDepartamento(this.idCiudad));
@@ -434,7 +431,7 @@ export class Adm007Component implements OnInit {
         ].id_ciudad = this.idCiudad;
       }
     } else {
-      console.log("No editar: ", data);
+      // console.log("No editar: ", data);
       this.ListCiudades.forEach(element => {
         if (element.nombre_pais == data.ciudad) {
           this.idCiudad = element.id_pais;
@@ -578,7 +575,16 @@ export class Adm007Component implements OnInit {
   }
 
   /// guardar estado - volver al estado anterior
+  GuardarDatosEmpresa() {
+    this.ListLastStadeEmpresa = {
+      razon_social: this.lista[0].razon_social,
+      sigla: this.lista[0].sigla,
+      id_actividad_empresarial: this.lista[0].id_actividad_empresarial,
+      nit: this.lista[0].nit
+    };
+  }
   GuardarEstado() {
+    this.GuardarDatosEmpresa();
     this.ListLastStadeDirecciones = [];
     this.ListLastStadeContactos = [];
     this.ListDirecciones.forEach(element => {
@@ -631,6 +637,11 @@ export class Adm007Component implements OnInit {
   }
 
   VolverEstadoAnterior() {
+    this.lista[0].razon_social = this.ListLastStadeEmpresa.razon_social;
+    this.lista[0].sigla = this.ListLastStadeEmpresa.sigla;
+    this.lista[0].id_actividad_empresarial = this.ListLastStadeEmpresa.id_actividad_empresarial;
+    this.lista[0].nit = this.ListLastStadeEmpresa.nit;
+    // direcciones y contactos
     this.ListDirecciones = [];
     this.ListLastStadeDirecciones.forEach(element => {
       let direcciones: any = {
@@ -674,36 +685,5 @@ export class Adm007Component implements OnInit {
       contactos.tipo = element.tipo;
       this.ListContactos.push(contactos);
     });
-    console.log("direcciones Recuperar contactos : ", this.ListContactos);
-    console.log("direcciones recuperar direcciones : ", this.ListDirecciones);
-
-    // this.estructuraPlanDeCuentas = [];
-    // this.Listnaturalezas = [];
-    // this.ListLastStade.forEach(element => {
-    //   let AuxEstructura: any = {
-    //     id_estructura: 0,
-    //     nombre: "",
-    //     largo: 0,
-    //     separador: ""
-    //   };
-    //   AuxEstructura.id_estructura = element.id_estructura;
-    //   AuxEstructura.nombre = element.nombre;
-    //   AuxEstructura.largo = element.largo;
-    //   AuxEstructura.separador = element.separador;
-    //   this.estructuraPlanDeCuentas.push(AuxEstructura);
-    // });
-    // console.log(this.ListLastStade);
-    // console.log(this.estructuraPlanDeCuentas);
-    // this.ListLastStadeNaturaleza.forEach(element => {
-    //   let AuxNaturaleza = {
-    //     id_codigo: 0,
-    //     id_naturaleza: 0
-    //   };
-    //   AuxNaturaleza.id_codigo = element.id_codigo;
-    //   AuxNaturaleza.id_naturaleza = element.id_naturaleza;
-    //   this.Listnaturalezas.push(AuxNaturaleza);
-    // });
-    // this.ListLastStadeNaturaleza = [];
-    // this.ListLastStade = [];
   }
 }

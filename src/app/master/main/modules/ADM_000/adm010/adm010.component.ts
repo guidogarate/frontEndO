@@ -174,6 +174,7 @@ export class Adm010Component implements OnInit {
     console.log("eliminar naturaleza: ", item);
     this.RemoverNaturaleza(item);
     this.Eliminar(item);
+    this.HabilitarEstado(item);
     this.topeNaturaleza = this.topeNaturaleza - 1;
   }
 
@@ -211,6 +212,7 @@ export class Adm010Component implements OnInit {
   }
   InicializarNaturaleza() {
     this.newNaturaleza = {
+      id: 0,
       codigo: 0,
       id_codigo: 0,
       id_naturaleza: 0
@@ -364,6 +366,7 @@ export class Adm010Component implements OnInit {
       AuxNaturaleza.id_naturaleza = element.id_naturaleza;
       this.Listnaturalezas.push(AuxNaturaleza);
     });
+    this.CalcularLargo();
     this.ListLastStadeNaturaleza = [];
     this.ListLastStade = [];
   }
@@ -379,7 +382,7 @@ export class Adm010Component implements OnInit {
       }
     });
     this.Listnaturalezas.forEach(element => {
-      if (element.codigo == 0) {
+      if (element.id == 0) {
         console.log("NAT para insert: ", element.codigo);
         this.naturalezas.push(element);
       } else {
@@ -460,6 +463,17 @@ export class Adm010Component implements OnInit {
         elemento.estado = 0;
         console.log(elemento);
         console.log(valor);
+      }
+    });
+  }
+
+  HabilitarEstado(id: number) {
+    console.log("Habilitando elemento: ", id);
+
+    this.allCodigosNaturalezas.forEach(elemento => {
+      if (elemento.id_codigo == id) {
+        elemento.estado = 0;
+        console.log(elemento);
       }
     });
   }
