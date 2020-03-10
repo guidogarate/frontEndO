@@ -148,7 +148,7 @@ export class Adm010Component implements OnInit {
       this.estructuraPlanDeCuentas.splice(v1 - 1, 1);
       this.totalLargo = sum - valor;
       this.ultimoElemento.largo = this.totalLargo;
-      console.info("valor del largo: ", this.ultimoElemento.largo);
+      console.log("valor del largo: ", this.ultimoElemento.largo);
     }
   }
 
@@ -159,7 +159,7 @@ export class Adm010Component implements OnInit {
     this.Listnaturalezas.forEach(element => {
       if (element.id_codigo == id) {
         valor = element.largo;
-        console.log("valor: ", element);
+        console.log("remover nat of ListNat: ", element);
         v1 = pos;
       }
       pos = pos + 1;
@@ -294,20 +294,38 @@ export class Adm010Component implements OnInit {
   Guardar() {
     this.ListarNuevos();
     this.InicializarListsUpdates();
-    console.log("lista plans update : ", this.ListUpdatesPlan);
-    console.log("lista naturalezas update : ", this.ListUpdatesNaturalezas);
+    // console.log("lista plans update : ", this.ListUpdatesPlan);
+    // console.log("lista naturalezas update : ", this.ListUpdatesNaturalezas);
     console.log("update: ", this.listSend);
     this.Update();
     this.InicializarListsSend();
     if (this.estructuras.length > 0 || this.naturalezas.length > 0) {
       console.log("lista para Insert: ", this.listSend);
-      this.Insertar();
+      setTimeout(() => {
+        this.Insertar();
+      }, 800);
     }
+    this.ListarParaEliminar();
     setTimeout(() => {
       this.ObtenerDatos();
-    }, 1000);
+    }, 1500);
     this.ListUpdatesPlan = [];
     this.ListUpdatesNaturalezas = [];
+  }
+
+  ListarParaEliminar() {
+    for (let index = 0; index < this.ListUpdatesNaturalezas.length; index++) {
+      if (
+        this.ListUpdatesNaturalezas[index].id_codigo !==
+        this.ListLastStadeNaturaleza[index].id_codigo
+      ) {
+        console.error(
+          "eliminando elemento: ",
+          this.ListLastStadeNaturaleza[index]
+        );
+        this.EliminarNaturaleza(this.ListLastStadeNaturaleza[index].id_codigo);
+      }
+    }
   }
 
   GuardarEstado() {
@@ -383,7 +401,7 @@ export class Adm010Component implements OnInit {
     });
     this.Listnaturalezas.forEach(element => {
       if (element.id == 0) {
-        console.log("NAT para insert: ", element.codigo);
+        console.log("NAT para insert: ", element);
         this.naturalezas.push(element);
       } else {
         console.log("NAT para update: ", element);

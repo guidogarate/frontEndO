@@ -7,3 +7,12 @@ export interface Adm011 {
   tipo_territorio: number;
   territorio: number;
 }
+
+export interface Adm012 {
+  idDocumento: number;
+  estado: boolean;
+  descripcion: string;
+  descripcion_corta: string;
+  nombreComponente: string;
+  sigla: string;
+}
