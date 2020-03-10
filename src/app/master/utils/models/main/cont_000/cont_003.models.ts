@@ -1,5 +1,6 @@
 export interface Cont003 {
-  division: string;
+  idunidaddivision: string;
+  division: number;
   dependencia: string;
   descripcion: string;
   sigla: string;

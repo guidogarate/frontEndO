@@ -52,12 +52,6 @@
                 (click)="habilitar('atras')"
                 title="atras"
               ></i>
-              <i
-                routerLink="{{ bienvenido }}"
-                class="icon-exit xxl puntero"
-                title="Pagina Bienvenido"
-              >
-              </i>
             </div>
           </div>
         </div>
@@ -71,9 +65,8 @@
               <thead>
                 <tr class="bg-blue">
                   <th data-hide="phone">Login</th>
-                  <th data-hide="phone">Foto</th>
                   <th data-toggle="true" class="table-content-center">
-                    Descripcion
+                    _______Descripcion_______
                   </th>
                   <th data-hide="phone,tablet">Tipo_de_Usuario</th>
                   <th data-hide="phone,tablet">Relacion_persona</th>
@@ -104,26 +97,30 @@
                       {{ adm005.login }}
                     </td>
                     <td>
-                      <img
-                        src="{{ adm005.foto | imagenpipe }}"
-                        class="img-fluid rounded-circle"
-                        width="20"
-                        height="20"
-                        alt=""
-                      />
-                    </td>
-                    <td class="table-content-center">
-                      {{ adm005.descripcion }}
-                      <div>
-                        Activo
-                        <i
-                          *ngIf="adm005.activo === 1"
-                          class="icon-primitive-dot verde"
-                        ></i>
-                        <i
-                          *ngIf="adm005.activo === 0"
-                          class="icon-primitive-dot rojo"
-                        ></i>
+                      <div class="d-flex align-items-center">
+                        <div class="mr-3">
+                          <img
+                            src="{{ adm005.foto | imagenpipe }}"
+                            class="img-fluid rounded-circle"
+                            width="30"
+                            height="30"
+                            alt=""
+                          />
+                        </div>
+                        <div>
+                          {{ adm005.descripcion }}
+                          <div class="text-muted font-size-sm">
+                            Activo
+                            <i
+                              *ngIf="adm005.activo === 1"
+                              class="icon-primitive-dot verde"
+                            ></i>
+                            <i
+                              *ngIf="adm005.activo === 0"
+                              class="icon-primitive-dot gris"
+                            ></i>
+                          </div>
+                        </div>
                       </div>
                     </td>
                     <td class="table-content-center">
@@ -154,7 +151,8 @@
                     <td class="text-center">
                       <div class="list-icons">
                         <i
-                          (click)="reset(adm005)"
+                          *ngIf="!(loadguardar === i)"
+                          (click)="reset(adm005, i)"
                           class="icon-floppy-disk"
                           [ngClass]="{
                             blue: adm005.estado,
@@ -162,6 +160,12 @@
                           }"
                           title="reset"
                         ></i>
+                        <i
+                          *ngIf="loadguardar === i"
+                          class="icon-spinner spinner position-left blue"
+                          title="Guardando..."
+                        >
+                        </i>
                       </div>
                     </td>
                   </tr>

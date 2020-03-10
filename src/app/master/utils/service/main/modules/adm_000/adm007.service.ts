@@ -1,19 +1,17 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import url from 'src/app/master/config/url.config';
-import adm0007 from 'src/app/master/config/adm000/adm007_url';
-import { map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import url from "src/app/master/config/url.config";
+import adm0007 from "src/app/master/config/adm000/adm007_url";
+import { map } from "rxjs/operators";
 
 @Injectable()
 export class Adm007Service {
+  token = sessionStorage.getItem("id");
 
-  token = sessionStorage.getItem("id");  
-
-  constructor(private httpClient: HttpClient) {
-  }
+  constructor(private httpClient: HttpClient) {}
 
   ObtenerParametros() {
-    const url1 = `${url.prod}${adm0007.get_datos_empresa}`+'90';
+    const url1 = `${url.prod}${adm0007.get_datos_empresa}` + "90";
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -27,13 +25,11 @@ export class Adm007Service {
         })
       );
   }
- 
-  
 
   ActualizarDatos(item: any) {
     console.log("service Actualizar data: ", item);
     const url1 = `${url.prod}${adm0007.insert_datos_empresa}`;
-    console.log(url1,item);
+    console.log(url1, item);
     return this.httpClient
       .post(url1, item, {
         headers: new HttpHeaders({
@@ -49,15 +45,36 @@ export class Adm007Service {
       );
   }
 
-  Eliminar(tipo: number,id : number){
-    console.log("service Actualizar data: ",tipo, id);
-    const url1 = `${url.prod}${adm0007.delete_datos_empresa}`+tipo+'/'+id;
+  Eliminar(tipo: number, id: number) {
+    console.log("service Actualizar data: ", tipo, id);
+    const url1 = `${url.prod}${adm0007.delete_datos_empresa}` + tipo + "/" + id;
     console.log(url1);
     return this.httpClient
       .delete(url1, {
         headers: new HttpHeaders({
           authorization: this.token,
           "Content-Type": "application/json"
+        })
+      })
+      .pipe(
+        map(resp => {
+          console.log(resp);
+          return resp;
+        })
+      );
+  }
+
+  InsertarImagen(img: File) {
+    const url1 = `${url.prod}${adm0007.insert_logo_empresa}`;
+    const fd = new FormData();
+    if (img) {
+      fd.append("logo", img, img.name);
+      console.log("cargando logo");
+    }
+    return this.httpClient
+      .post(url1, fd, {
+        headers: new HttpHeaders({
+          authorization: this.token
         })
       })
       .pipe(

@@ -1,109 +1,118 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import { Adm007Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import { NotyGlobal } from "src/app/master/utils/global/index.global";
-declare function initLabels ();
+declare function initLabels();
+
+interface HtmlInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
+}
 
 @Component({
-  selector: 'app-adm007',
-  templateUrl: './adm007.component.html',
-  styleUrls: ['./adm007.component.css']
+  selector: "app-adm007",
+  templateUrl: "./adm007.component.html",
+  styleUrls: ["./adm007.component.css"]
 })
 export class Adm007Component implements OnInit {
-
-  editar : boolean = false;
-  ocultarSeccion : boolean = false;
-  ocultarSeccionContactos : boolean = false;
-  ocultarSeccionDirecciones : boolean = false;
-  lista : any ;
-  ListActividadEmpresarial :  any;
-  ListTipoDirecciones : any;
-  idTipoDireccion : string ="1" ;
-  ListDirecciones : any ;
-  ListTipoContactos: any ;
-  ListContactos : any;
-  ListModulos : any;
-  ListCiudades : any ;
-  idCiudad : string ="0";
-  textPais : string = "";
-  textDepartamento : string = "";
-  ListDepartamentos : any;
-  ListPaises : any ;
-  direcciones : any  = [];
-  contactos : any = [];
-  // nueva direccion a adicionar
-  ListSend : any = {}; 
-  newDirection : any = {
-    "id_tipo_direccion": 1,
-    "estado": true,
-    "direccion": "",
-    "id_direccion": 1,
-    "tipo_direccion": "Propietario",
-    "pais": "",
-    "departamento": "",
-    "ciudad": "",
-    "id_ciudad":""
+  indiceContact: number = 0;
+  indiceDirection: number = 0;
+  editar: boolean = false;
+  ocultarSeccion: boolean = false;
+  ocultarSeccionContactos: boolean = false;
+  ocultarSeccionDirecciones: boolean = false;
+  lista: any;
+  ListActividadEmpresarial: any;
+  ListTipoDirecciones: any;
+  idTipoDireccion: string = "1";
+  ListDirecciones: any;
+  ListTipoContactos: any;
+  ListContactos: any;
+  ListModulos: any;
+  ListCiudades: any;
+  idCiudad: string = "0";
+  textPais: string = "";
+  textDepartamento: string = "";
+  ListDepartamentos: any;
+  ListPaises: any;
+  direcciones: any = [];
+  contactos: any = [];
+  CantidadDirecciones: number = 0;
+  CantidadContactos: number = 0;
+  ListSend: any = {};
+  newDirection: any = {
+    id_tipo_direccion: 1,
+    estado: 1,
+    direccion: "",
+    id_direccion: 0,
+    tipo_direccion: "Propietario",
+    pais: "",
+    departamento: "",
+    ciudad: "",
+    id_ciudad: ""
   };
 
-  newContacto : any =   {
-    "id_tipo_contacto": 33,
-    "id_subtipo_contacto": 2,
-    "id_contacto": "33-2",
-    "codigo_contacto": "",
-    "contacto": "",
-    "estado": true,
-    "tipo": "Fijo"
-  };
+  newContacto: any;
 
-  constructor( private _adm007Service : Adm007Service,
-              private _notyG: NotyGlobal) { 
+  photoSelected: string | ArrayBuffer;
+  file: File;
+  ListLastStadeDirecciones: any = [];
+  ListLastStadeContactos: any = [];
 
-  }
+  constructor(
+    private _adm007Service: Adm007Service,
+    private _notyG: NotyGlobal
+  ) {}
 
   ngOnInit() {
     this.ObtenerDatos();
     setTimeout(() => {
       initLabels();
     }, 1500);
-
   }
 
-  ObtenerDatos(){
-    this._adm007Service
-    .ObtenerParametros()
-    .subscribe(resp => {
-      if (resp ["ok"]) {
+  ObtenerDatos() {
+    this._adm007Service.ObtenerParametros().subscribe(resp => {
+      if (resp["ok"]) {
         this.lista = resp["datos"];
         this.ListActividadEmpresarial = this.lista[0]["actividad_empresarial"];
         this.ListTipoDirecciones = this.lista[0]["tipo_direcciones"];
-        this.ListDirecciones = this.lista[0]["direcciones"];
-        this.CambiarTipoEstado();
         this.ListContactos = this.lista[0]["contactos"];
+        if (this.ListContactos != null) {
+          this.CantidadContactos = this.ListContactos.length;
+        } else {
+          this.CantidadContactos = 0;
+        }
         this.ListTipoContactos = this.lista[0]["tipo_contactos"];
         this.AgregarId();
         this.ListModulos = this.lista[0]["modulos"];
         this.ListPaises = this.lista[0]["paises"];
-        this.ListDepartamentos = this.lista[0]["departamentos"];;
+        this.ListDepartamentos = this.lista[0]["departamentos"];
         this.ListCiudades = this.lista[0]["ciudades"];
+        this.idCiudad = this.ListCiudades[0].id_pais;
+        this.ListDirecciones = this.lista[0]["direcciones"];
+        if (this.ListDirecciones != null && this.ListDirecciones != undefined) {
+          this.CantidadDirecciones = this.ListDirecciones.length;
+          this.MostrarCiudad(
+            this.ListDirecciones[this.ListDirecciones.length - 1]
+          );
+          this.CambiarTipoEstado();
+        } else {
+          this.CantidadDirecciones = 0;
+        }
         setTimeout(() => {
           initLabels();
         }, 800);
-      }
-      else {
-        console.log("error: ", resp["mensaje"])
+      } else {
+        console.log("error: ", resp["mensaje"]);
       }
     });
   }
 
-  ActualizarDatos(){
+  ActualizarDatos() {
     console.log("lista para guardar: ", this.ListSend);
-    this._adm007Service
-    .ActualizarDatos(this.ListSend)
-    .subscribe(resp => {
-      if(resp["ok"]){
-        // console.log("datos actualizados component");
+    this._adm007Service.ActualizarDatos(this.ListSend).subscribe(resp => {
+      if (resp["ok"]) {
         this._notyG.noty("success", "datos actualizados", 3500);
-      }
-      else {
+      } else {
         this._notyG.noty("error", "no se pudo actualizar", 3500);
         console.log("error al guardar los datos");
         console.log(resp);
@@ -111,227 +120,323 @@ export class Adm007Component implements OnInit {
     });
   }
   /* metodos auxiliares*/
-  nada(){}
-
-  Actualizar( seccion : string){
-    this.pasarDatosDireccion();
-    switch(seccion){
-
-      case 'all':
-        // this.AgregarDireccion();
-        // this.Agregar('contactos');
-        // this.Agregar('direccion');
-        this.ActualizarDatos();
-        this.ModoVista();
-        console.log('entro por all');
-        break;
-      case 'direccion' :
-        this.Agregar(seccion);
-        console.log('entro por direccion');
-        break;
-      case 'contactos' :
-        this.Agregar(seccion);
-        console.log('entro por contactos');
-        break;
-    };
-    // this.AgregarDireccion();
-    //this.ActualizarDatos();
-    //this.ModoVista();
+  nada() {}
+  PrepareSend() {
+    if (this.ListDirecciones != null) {
+      this.ListDirecciones.forEach(element => {
+        if (element.id_ciudad != undefined) {
+          if (element.estado) {
+            element.estado = 1;
+          } else {
+            element.estado = 0;
+          }
+          this.direcciones.push(element);
+        }
+      });
+      this.ListContactos.forEach(element => {
+        if (element.id == 0) {
+          if (element.estado) {
+            element.estado = 1;
+          } else {
+            element.estado = 0;
+          }
+          this.contactos.push(element);
+        }
+      });
+    }
   }
-  ModoEdicion(){
+
+  Actualizar(seccion: string) {
+    this.PrepareSend();
+    this.pasarDatosDireccion();
+    switch (seccion) {
+      case "all":
+        if (this.direcciones.length > 0 || this.contactos.length > 0) {
+          this.ActualizarDatos();
+          console.log(this.direcciones.length);
+          console.log(this.contactos.length);
+        }
+        if (this.file) {
+          this.InsertarImagen(this.file);
+          console.log("insertando Imagen");
+        }
+        if (
+          this.direcciones.length > 0 ||
+          this.contactos.length > 0 ||
+          this.file
+        ) {
+          setTimeout(() => {
+            this.ObtenerDatos();
+          }, 1000);
+        }
+        this.ModoVista();
+        console.log("entro por all");
+        break;
+    }
+  }
+  ModoEdicion() {
     this.editar = true;
+    this.GuardarEstado();
     this.LimpiarData();
   }
-  ModoVista(){
+  ModoVista() {
     this.editar = false;
     this.LimpiarData();
     this.limpiarDataContacto();
+    this.file = null;
+    this.photoSelected = null;
+    this.indiceContact = 0;
+    this.indiceDirection = 0;
+    this.VolverEstadoAnterior();
   }
-
-  Agregar(newData : string){
-    // this.pasarDatosDireccion();
-    console.log("afrenado");
-    switch (newData) {
-      case 'contactos':
-        this.newContacto.estado = this.newContacto.estado == true ? 1 : 0
-        // if(!this.ValidarContacto()){
-        //   this._notyG.noty("warning", "rellene todos datos de contacto", 3500);
-        // }else{
-          // this.contactos.push(this.newContacto);
-          this.ListContactos.push(this.newContacto);
-          this.limpiarDataContacto();
-        // }
+  ValidarCantidad(tipo: string) {
+    const max: number = 10;
+    switch (tipo) {
+      case "contactos":
+        if (this.ListContactos == null) {
+          this.ListContactos = [];
+        }
+        return this.ListContactos.length < max;
         break;
-      case 'direccion':
-        this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
-        // if(!this.ValidarDireccion()){
-        //   this._notyG.noty("warning", "rellene todos los datos de la nueva direccion", 3500);  
-        // }
-        // else{
-          // this.direcciones.push(this.newDirection);
-          this.ListDirecciones.push(this.newDirection); 
-          this._notyG.noty("success", "direccion añadida", 3500);  
-          this.LimpiarData();
-          console.log("Lista añadida ", this.ListDirecciones);
-        // }
+      case "direccion":
+        if (this.ListDirecciones == null) {
+          this.ListDirecciones = [];
+        }
+        return this.ListDirecciones.length < max;
         break;
       default:
         break;
     }
   }
-  // Agregar(){
-  //   this.pasarDatosDireccion();
-   
-  //   this.newDirection.estado = this.newDirection.estado == true ? 1 : 0
-  //   this.direcciones.push(this.newDirection);
-  
-  //   this.ListDirecciones.push(this.newDirection); 
-    
-  //   this.LimpiarData();
-     
-  // }
-  
 
-  pasarDatosDireccion (){
-    this.ListSend ={
-      "razon_social": this.lista[0].razon_social,
-      "sigla": this.lista[0].sigla,
-      "id_actividad": this.lista[0].id_actividad_empresarial,
-      "nit": this.lista[0].nit,
-      "direcciones": this.direcciones,
-      "contactos" : this.contactos
-      };
+  Agregar(newData: string) {
+    console.log("agregando: ", newData);
+    switch (newData) {
+      case "contactos":
+        if (this.ValidarCantidad("contactos")) {
+          this.indiceContact = this.indiceContact + 1;
+          // if (this.ListContactos == null) {
+          //   this.ListContactos = [];
+          // }
+          this.limpiarDataContacto();
+          this.ListContactos.push(this.newContacto);
+          this._notyG.noty("success", "contacto", 3500);
+          console.log("Direccion añadida ", this.ListContactos);
+          break;
+        } else {
+          this._notyG.noty(
+            "warning",
+            "solo se puede ingresar 10 contactos",
+            3500
+          );
+          console.log("Direccion añadida", this.ListContactos);
+        }
+        break;
+      case "direccion":
+        if (this.ValidarCantidad("direccion")) {
+          this.indiceDirection = this.indiceDirection + 1;
+          // if (this.ListDirecciones == null) {
+          //   this.ListDirecciones = [];
+          // }
+          this.LimpiarData();
+          this.ListDirecciones.push(this.newDirection);
+          this.MostrarCiudad(this.idCiudad);
+          this._notyG.noty("success", "direccion añadida", 3500);
+          console.log("Lista añadida ", this.ListDirecciones);
+        } else {
+          this._notyG.noty(
+            "warning",
+            "solo se puede ingresar 10 direcciones",
+            3500
+          );
+          console.log("Direccion añadida", this.ListContactos);
+        }
+        break;
+      default:
+        break;
+    }
   }
-
-  LimpiarData(){
-    this.idCiudad="";
-    this.newDirection  = {
-      "id_tipo_direccion": 1,
-      "estado": true,
-      "direccion": "",
-      "id_direccion": 0,
-      "tipo_direccion": "Propietario",
-      "pais": "",
-      "departamento": "",
-      "ciudad": "",
-      "id_ciudad":""
+  // code ctrl x
+  pasarDatosDireccion() {
+    this.ListSend = {
+      razon_social: this.lista[0].razon_social,
+      sigla: this.lista[0].sigla,
+      id_actividad: this.lista[0].id_actividad_empresarial,
+      nit: this.lista[0].nit,
+      logo_url: this.lista[0].logo_empresa,
+      direcciones: this.direcciones,
+      contactos: this.contactos
     };
-    this.textPais = "";
-    this.textDepartamento = "";
   }
 
-  limpiarDataContacto(){
-    this.newContacto =  {
-      "id_tipo_contacto" : 33,
-      "id_subtipo_contacto" : 2,
-      "id_contacto" : "33-2",
-      "codigo_contacto" : "",
-      "contacto" : "",
-      "estado" : true,
-      "tipo": "Fijo"
+  LimpiarData() {
+    this.newDirection = {
+      id_tipo_direccion: 1,
+      estado: 1,
+      direccion: "",
+      id_direccion: 0,
+      tipo_direccion: "Propietario",
+      pais: "",
+      departamento: "",
+      ciudad: "",
+      id_ciudad: this.ListCiudades[0].id_pais
+    };
+    this.idCiudad = this.ListCiudades[0].id_pais;
+    this.textDepartamento = "";
+    this.textPais = "";
+  }
+
+  limpiarDataContacto() {
+    this.newContacto = {
+      id_tipo_contacto: 0,
+      id_subtipo_contacto: 2,
+      id_contacto: "33-2",
+      codigo_contacto: "",
+      contacto: "",
+      estado: 1,
+      tipo: "Fijo",
+      id: 0
     };
   }
   // Ocultar secciones
-  OcultarSeccion(seccion: string){
+  OcultarSeccion(seccion: string) {
     switch (seccion) {
-      case 'modulos': 
-          this.ocultarSeccion = true;
-          break;
-      case 'contactos': 
-          this.ocultarSeccionContactos = true;
-          break;
-      case 'direcciones': 
-          this.ocultarSeccionDirecciones = true;
-          break;
+      case "modulos":
+        this.ocultarSeccion = true;
+        break;
+      case "contactos":
+        this.ocultarSeccionContactos = true;
+        break;
+      case "direcciones":
+        this.ocultarSeccionDirecciones = true;
+        break;
       default:
-          console.log('invalid section');
+        console.log("invalid section");
     }
   }
-  MostrarSeccion(seccion: string){
+  MostrarSeccion(seccion: string) {
     switch (seccion) {
-      case 'modulos': 
-          this.ocultarSeccion = false;
-          break;
-      case 'contactos': 
-          this.ocultarSeccionContactos = false;
-          break;
-      case 'direcciones': 
-          this.ocultarSeccionDirecciones = false;
-          break;
+      case "modulos":
+        this.ocultarSeccion = false;
+        break;
+      case "contactos":
+        this.ocultarSeccionContactos = false;
+        break;
+      case "direcciones":
+        this.ocultarSeccionDirecciones = false;
+        break;
       default:
-          console.log('invalid section');
+        console.log("invalid section");
     }
   }
 
   /** poner estado a uno o cero en las direcciones */
-  CambiarTipoEstado(){
-    this.ListDirecciones.forEach( element => {
-      element = element.estado == 1 ? true : false
+  CambiarTipoEstado() {
+    this.ListDirecciones.forEach(element => {
+      element = element.estado === 1 ? true : false;
     });
   }
 
-  AgregarId(){
-    this.ListContactos.forEach(element => {
-      element.id_contacto = ""+element.id_tipo_contacto+"-"+element.id_subtipo_contacto;
-    });
-    this.ListTipoContactos.forEach(element => {
-      element.id_contacto = ""+element.id_tipo_contacto+"-"+element.id_tipo;
-    });
+  AgregarId() {
+    if (this.ListContactos != null) {
+      this.ListContactos.forEach(element => {
+        element.id = element.id_contacto;
+        element.id_contacto =
+          "" + element.id_tipo_contacto + "-" + element.id_subtipo_contacto;
+      });
+    }
+    if (this.ListTipoContactos != null) {
+      this.ListTipoContactos.forEach(element => {
+        element.id_contacto =
+          "" + element.id_tipo_contacto + "-" + element.id_tipo;
+      });
+    }
   }
 
-  ColocarCodigoContacto( ){
-    this.newContacto.id_tipo_contacto = this.newContacto.id_contacto.slice(0,2);
-    this.newContacto.id_subtipo_contacto = this.newContacto.id_contacto.slice(3);
-    this.BuscarNombreTipoContacto( +this.newContacto.id_tipo_contacto, +this.newContacto.id_subtipo_contacto);
+  ColocarCodigoContacto() {
+    this.ListContactos[
+      this.ListContactos.length - 1
+    ].id_tipo_contacto = this.ListContactos[
+      this.ListContactos.length - 1
+    ].id_contacto.slice(0, 2);
+    this.ListContactos[
+      this.ListContactos.length - 1
+    ].id_subtipo_contacto = this.ListContactos[
+      this.ListContactos.length - 1
+    ].id_contacto.slice(3);
+    this.BuscarNombreTipoContacto(
+      +this.ListContactos[this.ListContactos.length - 1].id_tipo_contacto,
+      +this.ListContactos[this.ListContactos.length - 1].id_subtipo_contacto
+    );
     this.newContacto.codigo_contacto = "";
     this.newContacto.contacto = "";
   }
 
-  BuscarNombreTipoContacto(tipo : number, subtipo : number){
-    this.ListTipoContactos.forEach( element => {
-      if(element.id_tipo_contacto == tipo && element.id_tipo == subtipo){
-          this.newContacto.tipo = element.tipo;
+  BuscarNombreTipoContacto(tipo: number, subtipo: number) {
+    this.ListTipoContactos.forEach(element => {
+      if (element.id_tipo_contacto == tipo && element.id_tipo == subtipo) {
+        this.ListContactos[this.ListContactos.length - 1].tipo = element.tipo;
+        console.log("entro a ver tipo contacto: ", element.id_tipo_contacto);
       }
     });
   }
-  ObtenerPais(codigo : string){
-    var codPais = codigo.slice(0, 3);
+  ObtenerPais(codigo: string) {
+    const codPais = codigo.slice(0, 3);
     return codPais;
   }
-  BuscarPais(codigo: string){
+  BuscarPais(codigo: string) {
     this.ListPaises.forEach(element => {
-      if (element.id_pais == codigo){
+      if (element.id_pais == codigo) {
         this.newDirection.pais = element.nombre_pais;
+        this.textPais = element.nombre_pais;
       }
     });
   }
-  ObtenerDepartamento(codigo : string){
-    var codDep = codigo.slice(0, 5);
+  ObtenerDepartamento(codigo: string) {
+    const codDep = codigo.slice(0, 5);
     return codDep;
   }
-  BuscarDepartamento(codigo : string){
-    this.ListDepartamentos.forEach( element => {
-      if(element.id_pais == codigo){
+  BuscarDepartamento(codigo: string) {
+    this.ListDepartamentos.forEach(element => {
+      if (element.id_pais == codigo) {
         this.newDirection.departamento = element.nombre_pais;
+        this.textDepartamento = element.nombre_pais;
       }
     });
   }
-  BuscarNombreCiudad(codigo : string){
-    this.ListCiudades.forEach( element => {
-      if(element.id_pais == codigo){
+  BuscarNombreCiudad(codigo: string) {
+    this.ListCiudades.forEach(element => {
+      if (element.id_pais == codigo) {
         this.newDirection.ciudad = element.nombre_pais;
       }
     });
   }
-  MostrarCiudad(data : any){
-    if(this.editar){
-          this.BuscarDepartamento(this.ObtenerDepartamento(this.idCiudad));
-          this.BuscarPais(this.ObtenerPais(this.idCiudad));
-          this.newDirection.id_ciudad = this.idCiudad;
-          this.BuscarNombreCiudad(this.idCiudad);
-    }else{
+  MostrarCiudad(data: any) {
+    console.log("mostrando: ", data);
+    if (this.editar) {
+      console.log("editar ciudad: ", data);
+      this.BuscarDepartamento(this.ObtenerDepartamento(this.idCiudad));
+      this.BuscarPais(this.ObtenerPais(this.idCiudad));
+      this.newDirection.id_ciudad = this.idCiudad;
+      this.BuscarNombreCiudad(this.idCiudad);
+      if (this.ListDirecciones != null) {
+        this.ListDirecciones[
+          this.ListDirecciones.length - 1
+        ].pais = this.textPais;
+        this.ListDirecciones[
+          this.ListDirecciones.length - 1
+        ].departamento = this.textDepartamento;
+        this.ListDirecciones[
+          this.ListDirecciones.length - 1
+        ].ciudad = this.newDirection.ciudad;
+        this.ListDirecciones[
+          this.ListDirecciones.length - 1
+        ].id_ciudad = this.idCiudad;
+      }
+    } else {
+      console.log("No editar: ", data);
       this.ListCiudades.forEach(element => {
-        if(element.nombre_pais == data.ciudad){
+        if (element.nombre_pais == data.ciudad) {
           this.idCiudad = element.id_pais;
           this.textPais = data.pais;
           this.textDepartamento = data.departamento;
@@ -339,26 +444,266 @@ export class Adm007Component implements OnInit {
       });
     }
   }
-  /**metodos auxiliares del tab */
   // validadores
-  ValidarDireccion(){
-    if(this.newDirection.direccion == "" || this.newDirection.id_ciudad== ""){
-      return false;
-    }
-    return true;
-
-  }
-  ValidarContacto(){
-    if(this.newContacto.contacto == ""){
+  ValidarDireccion() {
+    if (
+      this.newDirection.direccion == "" ||
+      this.newDirection.id_ciudad == ""
+    ) {
       return false;
     }
     return true;
   }
-  // por implements 
-  ValidarDatosEmpresa(){
-
+  ValidarContacto() {
+    if (this.newContacto.contacto == "") {
+      return false;
+    }
+    return true;
   }
-  Eliminar(){
+  // por implements
+  ValidarDatosEmpresa() {}
 
+  verTipo(tipo: string) {
+    let valor: number = 0;
+    switch (tipo) {
+      case "contactos":
+        valor = 2;
+        break;
+      case "direccion":
+        valor = 1;
+        break;
+      default:
+        console.log("invalid number");
+    }
+    return valor;
+  }
+  Eliminar(tipo: string, id: number, item: any) {
+    let aux: number = 0;
+    aux = this.verTipo(tipo);
+    if (aux == 1) {
+      this.EliminarService(aux, item.id_direccion);
+    }
+    if (aux == 2) {
+      this.EliminarService(aux, item.id);
+    }
+  }
+
+  EliminarDeLista(tipo: number) {
+    switch (tipo) {
+      case 2:
+        this.CantidadDirecciones = this.CantidadDirecciones - 1;
+        break;
+      case 1:
+        this.CantidadContactos = this.CantidadContactos - 1;
+        break;
+      default:
+        console.log("invalid number");
+    }
+  }
+
+  EliminarService(tipo: number, id: number) {
+    this._adm007Service.Eliminar(tipo, id).subscribe(resp => {
+      if (resp["ok"]) {
+        this.Remover(tipo, id);
+        this._notyG.noty("success", "datos Eliminados", 3500);
+      } else {
+        this._notyG.noty("error", "no se pudo Eliminar datos", 3500);
+        console.log("error al Eliminar los datos");
+        console.log(resp);
+      }
+    });
+  }
+
+  Remover(idTipo: number, id: number) {
+    let pos = 1;
+    let v1: number = -1;
+    if (idTipo == 1) {
+      this.ListDirecciones.forEach(element => {
+        if (element.id_direccion == id) {
+          v1 = pos;
+        }
+        pos = pos + 1;
+        console.log("posicion recorrido Direcciones: ", pos);
+      });
+      if (v1 !== -1) {
+        console.log("removiendo Posicion v1-1: ", v1 - 1);
+        this.ListDirecciones.splice(v1 - 1, 1);
+        this.CantidadDirecciones = this.CantidadDirecciones - 1;
+      }
+    }
+    if (idTipo == 2) {
+      this.ListContactos.forEach(element => {
+        if (element.id_contacto != undefined) {
+          v1 = pos;
+        }
+        pos = pos + 1;
+        console.log("posicion recorrido Contactos: ", pos);
+      });
+      if (v1 !== -1) {
+        console.error("removiendo Posicion v1-1: ", v1 - 1);
+        this.ListContactos.splice(v1 - 1, 1);
+        this.CantidadContactos = this.CantidadContactos - 1;
+      }
+    }
+  }
+
+  onPhotoSelected(event: HtmlInputEvent): void {
+    const extensionesValidas = ["image/png", "image/jpg", "image/jpeg"];
+    const extensionArchivo = event.target.files[0].type;
+    if (extensionesValidas.indexOf(extensionArchivo) === -1) {
+      this._notyG.noty("error", "Formato novalido, Solo formato imagen", 5000);
+      return;
+    }
+    if (event.target.files && event.target.files[0]) {
+      console.log("Elemento Event", event);
+      this.file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = e => (this.photoSelected = reader.result);
+      reader.readAsDataURL(this.file);
+      console.log("seleccionando imagen");
+    } else {
+      return;
+    }
+  }
+
+  InsertarImagen(img: File) {
+    this._adm007Service.InsertarImagen(img).subscribe(resp => {
+      if (resp["ok"]) {
+        this._notyG.noty("success", "Imagen Actualizada Correctamente", 2500);
+        this.file = null;
+      } else {
+        this._notyG.noty("warning", "la imagen no pudo ser actualizada", 2500);
+      }
+    });
+  }
+
+  /// guardar estado - volver al estado anterior
+  GuardarEstado() {
+    this.ListLastStadeDirecciones = [];
+    this.ListLastStadeContactos = [];
+    this.ListDirecciones.forEach(element => {
+      const direcciones: any = {
+        id_tipo_direccion: 1,
+        id_direccion: 0,
+        direccion: "",
+        estado: 1,
+        tipo_direccion: "Propietario",
+        pais: "Bolivia",
+        departamento: "Santa cruz",
+        ciudad: "Santa Cruz de la Sierra"
+      };
+      direcciones.id_tipo_direccion = element.id_tipo_direccion;
+      direcciones.id_direccion = element.id_direccion;
+      direcciones.direccion = element.direccion;
+      direcciones.estado = element.estado;
+      direcciones.tipo_direccion = element.tipo_direccion;
+      direcciones.pais = element.pais;
+      direcciones.departamento = element.departamento;
+      direcciones.ciudad = element.ciudad;
+      this.ListLastStadeDirecciones.push(direcciones);
+    });
+
+    this.ListContactos.forEach(element => {
+      let contactos = {
+        id_tipo_contacto: 0,
+        id_subtipo_contacto: 0,
+        id_contacto: 0,
+        codigo_contacto: "",
+        contacto:
+          "mario                                                                                               ",
+        estado: 1,
+        tipo: "Instagram"
+      };
+      contactos.id_tipo_contacto = element.id_tipo_contacto;
+      contactos.id_subtipo_contacto = element.id_subtipo_contacto;
+      contactos.id_contacto = element.id_contacto;
+      contactos.codigo_contacto = element.codigo_contacto;
+      contactos.contacto = element.contacto;
+      contactos.estado = element.estado;
+      contactos.tipo = element.tipo;
+      this.ListLastStadeContactos.push(contactos);
+    });
+    console.log("direcciones save contactos : ", this.ListLastStadeContactos);
+    console.log(
+      "direcciones save direcciones : ",
+      this.ListLastStadeDirecciones
+    );
+  }
+
+  VolverEstadoAnterior() {
+    this.ListDirecciones = [];
+    this.ListLastStadeDirecciones.forEach(element => {
+      let direcciones: any = {
+        id_tipo_direccion: 1,
+        id_direccion: 0,
+        direccion: "",
+        estado: 1,
+        tipo_direccion: "Propietario",
+        pais: "Bolivia",
+        departamento: "Santa cruz",
+        ciudad: "Santa Cruz de la Sierra"
+      };
+      direcciones.id_tipo_direccion = element.id_tipo_direccion;
+      direcciones.id_direccion = element.id_direccion;
+      direcciones.direccion = element.direccion;
+      direcciones.estado = element.estado;
+      direcciones.tipo_direccion = element.tipo_direccion;
+      direcciones.pais = element.pais;
+      direcciones.departamento = element.departamento;
+      direcciones.ciudad = element.ciudad;
+      this.ListDirecciones.push(direcciones);
+    });
+    this.ListContactos = [];
+    this.ListLastStadeContactos.forEach(element => {
+      let contactos = {
+        id_tipo_contacto: 0,
+        id_subtipo_contacto: 0,
+        id_contacto: 0,
+        codigo_contacto: "",
+        contacto:
+          "mario                                                                                               ",
+        estado: 1,
+        tipo: "Instagram"
+      };
+      contactos.id_tipo_contacto = element.id_tipo_contacto;
+      contactos.id_subtipo_contacto = element.id_subtipo_contacto;
+      contactos.id_contacto = element.id_contacto;
+      contactos.codigo_contacto = element.codigo_contacto;
+      contactos.contacto = element.contacto;
+      contactos.estado = element.estado;
+      contactos.tipo = element.tipo;
+      this.ListContactos.push(contactos);
+    });
+    console.log("direcciones Recuperar contactos : ", this.ListContactos);
+    console.log("direcciones recuperar direcciones : ", this.ListDirecciones);
+
+    // this.estructuraPlanDeCuentas = [];
+    // this.Listnaturalezas = [];
+    // this.ListLastStade.forEach(element => {
+    //   let AuxEstructura: any = {
+    //     id_estructura: 0,
+    //     nombre: "",
+    //     largo: 0,
+    //     separador: ""
+    //   };
+    //   AuxEstructura.id_estructura = element.id_estructura;
+    //   AuxEstructura.nombre = element.nombre;
+    //   AuxEstructura.largo = element.largo;
+    //   AuxEstructura.separador = element.separador;
+    //   this.estructuraPlanDeCuentas.push(AuxEstructura);
+    // });
+    // console.log(this.ListLastStade);
+    // console.log(this.estructuraPlanDeCuentas);
+    // this.ListLastStadeNaturaleza.forEach(element => {
+    //   let AuxNaturaleza = {
+    //     id_codigo: 0,
+    //     id_naturaleza: 0
+    //   };
+    //   AuxNaturaleza.id_codigo = element.id_codigo;
+    //   AuxNaturaleza.id_naturaleza = element.id_naturaleza;
+    //   this.Listnaturalezas.push(AuxNaturaleza);
+    // });
+    // this.ListLastStadeNaturaleza = [];
+    // this.ListLastStade = [];
   }
 }

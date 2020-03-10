@@ -1,22 +1,22 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Adm009 } from "src/app/master/utils/models/main/adm_000/index.models";
 import { Adm009Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
-import { NotyGlobal } from "src/app/master/utils/global/noty.global";
+import {
+  NotyGlobal,
+  InitGlobal
+} from "src/app/master/utils/global/index.global";
 import glb001 from "src/app/master/config/glb000/glb001_btn";
 import { FormControl, NgForm } from "@angular/forms";
 import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models";
 import { Observable, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
-declare function init_select();
-declare function initLabels();
-
 @Component({
   selector: "app-adm009",
   templateUrl: "./adm009.component.html",
   styleUrls: ["./adm009.component.css"]
 })
-export class Adm009Component implements OnInit {
+export class Adm009Component {
   textBuscarAdm009 = new FormControl("", []);
   buscar = true;
   texto = "all_paise";
@@ -43,19 +43,11 @@ export class Adm009Component implements OnInit {
   dependenciaAdm009: any[] = [];
   id_cod = "";
 
-  initSelect() {
-    setTimeout(() => {
-      init_select();
-    }, 5);
-  }
-
-  initLabels() {
-    setTimeout(() => {
-      initLabels();
-    }, 5);
-  }
-
-  constructor(private adm009S: Adm009Service, private notyG: NotyGlobal) {
+  constructor(
+    private adm009S: Adm009Service,
+    private notyG: NotyGlobal,
+    private initG: InitGlobal
+  ) {
     this.getAdm009(this.texto);
     this.textBuscarAdm009.valueChanges
       .pipe(debounceTime(500))
@@ -69,20 +61,18 @@ export class Adm009Component implements OnInit {
       });
   }
 
-  ngOnInit() {}
-
-  getAdm009(texto: string) {
+  getAdm009(texto: string, numePag = "1") {
     this.buscar = true;
     let peticion: Observable<any>;
     if (texto.length === 0 || texto === "all_auxma") {
       this.texto = "all_paise";
-      peticion = this.adm009S.geAdm009("90", "1", this.texto);
+      peticion = this.adm009S.geAdm009("90", numePag, this.texto);
     } else {
       this.texto = texto;
-      peticion = this.adm009S.geAdm009("90", "1", this.texto);
+      peticion = this.adm009S.geAdm009("90", numePag, this.texto);
     }
     this.sus = peticion.subscribe(resp => {
-      this.numeroPag = 1;
+      this.numeroPag = Number(numePag);
       this.nuevoAuxmaModal = resp.usr[0];
       if (resp["ok"]) {
         this.auxma = resp.usr[0].paises;
@@ -101,8 +91,8 @@ export class Adm009Component implements OnInit {
     this.boolDisabled(false);
     this.auxmaModal = [this.nuevoAuxmaModal];
     this.contorlAccion = "nuevo";
-    this.initLabels();
-    this.initSelect();
+    this.initG.labels();
+    this.initG.select();
   }
 
   OpcionesTable(adm_009: Adm009, tipo: string) {
@@ -114,15 +104,15 @@ export class Adm009Component implements OnInit {
       case "visualizar":
         this.btnGrupo.BtnEdita = true;
         this.btnGrupo.BtnNuevo = true;
-        this.initSelect();
-        this.initLabels();
+        this.initG.labels();
+        this.initG.select();
         break;
       case "editar":
         this.btnGrupo.BtnCance = true;
         this.btnGrupo.BtnGuard = true;
-
         this.boolDisabled(false);
-        this.initSelect();
+        this.disabled.codigo = true;
+        this.initG.select();
         break;
       case "eliminar":
         return;
@@ -142,15 +132,16 @@ export class Adm009Component implements OnInit {
       case "nuevo":
         this.contorlAccion = tipo;
         this.boolBtnGrupo(false, true);
-        this.btnGrupo.BtnCance = false;
+        this.btnGrupo.BtnCance = true;
         this.boolDisabled(false);
         forma.reset();
-        this.initLabels();
+        this.initG.labels();
         return;
       case "editar":
         this.contorlAccion = tipo;
         this.boolDisabled(false);
         this.boolBtnGrupo(false, true);
+        this.disabled.codigo = true;
         return;
       case "salir":
         this.resetDatos(forma);
@@ -163,14 +154,13 @@ export class Adm009Component implements OnInit {
         this.boolBtnGrupo(true, false);
         return;
       case "guardar":
-        if (forma.valid) {
-          this.boolDisabled(true);
-          this.boolBtnGrupo(true, false);
-          this.guardarDatos(forma.value, this.contorlAccion);
-        } else {
-          this.notyG.noty("error", "Complete todos los campos", 3000);
+        if (forma.invalid) {
+          return;
         }
-        this.initSelect();
+        this.btnGrupo.BtnLoadi = true;
+        this.btnGrupo.BtnCance = false;
+        this.guardarDatos(forma.value, this.contorlAccion);
+        this.initG.select();
         return;
     }
     this.boolBtnGrupo(true, true);
@@ -184,7 +174,7 @@ export class Adm009Component implements OnInit {
     this.disabled.descripci = bool;
     this.disabled.sigla = bool;
     this.disabled.estado = bool;
-    this.initSelect();
+    this.initG.select();
   }
 
   boolBtnGrupo(editNuevo: boolean, cancelGuardar: boolean) {
@@ -265,6 +255,7 @@ export class Adm009Component implements OnInit {
       this.auxmaModal[0].tipo_territorio.toString(),
       forma
     );
+    this.initG.labels();
   }
 
   cargarDependencia(codigo: string) {
@@ -275,7 +266,7 @@ export class Adm009Component implements OnInit {
         descripcion: "null"
       };
       this.dependenciaAdm009.push(dato);
-      this.initSelect();
+      this.initG.select();
       return;
     } else if (long === 5) {
       for (let index = 0; index < this.auxma.length; index++) {
@@ -298,7 +289,7 @@ export class Adm009Component implements OnInit {
         }
       }
     }
-    this.initSelect();
+    this.initG.select();
   }
 
   cargarDependencia2(id: string, forma: NgForm) {
@@ -313,7 +304,7 @@ export class Adm009Component implements OnInit {
       forma.controls.dependencia.setValue(
         this.dependenciaAdm009[0].dependencia
       );
-      this.initSelect();
+      this.initG.select();
       return;
     }
     for (let index = 0; index < this.auxma.length; index++) {
@@ -326,7 +317,7 @@ export class Adm009Component implements OnInit {
       }
     }
     forma.controls.dependencia.setValue(this.dependenciaAdm009[0].dependencia);
-    this.initSelect();
+    this.initG.select();
   }
 
   guardarDatos(auxModal: Adm009, contorlAccion: string) {
@@ -339,11 +330,14 @@ export class Adm009Component implements OnInit {
       this.notyG.noty("error", "control Accion Invalido", 2000);
     }
     this.sus = peticion.subscribe(resp => {
+      this.btnGrupo.BtnLoadi = false;
+      this.boolDisabled(true);
+      this.boolBtnGrupo(true, false);
       if (resp["ok"]) {
         if (contorlAccion === "nuevo") {
           this.id_cod = resp["id_registro"];
         }
-        this.getAdm009(this.texto);
+        this.getAdm009(this.texto, this.numeroPag.toString());
         this.notyG.noty("success", resp["mensaje"], 1000);
       } else {
         this.boolBtnGrupo(false, true);
@@ -356,9 +350,13 @@ export class Adm009Component implements OnInit {
   eliminarAdm006(id_cod: string) {
     let peticion: Observable<any>;
     peticion = this.adm009S.deAdm009(id_cod);
+    let numPag = this.numeroPag;
     this.sus = peticion.subscribe(resp => {
       if (resp["ok"]) {
-        this.paginacion(this.numeroPag.toString(), false);
+        if (this.auxma.length === 1) {
+          numPag--;
+        }
+        this.paginacion(numPag.toString(), false);
         this.id_cod = "";
         this.notyG.noty("success", resp["mensaje"], 3000);
       } else {

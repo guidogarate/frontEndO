@@ -47,8 +47,6 @@
                 (click)="nuevoAdm009()"
                 title="agregar"
               ></i>
-              <!-- routerLink="{{ bienvenido }}" -->
-              <i class="icon-exit xxl puntero" title="Pagina Bienvenido"> </i>
             </div>
           </div>
         </div>
@@ -56,12 +54,13 @@
       <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-          <div class="table-responsive text-center">
+          <div class="table-responsive">
             <table class="table table-sm table-hover table-bordered">
-              <thead>
+              <thead class=" text-center">
                 <tr class="bg-blue">
-                  <th>Codigo</th>
-                  <th>Descripcion</th>
+                  <th>
+                    _________Codigo_________
+                  </th>
                   <th>Sigla</th>
                   <th>Estado</th>
                   <th>Acciones</th>
@@ -78,14 +77,23 @@
                   "
                   [ngClass]="{ tablaCebradoPar: par, tablaCebradoImpar: impar }"
                 >
-                  <td>{{ adm009.codigo }}</td>
-                  <td class="table-content-center">
+                  <td *ngIf="adm009.codigo.length === 3">
+                    {{ adm009.id_vista }} &nbsp; {{ adm009.descripcion }}
+                  </td>
+                  <td *ngIf="adm009.codigo.length === 5">
+                    &nbsp; &nbsp;&nbsp; {{ adm009.id_vista }} &nbsp;
                     {{ adm009.descripcion }}
                   </td>
-                  <td class="table-content-center">
+                  <td *ngIf="adm009.codigo.length === 7">
+                    &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;{{
+                      adm009.id_vista
+                    }}
+                    &nbsp;{{ adm009.descripcion }}
+                  </td>
+                  <td class="table-content-center text-center">
                     {{ adm009.sigla }}
                   </td>
-                  <td>
+                  <td class="table-content-center text-center">
                     <div class="custom-control custom-switch">
                       <input
                         type="checkbox"
@@ -174,78 +182,83 @@
 <div id="modal_adm_009" class="modal" tabindex="-1">
   <div class="modal-dialog ">
     <div class="modal-content animacionmodal haciadentro">
-      <div class="modal-header bg-blue">
-        <h6 class="modal-title">ADM009</h6>
-        <div class="list-icons float-right">
-          <a class="puntero" *ngIf="btnGrupo.BtnCance"
-            ><i
-              class="icon-cancel-circle2 xxl"
-              data-toggle="tooltip"
-              data-placement="top"
-              (click)="OpcionesModal(forma, 'cancelar')"
-              title="Cancelar"
-            >
-            </i
-          ></a>
-          <a class="puntero" *ngIf="btnGrupo.BtnNuevo">
-            <i
-              data-toggle="tooltip"
-              data-placement="top"
-              class="icon-diff-added xxl"
-              (click)="OpcionesModal(forma, 'nuevo')"
-              title="nuevo"
-            ></i>
-          </a>
-          <a class="puntero" *ngIf="btnGrupo.BtnGuard"
-            ><i
-              class="icon-floppy-disk xxl"
-              data-toggle="tooltip"
-              data-placement="top"
+      <form #forma="ngForm" ngNativeValidate autocomplete="off" class="form">
+        <div class="modal-header bg-blue">
+          <h6 class="modal-title">ADM009</h6>
+          <div class="list-icons float-right">
+            <a class="puntero" *ngIf="btnGrupo.BtnCance"
+              ><i
+                class="icon-cancel-circle2 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal(forma, 'cancelar')"
+                title="Cancelar"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnGrupo.BtnNuevo">
+              <i
+                data-toggle="tooltip"
+                data-placement="top"
+                class="icon-diff-added xxl"
+                (click)="OpcionesModal(forma, 'nuevo')"
+                title="nuevo"
+              ></i>
+            </a>
+            <button
+              *ngIf="btnGrupo.BtnGuard"
+              style="padding: 1px;color: white;"
+              type="submit"
               (click)="OpcionesModal(forma, 'guardar')"
-              title="Guardar"
+              class="btn text-warning-600 btn-flat btn-icon btn-rounded"
+            >
+              <i
+                *ngIf="!btnGrupo.BtnLoadi"
+                class="icon-floppy-disk xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+              ></i>
+            </button>
+            <i
+              *ngIf="btnGrupo.BtnLoadi"
+              class="icon-spinner spinner position-left"
+              title="Guardando..."
             >
             </i>
-          </a>
-          <a *ngIf="btnGrupo.BtnEdita" class="puntero">
-            <i
-              class="icon-pencil7 xxl"
-              data-toggle="tooltip"
-              data-placement="top"
-              (click)="OpcionesModal(forma, 'editar')"
-              title="editar"
-            >
-            </i
-          ></a>
-          <a class="puntero" *ngIf="btnGrupo.BtnElimi"
-            ><i
-              class="icon-trash xxl"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Eliminar"
-            >
-            </i
-          ></a>
-          <a class="puntero">
-            <i
-              class="icon-exit xxl"
-              (click)="OpcionesModal(forma, 'salir')"
-              data-toggle="tooltip"
-              data-placement="top"
-              data-dismiss="modal"
-              title="Salir"
-            >
-            </i
-          ></a>
+            <a *ngIf="btnGrupo.BtnEdita" class="puntero">
+              <i
+                class="icon-pencil7 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal(forma, 'editar')"
+                title="editar"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnGrupo.BtnElimi"
+              ><i
+                class="icon-trash xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Eliminar"
+              >
+              </i
+            ></a>
+            <a class="puntero">
+              <i
+                class="icon-exit xxl"
+                (click)="OpcionesModal(forma, 'salir')"
+                data-toggle="tooltip"
+                data-placement="top"
+                data-dismiss="modal"
+                title="Salir"
+              >
+              </i
+            ></a>
+          </div>
         </div>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <form
-            #forma="ngForm"
-            ngNativeValidate
-            autocomplete="off"
-            class="form"
-          >
+        <div class="modal-body">
+          <div class="row">
             <ng-container *ngFor="let auxModal of auxmaModal; let i = index">
               <div class="col-xl-12">
                 <div class="row text-center">
@@ -253,6 +266,8 @@
                     <label class="form-group">Division</label>
                     <select
                       required
+                      onchange="setCustomValidity('')"
+                      oninvalid="setCustomValidity('Debe selecciona una division')"
                       [disabled]="disabled.division"
                       [ngModel]="auxModal.tipo_territorio"
                       (change)="cargarDependencia2($event.target.value, forma)"
@@ -294,12 +309,11 @@
                         style="text-align: center;"
                         type="text"
                         class="form-control"
-                        [disabled]="true"
-                        placeholder="Introducir Codigo"
+                        [disabled]="disabled.codigo"
+                        placeholder="Codigo"
                         [ngModel]="auxModal.codigo"
                         name="codigo"
                         title="{{ auxModal.codigo }}"
-                        required
                       />
                     </div>
                   </div>
@@ -316,6 +330,8 @@
                         name="descripcion"
                         title="{{ auxModal.descripcion }}"
                         required
+                        oninvalid="this.setCustomValidity('Introducir Descripcion')"
+                        oninput="setCustomValidity('')"
                       />
                     </div>
                   </div>
@@ -332,6 +348,8 @@
                         name="sigla"
                         title="{{ auxModal.sigla }}"
                         required
+                        oninvalid="this.setCustomValidity('Introducir Sigla')"
+                        oninput="setCustomValidity('')"
                       />
                     </div>
                   </div>
@@ -339,7 +357,6 @@
                     <div class="custom-control custom-switch">
                       <input
                         type="checkbox"
-                        required="false"
                         class="custom-control-input"
                         [disabled]="disabled.estado"
                         [ngModel]="auxModal.estado"
@@ -357,14 +374,14 @@
                 </div>
               </div>
             </ng-container>
-          </form>
-        </div>
-        <div *ngIf="loadingSub" class="d-flex justify-content-center">
-          <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
+          </div>
+          <div *ngIf="loadingSub" class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>

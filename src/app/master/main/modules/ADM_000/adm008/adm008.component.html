@@ -50,12 +50,6 @@
                 (click)="habilitar('atras')"
                 title="Sastifactorio"
               ></i>
-              <i
-                routerLink="{{ bienvenido }}"
-                class="icon-exit xxl puntero"
-                title="Pagina Bienvenido"
-              >
-              </i>
             </div>
           </div>
         </div>
@@ -155,7 +149,8 @@
                     <td class="text-center">
                       <div class="list-icons">
                         <i
-                          (click)="reset(adm005)"
+                          *ngIf="!(loadguardar === i)"
+                          (click)="reset(adm005, i)"
                           class="icon-floppy-disk gris"
                           [ngClass]="{
                             blue: adm005.estado,
@@ -163,6 +158,12 @@
                           }"
                           title="reset"
                         ></i>
+                        <i
+                          *ngIf="loadguardar === i"
+                          class="icon-spinner spinner position-left blue"
+                          title="Guardando..."
+                        >
+                        </i>
                       </div>
                     </td>
                   </tr>
