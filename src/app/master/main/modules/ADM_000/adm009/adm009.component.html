@@ -282,7 +282,7 @@
                       >
                     </select>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-6" *ngIf="ocultarSelect">
                     <label class="form-group">Dependencia Division</label>
                     <select
                       [disabled]="disabled.dependencia"
