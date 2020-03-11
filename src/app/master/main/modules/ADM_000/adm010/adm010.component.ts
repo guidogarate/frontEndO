@@ -487,7 +487,6 @@ export class Adm010Component implements OnInit {
 
   HabilitarEstado(id: number) {
     console.log("Habilitando elemento: ", id);
-
     this.allCodigosNaturalezas.forEach(elemento => {
       if (elemento.id_codigo == id) {
         elemento.estado = 0;

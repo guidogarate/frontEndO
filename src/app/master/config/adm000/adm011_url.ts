@@ -1,8 +1,8 @@
 const adm011 = {
-  getAdm011: "adm_000/adm_009/get-paises/",
-  upAdm011: "adm_000/adm_009/update-paises/",
-  delAdm011: "adm_000/adm_009/delete-paises/",
-  inAdm011: "adm_000/adm_009/insert-paises"
+  getAdm011: "adm_000/adm_011/get-clase-documentos/",
+  inAdm011: "adm_000/adm_011/insert-clase-documentos",
+  upAdm011: "adm_000/adm_011/update-clase-documentos/",
+  delAdm011: "adm_000/adm_011/delete-clase-documentos/"
 };
 
 export default adm011;

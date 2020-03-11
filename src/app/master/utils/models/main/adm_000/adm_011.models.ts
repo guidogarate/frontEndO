@@ -1,4 +1,4 @@
-export interface Adm011 {
+export interface Adm012 {
   codigo: string;
   descripcion: string;
   sigla: string;
@@ -8,11 +8,12 @@ export interface Adm011 {
   territorio: number;
 }
 
-export interface Adm012 {
-  idDocumento: number;
-  estado: boolean;
+export interface Adm011 {
+  id_Modulo: number;
+  nombre_modulo: string;
+  id_documento: number;
   descripcion: string;
-  descripcion_corta: string;
-  nombreComponente: string;
   sigla: string;
+  componente: string;
+  estado: boolean;
 }
