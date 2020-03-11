@@ -1,1 +1,1 @@
-export { Cont003 } from "./cont_003.models";
+export { Cont003, Cont003Select } from "./cont_003.models";

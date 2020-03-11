@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule, DatePipe } from "@angular/common";
 import { IndexCont000Module } from "src/app/master/utils/service/main/modules/cont_000/index.adm000.module";
-import { PipesModule } from "../../../utils/pipe/pipes.module";
+import { PipesModule } from "src/app/master/utils/pipe/pipes.module";
 
 import { CONT_000_MODULES_ROUTES } from "./con_000.routes";
 import { Cont003Component } from "./cont003/cont003.component";

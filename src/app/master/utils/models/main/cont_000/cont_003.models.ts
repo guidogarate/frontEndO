@@ -8,3 +8,8 @@ export interface Cont003 {
   estado: boolean;
   codigo: string;
 }
+
+export interface Cont003Select {
+  id_division: number;
+  descripcion: string;
+}
