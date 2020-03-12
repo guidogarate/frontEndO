@@ -39,18 +39,13 @@ export class Cont003Component {
   dataEmpres: DataEmpresa[];
   textBuscarAdm009 = new FormControl("", []);
   dependenciaCont003: any[] = [];
-  disabled = {
-    division: true,
-    dependencia: true,
-    codigo: true,
-    descripci: true,
-    sigla: true,
-    estado: true
-  };
   forma: FormGroup;
   table = false;
-  ocultarSelect = true;
   gestion = "0";
+  ocultarSelect = true;
+  mostrarCheck = false;
+  placeholdeAuto = "auto";
+  mostrarErroAuto = false;
 
   constructor(
     private cont003S: Cont003Service,
@@ -71,12 +66,12 @@ export class Cont003Component {
         }
       });
   }
-  // idunidaddivision: ["", [Validators.pattern("^[auto]{4}|[d]{3}$")]],
   crearFormulario() {
     this.forma = this.fb.group({
       idunidaddivision: ["", [Validators.maxLength(4)]],
       descripcion: ["", [Validators.required]],
       sigla: ["", [Validators.required]],
+      checkauto: [""],
       division: ["", [Validators.required]],
       dependencia: [""],
       estado: ["", [Validators.required]]
@@ -118,6 +113,7 @@ export class Cont003Component {
       this.start.Table = true;
       this.initG.select();
       this.initG.labels();
+      this.initG.uniform();
     });
   }
 
@@ -126,9 +122,13 @@ export class Cont003Component {
     this.btnGrupo.BtnCance = false;
     this.boolDisabled(false);
     this.dependenciaCont003 = [];
-    this.forma.reset({ estado: false });
+    this.forma.reset({ estado: false, checkauto: true });
     this.start.CtrAc = "nuevo";
     this.ocultarSelect = false;
+    this.mostrarCheck = true;
+    this.forma.get("idunidaddivision").setValue("auto");
+    this.forma.get("idunidaddivision").disable();
+    this.initG.uniform();
     this.initG.labels();
     this.initG.select();
   }
@@ -162,14 +162,20 @@ export class Cont003Component {
   }
 
   OpcionesModal(tipo: string) {
+    this.mostrarCheck = false;
     switch (tipo) {
       case "nuevo":
         this.start.CtrAc = tipo;
         this.boolBtnGrupo(false, true);
         this.btnGrupo.BtnCance = true;
         this.dependenciaCont003 = [];
-        this.forma.reset({ estado: false }); // resetea todo a null y estado a false
+        this.forma.reset({ estado: false, checkauto: true }); // resetea todo a null y estado a false
         this.boolDisabled(false);
+        this.mostrarCheck = true;
+        this.forma.get("idunidaddivision").setValue("auto");
+        this.forma.get("idunidaddivision").disable();
+        this.initG.uniform();
+        this.initG.labels();
         return;
       case "editar":
         this.start.CtrAc = tipo;
@@ -368,36 +374,56 @@ export class Cont003Component {
     this.initG.select();
   }
 
+  habilitarAuto() {
+    if (this.forma.get("checkauto").value) {
+      this.forma.get("idunidaddivision").enable();
+      this.forma.get("idunidaddivision").setValue("");
+      this.placeholdeAuto = "introducir codigo";
+      this.mostrarErroAuto = true;
+    } else {
+      this.forma.get("idunidaddivision").setValue("auto");
+      this.forma.get("idunidaddivision").disable();
+      this.mostrarErroAuto = false;
+      this.placeholdeAuto = "auto";
+    }
+    this.initG.labels();
+  }
   cont003Selectgest(gestion: string) {
     this.gestion = gestion;
     this.getCont003("all_data", "1", gestion);
   }
 
   guardarDatos(cont_003: Cont003, contorlAccion: string) {
-    let peticion: Observable<any>;
-    if (contorlAccion === "nuevo") {
-      peticion = this.cont003S.inCont003(cont_003, this.gestion);
-    } else if (contorlAccion === "editar") {
-      peticion = this.cont003S.upCont003(cont_003, this.start.IdCod);
-    } else {
-      this.notyG.noty("error", "control Accion Invalido", 2000);
-    }
-    this.sus = peticion.subscribe(resp => {
-      this.btnGrupo.BtnLoadi = false;
-      this.boolDisabled(true);
-      this.boolBtnGrupo(true, false);
-      if (resp["ok"]) {
-        if (contorlAccion === "nuevo") {
-          this.start.IdCod = resp["id_registro"];
-        }
-        this.getCont003(this.start.Texto, this.start.NumPa.toString());
-        this.notyG.noty("success", resp["mensaje"], 1000);
-      } else {
-        this.boolBtnGrupo(false, true);
-        this.boolDisabled(false);
-        this.notyG.noty("error", resp["mensaje"], 3000);
-      }
-    });
+    console.log(contorlAccion);
+    console.log(cont_003);
+    this.btnGrupo.BtnLoadi = false;
+    this.boolDisabled(true);
+    this.boolBtnGrupo(true, false);
+    return;
+    // let peticion: Observable<any>;
+    // if (contorlAccion === "nuevo") {
+    //   peticion = this.cont003S.inCont003(cont_003, this.gestion);
+    // } else if (contorlAccion === "editar") {
+    //   peticion = this.cont003S.upCont003(cont_003, this.start.IdCod);
+    // } else {
+    //   this.notyG.noty("error", "control Accion Invalido", 2000);
+    // }
+    // this.sus = peticion.subscribe(resp => {
+    //   this.btnGrupo.BtnLoadi = false;
+    //   this.boolDisabled(true);
+    //   this.boolBtnGrupo(true, false);
+    //   if (resp["ok"]) {
+    //     if (contorlAccion === "nuevo") {
+    //       this.start.IdCod = resp["id_registro"];
+    //     }
+    //     this.getCont003(this.start.Texto, this.start.NumPa.toString());
+    //     this.notyG.noty("success", resp["mensaje"], 1000);
+    //   } else {
+    //     this.boolBtnGrupo(false, true);
+    //     this.boolDisabled(false);
+    //     this.notyG.noty("error", resp["mensaje"], 3000);
+    //   }
+    // });
   }
 
   eliminarCont003(id_cod: string) {
