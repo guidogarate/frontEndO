@@ -11,7 +11,7 @@ export interface Adm012 {
 export interface Adm011 {
   id_Modulo: number;
   nombre_modulo: string;
-  id_documento: number;
+  id_documento: string;
   descripcion: string;
   sigla: string;
   componente: string;

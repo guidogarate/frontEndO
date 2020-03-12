@@ -177,7 +177,7 @@
           <span class="sr-only">Loading...</span>
         </div>
       </div>
-      <!-- <div *ngIf="!loading" class="row justify-content-center">
+      <div *ngIf="!loading" class="row justify-content-center">
         <ul class="pagination pagination-flat align-self-center">
           <li class="page-item puntero">
             <a (click)="paginacion('000')" class="page-link"
@@ -201,7 +201,7 @@
             >
           </li>
         </ul>
-      </div> -->
+      </div>
     </div>
   </div>
 </div>
@@ -291,6 +291,14 @@
           <div class="row">
             <ng-container *ngFor="let auxModal of auxmaModal; let i = index">
               <div class="col-xl-12">
+                <div class="row text-center">
+                  <div class="col-sm-4 col-4">
+                    <input
+                      type="{{ auxModal.nombre_modulo }}"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
                 <div class="row text-center">
                   <div class="col-md-6">
                     <label class="form-group">Division</label>
@@ -416,7 +424,7 @@
   </div>
 </div>
 
-<div id="modal_adm_011_eliminar" class="modal" tabindex="-1">
+<!-- <div id="modal_adm_011_eliminar" class="modal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -445,4 +453,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

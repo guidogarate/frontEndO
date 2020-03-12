@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { Adm011 } from "src/app/master/utils/models/main/adm_000/index.models";
 import { Adm011Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import {
@@ -15,7 +15,7 @@ import { debounceTime } from "rxjs/operators";
   templateUrl: "./adm011.component.html",
   styleUrls: ["./adm011.component.css"]
 })
-export class Adm011Component {
+export class Adm011Component implements OnDestroy {
   textBuscarAdm011 = new FormControl("", []);
   buscar = true;
   texto = "all_data";
@@ -45,6 +45,7 @@ export class Adm011Component {
   idModulo = 10;
   ListDocumentos: any = [];
   ListModulos: any = [];
+
   constructor(
     private adm011S: Adm011Service,
     private notyG: NotyGlobal,
@@ -52,16 +53,21 @@ export class Adm011Component {
   ) {
     console.log("buscando Texto");
     this.getAdm011(this.texto);
-    // this.textBuscarAdm011.valueChanges
-    //   .pipe(debounceTime(500))
-    //   .subscribe(value => {
-    //     if (value.length > 1) {
-    //       this.getAdm011(value);
-    //     } else {
-    //       this.texto = "all_data";
-    //       this.getAdm011(this.texto);
-    //     }
-    //   });
+    this.textBuscarAdm011.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe(value => {
+        if (value.length > 1) {
+          this.getAdm011(value);
+        } else {
+          this.texto = "all_data";
+          this.getAdm011(this.texto);
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.sus.unsubscribe();
+    this.textBuscarAdm011 = null;
   }
 
   getAdm011(texto: string, numePag = "1") {
@@ -88,15 +94,15 @@ export class Adm011Component {
     console.log("peticion: ", peticion);
     this.sus = peticion.subscribe(resp => {
       this.numeroPag = Number(numePag);
-      this.nuevoAuxmaModal = this.auxma = resp["data"][0].clase_documentos[0];
+      this.nuevoAuxmaModal = this.auxma = resp.data[0].clase_documentos[0];
       console.log("nuevo aux modal : ", this.nuevoAuxmaModal);
       if (resp["ok"]) {
-        this.auxma = resp["data"][0].clase_documentos;
-        this.ListModulos = resp["data"][0].modulos;
+        this.auxma = resp.data[0].clase_documentos;
+        this.ListModulos = resp.data[0].modulos;
         console.log(this.auxma);
         this.initG.labels();
         this.initG.select();
-        // this.pagi = resp["cant"];
+        this.pagi = resp["cant"];
       } else {
         this.notyG.noty("error", resp["messagge"], 5000);
       }
@@ -207,61 +213,64 @@ export class Adm011Component {
   //   this.boolBtnGrupo(false, false);
   // }
 
-  // paginacion(numero: string, eliminar = true) {
-  //   const nume = Number(numero);
-  //   if (this.numeroPag === nume && eliminar) {
-  //     return;
-  //   }
-  //   const total = this.pagi.length;
-  //   let peticion: Observable<any>;
-  //   if (nume > 0 && nume <= total) {
-  //     this.numeroPag = nume;
-  //     peticion = this.adm011S.getAdm011(
-  //       "90",
-  //       this.numeroPag.toString(),
-  //       this.texto
-  //     );
-  //   } else {
-  //     if (numero === "000") {
-  //       if (this.numeroPag === 1) {
-  //         return;
-  //       }
-  //       if (this.numeroPag === 1) {
-  //         this.numeroPag = 1;
-  //       } else {
-  //         this.numeroPag--;
-  //       }
-  //       peticion = this.adm011S.getAdm011(
-  //         "90",
-  //         this.numeroPag.toString(),
-  //         this.texto
-  //       );
-  //     } else if (numero === "999") {
-  //       if (this.numeroPag === total) {
-  //         return;
-  //       }
-  //       if (this.numeroPag === total) {
-  //         this.numeroPag = total;
-  //       } else {
-  //         this.numeroPag++;
-  //       }
-  //       peticion = this.adm011S.getAdm011(
-  //         "90",
-  //         this.numeroPag.toString(),
-  //         this.texto
-  //       );
-  //     }
-  //   }
-  //   this.sus = peticion.subscribe(resp => {
-  //     if (resp["ok"]) {
-  //       this.auxma = resp.usr[0].paises;
-  //       this.pagi = resp["cant"];
-  //       this.nuevoAuxmaModal = resp.usr[0];
-  //     } else {
-  //       this.notyG.noty("error", resp["mensaje"], 5000);
-  //     }
-  //   });
-  // }
+  paginacion(numero: string, eliminar = true) {
+    const nume = Number(numero);
+    if (this.numeroPag === nume && eliminar) {
+      return;
+    }
+    const total = this.pagi.length;
+    let peticion: Observable<any>;
+    if (nume > 0 && nume <= total) {
+      this.numeroPag = nume;
+      peticion = this.adm011S.getAdm011(
+        "90",
+        this.numeroPag.toString(),
+        this.idModulo,
+        this.texto
+      );
+    } else {
+      if (numero === "000") {
+        if (this.numeroPag === 1) {
+          return;
+        }
+        if (this.numeroPag === 1) {
+          this.numeroPag = 1;
+        } else {
+          this.numeroPag--;
+        }
+        peticion = this.adm011S.getAdm011(
+          "90",
+          this.numeroPag.toString(),
+          this.idModulo,
+          this.texto
+        );
+      } else if (numero === "999") {
+        if (this.numeroPag === total) {
+          return;
+        }
+        if (this.numeroPag === total) {
+          this.numeroPag = total;
+        } else {
+          this.numeroPag++;
+        }
+        peticion = this.adm011S.getAdm011(
+          "90",
+          this.numeroPag.toString(),
+          this.idModulo,
+          this.texto
+        );
+      }
+    }
+    this.sus = peticion.subscribe(resp => {
+      if (resp["ok"]) {
+        this.auxma = resp.data[0].clase_documentos;
+        this.pagi = resp["cant"];
+        this.nuevoAuxmaModal = resp.data[0].clase_documentos[0];
+      } else {
+        this.notyG.noty("error", resp["mensaje"], 5000);
+      }
+    });
+  }
 
   // resetDatos(forma: NgForm) {
   //   if (this.auxmaModal[0].id_documento === undefined) {
