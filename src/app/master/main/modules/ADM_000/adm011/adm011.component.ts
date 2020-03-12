@@ -88,7 +88,8 @@ export class Adm011Component {
     console.log("peticion: ", peticion);
     this.sus = peticion.subscribe(resp => {
       this.numeroPag = Number(numePag);
-      // this.nuevoAuxmaModal = resp.clase_documentos[0];
+      this.nuevoAuxmaModal = this.auxma = resp["data"][0].clase_documentos[0];
+      console.log("nuevo aux modal : ", this.nuevoAuxmaModal);
       if (resp["ok"]) {
         this.auxma = resp["data"][0].clase_documentos;
         this.ListModulos = resp["data"][0].modulos;

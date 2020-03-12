@@ -177,7 +177,7 @@
           <span class="sr-only">Loading...</span>
         </div>
       </div>
-      <div *ngIf="!loading" class="row justify-content-center">
+      <!-- <div *ngIf="!loading" class="row justify-content-center">
         <ul class="pagination pagination-flat align-self-center">
           <li class="page-item puntero">
             <a (click)="paginacion('000')" class="page-link"
@@ -201,17 +201,20 @@
             >
           </li>
         </ul>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
 
-<!-- <div id="modal_adm_011" class="modal" tabindex="-1">
+<div id="modal_adm_011" class="modal" tabindex="-1">
   <div class="modal-dialog ">
     <div class="modal-content animacionmodal haciadentro">
       <form #forma="ngForm" ngNativeValidate autocomplete="off" class="form">
         <div class="modal-header bg-blue">
-          <h6 class="modal-title">adm011</h6>
+          <h6 class="modal-title">
+            <i class="icon-stack-text"></i>
+            CLASE DE DOCUMENTOS
+          </h6>
           <div class="list-icons float-right">
             <a class="puntero" *ngIf="btnGrupo.BtnCance"
               ><i
@@ -412,11 +415,12 @@
     </div>
   </div>
 </div>
+
 <div id="modal_adm_011_eliminar" class="modal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">adm011</h5>
+        <h5 class="modal5-title">adm011</h5>
         <button type="button" class="close" data-dismiss="modal">
           &times;
         </button>
@@ -441,4 +445,4 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
