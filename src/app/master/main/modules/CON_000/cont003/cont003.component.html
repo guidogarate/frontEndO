@@ -417,7 +417,7 @@
                     <label class="form-group-float-label">Codigo</label>
                     <input
                       style="text-align: center;"
-                      type="number"
+                      type="text"
                       class="form-control"
                       oninvalid="this.setCustomValidity('Introducir Codigo')"
                       oninput="setCustomValidity('')"
@@ -426,7 +426,9 @@
                       name="idunidaddivision"
                       required
                     />
-                    <span *ngIf="mostrarErroAuto" class="form-text text-danger"
+                    <span
+                      *ngIf="this.forma.get('idunidaddivision').invalid"
+                      class="form-text text-danger"
                       >Acepta 3 digitos</span
                     >
                   </div>
@@ -484,10 +486,11 @@
           </div>
         </div>
       </form>
-      <!-- <hr />
-      <p>{{ this.forma.get("idunidaddivision").status }}</p> -->
-      <!-- <hr />
-      <pre>{{ forma.value | json }}</pre> -->
+      <hr />
+      <p>
+        {{ this.forma.get("idunidaddivision").status }}
+      </p>
+      <pre>{{ forma.value | json }}</pre>
     </div>
   </div>
 </div>

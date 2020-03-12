@@ -28,7 +28,6 @@ export class Cont003Service {
 
   upCont003(cont_003: Cont003, id_cod: string) {
     const url1 = `${url.prod}${cont003.upCont003}${id_cod}`;
-    console.log(id_cod);
     let estado: string = "";
     if (cont_003.estado) {
       estado = "1";
@@ -40,7 +39,6 @@ export class Cont003Service {
       sigla: cont_003.sigla,
       estado
     });
-    console.log(JSON.parse(json));
     return this.httpClient
       .put(url1, json, {
         headers: new HttpHeaders({
@@ -74,6 +72,7 @@ export class Cont003Service {
   inCont003(cont_003: Cont003, gestion: string) {
     const url1 = `${url.prod}${cont003.inCont003}/${gestion}`;
     let estado: string = "";
+    let codigo: string = "";
     if (cont_003.estado === undefined) {
       cont_003.estado = false;
     }
@@ -82,12 +81,18 @@ export class Cont003Service {
     } else {
       estado = "0";
     }
+    if (cont_003.checkauto) {
+      codigo = "auto";
+    } else {
+      codigo = cont_003.idunidaddivision;
+    }
     const json = JSON.stringify({
       division: cont_003.division,
       dependencia: cont_003.dependencia,
       descripcion: cont_003.descripcion,
       sigla: cont_003.sigla,
-      estado
+      estado,
+      codigo
     });
     return this.httpClient
       .post(url1, json, {
