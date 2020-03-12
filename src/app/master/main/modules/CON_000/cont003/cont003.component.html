@@ -397,10 +397,19 @@
               <div class="row text-center">
                 <div class="col-md-1">
                   <div
+                    *ngIf="mostrarCheck"
                     class="form-group"
-                    style="padding-left: 50px;padding-top: 20px;"
+                    style="padding-left: 15px;padding-top: 20px;"
                   >
-                    <input type="checkbox" class="form-check-input" />
+                    <div class="uniform-checker" style="margin: auto;">
+                      <input
+                        class="form-input-styled"
+                        formControlName="checkauto"
+                        (click)="habilitarAuto()"
+                        data-fouc=""
+                        type="checkbox"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -408,15 +417,18 @@
                     <label class="form-group-float-label">Codigo</label>
                     <input
                       style="text-align: center;"
-                      type="text"
+                      type="number"
                       class="form-control"
-                      placeholder="Introducir Codigo"
+                      oninvalid="this.setCustomValidity('Introducir Codigo')"
+                      oninput="setCustomValidity('')"
+                      placeholder="{{ placeholdeAuto }}"
                       formControlName="idunidaddivision"
                       name="idunidaddivision"
+                      required
                     />
-                    <!-- <span class="form-text text-danger"
-                      >Acepta 3 digitos o auto</span
-                    > -->
+                    <span *ngIf="mostrarErroAuto" class="form-text text-danger"
+                      >Acepta 3 digitos</span
+                    >
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -474,8 +486,8 @@
       </form>
       <!-- <hr />
       <p>{{ this.forma.get("idunidaddivision").status }}</p> -->
-      <hr />
-      <pre>{{ forma.value | json }}</pre>
+      <!-- <hr />
+      <pre>{{ forma.value | json }}</pre> -->
     </div>
   </div>
 </div>
