@@ -45,7 +45,7 @@ export class Cont003Component {
   ocultarSelect = true;
   mostrarCheck = false;
   placeholdeAuto = "auto";
-  mostrarErroAuto = false;
+  insertar = "fall";
 
   constructor(
     private cont003S: Cont003Service,
@@ -59,16 +59,17 @@ export class Cont003Component {
       .pipe(debounceTime(500))
       .subscribe(value => {
         if (value.length > 1) {
-          this.getCont003(value);
+          this.getCont003(value, "1", this.gestion);
         } else {
           this.start.Texto = "all_data";
           this.getCont003(this.start.Texto);
         }
       });
   }
+
   crearFormulario() {
     this.forma = this.fb.group({
-      idunidaddivision: ["", [Validators.maxLength(4)]],
+      idunidaddivision: ["", [Validators.pattern("^([0-9]{3})$")]],
       descripcion: ["", [Validators.required]],
       sigla: ["", [Validators.required]],
       checkauto: [""],
@@ -165,12 +166,18 @@ export class Cont003Component {
     this.mostrarCheck = false;
     switch (tipo) {
       case "nuevo":
+        if (this.insertar === "exito") {
+          this.boolDisabled(true);
+          this.boolBtnGrupo(true, false);
+          return;
+        }
         this.start.CtrAc = tipo;
         this.boolBtnGrupo(false, true);
         this.btnGrupo.BtnCance = true;
         this.dependenciaCont003 = [];
         this.forma.reset({ estado: false, checkauto: true }); // resetea todo a null y estado a false
         this.boolDisabled(false);
+        this.cargarDependencia2("1");
         this.mostrarCheck = true;
         this.forma.get("idunidaddivision").setValue("auto");
         this.forma.get("idunidaddivision").disable();
@@ -186,11 +193,20 @@ export class Cont003Component {
         this.forma.get("dependencia").disable();
         return;
       case "salir":
+        this.insertar = "fall";
+        this.placeholdeAuto = "auto";
         this.resetDatos();
         this.boolDisabled(true);
         this.dependenciaCont003 = [];
         break;
       case "cancelar":
+        console.log(this.start.CtrAc);
+        if (this.insertar === "exito") {
+          this.boolDisabled(true);
+          this.boolBtnGrupo(true, false);
+          return;
+        }
+        this.placeholdeAuto = "auto";
         this.resetDatos();
         this.dependenciaCont003 = [];
         this.cargarDependencia(this.auxmaModal.idunidaddivision);
@@ -198,8 +214,8 @@ export class Cont003Component {
         this.boolBtnGrupo(true, false);
         return;
       case "guardar":
-        this.forma.get("idunidaddivision").disable();
         if (this.forma.invalid) {
+          this.mostrarCheck = true;
           return;
         }
         this.btnGrupo.BtnLoadi = true;
@@ -291,7 +307,6 @@ export class Cont003Component {
       if (resp["ok"]) {
         this.auxma = resp.usr[0].unidades_division;
         this.pagi = resp["cant"];
-        // this.nuevoAuxmaModal = resp.usr[0];
       } else {
         this.notyG.noty("error", resp["mensaje"], 5000);
       }
@@ -379,51 +394,51 @@ export class Cont003Component {
       this.forma.get("idunidaddivision").enable();
       this.forma.get("idunidaddivision").setValue("");
       this.placeholdeAuto = "introducir codigo";
-      this.mostrarErroAuto = true;
     } else {
       this.forma.get("idunidaddivision").setValue("auto");
       this.forma.get("idunidaddivision").disable();
-      this.mostrarErroAuto = false;
       this.placeholdeAuto = "auto";
     }
     this.initG.labels();
   }
+
   cont003Selectgest(gestion: string) {
     this.gestion = gestion;
     this.getCont003("all_data", "1", gestion);
   }
 
   guardarDatos(cont_003: Cont003, contorlAccion: string) {
-    console.log(contorlAccion);
-    console.log(cont_003);
-    this.btnGrupo.BtnLoadi = false;
-    this.boolDisabled(true);
-    this.boolBtnGrupo(true, false);
-    return;
-    // let peticion: Observable<any>;
-    // if (contorlAccion === "nuevo") {
-    //   peticion = this.cont003S.inCont003(cont_003, this.gestion);
-    // } else if (contorlAccion === "editar") {
-    //   peticion = this.cont003S.upCont003(cont_003, this.start.IdCod);
-    // } else {
-    //   this.notyG.noty("error", "control Accion Invalido", 2000);
-    // }
-    // this.sus = peticion.subscribe(resp => {
-    //   this.btnGrupo.BtnLoadi = false;
-    //   this.boolDisabled(true);
-    //   this.boolBtnGrupo(true, false);
-    //   if (resp["ok"]) {
-    //     if (contorlAccion === "nuevo") {
-    //       this.start.IdCod = resp["id_registro"];
-    //     }
-    //     this.getCont003(this.start.Texto, this.start.NumPa.toString());
-    //     this.notyG.noty("success", resp["mensaje"], 1000);
-    //   } else {
-    //     this.boolBtnGrupo(false, true);
-    //     this.boolDisabled(false);
-    //     this.notyG.noty("error", resp["mensaje"], 3000);
-    //   }
-    // });
+    let peticion: Observable<any>;
+    if (contorlAccion === "nuevo") {
+      peticion = this.cont003S.inCont003(cont_003, this.gestion);
+    } else if (contorlAccion === "editar") {
+      peticion = this.cont003S.upCont003(cont_003, this.start.IdCod);
+    } else {
+      this.notyG.noty("error", "control Accion Invalido", 2000);
+    }
+    this.sus = peticion.subscribe(resp => {
+      this.btnGrupo.BtnLoadi = false;
+      this.boolDisabled(true);
+      this.boolBtnGrupo(true, false);
+      if (resp["ok"]) {
+        if (contorlAccion === "nuevo") {
+          this.start.IdCod = resp["id_registro"];
+          this.insertar = "exito";
+          // para que, cuando le de x, resetee el valor que
+          // se ha insertado recientemente entonces vamos a opcionModal en editar
+        }
+        this.getCont003(
+          this.start.Texto,
+          this.start.NumPa.toString(),
+          this.gestion
+        );
+        this.notyG.noty("success", resp["mensaje"], 1000);
+      } else {
+        this.boolBtnGrupo(false, true);
+        this.boolDisabled(false);
+        this.notyG.noty("error", resp["mensaje"], 3000);
+      }
+    });
   }
 
   eliminarCont003(id_cod: string) {
