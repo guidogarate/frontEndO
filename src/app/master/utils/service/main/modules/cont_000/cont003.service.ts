@@ -27,7 +27,6 @@ export class Cont003Service {
   }
 
   upCont003(cont_003: Cont003, id_cod: string) {
-    return true;
     const url1 = `${url.prod}${cont003.upCont003}${id_cod}`;
     let estado: string = "";
     if (cont_003.estado) {
@@ -36,8 +35,6 @@ export class Cont003Service {
       estado = "0";
     }
     const json = JSON.stringify({
-      division: cont_003.division,
-      dependencia: cont_003.dependencia,
       descripcion: cont_003.descripcion,
       sigla: cont_003.sigla,
       estado
@@ -57,7 +54,6 @@ export class Cont003Service {
   }
 
   deCont003(id_cod: string) {
-    return true;
     const url1 = `${url.prod}${cont003.deCont003}${id_cod}`;
     return this.httpClient
       .delete(url1, {
@@ -73,10 +69,10 @@ export class Cont003Service {
       );
   }
 
-  inCont003(cont_003: Cont003) {
-    return true;
-    const url1 = `${url.prod}${cont003.inCont003}`;
+  inCont003(cont_003: Cont003, gestion: string) {
+    const url1 = `${url.prod}${cont003.inCont003}/${gestion}`;
     let estado: string = "";
+    let codigo: string = "";
     if (cont_003.estado === undefined) {
       cont_003.estado = false;
     }
@@ -85,12 +81,18 @@ export class Cont003Service {
     } else {
       estado = "0";
     }
+    if (cont_003.checkauto) {
+      codigo = "auto";
+    } else {
+      codigo = cont_003.idunidaddivision;
+    }
     const json = JSON.stringify({
       division: cont_003.division,
       dependencia: cont_003.dependencia,
       descripcion: cont_003.descripcion,
       sigla: cont_003.sigla,
-      estado
+      estado,
+      codigo
     });
     return this.httpClient
       .post(url1, json, {

@@ -42,6 +42,7 @@ export class Adm009Component {
   controlLoginModal = "";
   dependenciaAdm009: any[] = [];
   id_cod = "";
+  ocultarSelect = true;
 
   constructor(
     private adm009S: Adm009Service,
@@ -133,6 +134,7 @@ export class Adm009Component {
         this.contorlAccion = tipo;
         this.boolBtnGrupo(false, true);
         this.btnGrupo.BtnCance = true;
+        this.dependenciaAdm009 = [];
         this.boolDisabled(false);
         forma.reset();
         this.initG.labels();
@@ -150,6 +152,8 @@ export class Adm009Component {
         break;
       case "cancelar":
         this.resetDatos(forma);
+        this.dependenciaAdm009 = [];
+        this.cargarDependencia(this.auxmaModal[0].codigo);
         this.boolDisabled(true);
         this.boolBtnGrupo(true, false);
         return;
@@ -245,16 +249,10 @@ export class Adm009Component {
     if (this.auxmaModal[0].tipo_territorio === undefined) {
       return;
     }
-    forma.controls.tipo_territorio.setValue(this.auxmaModal[0].tipo_territorio);
-    forma.controls.dependencia.setValue(this.auxmaModal[0].dependencia);
     forma.controls.codigo.setValue(this.auxmaModal[0].codigo);
     forma.controls.descripcion.setValue(this.auxmaModal[0].descripcion);
     forma.controls.sigla.setValue(this.auxmaModal[0].sigla);
     forma.controls.estado.setValue(this.auxmaModal[0].estado);
-    this.cargarDependencia2(
-      this.auxmaModal[0].tipo_territorio.toString(),
-      forma
-    );
     this.initG.labels();
   }
 
@@ -263,8 +261,9 @@ export class Adm009Component {
     if (long === 3) {
       const dato = {
         dependencia: null,
-        descripcion: "null"
+        descripcion: "."
       };
+      //  this.ocultarSelect = false;
       this.dependenciaAdm009.push(dato);
       this.initG.select();
       return;
@@ -289,6 +288,7 @@ export class Adm009Component {
         }
       }
     }
+    //   this.ocultarSelect = true;
     this.initG.select();
   }
 
@@ -298,8 +298,9 @@ export class Adm009Component {
     if (id_terr === 1) {
       const dato = {
         dependencia: null,
-        descripcion: "null"
+        descripcion: "."
       };
+      // this.ocultarSelect = false;
       this.dependenciaAdm009.push(dato);
       forma.controls.dependencia.setValue(
         this.dependenciaAdm009[0].dependencia
@@ -317,6 +318,7 @@ export class Adm009Component {
       }
     }
     forma.controls.dependencia.setValue(this.dependenciaAdm009[0].dependencia);
+    // this.ocultarSelect = true;
     this.initG.select();
   }
 

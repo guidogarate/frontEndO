@@ -1,5 +1,10 @@
 import { Component } from "@angular/core";
-import { FormControl, NgForm } from "@angular/forms";
+import {
+  FormControl,
+  FormGroup,
+  FormBuilder,
+  Validators
+} from "@angular/forms";
 import { Cont003Service } from "src/app/master/utils/service/main/modules/cont_000/index.shared.service";
 import {
   NotyGlobal,
@@ -12,7 +17,10 @@ import {
 import glb001 from "src/app/master/config/glb000/glb001_btn";
 import glb002 from "src/app/master/config/glb000/glb002_start";
 import { Observable, Subscription } from "rxjs";
-import { Cont003 } from "src/app/master/utils/models/main/cont_000/index.models";
+import {
+  Cont003,
+  Cont003Select
+} from "src/app/master/utils/models/main/cont_000/index.models";
 import { debounceTime } from "rxjs/operators";
 
 @Component({
@@ -26,90 +34,124 @@ export class Cont003Component {
   pagi: Paginacion[];
   sus: Subscription;
   auxma: Cont003[];
-  auxmaModal: Cont003[];
-  nuevoAuxmaModal: Cont003;
+  auxmaModal: Cont003;
+  selecDivModal: Cont003Select[];
   dataEmpres: DataEmpresa[];
   textBuscarAdm009 = new FormControl("", []);
   dependenciaCont003: any[] = [];
-  contorlAccion: string = "";
-  disabled = {
-    division: true,
-    dependencia: true,
-    codigo: true,
-    descripci: true,
-    sigla: true,
-    estado: true
-  };
+  forma: FormGroup;
+  table = false;
+  gestion = "0";
+  ocultarSelect = true;
+  mostrarCheck = false;
+  placeholdeAuto = "auto";
+  insertar = "fall";
 
   constructor(
     private cont003S: Cont003Service,
+    private fb: FormBuilder,
     private notyG: NotyGlobal,
     private initG: InitGlobal
   ) {
-    this.getCont003(this.start.startText);
+    this.getCont003(this.start.Texto);
+    this.crearFormulario();
     this.textBuscarAdm009.valueChanges
       .pipe(debounceTime(500))
       .subscribe(value => {
         if (value.length > 1) {
-          this.getCont003(value);
+          this.getCont003(value, "1", this.gestion);
         } else {
-          this.start.startText = "all_data";
-          this.getCont003(this.start.startText);
+          this.start.Texto = "all_data";
+          this.getCont003(this.start.Texto);
         }
       });
   }
 
-  getCont003(texto: string, gst = "0") {
-    this.start.startBusc = true;
+  crearFormulario() {
+    this.forma = this.fb.group({
+      idunidaddivision: ["", [Validators.pattern("^([0-9]{3})$")]],
+      descripcion: ["", [Validators.required]],
+      sigla: ["", [Validators.required]],
+      checkauto: [""],
+      division: ["", [Validators.required]],
+      dependencia: [""],
+      estado: ["", [Validators.required]]
+    });
+  }
+
+  getCont003(texto: string, numePag = "1", gst = "0") {
+    this.start.Busca = true;
     let peticion: Observable<any>;
     if (texto.length === 0 || texto === "all_data") {
-      this.start.startText = "all_data";
-      peticion = this.cont003S.geCont003("10", "1", gst, this.start.startText);
+      this.start.Texto = "all_data";
+      peticion = this.cont003S.geCont003("10", numePag, gst, this.start.Texto);
     } else {
-      this.start.startText = texto;
-      peticion = this.cont003S.geCont003("10", "1", gst, this.start.startText);
+      this.start.Texto = texto;
+      peticion = this.cont003S.geCont003("10", numePag, gst, this.start.Texto);
     }
     this.sus = peticion.subscribe(resp => {
-      if (!this.start.startCont) {
-        this.start.startCont = true;
+      this.gestion = resp.usr[0].datos_empresa[0].gestiones[0].gestion;
+      if (!this.start.Conte) {
+        this.start.Conte = true;
       }
       if (this.dataEmpres === undefined) {
         this.dataEmpres = resp.usr[0].datos_empresa;
       }
-      console.log(resp);
-      this.nuevoAuxmaModal = resp.usr[0];
-      this.start.startNumP = 1;
+      this.start.NumPa = Number(numePag);
+      this.selecDivModal = resp.usr[0].niveles_unidades_negocio;
       if (resp["ok"]) {
         this.auxma = resp.usr[0].unidades_division;
-
         this.pagi = resp["cant"];
+        this.table = false;
       } else {
         this.notyG.noty("error", resp["messagge"], 5000);
+        this.auxma = [];
+        this.pagi = [];
+        this.table = true;
       }
-      this.start.startBusc = false;
-      this.start.startLoad = false;
-      this.start.startTabl = true;
-      this.initG.labels();
+      this.start.Busca = false;
+      this.start.Loadi = false;
+      this.start.Table = true;
       this.initG.select();
+      this.initG.labels();
+      this.initG.uniform();
     });
   }
 
+  nuevoCont003() {
+    this.boolBtnGrupo(false, true);
+    this.btnGrupo.BtnCance = false;
+    this.boolDisabled(false);
+    this.dependenciaCont003 = [];
+    this.forma.reset({ estado: false, checkauto: true });
+    this.start.CtrAc = "nuevo";
+    this.ocultarSelect = false;
+    this.mostrarCheck = true;
+    this.forma.get("idunidaddivision").setValue("auto");
+    this.forma.get("idunidaddivision").disable();
+    this.initG.uniform();
+    this.initG.labels();
+    this.initG.select();
+  }
+
   OpcionesTable(cont_003: Cont003, tipo: string) {
-    this.auxmaModal = [cont_003];
+    this.auxmaModal = cont_003;
+    this.forma.reset(this.auxmaModal);
     this.cargarDependencia(cont_003.idunidaddivision);
+    this.start.IdCod = cont_003.idunidaddivision;
     switch (tipo) {
       case "visualizar":
         this.btnGrupo.BtnEdita = true;
         this.btnGrupo.BtnNuevo = true;
-        this.initG.labels();
-        this.initG.select();
+        this.boolDisabled(true);
         break;
       case "editar":
         this.btnGrupo.BtnCance = true;
         this.btnGrupo.BtnGuard = true;
-
         this.boolDisabled(false);
-        this.initG.select();
+        this.forma.get("idunidaddivision").disable();
+        this.forma.get("division").disable();
+        this.forma.get("dependencia").disable();
         break;
       case "eliminar":
         return;
@@ -117,51 +159,164 @@ export class Cont003Component {
         this.notyG.noty("error", "Operacion incorrecta", 5000);
         break;
     }
+    this.start.CtrAc = tipo;
   }
 
-  OpcionesModal(forma: NgForm, tipo: string) {
-    console.log(forma);
-    console.log(this.auxmaModal);
-
+  OpcionesModal(tipo: string) {
+    this.mostrarCheck = false;
     switch (tipo) {
       case "nuevo":
-        this.contorlAccion = tipo;
+        if (this.insertar === "exito") {
+          this.boolDisabled(true);
+          this.boolBtnGrupo(true, false);
+          return;
+        }
+        this.start.CtrAc = tipo;
         this.boolBtnGrupo(false, true);
         this.btnGrupo.BtnCance = true;
+        this.dependenciaCont003 = [];
+        this.forma.reset({ estado: false, checkauto: true }); // resetea todo a null y estado a false
         this.boolDisabled(false);
-        forma.reset();
+        this.cargarDependencia2("1");
+        this.mostrarCheck = true;
+        this.forma.get("idunidaddivision").setValue("auto");
+        this.forma.get("idunidaddivision").disable();
+        this.initG.uniform();
         this.initG.labels();
         return;
       case "editar":
-        this.contorlAccion = tipo;
+        this.start.CtrAc = tipo;
         this.boolDisabled(false);
         this.boolBtnGrupo(false, true);
+        this.forma.get("idunidaddivision").disable();
+        this.forma.get("division").disable();
+        this.forma.get("dependencia").disable();
         return;
       case "salir":
-        this.resetDatos(forma);
+        this.insertar = "fall";
+        this.placeholdeAuto = "auto";
+        this.resetDatos();
         this.boolDisabled(true);
         this.dependenciaCont003 = [];
         break;
       case "cancelar":
-        this.resetDatos(forma);
+        console.log(this.start.CtrAc);
+        if (this.insertar === "exito") {
+          this.boolDisabled(true);
+          this.boolBtnGrupo(true, false);
+          return;
+        }
+        this.placeholdeAuto = "auto";
+        this.resetDatos();
+        this.dependenciaCont003 = [];
+        this.cargarDependencia(this.auxmaModal.idunidaddivision);
         this.boolDisabled(true);
         this.boolBtnGrupo(true, false);
         return;
       case "guardar":
-        if (forma.invalid) {
+        if (this.forma.invalid) {
+          this.mostrarCheck = true;
           return;
         }
-        this.boolDisabled(true);
-        this.boolBtnGrupo(true, false);
-        this.guardarDatos(forma.value, this.contorlAccion);
-        this.initG.select();
+        this.btnGrupo.BtnLoadi = true;
+        this.btnGrupo.BtnCance = false;
+        this.guardarDatos(this.forma.value, this.start.CtrAc);
         return;
     }
     this.boolBtnGrupo(true, true);
     this.boolBtnGrupo(false, false);
   }
-  guardarDatos(cont_003: Cont003, contorlAccion: string) {
-    console.log(cont_003);
+
+  boolDisabled(bool: boolean) {
+    if (bool) {
+      this.forma.get("idunidaddivision").disable();
+      this.forma.get("descripcion").disable();
+      this.forma.get("sigla").disable();
+      this.forma.get("division").disable();
+      this.forma.get("dependencia").disable();
+      this.forma.get("estado").disable();
+    } else {
+      this.forma.get("idunidaddivision").enable();
+      this.forma.get("descripcion").enable();
+      this.forma.get("sigla").enable();
+      this.forma.get("division").enable();
+      this.forma.get("dependencia").enable();
+      this.forma.get("estado").enable();
+    }
+    this.initG.labels();
+    this.initG.select();
+  }
+
+  boolBtnGrupo(editNuevo: boolean, cancelGuardar: boolean) {
+    this.btnGrupo.BtnCance = cancelGuardar;
+    this.btnGrupo.BtnEdita = editNuevo;
+    this.btnGrupo.BtnElimi = false;
+    this.btnGrupo.BtnGuard = cancelGuardar;
+    this.btnGrupo.BtnNuevo = editNuevo;
+  }
+
+  paginacion(numero: string, eliminar = true, gest = "0") {
+    const nume = Number(numero);
+    if (this.start.NumPa === nume && eliminar) {
+      return;
+    }
+    const total = this.pagi.length;
+    let peticion: Observable<any>;
+    if (nume > 0 && nume <= total) {
+      this.start.NumPa = nume;
+      peticion = this.cont003S.geCont003(
+        "10",
+        this.start.NumPa.toString(),
+        gest,
+        this.start.Texto
+      );
+    } else {
+      if (numero === "000") {
+        if (this.start.NumPa === 1) {
+          return;
+        }
+        if (this.start.NumPa === 1) {
+          this.start.NumPa = 1;
+        } else {
+          this.start.NumPa--;
+        }
+        peticion = this.cont003S.geCont003(
+          "10",
+          this.start.NumPa.toString(),
+          gest,
+          this.start.Texto
+        );
+      } else if (numero === "999") {
+        if (this.start.NumPa === total) {
+          return;
+        }
+        if (this.start.NumPa === total) {
+          this.start.NumPa = total;
+        } else {
+          this.start.NumPa++;
+        }
+        peticion = this.cont003S.geCont003(
+          "10",
+          this.start.NumPa.toString(),
+          gest,
+          this.start.Texto
+        );
+      }
+    }
+    this.sus = peticion.subscribe(resp => {
+      if (resp["ok"]) {
+        this.auxma = resp.usr[0].unidades_division;
+        this.pagi = resp["cant"];
+      } else {
+        this.notyG.noty("error", resp["mensaje"], 5000);
+      }
+    });
+  }
+
+  resetDatos() {
+    this.forma.reset(this.auxmaModal);
+    this.initG.labels();
+    this.initG.select();
   }
 
   // inicia cuando se da click en la tabla
@@ -170,8 +325,9 @@ export class Cont003Component {
     if (long === 7) {
       const dato = {
         dependencia: null,
-        descripcion: "null"
+        descripcion: "."
       };
+      this.ocultarSelect = false;
       this.dependenciaCont003.push(dato);
       this.initG.select();
       return;
@@ -196,21 +352,24 @@ export class Cont003Component {
         }
       }
     }
+    this.ocultarSelect = true;
     this.initG.select();
   }
+
   // cuando se realiza una accion en division
-  cargarDependencia2(id: string, forma: NgForm) {
+  cargarDependencia2(id: string) {
     this.dependenciaCont003 = [];
     const id_terr = Number(id);
     if (id_terr === 1) {
       const dato = {
         dependencia: null,
-        descripcion: "null"
+        descripcion: "."
       };
+      this.ocultarSelect = false;
       this.dependenciaCont003.push(dato);
-      forma.controls.dependencia.setValue(
-        this.dependenciaCont003[0].dependencia
-      );
+      this.forma
+        .get("dependencia")
+        .setValue(this.dependenciaCont003[0].dependencia);
       this.initG.select();
       return;
     }
@@ -223,108 +382,80 @@ export class Cont003Component {
         this.dependenciaCont003.push(dato);
       }
     }
-    forma.controls.dependencia.setValue(this.dependenciaCont003[0].dependencia);
+    this.forma
+      .get("dependencia")
+      .setValue(this.dependenciaCont003[0].dependencia);
+    this.ocultarSelect = true;
     this.initG.select();
+  }
+
+  habilitarAuto() {
+    if (this.forma.get("checkauto").value) {
+      this.forma.get("idunidaddivision").enable();
+      this.forma.get("idunidaddivision").setValue("");
+      this.placeholdeAuto = "introducir codigo";
+    } else {
+      this.forma.get("idunidaddivision").setValue("auto");
+      this.forma.get("idunidaddivision").disable();
+      this.placeholdeAuto = "auto";
+    }
+    this.initG.labels();
   }
 
   cont003Selectgest(gestion: string) {
-    this.getCont003("all_data", gestion);
+    this.gestion = gestion;
+    this.getCont003("all_data", "1", gestion);
   }
 
-  paginacion(numero: string, eliminar = true) {
-    const nume = Number(numero);
-    if (this.start.startNumP === nume && eliminar) {
-      return;
-    }
-    const total = this.pagi.length;
+  guardarDatos(cont_003: Cont003, contorlAccion: string) {
     let peticion: Observable<any>;
-    if (nume > 0 && nume <= total) {
-      this.start.startNumP = nume;
-      peticion = this.cont003S.geCont003(
-        "10",
-        this.start.startNumP.toString(),
-        "0",
-        this.start.startText
-      );
+    if (contorlAccion === "nuevo") {
+      peticion = this.cont003S.inCont003(cont_003, this.gestion);
+    } else if (contorlAccion === "editar") {
+      peticion = this.cont003S.upCont003(cont_003, this.start.IdCod);
     } else {
-      if (numero === "000") {
-        if (this.start.startNumP === 1) {
-          return;
-        }
-        if (this.start.startNumP === 1) {
-          this.start.startNumP = 1;
-        } else {
-          this.start.startNumP--;
-        }
-        peticion = this.cont003S.geCont003(
-          "10",
-          this.start.startNumP.toString(),
-          "0",
-          this.start.startText
-        );
-      } else if (numero === "999") {
-        if (this.start.startNumP === total) {
-          return;
-        }
-        if (this.start.startNumP === total) {
-          this.start.startNumP = total;
-        } else {
-          this.start.startNumP++;
-        }
-        peticion = this.cont003S.geCont003(
-          "10",
-          this.start.startNumP.toString(),
-          "0",
-          this.start.startText
-        );
-      }
+      this.notyG.noty("error", "control Accion Invalido", 2000);
     }
     this.sus = peticion.subscribe(resp => {
+      this.btnGrupo.BtnLoadi = false;
+      this.boolDisabled(true);
+      this.boolBtnGrupo(true, false);
       if (resp["ok"]) {
-        this.auxma = resp.usr[0].unidades_division;
-        this.pagi = resp["cant"];
-        // this.nuevoAuxmaModal = resp.usr[0];
+        if (contorlAccion === "nuevo") {
+          this.start.IdCod = resp["id_registro"];
+          this.insertar = "exito";
+          // para que, cuando le de x, resetee el valor que
+          // se ha insertado recientemente entonces vamos a opcionModal en editar
+        }
+        this.getCont003(
+          this.start.Texto,
+          this.start.NumPa.toString(),
+          this.gestion
+        );
+        this.notyG.noty("success", resp["mensaje"], 1000);
       } else {
-        this.notyG.noty("error", resp["mensaje"], 5000);
+        this.boolBtnGrupo(false, true);
+        this.boolDisabled(false);
+        this.notyG.noty("error", resp["mensaje"], 3000);
       }
     });
   }
-  boolDisabled(bool: boolean) {
-    this.disabled.division = bool;
-    this.disabled.dependencia = bool;
-    this.disabled.codigo = bool;
-    this.disabled.descripci = bool;
-    this.disabled.sigla = bool;
-    this.disabled.estado = bool;
-    this.initG.select();
-  }
 
-  boolBtnGrupo(editNuevo: boolean, cancelGuardar: boolean) {
-    this.btnGrupo.BtnCance = cancelGuardar;
-    this.btnGrupo.BtnEdita = editNuevo;
-    this.btnGrupo.BtnElimi = false;
-    this.btnGrupo.BtnGuard = cancelGuardar;
-    this.btnGrupo.BtnNuevo = editNuevo;
-  }
-
-  resetDatos(forma: NgForm) {
-    console.log(this.auxmaModal[0].idunidaddivision);
-    console.log(this.auxmaModal);
-
-    console.log(forma.value);
-
-    if (this.auxmaModal[0].division === undefined) {
-      return;
-    }
-    // forma.controls.idunidaddivision.setValue(
-    //   this.auxmaModal[0].idunidaddivision
-    // );
-    forma.controls.division.setValue(this.auxmaModal[0].division);
-    forma.controls.dependencia.setValue(this.auxmaModal[0].dependencia);
-    forma.controls.descripcion.setValue(this.auxmaModal[0].descripcion);
-    forma.controls.sigla.setValue(this.auxmaModal[0].sigla);
-    forma.controls.estado.setValue(this.auxmaModal[0].estado);
-    this.cargarDependencia2(this.auxmaModal[0].division.toString(), forma);
-    this.initG.labels();
+  eliminarCont003(id_cod: string) {
+    let peticion: Observable<any>;
+    peticion = this.cont003S.deCont003(id_cod);
+    let numPag = this.start.NumPa;
+    this.sus = peticion.subscribe(resp => {
+      if (resp["ok"]) {
+        if (this.auxma.length === 1) {
+          numPag--;
+        }
+        this.paginacion(numPag.toString(), false);
+        this.start.IdCod = "";
+        this.notyG.noty("success", resp["mensaje"], 3000);
+      } else {
+        this.notyG.noty("error", resp["mensaje"], 3000);
+      }
+    });
   }
 }
