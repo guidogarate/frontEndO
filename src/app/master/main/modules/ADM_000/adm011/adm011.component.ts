@@ -1,12 +1,22 @@
-import { Component, OnDestroy } from "@angular/core";
-import { Adm011 } from "src/app/master/utils/models/main/adm_000/index.models";
+import { Component } from "@angular/core";
+import {
+  Adm011,
+  Adm011Select
+} from "src/app/master/utils/models/main/adm_000/index.models";
 import { Adm011Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import {
   NotyGlobal,
   InitGlobal
 } from "src/app/master/utils/global/index.global";
 import glb001 from "src/app/master/config/glb000/glb001_btn";
-import { FormControl, NgForm } from "@angular/forms";
+import glb002 from "src/app/master/config/glb000/glb002_start";
+import {
+  FormControl,
+  FormGroup,
+  FormBuilder,
+  Validators,
+  NgForm
+} from "@angular/forms";
 import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models";
 import { Observable, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
@@ -15,10 +25,10 @@ import { debounceTime } from "rxjs/operators";
   templateUrl: "./adm011.component.html",
   styleUrls: ["./adm011.component.css"]
 })
-export class Adm011Component implements OnDestroy {
+export class Adm011Component {
   textBuscarAdm011 = new FormControl("", []);
-  buscar = true;
-  texto = "all_data";
+  // buscar = true;
+  // texto = "all_data";
   sus: Subscription;
   numeroPag = 1;
   auxma: Adm011[];
@@ -27,6 +37,7 @@ export class Adm011Component implements OnDestroy {
   pagi: Paginacion[];
   loading = true;
   btnGrupo = glb001;
+  start = glb002;
   disabled = {
     division: true,
     dependencia: true,
@@ -40,74 +51,145 @@ export class Adm011Component implements OnDestroy {
   loadingSub = false;
   controlLoginModal = "";
   dependenciaAdm011: any[] = [];
-  // TODO: mis variables
+  // TODO: new variables
   id_cod = "";
   idModulo = 10;
   ListDocumentos: any = [];
   ListModulos: any = [];
 
+  // new variables
+  forma: FormGroup;
+  table = false;
+  gestion = "0";
+  ocultarSelect = true;
+  mostrarCheck = false;
+  placeholdeAuto = "auto";
+  insertar = "fall";
+  selectModulo: Adm011Select;
+
   constructor(
     private adm011S: Adm011Service,
+    private fb: FormBuilder,
     private notyG: NotyGlobal,
     private initG: InitGlobal
   ) {
-    console.log("buscando Texto");
-    this.getAdm011(this.texto);
+    this.getAdm011(this.start.Texto);
+    this.crearFormulario();
     this.textBuscarAdm011.valueChanges
       .pipe(debounceTime(500))
       .subscribe(value => {
         if (value.length > 1) {
-          this.getAdm011(value);
+          this.getAdm011(value, "1");
         } else {
-          this.texto = "all_data";
-          this.getAdm011(this.texto);
+          this.start.Texto = "all_data";
+          this.getAdm011(this.start.Texto);
         }
       });
   }
 
-  ngOnDestroy() {
-    this.sus.unsubscribe();
-    this.textBuscarAdm011 = null;
-  }
-
   getAdm011(texto: string, numePag = "1") {
-    this.buscar = true;
+    this.start.Busca = true;
     let peticion: Observable<any>;
     if (texto.length === 0 || texto === "all_data") {
-      this.texto = "all_data";
+      this.start.Texto = "all_data";
       peticion = this.adm011S.getAdm011(
         "90",
         numePag,
         this.idModulo,
-        this.texto
+        this.start.Texto
       );
-      console.log(peticion);
     } else {
-      this.texto = texto;
+      this.start.Texto = texto;
       peticion = this.adm011S.getAdm011(
         "90",
         numePag,
         this.idModulo,
-        this.texto
+        this.start.Texto
       );
     }
-    console.log("peticion: ", peticion);
     this.sus = peticion.subscribe(resp => {
-      this.numeroPag = Number(numePag);
+      // this.gestion = resp.usr[0].datos_empresa[0].gestiones[0].gestion;
+      if (!this.start.Conte) {
+        this.start.Conte = true;
+      }
+      this.start.NumPa = Number(numePag);
       this.nuevoAuxmaModal = this.auxma = resp.data[0].clase_documentos[0];
-      console.log("nuevo aux modal : ", this.nuevoAuxmaModal);
       if (resp["ok"]) {
         this.auxma = resp.data[0].clase_documentos;
+        console.log("auxma: ", this.auxma);
+        // this.nuevoAuxmaModal = this.auxma = resp.data[0].clase_documentos[0];
         this.ListModulos = resp.data[0].modulos;
         console.log(this.auxma);
         this.initG.labels();
         this.initG.select();
         this.pagi = resp["cant"];
+        this.table = false;
       } else {
         this.notyG.noty("error", resp["messagge"], 5000);
+        this.ListModulos = [];
+        this.auxma = [];
+        this.pagi = [];
+        this.table = true;
       }
-      this.buscar = false;
-      this.loading = false;
+      this.start.Busca = false;
+      this.start.Loadi = false;
+      this.start.Table = true;
+      this.initG.select();
+      this.initG.labels();
+      this.initG.uniform();
+    });
+  }
+
+  // getAdm0111(texto: string, numePag = "1") {
+  //   this.buscar = true;
+  //   let peticion: Observable<any>;
+  //   if (texto.length === 0 || texto === "all_data") {
+  //     this.texto = "all_data";
+  //     peticion = this.adm011S.getAdm011(
+  //       "90",
+  //       numePag,
+  //       this.idModulo,
+  //       this.texto
+  //     );
+  //     console.log(peticion);
+  //   } else {
+  //     this.texto = texto;
+  //     peticion = this.adm011S.getAdm011(
+  //       "90",
+  //       numePag,
+  //       this.idModulo,
+  //       this.texto
+  //     );
+  //   }
+  //   this.sus = peticion.subscribe(resp => {
+  //     this.numeroPag = Number(numePag);
+  //     this.nuevoAuxmaModal = this.auxma = resp.data[0].clase_documentos[0];
+  //     console.log("nuevo aux modal : ", this.nuevoAuxmaModal);
+  //     if (resp["ok"]) {
+  //       this.auxma = resp.data[0].clase_documentos;
+  //       this.ListModulos = resp.data[0].modulos;
+  //       console.log(this.auxma);
+  //       this.initG.labels();
+  //       this.initG.select();
+  //       this.pagi = resp["cant"];
+  //     } else {
+  //       this.notyG.noty("error", resp["messagge"], 5000);
+  //     }
+  //     this.buscar = false;
+  //     this.loading = false;
+  //   });
+  // }
+
+  crearFormulario() {
+    this.forma = this.fb.group({
+      idModulo: ["", [Validators.required]],
+      nombre_modulo: ["", [Validators.required]],
+      sigla: ["", [Validators.required]],
+      checkauto: [""],
+      descripcion: ["", [Validators.required]],
+      id_documento: ["", [Validators.required]],
+      component: [""],
+      estado: ["", [Validators.required]]
     });
   }
 

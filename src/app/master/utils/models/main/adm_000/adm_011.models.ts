@@ -1,13 +1,3 @@
-export interface Adm012 {
-  codigo: string;
-  descripcion: string;
-  sigla: string;
-  estado: boolean;
-  dependencia: string;
-  tipo_territorio: number;
-  territorio: number;
-}
-
 export interface Adm011 {
   id_Modulo: number;
   nombre_modulo: string;
@@ -16,4 +6,9 @@ export interface Adm011 {
   sigla: string;
   componente: string;
   estado: boolean;
+}
+
+export interface Adm011Select {
+  id_documento: number;
+  descripcion: string;
 }

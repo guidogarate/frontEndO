@@ -4,3 +4,4 @@ export { Adm005 } from "./adm_005.models";
 export { Adm006 } from "./adm_006.models";
 export { Adm009 } from "./adm_009.models";
 export { Adm011 } from "./adm_011.models";
+export { Adm011Select } from "./adm_011.models";
