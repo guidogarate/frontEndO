@@ -308,7 +308,7 @@ export class Adm011Component {
         "90",
         this.numeroPag.toString(),
         this.idModulo,
-        this.texto
+        this.start.Texto
       );
     } else {
       if (numero === "000") {
@@ -324,7 +324,7 @@ export class Adm011Component {
           "90",
           this.numeroPag.toString(),
           this.idModulo,
-          this.texto
+          this.start.Texto
         );
       } else if (numero === "999") {
         if (this.numeroPag === total) {
@@ -339,7 +339,7 @@ export class Adm011Component {
           "90",
           this.numeroPag.toString(),
           this.idModulo,
-          this.texto
+          this.start.Texto
         );
       }
     }
