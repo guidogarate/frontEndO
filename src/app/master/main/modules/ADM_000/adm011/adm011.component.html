@@ -70,7 +70,7 @@
                 title="agregar2"
               ></i>
             </div>
-            <div class="form-control-feedback">
+            <!-- <div class="form-control-feedback">
               <i
                 data-toggle="modal"
                 data-target="#modal_adm_011"
@@ -85,11 +85,11 @@
                 (click)="nuevoAdm011()"
                 title="agregar2"
               ></i>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row m0">
         <div class="col-md-1"></div>
         <div class="col-md-10">
           <div class="table-responsive" *ngIf="auxma != undefined">
@@ -204,9 +204,10 @@
     </div>
   </div>
 </div>
-<app-cargacontent *ngIf="!start.Conte"></app-cargacontent>
-<div id="modal_adm_011" class="modal" tabindex="-1">
-  <div class="modal-dialog ">
+<!-- <app-cargacontent *ngIf="!start.Conte"></app-cargacontent> -->
+<div></div>
+<!-- <div id="modal_adm_011" class="modal" tabindex="-1">
+  <div class="modal-dialog">
     <div class="modal-content animacionmodal haciadentro">
       <form #forma="ngForm" ngNativeValidate autocomplete="off" class="form">
         <div class="modal-header bg-blue">
@@ -419,6 +420,249 @@
           </div>
         </div>
       </form>
+    </div>
+  </div>
+</div> -->
+
+<!-- TODO: new modal based on cont 003 -->
+<div id="modal_adm_011" class="modal" tabindex="-1">
+  <div class="modal-dialog ">
+    <div class="modal-content animacionmodal haciadentro">
+      <form
+        [formGroup]="forma"
+        (ngSubmit)="OpcionesModal('guardar')"
+        ngNativeValidate
+        autocomplete="off"
+        class="form"
+      >
+        <div class="modal-header bg-blue">
+          <h6 class="modal-title">ADM011</h6>
+          <div class="list-icons float-right">
+            <a class="puntero" *ngIf="btnGrupo.BtnCance"
+              ><i
+                class="icon-cancel-circle2 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal('cancelar')"
+                title="Cancelar"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnGrupo.BtnNuevo">
+              <i
+                data-toggle="tooltip"
+                data-placement="top"
+                class="icon-diff-added xxl"
+                (click)="OpcionesModal('nuevo')"
+                title="nuevo"
+              ></i>
+            </a>
+            <button
+              *ngIf="btnGrupo.BtnGuard"
+              style="padding: 1px;color: white;"
+              type="submit"
+              class="btn text-warning-600 btn-flat btn-icon btn-rounded"
+            >
+              <i
+                *ngIf="!btnGrupo.BtnLoadi"
+                class="icon-floppy-disk xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+              ></i>
+            </button>
+            <i
+              *ngIf="btnGrupo.BtnLoadi"
+              class="icon-spinner spinner position-left"
+              title="Guardando..."
+            >
+            </i>
+            <a *ngIf="btnGrupo.BtnEdita" class="puntero">
+              <i
+                class="icon-pencil7 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal('editar')"
+                title="editar"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnGrupo.BtnElimi"
+              ><i
+                class="icon-trash xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Eliminar"
+              >
+              </i
+            ></a>
+            <a class="puntero">
+              <i
+                class="icon-exit xxl"
+                (click)="OpcionesModal('salir')"
+                data-toggle="tooltip"
+                data-placement="top"
+                data-dismiss="modal"
+                title="Salir"
+              >
+              </i
+            ></a>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="row m0">
+                <input type="text" formControlName="nombre_modulo" />
+              </div>
+              <div class="row text-center">
+                <div class="col-md-6">
+                  <label class="form-group">Division</label>
+                  <!-- <select
+                    formControlName="division"
+                    (change)="cargarDependencia2($event.target.value)"
+                    class="form-control selectpicker show-tick"
+                    name="division"
+                    onchange="setCustomValidity('')"
+                    oninvalid="setCustomValidity('Seleccione una division')"
+                    required
+                  >
+                    <option
+                      *ngFor="let gruac of selecDivModal"
+                      [value]="gruac.id_division"
+                    >
+                      {{ gruac.descripcion }}</option
+                    >
+                  </select> -->
+                </div>
+                <div class="col-md-6" *ngIf="ocultarSelect">
+                  <label class="form-group">Dependencia Division</label>
+                  <!-- <select
+                    formControlName="dependencia"
+                    class="form-control selectpicker show-tick"
+                    name="dependencia"
+                  >
+                    <option
+                      *ngFor="let gruac of dependenciaCont003"
+                      [value]="gruac.dependencia"
+                    >
+                      {{ gruac.descripcion }}</option
+                    >
+                  </select> -->
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-12" style="padding-top: 20px;">
+              <div class="row text-center">
+                <div class="col-md-1">
+                  <div
+                    *ngIf="mostrarCheck"
+                    class="form-group"
+                    style="padding-left: 15px;padding-top: 20px;"
+                  >
+                    <div class="uniform-checker" style="margin: auto;">
+                      <input
+                        class="form-input-styled"
+                        formControlName="checkauto"
+                        (click)="habilitarAuto()"
+                        data-fouc=""
+                        type="checkbox"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group form-group-float">
+                    <label class="form-group-float-label">Codigo</label>
+                    <input
+                      style="text-align: center;"
+                      type="text"
+                      class="form-control"
+                      oninvalid="this.setCustomValidity('Introducir Codigo')"
+                      oninput="setCustomValidity('')"
+                      placeholder="{{ placeholdeAuto }}"
+                      formControlName="id_documento"
+                      name="id_documento"
+                      required
+                    />
+                    <span
+                      *ngIf="this.forma.get('id_documento').invalid"
+                      class="form-text text-danger"
+                      >Acepta 3 digitos</span
+                    >
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group form-group-float">
+                    <label class="form-group-float-label">Descripcion</label>
+                    <input
+                      style="text-align: center;"
+                      type="text"
+                      class="form-control"
+                      oninvalid="this.setCustomValidity('Introducir Descripcion')"
+                      oninput="setCustomValidity('')"
+                      placeholder="Introducir Descripcion"
+                      formControlName="descripcion"
+                      name="descripcion"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group form-group-float">
+                    <label class="form-group-float-label">Sigla</label>
+                    <input
+                      style="text-align: center;"
+                      type="text"
+                      class="form-control"
+                      oninvalid="this.setCustomValidity('Introducir Sigla')"
+                      oninput="setCustomValidity('')"
+                      placeholder="Introducir Sigla"
+                      formControlName="sigla"
+                      name="sigla"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group form-group-float">
+                    <label class="form-group-float-label">Componente</label>
+                    <input
+                      style="text-align: center;"
+                      type="text"
+                      class="form-control"
+                      oninvalid="this.setCustomValidity('Introducir Componente')"
+                      oninput="setCustomValidity('')"
+                      placeholder="Introducir Componente"
+                      formControlName="componente"
+                      name="componente"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      required="false"
+                      class="custom-control-input"
+                      formControlName="estado"
+                      title="auxmaModal.estado"
+                      name="estado"
+                      id="estadoadm011"
+                    />
+                    <label class="custom-control-label" for="estadoadm011"
+                      >Estado</label
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <hr />
+      <!-- <p>id_documento {{ forma.get("componente").status }}</p> -->
+      <!-- <pre>auxmaModal {{ auxmaModal | json }}</pre> -->
     </div>
   </div>
 </div>

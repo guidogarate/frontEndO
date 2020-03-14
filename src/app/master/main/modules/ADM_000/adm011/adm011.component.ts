@@ -14,8 +14,7 @@ import {
   FormControl,
   FormGroup,
   FormBuilder,
-  Validators,
-  NgForm
+  Validators
 } from "@angular/forms";
 import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models";
 import { Observable, Subscription } from "rxjs";
@@ -32,8 +31,8 @@ export class Adm011Component {
   sus: Subscription;
   numeroPag = 1;
   auxma: Adm011[];
-  auxmaModal: Adm011[];
-  nuevoAuxmaModal: Adm011;
+  auxmaModal: Adm011;
+  // nuevoAuxmaModal: Adm011;
   pagi: Paginacion[];
   loading = true;
   btnGrupo = glb001;
@@ -60,7 +59,7 @@ export class Adm011Component {
   // new variables
   forma: FormGroup;
   table = false;
-  gestion = "0";
+  // gestion = "0";
   ocultarSelect = true;
   mostrarCheck = false;
   placeholdeAuto = "auto";
@@ -113,7 +112,7 @@ export class Adm011Component {
         this.start.Conte = true;
       }
       this.start.NumPa = Number(numePag);
-      this.nuevoAuxmaModal = this.auxma = resp.data[0].clase_documentos[0];
+      this.auxma = resp.data[0].clase_documentos[0];
       if (resp["ok"]) {
         this.auxma = resp.data[0].clase_documentos;
         console.log("auxma: ", this.auxma);
@@ -140,46 +139,6 @@ export class Adm011Component {
     });
   }
 
-  // getAdm0111(texto: string, numePag = "1") {
-  //   this.buscar = true;
-  //   let peticion: Observable<any>;
-  //   if (texto.length === 0 || texto === "all_data") {
-  //     this.texto = "all_data";
-  //     peticion = this.adm011S.getAdm011(
-  //       "90",
-  //       numePag,
-  //       this.idModulo,
-  //       this.texto
-  //     );
-  //     console.log(peticion);
-  //   } else {
-  //     this.texto = texto;
-  //     peticion = this.adm011S.getAdm011(
-  //       "90",
-  //       numePag,
-  //       this.idModulo,
-  //       this.texto
-  //     );
-  //   }
-  //   this.sus = peticion.subscribe(resp => {
-  //     this.numeroPag = Number(numePag);
-  //     this.nuevoAuxmaModal = this.auxma = resp.data[0].clase_documentos[0];
-  //     console.log("nuevo aux modal : ", this.nuevoAuxmaModal);
-  //     if (resp["ok"]) {
-  //       this.auxma = resp.data[0].clase_documentos;
-  //       this.ListModulos = resp.data[0].modulos;
-  //       console.log(this.auxma);
-  //       this.initG.labels();
-  //       this.initG.select();
-  //       this.pagi = resp["cant"];
-  //     } else {
-  //       this.notyG.noty("error", resp["messagge"], 5000);
-  //     }
-  //     this.buscar = false;
-  //     this.loading = false;
-  //   });
-  // }
-
   crearFormulario() {
     this.forma = this.fb.group({
       idModulo: ["", [Validators.required]],
@@ -193,107 +152,17 @@ export class Adm011Component {
     });
   }
 
-  nuevoAdm011() {
-    this.boolBtnGrupo(false, true);
-    this.btnGrupo.BtnCance = false;
-    this.boolDisabled(false);
-    this.auxmaModal = [this.nuevoAuxmaModal];
-    this.contorlAccion = "nuevo";
-    this.initG.labels();
-    this.initG.select();
-  }
-
-  boolDisabled(bool: boolean) {
-    this.disabled.division = bool;
-    this.disabled.dependencia = bool;
-    this.disabled.codigo = bool;
-    this.disabled.descripci = bool;
-    this.disabled.sigla = bool;
-    this.disabled.estado = bool;
-    this.initG.select();
-  }
-
-  boolBtnGrupo(editNuevo: boolean, cancelGuardar: boolean) {
-    this.btnGrupo.BtnCance = cancelGuardar;
-    this.btnGrupo.BtnEdita = editNuevo;
-    this.btnGrupo.BtnElimi = false;
-    this.btnGrupo.BtnGuard = cancelGuardar;
-    this.btnGrupo.BtnNuevo = editNuevo;
-  }
+  // nuevoAdm011() {
+  //   this.boolBtnGrupo(false, true);
+  //   this.btnGrupo.BtnCance = false;
+  //   this.boolDisabled(false);
+  //   this.auxmaModal = [this.nuevoAuxmaModal];
+  //   this.contorlAccion = "nuevo";
+  //   this.initG.labels();
+  //   this.initG.select();
+  // }
 
   // añadir metodos
-
-  OpcionesTable(adm_011: Adm011, tipo: string) {
-    this.auxmaModal = [adm_011];
-    // this.id_cod = adm_011.codigo;
-    // this.cargarDependencia(adm_011.codigo);
-    // this.id_adm011 = adm_011.codigo;
-    switch (tipo) {
-      case "visualizar":
-        this.btnGrupo.BtnEdita = true;
-        this.btnGrupo.BtnNuevo = true;
-        this.initG.labels();
-        this.initG.select();
-        break;
-      case "editar":
-        this.btnGrupo.BtnCance = true;
-        this.btnGrupo.BtnGuard = true;
-        this.boolDisabled(false);
-        this.disabled.codigo = true;
-        this.initG.select();
-        break;
-      case "eliminar":
-        return;
-      default:
-        this.notyG.noty("error", "Operacion incorrecta", 5000);
-        break;
-    }
-    this.contorlAccion = tipo;
-    if (this.controlLoginModal === "" + adm_011.id_Modulo) {
-      return;
-    }
-    this.controlLoginModal = "" + adm_011.id_Modulo;
-  }
-
-  // OpcionesModal(forma: NgForm, tipo: string) {
-  //   switch (tipo) {
-  //     case "nuevo":
-  //       this.contorlAccion = tipo;
-  //       this.boolBtnGrupo(false, true);
-  //       this.btnGrupo.BtnCance = true;
-  //       this.boolDisabled(false);
-  //       forma.reset();
-  //       this.initG.labels();
-  //       return;
-  //     case "editar":
-  //       this.contorlAccion = tipo;
-  //       this.boolDisabled(false);
-  //       this.boolBtnGrupo(false, true);
-  //       this.disabled.codigo = true;
-  //       return;
-  //     case "salir":
-  //       this.resetDatos(forma);
-  //       this.boolDisabled(true);
-  //       this.dependenciaAdm011 = [];
-  //       break;
-  //     case "cancelar":
-  //       this.resetDatos(forma);
-  //       this.boolDisabled(true);
-  //       this.boolBtnGrupo(true, false);
-  //       return;
-  //     case "guardar":
-  //       if (forma.invalid) {
-  //         return;
-  //       }
-  //       this.btnGrupo.BtnLoadi = true;
-  //       this.btnGrupo.BtnCance = false;
-  //       this.guardarDatos(forma.value, this.contorlAccion);
-  //       this.initG.select();
-  //       return;
-  //   }
-  //   this.boolBtnGrupo(true, true);
-  //   this.boolBtnGrupo(false, false);
-  // }
 
   paginacion(numero: string, eliminar = true) {
     const nume = Number(numero);
@@ -347,134 +216,236 @@ export class Adm011Component {
       if (resp["ok"]) {
         this.auxma = resp.data[0].clase_documentos;
         this.pagi = resp["cant"];
-        this.nuevoAuxmaModal = resp.data[0].clase_documentos[0];
+        // this.auxma = resp.data[0].clase_documentos[0];
       } else {
         this.notyG.noty("error", resp["mensaje"], 5000);
       }
     });
   }
 
-  // resetDatos(forma: NgForm) {
-  //   if (this.auxmaModal[0].id_documento === undefined) {
-  //     return;
-  //   }
-  //   forma.controls.tipo_territorio.setValue(this.auxmaModal[0].tipo_territorio);
-  //   forma.controls.dependencia.setValue(this.auxmaModal[0].dependencia);
-  //   forma.controls.codigo.setValue(this.auxmaModal[0].codigo);
-  //   forma.controls.descripcion.setValue(this.auxmaModal[0].descripcion);
-  //   forma.controls.sigla.setValue(this.auxmaModal[0].sigla);
-  //   forma.controls.estado.setValue(this.auxmaModal[0].estado);
-  //   this.cargarDependencia2(
-  //     this.auxmaModal[0].tipo_territorio.toString(),
-  //     forma
-  //   );
-  //   this.initG.labels();
+  nuevoAdm011() {
+    this.boolBtnGrupo(false, true);
+    this.btnGrupo.BtnCance = false;
+    this.boolDisabled(false);
+    // this.dependenciaAdm011 = [];
+    this.forma.reset({ estado: false, checkauto: true });
+    this.start.CtrAc = "nuevo";
+    this.ocultarSelect = false;
+    this.mostrarCheck = true;
+    this.forma.get("id_documento").setValue("auto");
+    this.forma.get("id_documento").disable();
+    this.initG.uniform();
+    this.initG.labels();
+    this.initG.select();
+  }
+
+  OpcionesTable(adm_011: Adm011, tipo: string) {
+    this.auxmaModal = adm_011;
+    this.forma.reset(this.auxmaModal);
+    // this.cargarDependencia(adm_011.idunidaddivision);
+    this.start.IdCod = adm_011.id_documento;
+    switch (tipo) {
+      case "visualizar":
+        this.btnGrupo.BtnEdita = true;
+        this.btnGrupo.BtnNuevo = true;
+        this.boolDisabled(true);
+        break;
+      case "editar":
+        this.btnGrupo.BtnCance = true;
+        this.btnGrupo.BtnGuard = true;
+        this.boolDisabled(false);
+
+        // this.forma.get("estado").disable();
+        // this.forma.get("descripcion").disable();
+        // this.forma.get("sigla").disable();
+        break;
+      case "eliminar":
+        return;
+      default:
+        this.notyG.noty("error", "Operacion incorrecta", 5000);
+        break;
+    }
+    this.start.CtrAc = tipo;
+  }
+
+  OpcionesModal(tipo: string) {
+    this.mostrarCheck = false;
+    switch (tipo) {
+      case "nuevo":
+        if (this.insertar === "exito") {
+          this.boolDisabled(true);
+          this.boolBtnGrupo(true, false);
+          return;
+        }
+        this.start.CtrAc = tipo;
+        this.boolBtnGrupo(false, true);
+        this.btnGrupo.BtnCance = true;
+        this.dependenciaAdm011 = [];
+        this.forma.reset({ estado: false, checkauto: true }); // resetea todo a null y estado a false
+        this.boolDisabled(false);
+        // this.cargarDependencia2("1");
+        this.mostrarCheck = true;
+        this.forma.get("id_documento").setValue("auto");
+        this.forma.get("id_documento").disable();
+        this.initG.uniform();
+        this.initG.labels();
+        return;
+      case "editar":
+        this.start.CtrAc = tipo;
+        this.boolDisabled(false);
+        this.boolBtnGrupo(false, true);
+        this.forma.get("id_documento").disable();
+        this.forma.get("sigla").disable();
+        this.forma.get("checkauto").disable();
+        this.forma.get("descripcion").disable();
+        this.forma.get("componente").disable();
+        return;
+      case "salir":
+        this.insertar = "fall";
+        this.placeholdeAuto = "auto";
+        this.resetDatos();
+        this.boolDisabled(true);
+        // this.dependenciaAdm011 = [];
+        break;
+      case "cancelar":
+        console.log(this.start.CtrAc);
+        if (this.insertar === "exito") {
+          this.boolDisabled(true);
+          this.boolBtnGrupo(true, false);
+          return;
+        }
+        this.placeholdeAuto = "auto";
+        this.resetDatos();
+        this.dependenciaAdm011 = [];
+        // this.cargarDependencia(this.auxmaModal.idunidaddivision);
+        this.boolDisabled(true);
+        this.boolBtnGrupo(true, false);
+        return;
+      case "guardar":
+        if (this.forma.invalid) {
+          this.mostrarCheck = true;
+          return;
+        }
+        this.btnGrupo.BtnLoadi = true;
+        this.btnGrupo.BtnCance = false;
+        this.guardarDatos(this.forma.value, this.start.CtrAc);
+        return;
+    }
+    this.boolBtnGrupo(true, true);
+    this.boolBtnGrupo(false, false);
+  }
+
+  boolDisabled(bool: boolean) {
+    if (bool) {
+      this.forma.get("nombre_modulo").disable();
+      this.forma.get("checkauto").disable();
+      this.forma.get("estado").disable();
+      this.forma.get("id_documento").disable();
+      this.forma.get("descripcion").disable();
+      this.forma.get("sigla").disable();
+      this.forma.get("componente").disable();
+    } else {
+      this.forma.get("nombre_modulo").enable();
+      this.forma.get("checkauto").enable();
+      this.forma.get("estado").enable();
+      this.forma.get("id_documento").enable();
+      this.forma.get("descripcion").enable();
+      this.forma.get("sigla").enable();
+      this.forma.get("componente").enable();
+
+      // this.forma.get("idunidaddivision").enable();
+      // this.forma.get("descripcion").enable();
+      // this.forma.get("sigla").enable();
+      // this.forma.get("division").enable();
+      // this.forma.get("dependencia").enable();
+      // this.forma.get("estado").enable();
+    }
+    this.initG.labels();
+    this.initG.select();
+  }
+
+  // 11
+  boolBtnGrupo(editNuevo: boolean, cancelGuardar: boolean) {
+    this.btnGrupo.BtnCance = cancelGuardar;
+    this.btnGrupo.BtnEdita = editNuevo;
+    this.btnGrupo.BtnElimi = false;
+    this.btnGrupo.BtnGuard = cancelGuardar;
+    this.btnGrupo.BtnNuevo = editNuevo;
+  }
+
+  resetDatos() {
+    this.forma.reset(this.auxmaModal);
+    this.initG.labels();
+    this.initG.select();
+  }
+
+  habilitarAuto() {
+    if (this.forma.get("checkauto").value) {
+      this.forma.get("id_documento").enable();
+      this.forma.get("id_documento").setValue("");
+      this.placeholdeAuto = "introducir codigo";
+    } else {
+      this.forma.get("id_documento").setValue("auto");
+      this.forma.get("id_documento").disable();
+      this.placeholdeAuto = "auto";
+    }
+    this.initG.labels();
+  }
+
+  // Adm011Selectgest(gestion: string) {
+  //   this.gestion = gestion;
+  //   this.getAdm011("all_data", "1", gestion);
   // }
 
-  // cargarDependencia(codigo: string) {
-  //   const long = codigo.length;
-  //   if (long === 3) {
-  //     const dato = {
-  //       dependencia: null,
-  //       descripcion: "null"
-  //     };
-  //     this.dependenciaAdm011.push(dato);
-  //     this.initG.select();
-  //     return;
-  //   } else if (long === 5) {
-  //     for (let index = 0; index < this.auxma.length; index++) {
-  //       if (3 === this.auxma[index].codigo.length) {
-  //         const dato = {
-  //           dependencia: this.auxma[index].codigo,
-  //           descripcion: this.auxma[index].descripcion
-  //         };
-  //         this.dependenciaAdm011.push(dato);
-  //       }
-  //     }
-  //   } else if (long === 7) {
-  //     for (let index = 0; index < this.auxma.length; index++) {
-  //       if (5 === this.auxma[index].codigo.length) {
-  //         const dato = {
-  //           dependencia: this.auxma[index].codigo,
-  //           descripcion: this.auxma[index].descripcion
-  //         };
-  //         this.dependenciaAdm011.push(dato);
-  //       }
-  //     }
-  //   }
-  //   this.initG.select();
-  // }
+  guardarDatos(adm_011: Adm011, contorlAccion: string) {
+    let peticion: Observable<any>;
+    if (contorlAccion === "nuevo") {
+      peticion = this.adm011S.inAdm011(adm_011);
+    } else if (contorlAccion === "editar") {
+      peticion = this.adm011S.upAdm011(
+        adm_011,
+        this.idModulo,
+        adm_011.id_documento
+      );
+    } else {
+      this.notyG.noty("error", "control Accion Invalido", 2000);
+    }
+    this.sus = peticion.subscribe(resp => {
+      this.btnGrupo.BtnLoadi = false;
+      this.boolDisabled(true);
+      this.boolBtnGrupo(true, false);
+      if (resp["ok"]) {
+        if (contorlAccion === "nuevo") {
+          this.start.IdCod = resp["id_registro"];
+          this.insertar = "exito";
+          // para que, cuando le de x, resetee el valor que
+          // se ha insertado recientemente entonces vamos a opcionModal en editar
+        }
+        this.getAdm011(this.start.Texto, this.start.NumPa.toString());
+        this.notyG.noty("success", resp["mensaje"], 1000);
+      } else {
+        this.boolBtnGrupo(false, true);
+        this.boolDisabled(false);
+        this.notyG.noty("error", resp["mensaje"], 3000);
+      }
+    });
+  }
 
-  // cargarDependencia2(id: string, forma: NgForm) {
-  //   this.dependenciaAdm011 = [];
-  //   const id_terr = Number(id);
-  //   if (id_terr === 1) {
-  //     const dato = {
-  //       dependencia: null,
-  //       descripcion: "null"
-  //     };
-  //     this.dependenciaAdm011.push(dato);
-  //     forma.controls.dependencia.setValue(
-  //       this.dependenciaAdm011[0].dependencia
-  //     );
-  //     this.initG.select();
-  //     return;
-  //   }
-  //   for (let index = 0; index < this.auxma.length; index++) {
-  //     if (id_terr - 1 === this.auxma[index].tipo_territorio) {
-  //       const dato = {
-  //         dependencia: this.auxma[index].codigo,
-  //         descripcion: this.auxma[index].descripcion
-  //       };
-  //       this.dependenciaAdm011.push(dato);
-  //     }
-  //   }
-  //   forma.controls.dependencia.setValue(this.dependenciaAdm011[0].dependencia);
-  //   this.initG.select();
-  // }
-
-  // guardarDatos(auxModal: Adm011, contorlAccion: string) {
-  //   let peticion: Observable<any>;
-  //   if (contorlAccion === "nuevo") {
-  //     peticion = this.adm011S.inAdm011(auxModal);
-  //   } else if (contorlAccion === "editar") {
-  //     peticion = this.adm011S.upAdm011(auxModal, this.id_cod);
-  //   } else {
-  //     this.notyG.noty("error", "control Accion Invalido", 2000);
-  //   }
-  //   this.sus = peticion.subscribe(resp => {
-  //     this.btnGrupo.BtnLoadi = false;
-  //     this.boolDisabled(true);
-  //     this.boolBtnGrupo(true, false);
-  //     if (resp["ok"]) {
-  //       if (contorlAccion === "nuevo") {
-  //         this.id_cod = resp["id_registro"];
-  //       }
-  //       this.getAdm011(this.texto, this.numeroPag.toString());
-  //       this.notyG.noty("success", resp["mensaje"], 1000);
-  //     } else {
-  //       this.boolBtnGrupo(false, true);
-  //       this.boolDisabled(false);
-  //       this.notyG.noty("error", resp["mensaje"], 3000);
-  //     }
-  //   });
-  // }
-
-  // eliminarAdm006(id_cod: string) {
-  //   let peticion: Observable<any>;
-  //   peticion = this.adm011S.deAdm011(id_cod);
-  //   let numPag = this.numeroPag;
-  //   this.sus = peticion.subscribe(resp => {
-  //     if (resp["ok"]) {
-  //       if (this.auxma.length === 1) {
-  //         numPag--;
-  //       }
-  //       this.paginacion(numPag.toString(), false);
-  //       this.id_cod = "";
-  //       this.notyG.noty("success", resp["mensaje"], 3000);
-  //     } else {
-  //       this.notyG.noty("error", resp["mensaje"], 3000);
-  //     }
-  //   });
-  // }
+  eliminarCont003(adm011: Adm011) {
+    let peticion: Observable<any>;
+    peticion = this.adm011S.delAdm011(adm011.id_Modulo, adm011.id_documento);
+    let numPag = this.start.NumPa;
+    this.sus = peticion.subscribe(resp => {
+      if (resp["ok"]) {
+        if (this.auxma.length === 1) {
+          numPag--;
+        }
+        this.paginacion(numPag.toString(), false);
+        this.start.IdCod = "";
+        this.notyG.noty("success", resp["mensaje"], 3000);
+      } else {
+        this.notyG.noty("error", resp["mensaje"], 3000);
+      }
+    });
+  }
 }
