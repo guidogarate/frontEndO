@@ -511,55 +511,39 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-xl-12">
-              <div class="row m0">
-                <input type="text" formControlName="nombre_modulo" />
-              </div>
-              <div class="row text-center">
-                <div class="col-md-6">
-                  <label class="form-group">Division</label>
-                  <!-- <select
-                    formControlName="division"
-                    (change)="cargarDependencia2($event.target.value)"
-                    class="form-control selectpicker show-tick"
-                    name="division"
-                    onchange="setCustomValidity('')"
-                    oninvalid="setCustomValidity('Seleccione una division')"
-                    required
-                  >
-                    <option
-                      *ngFor="let gruac of selecDivModal"
-                      [value]="gruac.id_division"
-                    >
-                      {{ gruac.descripcion }}</option
-                    >
-                  </select> -->
-                </div>
-                <div class="col-md-6" *ngIf="ocultarSelect">
-                  <label class="form-group">Dependencia Division</label>
-                  <!-- <select
-                    formControlName="dependencia"
-                    class="form-control selectpicker show-tick"
-                    name="dependencia"
-                  >
-                    <option
-                      *ngFor="let gruac of dependenciaCont003"
-                      [value]="gruac.dependencia"
-                    >
-                      {{ gruac.descripcion }}</option
-                    >
-                  </select> -->
+              <div class="row m0 text">
+                <div class="col-sm-4 col-6" style="margin: auto;">
+                  <input
+                    class="text-center"
+                    disabled="true"
+                    type="text"
+                    formControlName="nombre_modulo"
+                  />
                 </div>
               </div>
-            </div>
-            <div class="col-xl-12" style="padding-top: 20px;">
-              <div class="row text-center">
-                <div class="col-md-1">
-                  <div
-                    *ngIf="mostrarCheck"
-                    class="form-group"
-                    style="padding-left: 15px;padding-top: 20px;"
-                  >
-                    <div class="uniform-checker" style="margin: auto;">
+              <div class="row">
+                <div class="col-xl-12">
+                  <div class="col-sm-4 col-6">
+                    <div class="custom-control custom-switch">
+                      <input
+                        type="checkbox"
+                        required="false"
+                        class="custom-control-input"
+                        formControlName="estado"
+                        title="auxmaModal.estado"
+                        name="estado"
+                        id="estadoadm011"
+                      />
+                      <label class="custom-control-label" for="estadoadm011"
+                        >Estado</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-sm-4 col-6" style="display: flex;">
+                    <div class="uniform-checker">
+                      <label>
+                        Numeracion Automatica
+                      </label>
                       <input
                         class="form-input-styled"
                         formControlName="checkauto"
@@ -567,92 +551,128 @@
                         data-fouc=""
                         type="checkbox"
                       />
+                      <label>
+                        Numeracion Automatica
+                      </label>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="form-group form-group-float">
-                    <label class="form-group-float-label">Codigo</label>
-                    <input
-                      style="text-align: center;"
-                      type="text"
-                      class="form-control"
-                      oninvalid="this.setCustomValidity('Introducir Codigo')"
-                      oninput="setCustomValidity('')"
-                      placeholder="{{ placeholdeAuto }}"
-                      formControlName="id_documento"
-                      name="id_documento"
-                      required
-                    />
-                    <span
-                      *ngIf="this.forma.get('id_documento').invalid"
-                      class="form-text text-danger"
-                      >Acepta 3 digitos</span
-                    >
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group form-group-float">
-                    <label class="form-group-float-label">Descripcion</label>
-                    <input
-                      style="text-align: center;"
-                      type="text"
-                      class="form-control"
-                      oninvalid="this.setCustomValidity('Introducir Descripcion')"
-                      oninput="setCustomValidity('')"
-                      placeholder="Introducir Descripcion"
-                      formControlName="descripcion"
-                      name="descripcion"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group form-group-float">
-                    <label class="form-group-float-label">Sigla</label>
-                    <input
-                      style="text-align: center;"
-                      type="text"
-                      class="form-control"
-                      oninvalid="this.setCustomValidity('Introducir Sigla')"
-                      oninput="setCustomValidity('')"
-                      placeholder="Introducir Sigla"
-                      formControlName="sigla"
-                      name="sigla"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group form-group-float">
-                    <label class="form-group-float-label">Componente</label>
-                    <input
-                      style="text-align: center;"
-                      type="text"
-                      class="form-control"
-                      oninvalid="this.setCustomValidity('Introducir Componente')"
-                      oninput="setCustomValidity('')"
-                      placeholder="Introducir Componente"
-                      formControlName="componente"
-                      name="componente"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="custom-control custom-switch">
-                    <input
-                      type="checkbox"
-                      required="false"
-                      class="custom-control-input"
-                      formControlName="estado"
-                      title="auxmaModal.estado"
-                      name="estado"
-                      id="estadoadm011"
-                    />
-                    <label class="custom-control-label" for="estadoadm011"
-                      >Estado</label
-                    >
+
+                <!-- <div class="row text-center">
+                  <div class="col-md-6">
+                        <label class="form-group">Division</label>
+                        <select
+                              formControlName="division"
+                              (change)="cargarDependencia2($event.target.value)"
+                              class="form-control selectpicker show-tick"
+                              name="division"
+                              onchange="setCustomValidity('')"
+                              oninvalid="setCustomValidity('Seleccione una division')"
+                              required
+                            >
+                              <option
+                                *ngFor="let gruac of selecDivModal"
+                                [value]="gruac.id_division"
+                              >
+                                {{ gruac.descripcion }}</option
+                              >
+                            </select>
+                      </div>
+                  <div class="col-md-6" *ngIf="ocultarSelect">
+                        <label class="form-group">Dependencia Division</label>
+                              <select
+                                formControlName="dependencia"
+                                class="form-control selectpicker show-tick"
+                                name="dependencia"
+                              >
+                              <option
+                                *ngFor="let gruac of dependenciaCont003"
+                                [value]="gruac.dependencia"
+                              >
+                                {{ gruac.descripcion }}</option
+                              >
+                            </select>
+                    </div>
+                </div> -->
+              </div>
+              <div class="row m0 p0">
+                <div class="col-xl-12" style="padding-top: 20px;">
+                  <div class="row text-center">
+                    <div class="col-md-3">
+                      <div class="form-group form-group-float">
+                        <label class="form-group-float-label"
+                          >Identificador</label
+                        >
+                        <input
+                          style="text-align: center;"
+                          type="text"
+                          class="form-control"
+                          oninvalid="this.setCustomValidity('Introducir Codigo')"
+                          oninput="setCustomValidity('')"
+                          placeholder="{{ placeholdeAuto }}"
+                          formControlName="id_documento"
+                          name="id_documento"
+                          required
+                        />
+                        <span
+                          *ngIf="this.forma.get('id_documento').invalid"
+                          class="form-text text-danger"
+                          >Acepta 3 digitos</span
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group form-group-float">
+                        <label class="form-group-float-label"
+                          >Descripcion</label
+                        >
+                        <input
+                          style="text-align: center;"
+                          type="text"
+                          class="form-control"
+                          oninvalid="this.setCustomValidity('Introducir Descripcion')"
+                          oninput="setCustomValidity('')"
+                          placeholder="Introducir Descripcion"
+                          formControlName="descripcion"
+                          name="descripcion"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group form-group-float">
+                        <label class="form-group-float-label"
+                          >Descripcion Corta</label
+                        >
+                        <input
+                          style="text-align: center;"
+                          type="text"
+                          class="form-control"
+                          oninvalid="this.setCustomValidity('Introducir Sigla')"
+                          oninput="setCustomValidity('')"
+                          placeholder="Introducir Sigla"
+                          formControlName="sigla"
+                          name="sigla"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group form-group-float">
+                        <label class="form-group-float-label">Componente</label>
+                        <input
+                          style="text-align: center;"
+                          type="text"
+                          class="form-control"
+                          oninvalid="this.setCustomValidity('Introducir Componente')"
+                          oninput="setCustomValidity('')"
+                          placeholder="Introducir Componente"
+                          formControlName="componente"
+                          name="componente"
+                          required
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

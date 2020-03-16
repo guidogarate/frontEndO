@@ -147,7 +147,7 @@ export class Adm011Component {
       checkauto: [""],
       descripcion: ["", [Validators.required]],
       id_documento: ["", [Validators.required]],
-      component: [""],
+      componente: [""],
       estado: ["", [Validators.required]]
     });
   }
