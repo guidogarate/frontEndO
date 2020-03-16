@@ -77,3 +77,42 @@ body {
 .padding-title {
   padding: 0.5em;
 }
+
+/**-----------global en todos los componentes(cont003,cont004)-----------*/
+.xxl {
+  font-size: 2em;
+  padding-right: 0.5em;
+}
+
+.xxl:hover {
+  color: rgba(178, 203, 211, 0.918);
+}
+@media screen and (max-width: 600px) {
+  .xxl {
+    font-size: 1.5em;
+  }
+}
+
+.table td,
+.table th {
+  padding-top: 0%;
+  padding-bottom: 0%;
+}
+.PRL0 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.pb0 {
+  padding-bottom: 0.5em;
+}
+
+/*activo*/
+.gris {
+  color: #808080;
+}
+
+.verde {
+  color: rgb(12, 197, 36);
+}
+/**-------------fin de global en todos los componentes--------------------*/

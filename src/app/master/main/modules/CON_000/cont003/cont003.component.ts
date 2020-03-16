@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import {
   FormControl,
   FormGroup,
@@ -22,14 +22,13 @@ import {
   Cont003Select
 } from "src/app/master/utils/models/main/cont_000/index.models";
 import { debounceTime } from "rxjs/operators";
-import { DatosPipe } from "src/app/master/utils/pipe/texto.pipe";
 
 @Component({
   selector: "app-cont003",
   templateUrl: "./cont003.component.html",
   styleUrls: ["./cont003.component.css"]
 })
-export class Cont003Component {
+export class Cont003Component implements OnDestroy {
   btnGrupo = glb001;
   start = glb002;
   pagi: Paginacion[];
@@ -118,6 +117,7 @@ export class Cont003Component {
     });
   }
 
+  ngOnDestroy() {}
   nuevoCont003() {
     this.boolBtnGrupo(false, true);
     this.btnGrupo.BtnCance = false;
