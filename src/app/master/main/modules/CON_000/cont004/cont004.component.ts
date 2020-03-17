@@ -3,7 +3,8 @@ import {
   FormControl,
   FormGroup,
   FormBuilder,
-  Validators
+  Validators,
+  FormArray
 } from "@angular/forms";
 import { Cont004Service } from "src/app/master/utils/service/main/modules/cont_000/index.shared.service";
 import glb001 from "src/app/master/config/glb000/glb001_btn";
@@ -12,6 +13,7 @@ import * as glb from "src/app/master/utils/global/index.global";
 import { Paginacion } from "src/app/master/utils/models/main/global/index.models";
 import { Cont004 } from "src/app/master/utils/models/main/cont_000/index.models";
 import { Observable, Subscription } from "rxjs";
+import { debounceTime } from "rxjs/operators";
 
 @Component({
   selector: "app-cont004",
@@ -27,6 +29,7 @@ export class Cont004Component {
   auxmaModal: Cont004;
   textBuscarCont004 = new FormControl("", []);
   table = false;
+  forma: FormGroup;
 
   constructor(
     private cont004S: Cont004Service,
@@ -34,10 +37,57 @@ export class Cont004Component {
     private notyG: glb.NotyGlobal,
     private initG: glb.InitGlobal
   ) {
-    this.getCont003(this.start.Texto);
+    this.getCont004(this.start.Texto);
+    this.crearFormulario();
+    this.textBuscarCont004.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe(value => {
+        if (value.length > 1) {
+          this.getCont004(value, "1");
+        } else {
+          this.start.Texto = "all_data";
+          this.getCont004(this.start.Texto, "1");
+        }
+      });
   }
 
-  getCont003(texto: string, numePag = "1") {
+  crearFormulario() {
+    this.forma = this.fb.group({
+      codigo: ["", [Validators.pattern("^([0-9]{3})$")]],
+      descripcion: ["", [Validators.required]],
+      sigla: ["", [Validators.required]],
+      estado: ["", [Validators.required]],
+      subforma: this.fb.array([
+        this.fb.group({
+          codigo: ["", [Validators.required]],
+          descripcion: ["", [Validators.required]],
+          sigla: ["", [Validators.required]],
+          estado: ["", [Validators.required]]
+        })
+      ])
+    });
+  }
+
+  get subforma() {
+    return this.forma.get("subforma") as FormArray;
+  }
+
+  addSubforma() {
+    this.subforma.push(
+      this.fb.group({
+        codigo: ["", [Validators.required]],
+        descripcion: ["", [Validators.required]],
+        sigla: ["", [Validators.required]],
+        estado: [false, [Validators.required]]
+      })
+    );
+  }
+
+  delSubforma(index: number) {
+    this.subforma.removeAt(index);
+  }
+
+  getCont004(texto: string, numePag = "1") {
     this.start.Busca = true;
     let peticion: Observable<any>;
     if (texto.length === 0 || texto === "all_data") {
@@ -56,12 +106,12 @@ export class Cont004Component {
       if (resp["ok"]) {
         this.auxma = resp.data[0].cuentas_adicionales;
         this.pagi = resp["cant"];
-        //  this.table = false;
+        this.table = false;
       } else {
         this.notyG.noty("error", resp["messagge"], 5000);
         this.auxma = [];
         this.pagi = [];
-        //    this.table = true;
+        this.table = true;
       }
       this.start.Busca = false;
       this.start.Loadi = false;
@@ -72,6 +122,22 @@ export class Cont004Component {
     });
   }
 
+  getCont004Moda(idCta: number) {
+    let peticion: Observable<any>;
+    peticion = this.cont004S.geCont004Cta("10", idCta);
+    this.sus = peticion.subscribe(resp => {
+      console.log(resp);
+      if (resp["ok"]) {
+        this.auxmaModal = resp.ctas[0].cuentas_adicionales;
+      } else {
+        this.notyG.noty("error", resp["messagge"], 5000);
+      }
+      console.log(this.auxmaModal);
+      this.initG.select();
+      this.initG.labels();
+      this.initG.uniform();
+    });
+  }
   nuevoCont004() {
     console.log("nuevo");
     this.initG.uniform();
@@ -81,6 +147,8 @@ export class Cont004Component {
 
   OpcionesTable(cont_004: Cont004, tipo: string) {
     console.log(cont_004);
+    this.getCont004Moda(cont_004.id_cuenta_adicional);
+    this.initG.labels();
   }
 
   OpcionesModal(tipo: string) {

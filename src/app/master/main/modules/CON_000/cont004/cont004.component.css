@@ -21,3 +21,21 @@
 .custom-control-input:disabled ~ .custom-control-label:before {
   opacity: 0.5;
 }
+
+/**label flotanbte*/
+.form-group-float-label.is-visible {
+  top: 0;
+  opacity: 0.5;
+}
+
+label {
+  margin-bottom: 0rem;
+}
+
+.form-control:disabled {
+  color: #381001;
+}
+
+.custom-control-label::before {
+  border: none;
+}

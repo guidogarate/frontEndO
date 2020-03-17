@@ -26,7 +26,7 @@ export class Cont004Service {
       );
   }
 
-  geCont004Cta(modulo: string, idCta: string) {
+  geCont004Cta(modulo: string, idCta: number) {
     const url1 = `${url.prod}${cont004.geCont004Cta}${modulo}/${idCta}`;
     return this.httpClient
       .get(url1, {

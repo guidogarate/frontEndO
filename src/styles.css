@@ -107,7 +107,7 @@ body {
   padding-bottom: 0.5em;
 }
 
-/*activo*/
+/*activo usuario*/
 .gris {
   color: #808080;
 }
@@ -115,4 +115,32 @@ body {
 .verde {
   color: rgb(12, 197, 36);
 }
+/*modal*/
+
+.modal-header {
+  padding: 0.5rem;
+}
+.modal-header {
+  position: relative;
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem;
+}
+
+.modal-body {
+  padding-bottom: 0px;
+}
+
+.card-body {
+  padding-bottom: 0em;
+}
+
+/*separador h*/
+.separadorh {
+  border: none;
+  height: 1px;
+  color: #333;
+  background-color: rgb(144, 145, 146);
+  margin-bottom: 7px;
+}
+
 /**-------------fin de global en todos los componentes--------------------*/
