@@ -123,7 +123,7 @@ export class Adm011Component {
         console.log("auxma: ", this.auxma);
         // this.nuevoAuxmaModal = this.auxma = resp.data[0].clase_documentos[0];
         this.ListModulos = resp.data[0].modulos;
-        console.log(this.auxma);
+        console.log(this.ListModulos);
         this.initG.labels();
         this.initG.select();
         this.pagi = resp["cant"];
