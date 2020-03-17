@@ -15,7 +15,11 @@
               <label class="form-group-float-label font-weight-semibold"
                 >Clase de Documentos</label
               >
-              <select class="form-control selectCenter" [(ngModel)]="idModulo">
+              <select
+                class="form-control selectCenter"
+                [(ngModel)]="idModulo"
+                (click)="getAdm011('all_data')"
+              >
                 <option
                   *ngFor="let item of ListModulos; let i = index"
                   [value]="item.id_modulo"
@@ -425,7 +429,7 @@
 </div> -->
 
 <!-- TODO: new modal based on cont 003 -->
-<div id="modal_adm_011" class="modal" tabindex="-1">
+<div id="modal_adm_011" class="modal p0" tabindex="-1" style="padding: 0em;">
   <div class="modal-dialog ">
     <div class="modal-content animacionmodal haciadentro">
       <form
@@ -512,8 +516,12 @@
           <div class="row">
             <div class="col-xl-12">
               <div class="row m0 text">
-                <div class="col-sm-4 col-6" style="margin: auto;">
+                <div class="col-sm-6 col-8 pad-row-title" style="margin: auto;">
                   <input
+                    style="width: inherit;
+                    border-radius: 1em;
+                    border-color: #03a9f4;
+                    background-color: white;"
                     class="text-center"
                     disabled="true"
                     type="text"
@@ -522,7 +530,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-xl-12">
+                <div class="col-xl-12 pad-row-title" style="display: flex;">
                   <div class="col-sm-4 col-6">
                     <div class="custom-control custom-switch">
                       <input
@@ -539,11 +547,8 @@
                       >
                     </div>
                   </div>
-                  <div class="col-sm-4 col-6" style="display: flex;">
-                    <div class="uniform-checker">
-                      <label>
-                        Numeracion Automatica
-                      </label>
+                  <div class="col-sm-4 col-6">
+                    <div class="uniform-checker" style="display: flex;">
                       <input
                         class="form-input-styled"
                         formControlName="checkauto"
@@ -551,7 +556,7 @@
                         data-fouc=""
                         type="checkbox"
                       />
-                      <label>
+                      <label style="padding-left: 0.5em;">
                         Numeracion Automatica
                       </label>
                     </div>
@@ -598,9 +603,9 @@
               <div class="row m0 p0">
                 <div class="col-xl-12" style="padding-top: 20px;">
                   <div class="row text-center">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       <div class="form-group form-group-float">
-                        <label class="form-group-float-label"
+                        <label class="form-group-float-label text-label"
                           >Identificador</label
                         >
                         <input
@@ -623,7 +628,7 @@
                     </div>
                     <div class="col-md-4">
                       <div class="form-group form-group-float">
-                        <label class="form-group-float-label"
+                        <label class="form-group-float-label text-label"
                           >Descripcion</label
                         >
                         <input
@@ -639,9 +644,9 @@
                         />
                       </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                       <div class="form-group form-group-float">
-                        <label class="form-group-float-label"
+                        <label class="form-group-float-label text-label"
                           >Descripcion Corta</label
                         >
                         <input
@@ -657,9 +662,11 @@
                         />
                       </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4" style="margin: auto;">
                       <div class="form-group form-group-float">
-                        <label class="form-group-float-label">Componente</label>
+                        <label class="form-group-float-label text-label"
+                          >Componente</label
+                        >
                         <input
                           style="text-align: center;"
                           type="text"

@@ -112,6 +112,11 @@ export class Adm011Component {
         this.start.Conte = true;
       }
       this.start.NumPa = Number(numePag);
+      if (resp.data[0].clase_documentos === null) {
+        console.log("datos vacios en documentos");
+      } else {
+        console.log("hay data");
+      }
       this.auxma = resp.data[0].clase_documentos[0];
       if (resp["ok"]) {
         this.auxma = resp.data[0].clase_documentos;
@@ -254,7 +259,9 @@ export class Adm011Component {
         this.btnGrupo.BtnCance = true;
         this.btnGrupo.BtnGuard = true;
         this.boolDisabled(false);
-
+        this.forma.get("nombre_modulo").disable();
+        this.forma.get("checkauto").disable();
+        this.forma.get("id_documento").disable();
         // this.forma.get("estado").disable();
         // this.forma.get("descripcion").disable();
         // this.forma.get("sigla").disable();
@@ -291,14 +298,23 @@ export class Adm011Component {
         this.initG.labels();
         return;
       case "editar":
+        console.log("editando");
         this.start.CtrAc = tipo;
         this.boolDisabled(false);
         this.boolBtnGrupo(false, true);
         this.forma.get("id_documento").disable();
-        this.forma.get("sigla").disable();
         this.forma.get("checkauto").disable();
-        this.forma.get("descripcion").disable();
-        this.forma.get("componente").disable();
+        // this.forma.get("sigla").disable();
+        // this.forma.get("descripcion").disable();
+        // this.forma.get("componente").disable();
+        // this.forma.get("nombre_modulo").enable();
+
+        // this.forma.get("checkauto").enable();
+        // this.forma.get("estado").enable();
+        // this.forma.get("id_documento").enable();
+        // this.forma.get("descripcion").enable();
+        // this.forma.get("sigla").enable();
+        // this.forma.get("componente").enable();
         return;
       case "salir":
         this.insertar = "fall";
