@@ -1,0 +1,41 @@
+/**personalizando switch*/
+/* --------switch desabilitado------- */
+.custom-control-input:disabled ~ .custom-control-label::before {
+  background-color: #808080;
+}
+
+.custom-switch .custom-control-label::after {
+  background-color: #fff;
+}
+
+.custom-control-label::before {
+  background-color: #808080;
+}
+
+/* --------switch habilitado------- */
+.custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #03a9f4;
+}
+
+/**disabled swtich*/
+.custom-control-input:disabled ~ .custom-control-label:before {
+  opacity: 0.5;
+}
+
+/**label flotanbte*/
+.form-group-float-label.is-visible {
+  top: 0;
+  opacity: 0.5;
+}
+
+label {
+  margin-bottom: 0rem;
+}
+
+.form-control:disabled {
+  color: #381001;
+}
+
+.custom-control-label::before {
+  border: none;
+}

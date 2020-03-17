@@ -6,8 +6,6 @@
   height: 1.5rem;*/
 }
 
-/*copiado de componente adm009*/
-
 .card-body {
   padding-bottom: 0em;
 }
@@ -74,42 +72,4 @@ label {
 /**disabled swtich*/
 .custom-control-input:disabled ~ .custom-control-label:before {
   opacity: 0.5;
-}
-/**--------------------YIMI---------------------------------*/
-.xxl {
-  font-size: 2em;
-  padding-right: 0.5em;
-}
-
-.xxl:hover {
-  color: rgba(178, 203, 211, 0.918);
-}
-@media screen and (max-width: 600px) {
-  .xxl {
-    font-size: 1.5em;
-  }
-}
-
-/** ESTILOS PARA TABLA, COLOCAL DE MANERA GLOBAL*/
-.table td,
-.table th {
-  padding-top: 0%;
-  padding-bottom: 0%;
-}
-.PRL0 {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.pb0 {
-  padding-bottom: 0.5em;
-}
-
-/*activo*/
-.gris {
-  color: #808080;
-}
-
-.verde {
-  color: rgb(12, 197, 36);
 }
