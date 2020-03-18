@@ -171,7 +171,7 @@
         class="form"
       >
         <div class="modal-header bg-blue">
-          <h6 class="modal-title">GRUPO</h6>
+          <h6 class="modal-title">Tipo Cuenta adicional</h6>
           <div class="list-icons float-right">
             <a class="puntero" *ngIf="btnGrupo.BtnCance"
               ><i
@@ -252,7 +252,7 @@
                   type="text"
                   class="form-control"
                   placeholder="Codigo"
-                  formControlName="codigo"
+                  formControlName="id_cuenta"
                   required
                 />
               </div>
@@ -296,7 +296,7 @@
         </div>
         <div class="modal-content animacionmodal haciadentro">
           <div class="modal-header bg-blue">
-            <h6 class="modal-title">SUB-GRUPO</h6>
+            <h6 class="modal-title">Cuenta Adicionales</h6>
             <div class="list-icons float-right">
               <a class="puntero" *ngIf="btnGrupo.BtnCance"
                 ><i
@@ -370,9 +370,12 @@
               ></a>
             </div>
           </div>
-          <div class="modal-body" formArrayName="subforma">
+          <div class="modal-body" formArrayName="cuentas_adicionales">
             <ng-container
-              *ngFor="let control of subforma.controls; let i = index"
+              *ngFor="
+                let control of cuentas_adicionales.controls;
+                let i = index
+              "
             >
               <div class="row" [formGroupName]="i">
                 <div *ngIf="true" class="col-1 col-sm-1 col-md-1 col-lg-1">
@@ -388,7 +391,7 @@
                       type="text"
                       class="form-control"
                       placeholder="Codigo"
-                      formControlName="codigo"
+                      formControlName="id_cuenta"
                       required
                     />
                   </div>

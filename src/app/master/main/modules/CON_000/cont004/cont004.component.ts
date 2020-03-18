@@ -22,6 +22,7 @@ import { debounceTime } from "rxjs/operators";
 })
 export class Cont004Component {
   btnGrupo = glb001;
+  btnGrupoSub = glb001;
   start = glb002;
   pagi: Paginacion[];
   sus: Subscription;
@@ -53,13 +54,13 @@ export class Cont004Component {
 
   crearFormulario() {
     this.forma = this.fb.group({
-      codigo: ["", [Validators.pattern("^([0-9]{3})$")]],
+      id_cuenta: ["", [Validators.pattern("^([0-9]{3})$")]],
       descripcion: ["", [Validators.required]],
       sigla: ["", [Validators.required]],
       estado: ["", [Validators.required]],
-      subforma: this.fb.array([
+      cuentas_adicionales: this.fb.array([
         this.fb.group({
-          codigo: ["", [Validators.required]],
+          id_cuenta: ["", [Validators.required]],
           descripcion: ["", [Validators.required]],
           sigla: ["", [Validators.required]],
           estado: ["", [Validators.required]]
@@ -68,14 +69,14 @@ export class Cont004Component {
     });
   }
 
-  get subforma() {
-    return this.forma.get("subforma") as FormArray;
+  get cuentas_adicionales() {
+    return this.forma.get("cuentas_adicionales") as FormArray;
   }
 
   addSubforma() {
-    this.subforma.push(
+    this.cuentas_adicionales.push(
       this.fb.group({
-        codigo: ["", [Validators.required]],
+        id_cuenta: ["", [Validators.required]],
         descripcion: ["", [Validators.required]],
         sigla: ["", [Validators.required]],
         estado: [false, [Validators.required]]
@@ -84,7 +85,7 @@ export class Cont004Component {
   }
 
   delSubforma(index: number) {
-    this.subforma.removeAt(index);
+    this.cuentas_adicionales.removeAt(index);
   }
 
   getCont004(texto: string, numePag = "1") {
@@ -98,7 +99,6 @@ export class Cont004Component {
       peticion = this.cont004S.geCont004Ctas("10", numePag, this.start.Texto);
     }
     this.sus = peticion.subscribe(resp => {
-      console.log(resp);
       if (!this.start.Conte) {
         this.start.Conte = true;
       }
@@ -126,18 +126,18 @@ export class Cont004Component {
     let peticion: Observable<any>;
     peticion = this.cont004S.geCont004Cta("10", idCta);
     this.sus = peticion.subscribe(resp => {
-      console.log(resp);
       if (resp["ok"]) {
-        this.auxmaModal = resp.ctas[0].cuentas_adicionales;
+        this.auxmaModal = resp.ctas[0].cuenta_adicional;
+        this.resetDatos();
       } else {
         this.notyG.noty("error", resp["messagge"], 5000);
       }
-      console.log(this.auxmaModal);
       this.initG.select();
       this.initG.labels();
       this.initG.uniform();
     });
   }
+
   nuevoCont004() {
     console.log("nuevo");
     this.initG.uniform();
@@ -146,13 +146,60 @@ export class Cont004Component {
   }
 
   OpcionesTable(cont_004: Cont004, tipo: string) {
-    console.log(cont_004);
     this.getCont004Moda(cont_004.id_cuenta_adicional);
+
     this.initG.labels();
   }
 
   OpcionesModal(tipo: string) {
     console.log(tipo);
+    switch (tipo) {
+      case "salir":
+        this.resetDatos();
+        break;
+    }
+  }
+
+  boolDisabled(bool: boolean, tipoPadreHijo: boolean) {
+    if (bool) {
+      if (tipoPadreHijo) {
+        this.forma.get("codigo").disable();
+        this.forma.get("descripcion").disable();
+        this.forma.get("sigla").disable();
+        this.forma.get("estado").disable();
+      } else {
+      }
+    } else {
+      if (tipoPadreHijo) {
+      } else {
+        this.forma.get("codigo").enable();
+        this.forma.get("descripcion").enable();
+        this.forma.get("sigla").enable();
+        this.forma.get("estado").enable();
+      }
+    }
+    this.initG.labels();
+    this.initG.select();
+  }
+
+  boolBtnGrupo(
+    editNuevo: boolean,
+    cancelGuardar: boolean,
+    tipoPadreHijo: boolean
+  ) {
+    if (tipoPadreHijo) {
+      this.btnGrupo.BtnCance = cancelGuardar;
+      this.btnGrupo.BtnEdita = editNuevo;
+      this.btnGrupo.BtnElimi = false;
+      this.btnGrupo.BtnGuard = cancelGuardar;
+      this.btnGrupo.BtnNuevo = editNuevo;
+    } else {
+      this.btnGrupoSub.BtnCance = cancelGuardar;
+      this.btnGrupoSub.BtnEdita = editNuevo;
+      this.btnGrupoSub.BtnElimi = false;
+      this.btnGrupoSub.BtnGuard = cancelGuardar;
+      this.btnGrupoSub.BtnNuevo = editNuevo;
+    }
   }
 
   paginacion(numero: string, eliminar = true) {
@@ -208,5 +255,21 @@ export class Cont004Component {
         this.notyG.noty("error", resp["mensaje"], 5000);
       }
     });
+  }
+
+  resetDatos() {
+    const lengData: number = this.auxmaModal[0].cuentas_adicionales.length;
+    const lengForm: number = this.cuentas_adicionales.length;
+    console.log(lengData, lengForm);
+    if (lengData > lengForm) {
+      for (let index = 0; index < lengData - 1; index++) {
+        this.addSubforma();
+      }
+    } else if (lengForm > lengData) {
+      console.log("eliminar");
+    }
+    this.forma.reset(this.auxmaModal[0]);
+    this.initG.labels();
+    this.initG.select();
   }
 }
