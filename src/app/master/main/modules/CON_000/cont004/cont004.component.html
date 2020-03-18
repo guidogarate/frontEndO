@@ -1,0 +1,451 @@
+<div class="card haciadentro animaciones superior" *ngIf="start.Conte">
+  <div class="card-body pb-0" style="padding-bottom: 0px;">
+    <div class="card-header header-elements-inline" style="padding: 0px;">
+      <h5 class="card-title font-weight-bold">
+        <img
+          src="https://trello-attachments.s3.amazonaws.com/5e00f87a7a953c871e9a19f0/37x37/026b03c4f5a191f167b26d1a634519ca/image.png"
+          alt=""
+        />
+        Cuentas Adicionales
+      </h5>
+    </div>
+    <div class="row">
+      <div class="col-1 col-sm-1 col-md-3 col-lg-8"></div>
+      <div class="col-8 col-sm-9 col-md-6 col-lg-3">
+        <div class="form-group form-group-feedback form-group-feedback-right">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar"
+            id="buscarGrupoLupa"
+            [formControl]="textBuscarCont004"
+          />
+          <div *ngIf="start.Busca" class="form-control-feedback">
+            <i class="icon-spinner2 spinner"></i>
+          </div>
+          <div *ngIf="!start.Busca" class="form-control-feedback">
+            <label for="buscarGrupoLupa">
+              <i class="icon-search4 puntero" title="buscar"></i
+            ></label>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 col-sm-2 col-md-3 col-lg-1" style="padding-top: 30px;">
+        <div class="form-control-feedback">
+          <i
+            data-toggle="modal"
+            data-target="#modal_cont_004"
+            class="icon-diff-added puntero xxl"
+            (click)="nuevoCont004()"
+            title="agregar"
+          ></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row p0 m0">
+    <div *ngIf="table" class="col-sm-12">
+      <span class="form-text text-danger text-center"
+        >No existen datos para mostrar</span
+      >
+    </div>
+    <div *ngIf="!table" class="col-sm-12">
+      <app-cargacontent *ngIf="start.Loadi"></app-cargacontent>
+      <div class="table-responsive">
+        <table class="table table-sm table-hover table-bordered">
+          <thead *ngIf="start.Table" class="text-center">
+            <tr class="bg-blue">
+              <th>Codigo</th>
+              <th>Descripcion</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="table-border-double PRL0"
+              *ngFor="
+                let cont004 of auxma;
+                let i = index;
+                let impar = odd;
+                let par = even
+              "
+              [ngClass]="{
+                tablaCebradoPar: par,
+                tablaCebradoImpar: impar
+              }"
+            >
+              <td class="table-content-center text-center">
+                {{ cont004.id_cuenta_adicional }}
+              </td>
+              <td class="table-content-center text-center">
+                {{ cont004.descripcion }}
+              </td>
+              <td class="table-content-center text-center">
+                <div class="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    [disabled]="true"
+                    [checked]="cont004.estado"
+                    title="cont004.estado"
+                    id="cont004estado{{ i }}"
+                  />
+                  <label
+                    class="custom-control-label"
+                    for="cont004estado{{ i }}"
+                  ></label>
+                </div>
+              </td>
+              <td class="table-content-center text-center">
+                <div class="list-icons">
+                  <i
+                    class="icon-file-eye"
+                    title="visualizar"
+                    data-toggle="modal"
+                    data-target="#modal_cont_004"
+                    (click)="OpcionesTable(cont004, 'visualizar')"
+                    class="icon-file-eye text-primary-600 puntero"
+                  ></i>
+                  <i
+                    class="icon-pencil7"
+                    title="editar"
+                    data-toggle="modal"
+                    data-target="#modal_cont_004"
+                    (click)="OpcionesTable(cont004, 'editar')"
+                    class="icon-pencil7 text-teal-600 puntero"
+                  ></i>
+                  <i
+                    class="icon-trash"
+                    title="eliminar"
+                    data-toggle="modal"
+                    data-target="#modal_cont_004_eliminar"
+                    (click)="OpcionesTable(cont004, 'eliminar')"
+                    class="icon-trash text-danger-600 puntero"
+                  ></i>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br />
+      </div>
+      <div class="row justify-content-center">
+        <ul class="pagination pagination-flat align-self-center">
+          <li class="page-item puntero">
+            <a (click)="paginacion('000')" class="page-link"
+              >&larr; &nbsp; Atras</a
+            >
+          </li>
+          <ng-container *ngFor="let pg of pagi; let i = index">
+            <li
+              [ngClass]="{
+                'page-item': true,
+                puntero: true,
+                active: start.NumPa === i + 1
+              }"
+            >
+              <a (click)="paginacion(pg.pag)" class="page-link">{{ pg.pag }}</a>
+            </li>
+          </ng-container>
+          <li class="page-item puntero">
+            <a (click)="paginacion('999')" class="page-link"
+              >Sig &nbsp; &rarr;</a
+            >
+          </li>
+        </ul>
+      </div>
+      <br />
+    </div>
+  </div>
+</div>
+
+<div id="modal_cont_004" class="modal" tabindex="-1">
+  <div class="modal-dialog ">
+    <div class="modal-content animacionmodal haciadentro">
+      <form
+        [formGroup]="forma"
+        (ngSubmit)="OpcionesModal('guardar')"
+        ngNativeValidate
+        autocomplete="off"
+        class="form"
+      >
+        <div class="modal-header bg-blue">
+          <h6 class="modal-title">Tipo Cuenta adicional</h6>
+          <div class="list-icons float-right">
+            <a class="puntero" *ngIf="btnGrupo.BtnCance"
+              ><i
+                class="icon-cancel-circle2 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal('cancelar')"
+                title="Cancelar"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnGrupo.BtnNuevo">
+              <i
+                data-toggle="tooltip"
+                data-placement="top"
+                class="icon-diff-added xxl"
+                (click)="OpcionesModal('nuevo')"
+                title="nuevo"
+              ></i>
+            </a>
+            <button
+              *ngIf="btnGrupo.BtnGuard"
+              style="padding: 1px;color: white;"
+              type="submit"
+              class="btn text-warning-600 btn-flat btn-icon btn-rounded"
+            >
+              <i
+                *ngIf="!btnGrupo.BtnLoadi"
+                class="icon-floppy-disk xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+              ></i>
+            </button>
+            <i
+              *ngIf="btnGrupo.BtnLoadi"
+              class="icon-spinner spinner position-left"
+              title="Guardando..."
+            >
+            </i>
+            <a *ngIf="btnGrupo.BtnEdita" class="puntero">
+              <i
+                class="icon-pencil7 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal('editar')"
+                title="editar"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnGrupo.BtnElimi"
+              ><i
+                class="icon-trash xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Eliminar"
+              >
+              </i
+            ></a>
+            <a class="puntero">
+              <i
+                class="icon-exit xxl"
+                (click)="OpcionesModal('salir')"
+                data-toggle="tooltip"
+                data-placement="top"
+                data-dismiss="modal"
+                title="Salir"
+              >
+              </i
+            ></a>
+          </div>
+        </div>
+        <div class="modal-body ">
+          <div class="row">
+            <div class="col-3 col-sm-2 col-md-2 col-lg-2">
+              <div class="form-group form-group-float">
+                <label class="form-group-float-label">Codigo</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Codigo"
+                  formControlName="id_cuenta"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-9 col-sm-5 col-md-5 col-lg-5">
+              <div class="form-group form-group-float">
+                <label class="form-group-float-label">Descripcion</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Descripcion"
+                  formControlName="descripcion"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-6 col-sm-3 col-md-3 col-lg-3">
+              <div class="form-group form-group-float">
+                <label class="form-group-float-label">Sigla</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Sigla"
+                  formControlName="sigla"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-6 col-sm-2 col-md-2 col-lg-2">
+              <div class="custom-control custom-switch">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  value="true"
+                  formControlName="estado"
+                />
+                <label class="custom-control-label">Estado</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-content animacionmodal haciadentro">
+          <div class="modal-header bg-blue">
+            <h6 class="modal-title">Cuenta Adicionales</h6>
+            <div class="list-icons float-right">
+              <a class="puntero" *ngIf="btnGrupo.BtnCance"
+                ><i
+                  class="icon-cancel-circle2 xxl"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  (click)="OpcionesModal('cancelar')"
+                  title="Cancelar"
+                >
+                </i
+              ></a>
+              <!-- (click)="OpcionesModal('nuevo')" -->
+              <!-- <a class="puntero" *ngIf="btnGrupo.BtnNuevo"> -->
+              <a class="puntero" *ngIf="true">
+                <i
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  class="icon-diff-added xxl"
+                  (click)="addSubforma()"
+                  title="nuevo"
+                ></i>
+              </a>
+              <button
+                *ngIf="btnGrupo.BtnGuard"
+                style="padding: 1px;color: white;"
+                type="submit"
+                class="btn text-warning-600 btn-flat btn-icon btn-rounded"
+              >
+                <i
+                  *ngIf="!btnGrupo.BtnLoadi"
+                  class="icon-floppy-disk xxl"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                ></i>
+              </button>
+              <i
+                *ngIf="btnGrupo.BtnLoadi"
+                class="icon-spinner spinner position-left"
+                title="Guardando..."
+              >
+              </i>
+              <a *ngIf="btnGrupo.BtnEdita" class="puntero">
+                <i
+                  class="icon-pencil7 xxl"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  (click)="OpcionesModal('editar')"
+                  title="editar"
+                >
+                </i
+              ></a>
+              <a class="puntero" *ngIf="btnGrupo.BtnElimi"
+                ><i
+                  class="icon-trash xxl"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Eliminar"
+                >
+                </i
+              ></a>
+              <a class="puntero">
+                <i
+                  class="icon-exit xxl"
+                  (click)="OpcionesModal('salir')"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  data-dismiss="modal"
+                  title="Salir"
+                >
+                </i
+              ></a>
+            </div>
+          </div>
+          <div class="modal-body" formArrayName="cuentas_adicionales">
+            <ng-container
+              *ngFor="
+                let control of cuentas_adicionales.controls;
+                let i = index
+              "
+            >
+              <div class="row" [formGroupName]="i">
+                <div *ngIf="true" class="col-1 col-sm-1 col-md-1 col-lg-1">
+                  <i
+                    class="icon-trash puntero text-danger-600"
+                    (click)="delSubforma(i)"
+                  ></i>
+                </div>
+                <div class="col-3 col-sm-2 col-md-2 col-lg-2">
+                  <div class="form-group form-group-float">
+                    <label class="form-group-float-label">Codigo</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Codigo"
+                      formControlName="id_cuenta"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-8 col-sm-5 col-md-5 col-lg-5">
+                  <div class="form-group form-group-float">
+                    <label class="form-group-float-label">Descripcion</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Descripcion"
+                      formControlName="descripcion"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-6 col-sm-2 col-md-2 col-lg-2">
+                  <div class="form-group form-group-float">
+                    <label class="form-group-float-label">Sigla</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Sigla"
+                      formControlName="sigla"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-6 col-sm-2 col-md-2 col-lg-2">
+                  <div class="custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      value="true"
+                      id="subforma{{ i }}"
+                      formControlName="estado"
+                    />
+                    <label class="custom-control-label" for="subforma{{ i }}"
+                      >Estado</label
+                    >
+                  </div>
+                </div>
+                <div class="separadorh"></div>
+              </div>
+              <div class="separadorh"></div>
+            </ng-container>
+          </div>
+        </div>
+      </form>
+      <hr />
+      <!-- <p>
+        {{ this.forma.get("codigo").status }}
+      </p> -->
+      <pre>{{ forma.value | json }}</pre>
+    </div>
+  </div>
+</div>

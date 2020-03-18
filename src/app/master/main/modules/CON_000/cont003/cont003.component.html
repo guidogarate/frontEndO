@@ -157,33 +157,33 @@
               }"
             >
               <td *ngIf="cont003.division === 1">
-                {{ cont003.division }} &nbsp; {{ cont003.descripcion }}
+                {{ cont003.id_vista }} &nbsp; {{ cont003.descripcion }}
               </td>
               <td *ngIf="cont003.division === 2">
-                &nbsp; &nbsp;&nbsp;{{ cont003.division }} &nbsp;
+                &nbsp; &nbsp;&nbsp;{{ cont003.id_vista }} &nbsp;
                 {{ cont003.descripcion }}
               </td>
               <td *ngIf="cont003.division === 3">
-                &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{ cont003.division }}
+                &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{ cont003.id_vista }}
                 &nbsp;
                 {{ cont003.descripcion }}
               </td>
               <td *ngIf="cont003.division === 4">
                 &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{
-                  cont003.division
+                  cont003.id_vista
                 }}
                 &nbsp;
                 {{ cont003.descripcion }}
               </td>
               <td *ngIf="cont003.division === 5">
                 &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{
-                  cont003.division
+                  cont003.id_vista
                 }}
                 &nbsp; {{ cont003.descripcion }}
               </td>
               <td *ngIf="cont003.division === 6">
                 &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{
-                  cont003.division
+                  cont003.id_vista
                 }}
                 &nbsp; {{ cont003.descripcion }}
               </td>
@@ -486,11 +486,11 @@
           </div>
         </div>
       </form>
-      <hr />
+      <!-- <hr />
       <p>
         {{ this.forma.get("idunidaddivision").status }}
       </p>
-      <pre>{{ forma.value | json }}</pre>
+      <pre>{{ forma.value | json }}</pre> -->
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import {
   FormControl,
   FormGroup,
@@ -28,7 +28,7 @@ import { debounceTime } from "rxjs/operators";
   templateUrl: "./cont003.component.html",
   styleUrls: ["./cont003.component.css"]
 })
-export class Cont003Component {
+export class Cont003Component implements OnDestroy {
   btnGrupo = glb001;
   start = glb002;
   pagi: Paginacion[];
@@ -45,7 +45,6 @@ export class Cont003Component {
   ocultarSelect = true;
   mostrarCheck = false;
   placeholdeAuto = "auto";
-  insertar = "fall";
 
   constructor(
     private cont003S: Cont003Service,
@@ -62,7 +61,7 @@ export class Cont003Component {
           this.getCont003(value, "1", this.gestion);
         } else {
           this.start.Texto = "all_data";
-          this.getCont003(this.start.Texto);
+          this.getCont003(this.start.Texto, "1", this.gestion);
         }
       });
   }
@@ -118,6 +117,7 @@ export class Cont003Component {
     });
   }
 
+  ngOnDestroy() {}
   nuevoCont003() {
     this.boolBtnGrupo(false, true);
     this.btnGrupo.BtnCance = false;
@@ -166,11 +166,6 @@ export class Cont003Component {
     this.mostrarCheck = false;
     switch (tipo) {
       case "nuevo":
-        if (this.insertar === "exito") {
-          this.boolDisabled(true);
-          this.boolBtnGrupo(true, false);
-          return;
-        }
         this.start.CtrAc = tipo;
         this.boolBtnGrupo(false, true);
         this.btnGrupo.BtnCance = true;
@@ -193,23 +188,16 @@ export class Cont003Component {
         this.forma.get("dependencia").disable();
         return;
       case "salir":
-        this.insertar = "fall";
         this.placeholdeAuto = "auto";
         this.resetDatos();
         this.boolDisabled(true);
         this.dependenciaCont003 = [];
         break;
       case "cancelar":
-        console.log(this.start.CtrAc);
-        if (this.insertar === "exito") {
-          this.boolDisabled(true);
-          this.boolBtnGrupo(true, false);
-          return;
-        }
-        this.placeholdeAuto = "auto";
         this.resetDatos();
         this.dependenciaCont003 = [];
         this.cargarDependencia(this.auxmaModal.idunidaddivision);
+        this.placeholdeAuto = "auto";
         this.boolDisabled(true);
         this.boolBtnGrupo(true, false);
         return;
@@ -351,6 +339,36 @@ export class Cont003Component {
           this.dependenciaCont003.push(dato);
         }
       }
+    } else if (long === 16) {
+      for (let index = 0; index < this.auxma.length; index++) {
+        if (13 === this.auxma[index].idunidaddivision.length) {
+          const dato = {
+            dependencia: this.auxma[index].idunidaddivision,
+            descripcion: this.auxma[index].descripcion
+          };
+          this.dependenciaCont003.push(dato);
+        }
+      }
+    } else if (long === 19) {
+      for (let index = 0; index < this.auxma.length; index++) {
+        if (16 === this.auxma[index].idunidaddivision.length) {
+          const dato = {
+            dependencia: this.auxma[index].idunidaddivision,
+            descripcion: this.auxma[index].descripcion
+          };
+          this.dependenciaCont003.push(dato);
+        }
+      }
+    } else if (long === 22) {
+      for (let index = 0; index < this.auxma.length; index++) {
+        if (19 === this.auxma[index].idunidaddivision.length) {
+          const dato = {
+            dependencia: this.auxma[index].idunidaddivision,
+            descripcion: this.auxma[index].descripcion
+          };
+          this.dependenciaCont003.push(dato);
+        }
+      }
     }
     this.ocultarSelect = true;
     this.initG.select();
@@ -373,6 +391,10 @@ export class Cont003Component {
       this.initG.select();
       return;
     }
+    // OJO AQUI CUANDO NO EXISTEN DatosPipe, VALIDA Estado. GESTION 2019
+    // if (this.dependenciaCont003 === undefined) {
+    //   return;
+    // }
     for (let index = 0; index < this.auxma.length; index++) {
       if (id_terr - 1 === this.auxma[index].division) {
         const dato = {
@@ -423,10 +445,19 @@ export class Cont003Component {
       if (resp["ok"]) {
         if (contorlAccion === "nuevo") {
           this.start.IdCod = resp["id_registro"];
-          this.insertar = "exito";
-          // para que, cuando le de x, resetee el valor que
-          // se ha insertado recientemente entonces vamos a opcionModal en editar
+          this.forma.get("idunidaddivision").setValue(this.start.IdCod);
+          this.auxmaModal.idunidaddivision = this.start.IdCod;
+          this.auxmaModal.descripcion = this.forma.get("descripcion").value;
+          this.auxmaModal.sigla = this.forma.get("sigla").value;
+          this.auxmaModal.estado = this.forma.get("estado").value;
+          this.auxmaModal.division = this.forma.get("division").value;
+          this.auxmaModal.dependencia = this.forma.get("dependencia").value;
+        } else {
+          this.auxmaModal.descripcion = this.forma.get("descripcion").value;
+          this.auxmaModal.sigla = this.forma.get("sigla").value;
+          this.auxmaModal.estado = this.forma.get("estado").value;
         }
+        this.resetDatos();
         this.getCont003(
           this.start.Texto,
           this.start.NumPa.toString(),
