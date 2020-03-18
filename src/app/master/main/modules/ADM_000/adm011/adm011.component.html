@@ -18,7 +18,7 @@
               <select
                 class="form-control selectCenter"
                 [(ngModel)]="idModulo"
-                (click)="getAdm011('all_data')"
+                (change)="getAdm011('all_data')"
               >
                 <option
                   *ngFor="let item of ListModulos; let i = index"
