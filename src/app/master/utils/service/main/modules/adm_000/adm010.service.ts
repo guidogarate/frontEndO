@@ -1,40 +1,38 @@
-import { Injectable } from '@angular/core';
-import url from 'src/app/master/config/url.config';
-import adm0010 from 'src/app/master/config/adm000/adm010_url';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import url from "src/app/master/config/url.config";
+import adm0010 from "src/app/master/config/adm000/adm010_url";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { map } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class Adm010Service {
-  
-  token = sessionStorage.getItem("id");  
-  
-  constructor(private httpClient: HttpClient) { }
-// parametros_iniciales
+  token = sessionStorage.getItem("id");
+
+  constructor(private httpClient: HttpClient) {}
+  // parametros_iniciales
   ObtenerParametrosIniciales(gestion: number) {
-    const url1 = `${url.prod}${adm0010.parametros_iniciales}`+'90/'+gestion;
+    const url1 = `${url.prod}${adm0010.parametros_iniciales}` + "90/" + gestion;
     console.log(url1);
     return this.httpClient
-    .get(url1, {
-      headers: new HttpHeaders({
-        authorization: this.token
+      .get(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token
+        })
       })
-    })
-    .pipe(
-      map(resp => {
-        console.log(resp);
-        return resp;
-      })
-    );
+      .pipe(
+        map(resp => {
+          console.log(resp);
+          return resp;
+        })
+      );
   }
 
-  Insertar(data : any, gestion : number){
-
+  Insertar(data: any, gestion: number) {
     console.log("service insertar data: ", data);
     const url1 = `${url.prod}${adm0010.insert_parametros_iniciales}${gestion}`;
-    console.log(url1,data);
+    console.log(url1, data);
     return this.httpClient
       .post(url1, data, {
         headers: new HttpHeaders({
@@ -49,10 +47,10 @@ export class Adm010Service {
         })
       );
   }
-  Actualizar(data : any, gestion : number ){
+  Actualizar(data: any, gestion: number) {
     console.log("service actualizar data: ", data);
     const url1 = `${url.prod}${adm0010.update_parametros_iniciales}${gestion}`;
-    console.log(url1,data);
+    console.log(url1, data);
     return this.httpClient
       .put(url1, data, {
         headers: new HttpHeaders({
@@ -67,9 +65,12 @@ export class Adm010Service {
         })
       );
   }
-  Eliminar( id : number, gestion : number){
+  Eliminar(id: number, gestion: number) {
     console.log("service Delete data: ", id);
-    const url1 = `${url.prod}${adm0010.delete_parametros_iniciales}${id}`+'/'+`${gestion}`;
+    const url1 =
+      `${url.prod}${adm0010.delete_parametros_iniciales}${id}` +
+      "/" +
+      `${gestion}`;
     console.log(url1);
     return this.httpClient
       .put(url1, null, {
@@ -85,5 +86,4 @@ export class Adm010Service {
         })
       );
   }
-
 }

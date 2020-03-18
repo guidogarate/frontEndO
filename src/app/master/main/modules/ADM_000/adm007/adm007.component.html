@@ -62,7 +62,7 @@
       <div class="row p0 m0">
         <div class="col-sm-2 col-12" *ngIf="lista != undefined">
           <div
-            class="card card-padding margin-botton-card "
+            class="card margin-botton-card img-position"
             style="align-items: center;"
           >
             <input
@@ -76,11 +76,10 @@
               [src]="
                 photoSelected || lista[0].logo_empresa || 'assets/subir_img.png'
               "
-              class="img-fluid rounded puntero"
+              class="img-fluid rounded puntero img-width"
               alt="No existe imagen, seleccione una imagen"
               (click)="photoInput.click()"
               style="height: 116px;
-                               width: fit-content;
                                padding: 0.5em;"
             />
           </div>
@@ -232,7 +231,7 @@
                 *ngFor="let item of ListDirecciones; let i = index"
               >
                 <div class="row p0 m0" (click)="MostrarCiudad(item)">
-                  <div class="col-sm-2 col-6">
+                  <div class="col-sm-3 col-6">
                     <select
                       class="form-control p0 selectCenter alturaInputs"
                       [disabled]="
@@ -261,7 +260,7 @@
                       [value]="item.direccion"
                     />
                   </div>
-                  <div class="col-sm-2 col-12" style="align-self: flex-end;">
+                  <div class="col-sm-3 col-12" style="align-self: flex-end;">
                     <div class="custom-control custom-switch switch-float">
                       <input
                         type="checkbox"
@@ -316,13 +315,13 @@
             >
               <div class="col-sm-3">
                 <div class="form-group row mb0">
-                  <label class="col-form-label col-lg-4 col-6">PaisNE</label>
+                  <label class="col-form-label col-lg-4 col-6">Pais</label>
                   <div class="col-lg-8 col-6">
                     <div class="input-group" style="justify-content: center;">
                       <input
                         type="text"
                         name="pais"
-                        class="text-center"
+                        class="text-center form-control"
                         [value]="textPais"
                         disabled
                       />
@@ -330,17 +329,17 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-5">
                 <div class="form-group row mb0">
-                  <label class="col-form-label col-lg-4 col-6"
+                  <label class="col-form-label col-lg-4 col-md-4 col-6"
                     >Departamento</label
                   >
-                  <div class="col-lg-8 col-6">
+                  <div class="col-lg-8 col-md-4 col-6">
                     <div class="input-group" style="justify-content: center;">
                       <input
                         type="text"
                         name="departamento"
-                        class="text-center"
+                        class="text-center form-control"
                         disabled
                         [value]="textDepartamento"
                       />
@@ -348,7 +347,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-3">
+              <div class="col-sm-4">
                 <div class="form-group row mb0">
                   <label class="col-form-label col-lg-4 col-6">Ciudad</label>
                   <div class="col-lg-8 col-6">
@@ -369,7 +368,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-2 col-0"></div>
+              <!-- <div class="col-sm-0 col-0"></div> -->
             </div>
             <div
               class="row p0 m0"
@@ -380,7 +379,7 @@
             >
               <div class="col-sm-3">
                 <div class="form-group row mb0">
-                  <label class="col-form-label col-lg-4 col-6">PaisE</label>
+                  <label class="col-form-label col-lg-4 col-6">Pais</label>
                   <div class="col-lg-8 col-6">
                     <div class="input-group" style="justify-content: center;">
                       <input
@@ -388,14 +387,14 @@
                         type="text"
                         name="pais"
                         disabled
-                        class="text-center"
+                        class="text-center form-control"
                         [value]="textPais"
                       />
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-5">
                 <div class="form-group row mb0">
                   <label class="col-form-label col-lg-4 col-6"
                     >Departamento</label
@@ -407,14 +406,14 @@
                         type="text"
                         name="departamento"
                         disabled
-                        class="text-center"
+                        class="text-center form-control"
                         [value]="textDepartamento"
                       />
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-sm-3">
+              <div class="col-sm-4">
                 <div class="form-group row mb0">
                   <label class="col-form-label col-lg-4 col-6">Ciudad</label>
                   <div class="col-lg-8 col-6">
@@ -432,7 +431,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-2 col-0"></div>
+              <!-- <div class="col-sm-2 col-0"></div> -->
             </div>
           </div>
         </div>
@@ -501,7 +500,7 @@
                 *ngFor="let item of ListContactos; let i = index"
               >
                 <div class="row p0 m0">
-                  <div class="col-sm-1 col-0"></div>
+                  <div class="col-sm-2 col-0"></div>
                   <div class="col-sm-2 col-8">
                     <select
                       class="form-control p0 selectCenter alturaInputs"
@@ -567,8 +566,8 @@
                             [disabled]="
                               !editar ||
                               ListContactos.length > i + indiceContact ||
-                              item.id_contacto != '33-1' ||
-                              item.id_contacto != '33-2'
+                              (item.id_contacto != '33-1' &&
+                                item.id_contacto != '33-2')
                             "
                             [(ngModel)]="item.codigo_contacto"
                             [value]="item.codigo_contacto"
@@ -632,7 +631,7 @@
                       </a>
                     </div>
                   </div>
-                  <div class="col-sm-1 col-0"></div>
+                  <div class="col-sm-2 col-0"></div>
                 </div>
                 <!-- <pre>{{ item | json }}</pre> -->
               </div>

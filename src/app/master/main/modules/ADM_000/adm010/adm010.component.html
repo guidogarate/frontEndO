@@ -62,16 +62,14 @@
       <div class="row p0 m0">
         <div class="col-sm-2 col-12" *ngIf="lista != undefined">
           <div
-            class="card card-padding margin-botton-card "
+            class="card margin-botton-card img-position "
             style="align-items: center;"
           >
             <img
               [src]="lista[0].logo_empresa || 'assets/subir_img.png'"
-              class="img-fluid rounded puntero"
+              class="img-fluid rounded puntero img-width"
               alt="No existe imagen, seleccione una imagen"
-              style="height: 116px;
-                                         padding: 0.5em;
-                                         width: fit-content;"
+              style="height: 116px; padding: 0.5em;"
             />
           </div>
         </div>
@@ -232,7 +230,7 @@
                     </div>
                     <div class="col-sm-3 col-3">
                       <input
-                        type="text"
+                        type="number"
                         class="form-control text-center"
                         (blur)="CalcularLargo()"
                         [(ngModel)]="ed.largo"
@@ -291,7 +289,7 @@
                       class="form-control text-center"
                       [(ngModel)]="ultimoElemento.largo"
                       [value]="ultimoElemento.largo"
-                      [disabled]="!editar"
+                      disabled
                     />
                   </div>
                 </div>
@@ -365,9 +363,12 @@
                       class="form-control p0 selectCenter alturaInputs"
                       [(ngModel)]="naturaleza.id_codigo"
                       [disabled]="!editar"
+                      (change)="ActualizarEstadoNaturaleza(naturaleza)"
                     >
                       <option
                         [value]="codNaturaleza.id_codigo"
+                        [disabled]="codNaturaleza.estado == 1"
+                        [ngClass]="{ noDisponible: codNaturaleza.estado == 1 }"
                         *ngFor="let codNaturaleza of allCodigosNaturalezas"
                       >
                         {{ codNaturaleza.codigo }}
@@ -405,7 +406,7 @@
                     </a>
                   </div>
                 </div>
-                <!-- <pre>{{Listnaturalezas | json}}</pre> -->
+                <!-- <pre>{{ Listnaturalezas | json }}</pre> -->
               </div>
               <div class="col-sm-3 col-0"></div>
             </div>

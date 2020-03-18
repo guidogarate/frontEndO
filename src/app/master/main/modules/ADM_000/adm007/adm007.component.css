@@ -42,6 +42,9 @@
   color: red;
   font-size: 1.8em;
 }
+.img-width {
+  width: -webkit-fill-available;
+}
 
 @media screen and (max-width: 600px) {
   .title-icon {
@@ -57,5 +60,12 @@
   .switch-float {
     float: right;
     bottom: 5em;
+  }
+  .img-position {
+    width: fit-content;
+    margin: auto;
+  }
+  .img-width {
+    width: auto;
   }
 }
