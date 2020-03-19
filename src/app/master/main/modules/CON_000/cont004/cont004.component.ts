@@ -122,64 +122,98 @@ export class Cont004Component {
     });
   }
 
-  getCont004Moda(idCta: number) {
+  getCont004Moda(cont_004: Cont004, tipo: string) {
+    this.start.ConMo = false;
     let peticion: Observable<any>;
+    const idCta: number = cont_004.id_cuenta_adicional;
     peticion = this.cont004S.geCont004Cta("10", idCta);
     this.sus = peticion.subscribe(resp => {
       if (resp["ok"]) {
         this.auxmaModal = resp.ctas[0].cuenta_adicional;
         this.resetDatos();
+        this.OpcionesTable(cont_004, tipo);
       } else {
         this.notyG.noty("error", resp["messagge"], 5000);
+        this.forma.reset();
       }
-      this.initG.select();
-      this.initG.labels();
-      this.initG.uniform();
+      this.start.ConMo = true;
     });
   }
 
   nuevoCont004() {
-    console.log("nuevo");
     this.initG.uniform();
     this.initG.labels();
     this.initG.select();
   }
 
   OpcionesTable(cont_004: Cont004, tipo: string) {
-    this.getCont004Moda(cont_004.id_cuenta_adicional);
-
-    this.initG.labels();
+    this.start.IdCod = cont_004.id_cuenta_adicional.toString();
+    switch (tipo) {
+      case "visualizar":
+        this.btnGrupo.BtnEdita = true;
+        this.btnGrupoSub.BtnEdita = true;
+        this.boolDisabled(true, true);
+        this.boolDisabled(true, false);
+        break;
+      case "editar":
+        if (this.cuentas_adicionales.length > 0) {
+          this.btnGrupoSub.BtnEdita = true;
+        } else {
+          this.btnGrupoSub.BtnNuevo = true;
+        }
+        this.boolDisabled(true, true);
+        this.boolDisabled(false, false);
+        break;
+      case "eliminar":
+        return;
+      default:
+        this.notyG.noty("error", "Operacion incorrecta", 5000);
+        break;
+    }
+    this.start.CtrAc = tipo;
   }
 
   OpcionesModal(tipo: string) {
-    console.log(tipo);
     switch (tipo) {
       case "salir":
-        this.resetDatos();
+        this.forma.reset();
+        const leng = this.cuentas_adicionales.length;
+        for (let index = 0; index < leng; index++) {
+          this.delSubforma(index);
+        }
         break;
     }
+    this.boolBtnGrupo(false, false, true);
+    this.boolBtnGrupo(false, false, false);
   }
 
   boolDisabled(bool: boolean, tipoPadreHijo: boolean) {
     if (bool) {
       if (tipoPadreHijo) {
-        this.forma.get("codigo").disable();
-        this.forma.get("descripcion").disable();
-        this.forma.get("sigla").disable();
-        this.forma.get("estado").disable();
+        this.forma.disable();
       } else {
+        const leng = this.cuentas_adicionales.length;
+        for (let index = 0; index < leng; index++) {
+          this.cuentas_adicionales.controls[index].disable();
+        }
       }
     } else {
       if (tipoPadreHijo) {
-      } else {
-        this.forma.get("codigo").enable();
+        this.forma.get("id_cuenta").disable();
         this.forma.get("descripcion").enable();
         this.forma.get("sigla").enable();
         this.forma.get("estado").enable();
+      } else {
+        const leng = this.cuentas_adicionales.length;
+        for (let index = 0; index < leng; index++) {
+          this.cuentas_adicionales.controls[index].get("id_cuenta").disable();
+          this.cuentas_adicionales.controls[index].get("descripcion").enable();
+          this.cuentas_adicionales.controls[index].get("sigla").enable();
+          this.cuentas_adicionales.controls[index].get("estado").enable();
+        }
       }
     }
     this.initG.labels();
-    this.initG.select();
   }
 
   boolBtnGrupo(
@@ -249,7 +283,7 @@ export class Cont004Component {
     }
     this.sus = peticion.subscribe(resp => {
       if (resp["ok"]) {
-        this.auxma = resp.usr[0].unidades_division;
+        this.auxma = resp.data[0].cuentas_adicionales;
         this.pagi = resp["cant"];
       } else {
         this.notyG.noty("error", resp["mensaje"], 5000);
@@ -258,18 +292,25 @@ export class Cont004Component {
   }
 
   resetDatos() {
-    const lengData: number = this.auxmaModal[0].cuentas_adicionales.length;
-    const lengForm: number = this.cuentas_adicionales.length;
-    console.log(lengData, lengForm);
-    if (lengData > lengForm) {
-      for (let index = 0; index < lengData - 1; index++) {
-        this.addSubforma();
+    if (this.auxmaModal[0].cuentas_adicionales === null) {
+      const leng = this.cuentas_adicionales.length;
+      for (let index = 0; index < leng; index++) {
+        this.delSubforma(index);
       }
-    } else if (lengForm > lengData) {
-      console.log("eliminar");
+    } else {
+      const lengData: number = this.auxmaModal[0].cuentas_adicionales.length;
+      const lengForm: number = this.cuentas_adicionales.length;
+      if (lengData > lengForm) {
+        for (let index = 0; index < lengData - 1; index++) {
+          this.addSubforma();
+        }
+      } else if (lengForm > lengData) {
+        for (let index = lengForm; index > lengData; index--) {
+          this.delSubforma(index - 1);
+        }
+      }
     }
     this.forma.reset(this.auxmaModal[0]);
     this.initG.labels();
-    this.initG.select();
   }
 }

@@ -4,6 +4,7 @@ const glb002 = {
   Loadi: true,
   Table: false,
   Conte: false,
+  ConMo: false,
   NumPa: 1,
   CtrAc: "",
   IdCod: ""
