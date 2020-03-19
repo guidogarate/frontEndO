@@ -70,7 +70,7 @@ const adm000_Routes: Routes = [
   },
   {
     path: "",
-    redirectTo: "/md/adm_000/adm_003",
+    redirectTo: "/bienvenido",
     pathMatch: "full"
   }
 ];

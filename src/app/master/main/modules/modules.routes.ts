@@ -76,6 +76,11 @@ const componente = [
     component: ModulesComponent,
     loadChildren: () =>
       import("./ACF_000/acf_000.module").then(mod => mod.ACF00Module)
+  },
+  {
+    path: "",
+    redirectTo: "/bienvenido",
+    pathMatch: "full"
   }
 ];
 
