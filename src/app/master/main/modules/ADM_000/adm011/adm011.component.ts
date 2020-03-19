@@ -32,7 +32,7 @@ export class Adm011Component {
   numeroPag = 1;
   auxma: Adm011[];
   auxmaModal: Adm011;
-  // nuevoAuxmaModal: Adm011;
+  selecDivModal: Adm011Select[];
   pagi: Paginacion[];
   loading = true;
   btnGrupo = glb001;
@@ -52,9 +52,9 @@ export class Adm011Component {
   // dependenciaAdm011: any[] = [];
   // TODO: new variables
   id_cod = "";
-  idModulo = 10;
+  idModulo = 0;
   ListDocumentos: any = [];
-  ListModulos: any = [];
+  // ListModulos: any = [];
 
   // new variables
   forma: FormGroup;
@@ -85,10 +85,6 @@ export class Adm011Component {
         }
       });
   }
-  /* Demo*/
-  test(cantData: string) {
-    console.log("test Select: ", 1, this.idModulo, this.start.Texto);
-  }
 
   getAdm011(texto: string, numePag = "1") {
     console.log("auxma init: ", this.auxma);
@@ -117,35 +113,24 @@ export class Adm011Component {
         this.start.Conte = true;
       }
       this.start.NumPa = Number(numePag);
-      if (resp.data[0].clase_documentos === null) {
-        console.log("datos vacios en documentos");
-      } else {
-        console.log("hay data");
-      }
-      // this.auxma = resp.data[0].clase_documentos[0];
-      // console.log("auxma data object: ", this.auxma);
       if (resp["ok"]) {
         this.auxma = resp.data[0].clase_documentos;
-        console.log("auxma data array: ", this.auxma);
-        // this.nuevoAuxmaModal = this.auxma = resp.data[0].clase_documentos[0];
-        this.ListModulos = resp.data[0].modulos;
-        console.log(this.ListModulos);
+        this.selecDivModal = resp.data[0].modulos;
         this.initG.labels();
         this.initG.select();
         this.pagi = resp["cant"];
         this.table = false;
       } else {
         if (resp["messagge"] === "No se encontraron registros") {
-          this.ListModulos = resp.data[0].modulos;
+          this.selecDivModal = resp.data[0].modulos;
           this.auxma = [];
-          console.log(this.ListModulos);
           this.initG.labels();
           this.initG.select();
           this.pagi = resp["cant"];
           this.table = false;
         } else {
           this.notyG.noty("error", resp["messagge"], 5000);
-          this.ListModulos = [];
+          this.selecDivModal = [];
           this.auxma = [];
           this.pagi = [];
           this.table = true;
@@ -162,7 +147,7 @@ export class Adm011Component {
 
   crearFormulario() {
     this.forma = this.fb.group({
-      idModulo: ["", [Validators.required]],
+      id_modulo: ["10", [Validators.required]],
       nombre_modulo: [""],
       sigla: ["", [Validators.required]],
       checkauto: [""],
@@ -171,17 +156,8 @@ export class Adm011Component {
       componente: ["", [Validators.required]],
       estado: ["", [Validators.required]]
     });
+    console.log("creando formulario: ", this.forma);
   }
-
-  // nuevoAdm011() {
-  //   this.boolBtnGrupo(false, true);
-  //   this.btnGrupo.BtnCance = false;
-  //   this.boolDisabled(false);
-  //   this.auxmaModal = [this.nuevoAuxmaModal];
-  //   this.contorlAccion = "nuevo";
-  //   this.initG.labels();
-  //   this.initG.select();
-  // }
 
   // añadir metodos
 
@@ -248,9 +224,10 @@ export class Adm011Component {
     this.boolBtnGrupo(false, true);
     this.btnGrupo.BtnCance = false;
     this.boolDisabled(false);
-    // this.dependenciaAdm011 = [];
     this.forma.reset({
-      idModulo: this.idModulo,
+      id_modulo: this.idModulo,
+      nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
+      id_documento: "auto",
       estado: false,
       checkauto: true
     });
@@ -263,11 +240,19 @@ export class Adm011Component {
     this.initG.labels();
     this.initG.select();
   }
+  ObtenerNombreModulo(id: number) {
+    this.selecDivModal.forEach(element => {
+      if (element.id_modulo === id) {
+        return element.modulo;
+      }
+    });
+  }
 
   OpcionesTable(adm_011: Adm011, tipo: string) {
     console.log("opciones table; ", adm_011);
     this.auxmaModal = adm_011;
     this.forma.reset(this.auxmaModal);
+    console.log("auxma en opciones table: ", this.auxmaModal);
     // this.cargarDependencia(adm_011.idunidaddivision);
     this.start.IdCod = adm_011.id_documento;
     switch (tipo) {
@@ -310,7 +295,8 @@ export class Adm011Component {
         this.btnGrupo.BtnCance = true;
         // this.dependenciaAdm011 = [];
         this.forma.reset({
-          idModulo: this.idModulo,
+          id_modulo: this.idModulo,
+          nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
           estado: false,
           checkauto: true
         }); // resetea todo a null y estado a false
@@ -354,7 +340,7 @@ export class Adm011Component {
       case "guardar":
         if (this.forma.invalid) {
           this.mostrarCheck = true;
-          console.log("invalid Formulario", this.forma);
+          console.log("Formulario Invalido?", this.forma);
           return;
         }
         this.btnGrupo.BtnLoadi = true;
@@ -407,18 +393,20 @@ export class Adm011Component {
       this.forma.get("id_documento").enable();
       this.forma.get("id_documento").setValue("");
       this.placeholdeAuto = "introducir codigo";
+      // console.log("id_documento value: ", this.forma.get("id_documento"));
     } else {
       this.forma.get("id_documento").setValue("auto");
       this.forma.get("id_documento").disable();
       this.placeholdeAuto = "auto";
+      // console.log("id_documento auto: ", this.forma.get("id_documento"));
     }
     this.initG.labels();
   }
 
-  // Adm011Selectgest(gestion: string) {
-  //   this.gestion = gestion;
-  //   this.getAdm011("all_data", "1", gestion);
-  // }
+  adm011Selectgest(gestion: string) {
+    this.idModulo = +gestion;
+    this.getAdm011("all_data", "1");
+  }
 
   guardarDatos(adm_011: Adm011, contorlAccion: string) {
     console.log("guardando datos-Accion: ", adm_011, contorlAccion);
@@ -458,7 +446,7 @@ export class Adm011Component {
 
   eliminarCont003(adm011: Adm011) {
     let peticion: Observable<any>;
-    peticion = this.adm011S.delAdm011(adm011.id_Modulo, adm011.id_documento);
+    peticion = this.adm011S.delAdm011(adm011.id_modulo, adm011.id_documento);
     let numPag = this.start.NumPa;
     this.sus = peticion.subscribe(resp => {
       if (resp["ok"]) {

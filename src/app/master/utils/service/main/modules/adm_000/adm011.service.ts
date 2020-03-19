@@ -68,7 +68,7 @@ export class Adm011Service {
   inAdm011(adm_011: Adm011) {
     const url1 = `${url.prod}${adm011.inAdm011}`;
     const json = JSON.stringify({
-      id_modulo: adm_011.id_Modulo,
+      id_modulo: adm_011.id_modulo,
       id_documento: adm_011.id_documento,
       descripcion: adm_011.descripcion,
       sigla: adm_011.sigla,

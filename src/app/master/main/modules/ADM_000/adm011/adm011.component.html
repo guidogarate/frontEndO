@@ -17,11 +17,10 @@
               >
               <select
                 class="form-control selectCenter"
-                [(ngModel)]="idModulo"
-                (change)="getAdm011('all_data')"
+                (change)="adm011Selectgest($event.target.value)"
               >
                 <option
-                  *ngFor="let item of ListModulos; let i = index"
+                  *ngFor="let item of selecDivModal; let i = index"
                   [value]="item.id_modulo"
                 >
                   {{ item.modulo }}
@@ -175,6 +174,7 @@
         </div>
         <div class="col-md-1"></div>
       </div>
+      <pre>idModulo {{ this.idModulo }}</pre>
       <div *ngIf="start.Loadi" class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
           <span class="sr-only">Loading...</span>
@@ -519,9 +519,9 @@
                 <div class="col-sm-6 col-8 pad-row-title" style="margin: auto;">
                   <input
                     style="width: inherit;
-                    border-radius: 1em;
-                    border-color: #03a9f4;
-                    background-color: white;"
+                          border-radius: 1em;
+                          border-color: #03a9f4;
+                          background-color: white;"
                     class="text-center"
                     disabled="true"
                     type="text"
@@ -688,8 +688,22 @@
         </div>
       </form>
       <hr />
-      <!-- <p>id_documento {{ forma.get("componente").status }}</p> -->
-      <!-- <pre>auxmaModal {{ auxmaModal | json }}</pre> -->
+      <pre>idModulo {{ idModulo }}</pre>
+      <pre *ngIf="this.forma.get('id_modulo') != null">
+            id_Modulo {{ this.forma.get("id_modulo").value }}</pre
+      >
+      <pre *ngIf="this.forma.get('nombre_modulo') != null">
+            nombre_modulo {{ this.forma.get("nombre_modulo").value }}</pre
+      >
+      <pre *ngIf="this.forma.get('sigla') != null">
+            sigla {{ this.forma.get("sigla").value }}</pre
+      >
+      <pre *ngIf="this.forma.get('id_documento') != null">
+            id_documento {{ this.forma.get("id_documento").value }}</pre
+      >
+      <!-- <pre>componente {{ this.forma.get("componente").value }}</pre>
+      <pre>estado {{ this.forma.get("estado").value }}</pre> -->
+      <pre>formControl  {{ this.forma }}</pre>
     </div>
   </div>
 </div>
