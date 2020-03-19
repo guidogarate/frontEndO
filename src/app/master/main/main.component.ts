@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-declare function init_plugins();
-declare function init_scroll();
+import { InitGlobal } from "src/app/master/utils/global/index.global";
+
 @Component({
   selector: "app-main",
   templateUrl: "./main.component.html",
@@ -10,13 +9,13 @@ declare function init_scroll();
 export class MainComponent implements OnInit {
   animacion = true;
 
-  constructor() {}
+  constructor(private initG: InitGlobal) {}
 
   ngOnInit() {
-    init_scroll();
+    this.initG.scroll();
     setTimeout(() => {
       this.animacion = false;
-      init_plugins();
+      this.initG.app();
     }, 3000);
   }
 }

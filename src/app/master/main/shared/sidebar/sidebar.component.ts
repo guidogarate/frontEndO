@@ -2,12 +2,13 @@ import { Component, OnInit } from "@angular/core";
 
 import { SidebarService } from "src/app/master/utils/service/main/shared/index.shared.service";
 
-import { NotyGlobal } from "src/app/master/utils/global/index.global";
+import {
+  NotyGlobal,
+  InitGlobal
+} from "src/app/master/utils/global/index.global";
 
 import { SocketService } from "src/app/master/utils/service/socket/socket.service";
 
-// declare function init_plugins();
-// declare function init_scroll();
 @Component({
   selector: "app-sidebar",
   templateUrl: "./sidebar.component.html",
@@ -26,7 +27,8 @@ export class SidebarComponent implements OnInit {
   constructor(
     private sidebarS: SidebarService,
     public wsService: SocketService,
-    private notyG: NotyGlobal
+    private notyG: NotyGlobal,
+    private initG: InitGlobal
   ) {
     if (this.datosUser === null) {
       return;
@@ -37,12 +39,7 @@ export class SidebarComponent implements OnInit {
     this.cargarMenuFavo();
   }
 
-  ngOnInit() {
-    // init_scroll();
-    // setTimeout(() => {
-    //   init_plugins();
-    // }, 3000);
-  }
+  ngOnInit() {}
 
   cargarMenuFavo() {
     const menu: string = sessionStorage.getItem("menu");

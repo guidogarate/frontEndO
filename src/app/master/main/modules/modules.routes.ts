@@ -10,7 +10,7 @@ const componente = [
       import("./ADM_000/adm_000.module").then(mod => mod.ADM00Module)
   },
   {
-    // path: "90",
+    // path: "12",
     path: "mod-cont",
     component: ModulesComponent,
     loadChildren: () =>
@@ -23,7 +23,7 @@ const componente = [
       import("./ABA_000/aba_000.module").then(mod => mod.ABA00Module)
   },
   {
-    path: "12",
+    path: "55",
     // path: "INVENTARIO",
     component: ModulesComponent,
     loadChildren: () =>
@@ -76,6 +76,11 @@ const componente = [
     component: ModulesComponent,
     loadChildren: () =>
       import("./ACF_000/acf_000.module").then(mod => mod.ACF00Module)
+  },
+  {
+    path: "",
+    redirectTo: "/bienvenido",
+    pathMatch: "full"
   }
 ];
 
@@ -88,6 +93,9 @@ const componente = [
 //     menuR.push(result);
 //   }
 // }
+// console.log(componente);
+// console.log(menuR);
+
 export const MODULES_ROUTES = RouterModule.forChild(componente);
 
 // export const MODULES_ROUTES = RouterModule.forChild(url.menu);

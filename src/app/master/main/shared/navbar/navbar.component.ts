@@ -18,7 +18,7 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  IrDashboard(){
+  IrDashboard() {
     window.location.href = url.principal;
   }
 }

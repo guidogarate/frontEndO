@@ -1,6 +1,6 @@
 // Setup module
 // ------------------------------
-function init_plugins() {
+function init_app() {
   var revertBottomMenus = function() {
     $(".sidebar-main")
       .find(".nav-sidebar")

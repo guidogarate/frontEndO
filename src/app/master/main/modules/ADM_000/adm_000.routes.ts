@@ -70,9 +70,11 @@ const adm000_Routes: Routes = [
   },
   {
     path: "",
-    redirectTo: "/md/adm_000/adm_003",
+    redirectTo: "/bienvenido",
     pathMatch: "full"
   }
 ];
+// const menu = JSON.parse(sessionStorage.getItem("menu"));
+// console.log(menu);
 
 export const ADM_000_MODULES_ROUTES = RouterModule.forChild(adm000_Routes);

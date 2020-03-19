@@ -3,7 +3,7 @@
   <ul class="navbar-nav">
     <li class="nav-item">
       <a
-        href="#"
+        href="javascript:void 0"
         class="navbar-nav-link sidebar-control sidebar-main-toggle d-none d-md-block"
       >
         <i class="icon-paragraph-justify3"></i>
@@ -11,15 +11,25 @@
     </li>
     <li class="nav-item">
       <a (click)="salir()" class="navbar-nav-link puntero">
-        <i class="icon-switch2 salir" data-toggle="tooltip" data-placement="top" title="Cerrar Sesión"></i>
+        <i
+          class="icon-switch2 salir"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Cerrar Sesión"
+        ></i>
         <span class="d-md-none ml-2">Logout</span>
       </a>
     </li>
     <li class="nav-item">
-        <a (click)= "IrDashboard()" class="navbar-nav-link puntero" >
-          <i class="icon-exit" data-toggle="tooltip" data-placement="top" title="Ir a la página Principal"></i>
-          <span class="d-md-none ml-2">Ir a la pagina Principal</span>
-        </a>
+      <a (click)="IrDashboard()" class="navbar-nav-link puntero">
+        <i
+          class="icon-exit"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Ir a la página Principal"
+        ></i>
+        <span class="d-md-none ml-2">Ir a la pagina Principal</span>
+      </a>
     </li>
   </ul>
 </div>

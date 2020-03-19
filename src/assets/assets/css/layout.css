@@ -1550,11 +1550,11 @@ body {
   border-left-width: 1px;
 }
 
-/* .sidebar-user-material .sidebar-user-material-body {
+.sidebar-user-material .sidebar-user-material-body {
   background: url(https://res.cloudinary.com/devdreams/image/upload/v1574643751/user_bg2_ku23le.jpg)
     center center no-repeat;
   background-size: cover;
-} */
+}
 
 .sidebar-dark .sidebar-user-material .collapse {
   background-color: transparent;

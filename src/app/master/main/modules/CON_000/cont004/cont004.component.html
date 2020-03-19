@@ -104,7 +104,7 @@
                     title="visualizar"
                     data-toggle="modal"
                     data-target="#modal_cont_004"
-                    (click)="OpcionesTable(cont004, 'visualizar')"
+                    (click)="getCont004Moda(cont004, 'visualizar')"
                     class="icon-file-eye text-primary-600 puntero"
                   ></i>
                   <i
@@ -112,7 +112,7 @@
                     title="editar"
                     data-toggle="modal"
                     data-target="#modal_cont_004"
-                    (click)="OpcionesTable(cont004, 'editar')"
+                    (click)="getCont004Moda(cont004, 'editar')"
                     class="icon-pencil7 text-teal-600 puntero"
                   ></i>
                   <i
@@ -161,7 +161,7 @@
 </div>
 
 <div id="modal_cont_004" class="modal" tabindex="-1">
-  <div class="modal-dialog ">
+  <div class="modal-dialog">
     <div class="modal-content animacionmodal haciadentro">
       <form
         [formGroup]="forma"
@@ -171,7 +171,7 @@
         class="form"
       >
         <div class="modal-header bg-blue">
-          <h6 class="modal-title">GRUPO</h6>
+          <h6 class="modal-title">Tipo Cuenta adicional</h6>
           <div class="list-icons float-right">
             <a class="puntero" *ngIf="btnGrupo.BtnCance"
               ><i
@@ -243,202 +243,211 @@
             ></a>
           </div>
         </div>
-        <div class="modal-body ">
-          <div class="row">
-            <div class="col-3 col-sm-2 col-md-2 col-lg-2">
-              <div class="form-group form-group-float">
-                <label class="form-group-float-label">Codigo</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Codigo"
-                  formControlName="codigo"
-                  required
-                />
+        <app-cargacontent *ngIf="!start.ConMo"></app-cargacontent>
+        <ng-container *ngIf="start.ConMo">
+          <div class="modal-body ">
+            <div class="row text-center">
+              <div class="col-3 col-sm-2 col-md-2 col-lg-2">
+                <div class="form-group form-group-float">
+                  <label class="form-group-float-label">Codigo</label>
+                  <input
+                    type="text"
+                    class="form-control text-center"
+                    placeholder="Codigo"
+                    formControlName="id_cuenta"
+                    required
+                  />
+                </div>
               </div>
-            </div>
-            <div class="col-9 col-sm-5 col-md-5 col-lg-5">
-              <div class="form-group form-group-float">
-                <label class="form-group-float-label">Descripcion</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Descripcion"
-                  formControlName="descripcion"
-                  required
-                />
+              <div class="col-9 col-sm-5 col-md-5 col-lg-5">
+                <div class="form-group form-group-float">
+                  <label class="form-group-float-label">Descripcion</label>
+                  <input
+                    type="text"
+                    class="form-control text-center"
+                    placeholder="Descripcion"
+                    formControlName="descripcion"
+                    required
+                  />
+                </div>
               </div>
-            </div>
-            <div class="col-6 col-sm-3 col-md-3 col-lg-3">
-              <div class="form-group form-group-float">
-                <label class="form-group-float-label">Sigla</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Sigla"
-                  formControlName="sigla"
-                  required
-                />
+              <div class="col-6 col-sm-3 col-md-3 col-lg-3">
+                <div class="form-group form-group-float">
+                  <label class="form-group-float-label">Sigla</label>
+                  <input
+                    type="text"
+                    class="form-control text-center"
+                    placeholder="Sigla"
+                    formControlName="sigla"
+                    required
+                  />
+                </div>
               </div>
-            </div>
-            <div class="col-6 col-sm-2 col-md-2 col-lg-2">
-              <div class="custom-control custom-switch">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  value="true"
-                  formControlName="estado"
-                />
-                <label class="custom-control-label">Estado</label>
+              <div class="col-6 col-sm-2 col-md-2 col-lg-2">
+                <div class="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    required="false"
+                    class="custom-control-input"
+                    value="true"
+                    formControlName="estado"
+                    id="estadoCta"
+                  />
+                  <label class="custom-control-label" for="estadoCta"
+                    >Estado</label
+                  >
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="modal-content animacionmodal haciadentro">
-          <div class="modal-header bg-blue">
-            <h6 class="modal-title">SUB-GRUPO</h6>
-            <div class="list-icons float-right">
-              <a class="puntero" *ngIf="btnGrupo.BtnCance"
-                ><i
-                  class="icon-cancel-circle2 xxl"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  (click)="OpcionesModal('cancelar')"
-                  title="Cancelar"
-                >
-                </i
-              ></a>
-              <!-- (click)="OpcionesModal('nuevo')" -->
-              <!-- <a class="puntero" *ngIf="btnGrupo.BtnNuevo"> -->
-              <a class="puntero" *ngIf="true">
-                <i
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  class="icon-diff-added xxl"
-                  (click)="addSubforma()"
-                  title="nuevo"
-                ></i>
-              </a>
-              <button
-                *ngIf="btnGrupo.BtnGuard"
-                style="padding: 1px;color: white;"
-                type="submit"
-                class="btn text-warning-600 btn-flat btn-icon btn-rounded"
-              >
-                <i
-                  *ngIf="!btnGrupo.BtnLoadi"
-                  class="icon-floppy-disk xxl"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                ></i>
-              </button>
-              <i
-                *ngIf="btnGrupo.BtnLoadi"
-                class="icon-spinner spinner position-left"
-                title="Guardando..."
-              >
-              </i>
-              <a *ngIf="btnGrupo.BtnEdita" class="puntero">
-                <i
-                  class="icon-pencil7 xxl"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  (click)="OpcionesModal('editar')"
-                  title="editar"
-                >
-                </i
-              ></a>
-              <a class="puntero" *ngIf="btnGrupo.BtnElimi"
-                ><i
-                  class="icon-trash xxl"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Eliminar"
-                >
-                </i
-              ></a>
-              <a class="puntero">
-                <i
-                  class="icon-exit xxl"
-                  (click)="OpcionesModal('salir')"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  data-dismiss="modal"
-                  title="Salir"
-                >
-                </i
-              ></a>
-            </div>
-          </div>
-          <div class="modal-body" formArrayName="subforma">
-            <ng-container
-              *ngFor="let control of subforma.controls; let i = index"
-            >
-              <div class="row" [formGroupName]="i">
-                <div *ngIf="true" class="col-1 col-sm-1 col-md-1 col-lg-1">
+          <div class="modal-content animacionmodal haciadentro">
+            <div class="modal-header bg-blue">
+              <h6 class="modal-title">Cuenta Adicionales</h6>
+              <div class="list-icons float-right">
+                <a class="puntero" *ngIf="btnGrupoSub.BtnCance"
+                  ><i
+                    class="icon-cancel-circle2 xxl"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    (click)="OpcionesModal('cancelar')"
+                    title="Cancelar"
+                  >
+                  </i
+                ></a>
+                <!-- (click)="OpcionesModal('nuevo')" -->
+                <!-- <a class="puntero" *ngIf="btnGrupoSub.BtnNuevo"> -->
+                <a class="puntero" *ngIf="true">
                   <i
-                    class="icon-trash puntero text-danger-600"
-                    (click)="delSubforma(i)"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    class="icon-diff-added xxl"
+                    (click)="addSubforma()"
+                    title="nuevo"
                   ></i>
-                </div>
-                <div class="col-3 col-sm-2 col-md-2 col-lg-2">
-                  <div class="form-group form-group-float">
-                    <label class="form-group-float-label">Codigo</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Codigo"
-                      formControlName="codigo"
-                      required
-                    />
+                </a>
+                <button
+                  *ngIf="btnGrupoSub.BtnGuard"
+                  style="padding: 1px;color: white;"
+                  type="submit"
+                  class="btn text-warning-600 btn-flat btn-icon btn-rounded"
+                >
+                  <i
+                    *ngIf="!btnGrupoSub.BtnLoadi"
+                    class="icon-floppy-disk xxl"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                  ></i>
+                </button>
+                <i
+                  *ngIf="btnGrupoSub.BtnLoadi"
+                  class="icon-spinner spinner position-left"
+                  title="Guardando..."
+                >
+                </i>
+                <a *ngIf="btnGrupoSub.BtnEdita" class="puntero">
+                  <i
+                    class="icon-pencil7 xxl"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    (click)="OpcionesModal('editar')"
+                    title="editar"
+                  >
+                  </i
+                ></a>
+                <a class="puntero" *ngIf="btnGrupoSub.BtnElimi"
+                  ><i
+                    class="icon-trash xxl"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Eliminar"
+                  >
+                  </i
+                ></a>
+                <a class="puntero">
+                  <i
+                    class="icon-exit xxl"
+                    (click)="OpcionesModal('salir')"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    data-dismiss="modal"
+                    title="Salir"
+                  >
+                  </i
+                ></a>
+              </div>
+            </div>
+            <div class="modal-body" formArrayName="cuentas_adicionales">
+              <ng-container
+                *ngFor="
+                  let control of cuentas_adicionales.controls;
+                  let i = index
+                "
+              >
+                <div class="row text-center" [formGroupName]="i">
+                  <div *ngIf="true" class="col-1 col-sm-1 col-md-1 col-lg-1">
+                    <i
+                      class="icon-trash puntero text-danger-600"
+                      (click)="delSubforma(i)"
+                    ></i>
                   </div>
-                </div>
-                <div class="col-8 col-sm-5 col-md-5 col-lg-5">
-                  <div class="form-group form-group-float">
-                    <label class="form-group-float-label">Descripcion</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Descripcion"
-                      formControlName="descripcion"
-                      required
-                    />
+                  <div class="col-3 col-sm-2 col-md-2 col-lg-2">
+                    <div class="form-group form-group-float">
+                      <label class="form-group-float-label">Codigo</label>
+                      <input
+                        type="text"
+                        class="form-control text-center"
+                        placeholder="Codigo"
+                        formControlName="id_cuenta"
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
-                <div class="col-6 col-sm-2 col-md-2 col-lg-2">
-                  <div class="form-group form-group-float">
-                    <label class="form-group-float-label">Sigla</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Sigla"
-                      formControlName="sigla"
-                      required
-                    />
+                  <div class="col-8 col-sm-5 col-md-5 col-lg-5">
+                    <div class="form-group form-group-float">
+                      <label class="form-group-float-label">Descripcion</label>
+                      <input
+                        type="text"
+                        class="form-control text-center"
+                        placeholder="Descripcion"
+                        formControlName="descripcion"
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
-                <div class="col-6 col-sm-2 col-md-2 col-lg-2">
-                  <div class="custom-control custom-switch">
-                    <input
-                      type="checkbox"
-                      class="custom-control-input"
-                      value="true"
-                      id="subforma{{ i }}"
-                      formControlName="estado"
-                    />
-                    <label class="custom-control-label" for="subforma{{ i }}"
-                      >Estado</label
-                    >
+                  <div class="col-6 col-sm-2 col-md-2 col-lg-2">
+                    <div class="form-group form-group-float">
+                      <label class="form-group-float-label">Sigla</label>
+                      <input
+                        type="text"
+                        class="form-control text-center text-center"
+                        placeholder="Sigla"
+                        formControlName="sigla"
+                        required
+                      />
+                    </div>
                   </div>
+                  <div class="col-6 col-sm-2 col-md-2 col-lg-2">
+                    <div class="custom-control custom-switch">
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        value="true"
+                        id="subforma{{ i }}"
+                        formControlName="estado"
+                      />
+                      <label class="custom-control-label" for="subforma{{ i }}"
+                        >Estado</label
+                      >
+                    </div>
+                  </div>
+                  <div class="separadorh"></div>
                 </div>
                 <div class="separadorh"></div>
-              </div>
-              <div class="separadorh"></div>
-            </ng-container>
+              </ng-container>
+            </div>
           </div>
-        </div>
+        </ng-container>
       </form>
-      <hr />
       <!-- <p>
         {{ this.forma.get("codigo").status }}
       </p> -->

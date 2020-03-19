@@ -1,4 +1,4 @@
-function init_scroll() {
+function init_perfect_scrollbar() {
   if (typeof PerfectScrollbar == "undefined") {
     console.warn("Warning - perfect_scrollbar.min.js is not loaded.");
     return;
@@ -7,6 +7,6 @@ function init_scroll() {
   // Initialize
   var ps = new PerfectScrollbar(".sidebar-fixed .sidebar-content", {
     wheelSpeed: 2,
-    wheelPropagation: false
+    wheelPropagation: true
   });
 }

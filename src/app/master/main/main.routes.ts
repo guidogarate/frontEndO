@@ -4,21 +4,21 @@ import { ModulesGuard } from "../utils/guard/modules.guard";
 
 const mainRoutes: Routes = [
   {
-    path: "md",
-    component: MainComponent,
-    canActivate: [ModulesGuard],
-    loadChildren: "./modules/modules.module#ModulesModule"
-  },
-  {
-    path: "bienvenido",
-    component: MainComponent,
-    canActivate: [ModulesGuard],
-    loadChildren: "./bienvenido/bienvenido.module#BienvenidoModule"
-  },
-  {
     path: "",
-    redirectTo: "/bienvenido",
-    pathMatch: "full"
+    component: MainComponent,
+    canActivate: [ModulesGuard],
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("./modules/modules.module").then(m => m.ModulesModule)
+      },
+      {
+        path: "bienvenido",
+        loadChildren: () =>
+          import("./bienvenido/bienvenido.module").then(m => m.BienvenidoModule)
+      }
+    ]
   }
 ];
 
