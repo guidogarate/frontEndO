@@ -93,12 +93,12 @@
                 <ng-container *ngFor="let component of submenu.componentes">
                   <li class="nav-item">
                     <!-- (click)="menuComponent(menu.titulo)" -->
-                    <!-- routerLink="/md/Mod-Administracion/adm_003" -->
-                    <!-- routerLink="/md/{{ menu.ruta }}/adm_003" -->
+                    <!-- routerLink="/Mod-Administracion/adm_003" -->
+                    <!-- routerLink="/{{ menu.ruta }}/adm_003" -->
                     <!-- (click)="menuComponent(component)" -->
-                    <!-- routerLink="/md/{{menu.titulo}}""/Mod-Administracion/adm_003" -->
+                    <!-- routerLink="/{{menu.titulo}}""/Mod-Administracion/adm_003" -->
                     <a
-                      routerLink="/md/{{ menu.ruta }}/{{ component.ruta }}"
+                      routerLink="/{{ menu.ruta }}/{{ component.ruta }}"
                       class="nav-link puntero"
                       >{{ component.titulo }}
                       <span

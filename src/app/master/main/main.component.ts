@@ -13,9 +13,9 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.initG.scroll();
-    this.initG.app();
     setTimeout(() => {
       this.animacion = false;
+      this.initG.app();
     }, 3000);
   }
 }

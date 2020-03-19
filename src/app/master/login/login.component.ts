@@ -90,6 +90,7 @@ export class LoginComponent implements OnInit {
             form.reset();
           }, 1000);
           window.location.href = url.principal;
+          // window.open(url.bienvenido, "_self");
         }
       } else {
         this.notyG.noty("info", resp["messagge"], 5000);

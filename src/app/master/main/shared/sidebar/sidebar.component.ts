@@ -54,8 +54,6 @@ export class SidebarComponent implements OnInit {
           this.datos = resp["menu"];
           this.favoritos = resp["favoritos"];
           this.cargandoMenu = false;
-          this.initG.scroll();
-          this.initG.app();
         } else {
           console.log("NO SE CARGARON LOS DATOS MENU FAVORITOS");
         }
