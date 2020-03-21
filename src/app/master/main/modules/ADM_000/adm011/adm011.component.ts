@@ -52,7 +52,7 @@ export class Adm011Component {
   // dependenciaAdm011: any[] = [];
   // TODO: new variables
   id_cod = "";
-  idModulo = 0;
+  idModulo = 10;
   ListDocumentos: any = [];
   // ListModulos: any = [];
 
@@ -156,7 +156,8 @@ export class Adm011Component {
       componente: ["", [Validators.required]],
       estado: ["", [Validators.required]]
     });
-    console.log("creando formulario: ", this.forma);
+    console.log("creando formulario: ", this.forma.value);
+    // console.log("creando formulario: ", this.forma.value);
   }
 
   // añadir metodos
@@ -231,6 +232,7 @@ export class Adm011Component {
       estado: false,
       checkauto: true
     });
+    console.log('agregando nuevo: ', this.forma.value);
     this.start.CtrAc = "nuevo";
     this.ocultarSelect = false;
     this.mostrarCheck = true;
@@ -241,11 +243,15 @@ export class Adm011Component {
     this.initG.select();
   }
   ObtenerNombreModulo(id: number) {
+    let name : string = '';
     this.selecDivModal.forEach(element => {
-      if (element.id_modulo === id) {
-        return element.modulo;
-      }
+      if (element.id_modulo == id) {
+      console.log('Elemento encontrado: ', element.modulo);
+      name = element.modulo;
+    }
+    console.log('Elemento No encontrado: ', element.modulo);
     });
+    return name;
   }
 
   OpcionesTable(adm_011: Adm011, tipo: string) {
@@ -300,6 +306,7 @@ export class Adm011Component {
           estado: false,
           checkauto: true
         }); // resetea todo a null y estado a false
+        console.log('reseteando form opciones Modal: ', this.forma.value);
         this.boolDisabled(false);
         // this.cargarDependencia2("1");
         this.mostrarCheck = true;
@@ -338,9 +345,9 @@ export class Adm011Component {
         this.boolBtnGrupo(true, false);
         return;
       case "guardar":
+        console.log("Formulario Invalido?", this.forma.value);
         if (this.forma.invalid) {
           this.mostrarCheck = true;
-          console.log("Formulario Invalido?", this.forma);
           return;
         }
         this.btnGrupo.BtnLoadi = true;
@@ -404,6 +411,7 @@ export class Adm011Component {
   }
 
   adm011Selectgest(gestion: string) {
+    console.log('gestion change: ', gestion);
     this.idModulo = +gestion;
     this.getAdm011("all_data", "1");
   }
@@ -412,7 +420,7 @@ export class Adm011Component {
     console.log("guardando datos-Accion: ", adm_011, contorlAccion);
     let peticion: Observable<any>;
     if (contorlAccion === "nuevo") {
-      console.log("llego Nuevo");
+      console.log("Nuevo para guardar: ", adm_011, contorlAccion);
       peticion = this.adm011S.inAdm011(adm_011);
     } else if (contorlAccion === "editar") {
       peticion = this.adm011S.upAdm011(
