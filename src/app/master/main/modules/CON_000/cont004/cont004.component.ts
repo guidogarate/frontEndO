@@ -9,6 +9,7 @@ import {
 import { Cont004Service } from "src/app/master/utils/service/main/modules/cont_000/index.shared.service";
 import glb001 from "src/app/master/config/glb000/glb001_btn";
 import glb002 from "src/app/master/config/glb000/glb002_start";
+import glb003 from "src/app/master/config/glb000/glb003_btn";
 import * as glb from "src/app/master/utils/global/index.global";
 import { Paginacion } from "src/app/master/utils/models/main/global/index.models";
 import { Cont004 } from "src/app/master/utils/models/main/cont_000/index.models";
@@ -22,7 +23,7 @@ import { debounceTime } from "rxjs/operators";
 })
 export class Cont004Component {
   btnGrupo = glb001;
-  btnGrupoSub = glb001;
+  btnGrupoSub = glb003;
   start = glb002;
   pagi: Paginacion[];
   sus: Subscription;
@@ -31,6 +32,9 @@ export class Cont004Component {
   textBuscarCont004 = new FormControl("", []);
   table = false;
   forma: FormGroup;
+  eliminarSub = false;
+  oculto: string = "";
+  cantCtasAdic = 0;
 
   constructor(
     private cont004S: Cont004Service,
@@ -40,6 +44,7 @@ export class Cont004Component {
   ) {
     this.getCont004(this.start.Texto);
     this.crearFormulario();
+    this.delSubforma(0);
     this.textBuscarCont004.valueChanges
       .pipe(debounceTime(500))
       .subscribe(value => {
@@ -123,6 +128,7 @@ export class Cont004Component {
   }
 
   getCont004Moda(cont_004: Cont004, tipo: string) {
+    this.oculto = "";
     this.start.ConMo = false;
     let peticion: Observable<any>;
     const idCta: number = cont_004.id_cuenta_adicional;
@@ -148,16 +154,18 @@ export class Cont004Component {
 
   OpcionesTable(cont_004: Cont004, tipo: string) {
     this.start.IdCod = cont_004.id_cuenta_adicional.toString();
+    this.cantCtasAdic = this.cuentas_adicionales.length;
     switch (tipo) {
       case "visualizar":
-        this.btnGrupo.BtnEdita = true;
-        this.btnGrupoSub.BtnEdita = true;
+        this.eliminarSub = false;
+        this.btnSinCtaAdic();
         this.boolDisabled(true, true);
         this.boolDisabled(true, false);
         break;
       case "editar":
+        this.eliminarSub = false;
         if (this.cuentas_adicionales.length > 0) {
-          this.btnGrupoSub.BtnEdita = true;
+          this.boolBtnGrupo(false, true, false);
         } else {
           this.btnGrupoSub.BtnNuevo = true;
         }
@@ -165,23 +173,109 @@ export class Cont004Component {
         this.boolDisabled(false, false);
         break;
       case "eliminar":
+        if (this.cuentas_adicionales.length > 0) {
+          this.eliminarSub = true;
+          this.boolBtnGrupo(false, true, false);
+        } else {
+          this.eliminarSub = false;
+          this.btnGrupo.BtnElimi = true;
+          this.btnGrupo.BtnCance = true;
+        }
+        this.boolDisabled(true, true);
+        this.boolDisabled(true, false);
         return;
       default:
+        this.oculto = "modal";
         this.notyG.noty("error", "Operacion incorrecta", 5000);
         break;
     }
     this.start.CtrAc = tipo;
   }
 
-  OpcionesModal(tipo: string) {
+  OpcionesModal(tipo: string, tipoPadreHijo = true) {
     switch (tipo) {
-      case "salir":
-        this.forma.reset();
-        const leng = this.cuentas_adicionales.length;
-        for (let index = 0; index < leng; index++) {
-          this.delSubforma(index);
+      case "nuevo":
+        console.log("nuevo");
+        return;
+      case "editar":
+        this.eliminarSub = false;
+        this.start.CtrAc = tipo;
+        if (tipoPadreHijo) {
+          this.boolDisabled(false, true);
+          this.boolBtnGrupo(false, true, true);
+          this.boolBtnGrupo(false, false, false);
+        } else {
+          this.boolDisabled(false, false);
+          this.boolBtnGrupo(false, false, true);
+          this.boolBtnGrupo(false, true, false);
         }
+        return;
+      case "salir":
+        const salirS = this.cuentas_adicionales.length;
+        if (this.forma.dirty || salirS !== this.cantCtasAdic) {
+          const resp = confirm("Desea Descartar Cambios");
+          if (!resp) {
+            this.oculto = "";
+            return;
+          }
+        }
+        this.oculto = "modal";
+        this.eliminarSub = false;
+        this.forma.reset();
         break;
+      case "cancelar":
+        this.eliminarSub = false;
+        this.resetDatos();
+        if (tipoPadreHijo) {
+          this.boolDisabled(true, true);
+        } else {
+          this.boolDisabled(true, false);
+        }
+        this.btnSinCtaAdic();
+        return;
+      case "eliminar":
+        if (tipoPadreHijo) {
+          if (this.cuentas_adicionales.length > 0) {
+            this.notyG.noty(
+              "error",
+              "Primero Elimina Todas las Cuentas Adicionales",
+              3000
+            );
+          } else {
+            this.boolBtnGrupo(false, true, true);
+            this.boolBtnGrupo(false, false, false);
+          }
+        } else {
+          this.eliminarSub = true;
+          this.boolBtnGrupo(false, false, true);
+          this.boolBtnGrupo(false, true, false);
+        }
+        this.boolDisabled(true, true);
+        this.boolDisabled(true, false);
+        return;
+      case "guardar":
+        const salirG = this.cuentas_adicionales.length;
+        if (this.forma.dirty || salirG !== this.cantCtasAdic) {
+          if (tipoPadreHijo) {
+            if (this.forma.invalid) {
+              return;
+            }
+            this.boolDisabled(true, true);
+            this.btnGrupo.BtnLoadi = true;
+            this.btnGrupo.BtnCance = false;
+          } else {
+            if (this.cuentas_adicionales.invalid) {
+              return;
+            }
+            this.boolDisabled(true, false);
+            this.btnGrupoSub.BtnLoadi = true;
+            this.btnGrupoSub.BtnCance = false;
+          }
+          this.guardarDatos(this.forma.value, this.start.CtrAc);
+        } else {
+          this.notyG.noty("info", "Datos no han sido modificados", 2000);
+        }
+        return;
     }
     this.boolBtnGrupo(false, false, true);
     this.boolBtnGrupo(false, false, false);
@@ -217,22 +311,22 @@ export class Cont004Component {
   }
 
   boolBtnGrupo(
-    editNuevo: boolean,
+    upNewDel: boolean,
     cancelGuardar: boolean,
     tipoPadreHijo: boolean
   ) {
     if (tipoPadreHijo) {
       this.btnGrupo.BtnCance = cancelGuardar;
-      this.btnGrupo.BtnEdita = editNuevo;
-      this.btnGrupo.BtnElimi = false;
+      this.btnGrupo.BtnEdita = upNewDel;
+      this.btnGrupo.BtnElimi = upNewDel;
       this.btnGrupo.BtnGuard = cancelGuardar;
-      this.btnGrupo.BtnNuevo = editNuevo;
+      this.btnGrupo.BtnNuevo = upNewDel;
     } else {
       this.btnGrupoSub.BtnCance = cancelGuardar;
-      this.btnGrupoSub.BtnEdita = editNuevo;
-      this.btnGrupoSub.BtnElimi = false;
+      this.btnGrupoSub.BtnEdita = upNewDel;
+      this.btnGrupoSub.BtnElimi = upNewDel;
       this.btnGrupoSub.BtnGuard = cancelGuardar;
-      this.btnGrupoSub.BtnNuevo = editNuevo;
+      this.btnGrupoSub.BtnNuevo = upNewDel;
     }
   }
 
@@ -294,14 +388,15 @@ export class Cont004Component {
   resetDatos() {
     if (this.auxmaModal[0].cuentas_adicionales === null) {
       const leng = this.cuentas_adicionales.length;
-      for (let index = 0; index < leng; index++) {
-        this.delSubforma(index);
+      for (let index = leng; index > 0; index--) {
+        this.delSubforma(index - 1);
       }
     } else {
       const lengData: number = this.auxmaModal[0].cuentas_adicionales.length;
       const lengForm: number = this.cuentas_adicionales.length;
+      // console.log(lengData, ">", lengForm);
       if (lengData > lengForm) {
-        for (let index = 0; index < lengData - 1; index++) {
+        for (let index = lengForm; index < lengData; index++) {
           this.addSubforma();
         }
       } else if (lengForm > lengData) {
@@ -312,5 +407,51 @@ export class Cont004Component {
     }
     this.forma.reset(this.auxmaModal[0]);
     this.initG.labels();
+  }
+
+  btnSinCtaAdic() {
+    if (this.cuentas_adicionales.length > 0) {
+      this.boolBtnGrupo(true, false, true);
+      this.boolBtnGrupo(true, false, false);
+    } else {
+      this.boolBtnGrupo(true, false, true);
+      this.boolBtnGrupo(false, false, false);
+      this.btnGrupoSub.BtnNuevo = true;
+    }
+  }
+
+  guardarDatos(cont_004: Cont004, contorlAccion: string) {
+    console.log(cont_004);
+    console.log(contorlAccion);
+    console.log(this.start.IdCod);
+    this.btnGrupo.BtnLoadi = false;
+    this.btnGrupoSub.BtnLoadi = false;
+    return;
+    // let peticion: Observable<any>;
+    // if (contorlAccion === "nuevo") {
+    //   peticion = this.cont004S.inCont004(cont_004);
+    // } else if (contorlAccion === "editar") {
+    //   peticion = this.cont004S.upCont004(cont_004, this.start.IdCod);
+    // } else {
+    //   this.notyG.noty("error", "control Accion Invalido", 2000);
+    //   return;
+    // }
+    // this.sus = peticion.subscribe(resp => {
+    //   this.btnGrupo.BtnLoadi = false;
+    //   this.btnGrupoSub.BtnLoadi = false;
+    //   if (resp["ok"]) {
+    //     if (contorlAccion === "nuevo") {
+    //       console.log("guardado con exito y reset datos(nuevo)");
+    //     } else {
+    //       this.auxmaModal[0] = cont_004;
+    //     }
+    //     this.resetDatos();
+    //     this.btnSinCtaAdic();
+    //     this.getCont004(this.start.Texto, this.start.NumPa.toString());
+    //     this.notyG.noty("success", resp["mensaje"], 1000);
+    //   } else {
+    //     this.notyG.noty("error", resp["mensaje"], 3000);
+    //   }
+    // });
   }
 }

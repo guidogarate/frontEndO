@@ -6,12 +6,10 @@
  *
  * ---------------------------------------------------------------------------- */
 
-
 // Setup module
 // ------------------------------
 
 // var Modals = function () {
-
 
 //     //
 //     // Setup module components
@@ -104,16 +102,16 @@
 //                     }
 //                 },
 //                 callback: function (result) {
-//                     if (result === null) {                                             
+//                     if (result === null) {
 //                         bootbox.alert({
 //                             title: 'Prompt dismissed',
 //                             message: 'You have cancelled this damn thing'
-//                         });                              
+//                         });
 //                     } else {
 //                         bootbox.alert({
 //                             title: 'Hi <strong>' + result + '</strong>',
 //                             message: 'How are you doing today?'
-//                         });                              
+//                         });
 //                     }
 //                 }
 //             });
@@ -135,16 +133,16 @@
 //                     }
 //                 },
 //                 callback: function(result) {
-//                     if (result === null) {                                             
+//                     if (result === null) {
 //                         bootbox.alert({
 //                             title: 'Prompt dismissed',
 //                             message: 'You have cancelled this damn thing'
-//                         });                              
+//                         });
 //                     } else {
 //                         bootbox.alert({
 //                             title: 'Hi <strong>' + result + '</strong>',
 //                             message: 'How are you doing today?'
-//                         });                              
+//                         });
 //                     }
 //                 }
 //             });
@@ -256,7 +254,6 @@
 //         });
 //     };
 
-
 //     //
 //     // Return objects assigned to module
 //     //
@@ -270,7 +267,6 @@
 //     }
 // }();
 
-
 // // Initialize module
 // // ------------------------------
 
@@ -278,53 +274,51 @@
 //     Modals.initComponents();
 // });
 
-
 // Setup module
 // ------------------------------
 
-function initModal(){
-    
+function init_Modal() {
+  //
+  // Setup module components
+  //
 
+  // Load remote content
 
-        //
-        // Setup module components
-        //
-    
-        // Load remote content
-        
-            $('#modal_remote').on('show.bs.modal', function() {
-                $(this).find('.modal-body').load('../../../../global_assets/demo_data/wizard/education.html', function() {
-                    _componentSelect2();
-                });
-            });
-        
-    
-        // Modal callbacks
-        
-    
-            // onShow callback
-            $('#modal_onshow').on('show.bs.modal', function() {
-                alert('onShow callback fired.')
-            });
-    
-            // onShown callback
-            $('#modal_onshown').on('shown.bs.modal', function() {
-                alert('onShown callback fired.')
-            });
-    
-            // onHide callback
-            $('#modal_onhide').on('hide.bs.modal', function() {
-                alert('onHide callback fired.')
-            });
-    
-            // onHidden callback
-            $('#modal_onhidden').on('hidden.bs.modal', function() {
-                alert('onHidden callback fired.')
-            });
-        
-    
-        // Bootbox extension
-        /*
+  $("#modal_remote").on("show.bs.modal", function() {
+    $(this)
+      .find(".modal-body")
+      .load(
+        "../../../../global_assets/demo_data/wizard/education.html",
+        function() {
+          _componentSelect2();
+        }
+      );
+  });
+
+  // Modal callbacks
+
+  // onShow callback
+  $("#modal_onshow").on("show.bs.modal", function() {
+    alert("onShow callback fired.");
+  });
+
+  // onShown callback
+  $("#modal_onshown").on("shown.bs.modal", function() {
+    alert("onShown callback fired.");
+  });
+
+  // onHide callback
+  $("#modal_onhide").on("hide.bs.modal", function() {
+    alert("Descartar Cambios");
+  });
+
+  // onHidden callback
+  $("#modal_onhidden").on("hidden.bs.modal", function() {
+    alert("onHidden callback fired.");
+  });
+
+  // Bootbox extension
+  /*
         var _componentModalBootbox = function() {
             if (typeof bootbox == 'undefined') {
                 console.warn('Warning - bootbox.min.js is not loaded.');
@@ -517,29 +511,27 @@ function initModal(){
             });
         };
     */
-        // Select2
-        // var _componentSelect2 = function() {
-        //     if (!$().select2) {
-        //         console.warn('Warning - select2.min.js is not loaded.');
-        //         return;
-        //     }
-    
-        //     // Initialize
-        //     $('.form-control-select2').select2({
-        //         minimumResultsForSearch: Infinity
-        //     });
-        // };
-    
-    
-        //
-        // Return objects assigned to module
-        //
-    
-    // Initialize module
-    // ------------------------------
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        Modals.initComponents();
-    });
-    
+  // Select2
+  // var _componentSelect2 = function() {
+  //     if (!$().select2) {
+  //         console.warn('Warning - select2.min.js is not loaded.');
+  //         return;
+  //     }
+
+  //     // Initialize
+  //     $('.form-control-select2').select2({
+  //         minimumResultsForSearch: Infinity
+  //     });
+  // };
+
+  //
+  // Return objects assigned to module
+  //
+
+  // Initialize module
+  // ------------------------------
+
+  document.addEventListener("DOMContentLoaded", function() {
+    Modals.initComponents();
+  });
 }

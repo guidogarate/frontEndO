@@ -79,6 +79,9 @@ body {
 }
 
 /**-----------global en todos los componentes(cont003,cont004)-----------*/
+.labelOpaco {
+  color: #808080;
+}
 .xxl {
   font-size: 2em;
   padding-right: 0.5em;
