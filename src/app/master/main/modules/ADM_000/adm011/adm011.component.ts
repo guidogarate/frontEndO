@@ -412,6 +412,7 @@ export class Adm011Component {
 
   adm011Selectgest(gestion: string) {
     console.log('gestion change: ', gestion);
+    
     this.idModulo = +gestion;
     this.getAdm011("all_data", "1");
   }
