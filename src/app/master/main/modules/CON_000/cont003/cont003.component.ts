@@ -44,7 +44,7 @@ export class Cont003Component implements OnDestroy {
   gestion = "0";
   ocultarSelect = true;
   mostrarCheck = false;
-  placeholdeAuto = "auto";
+  placeholdeAuto = "Automatico";
 
   constructor(
     private cont003S: Cont003Service,
@@ -174,7 +174,7 @@ export class Cont003Component implements OnDestroy {
         this.boolDisabled(false);
         this.cargarDependencia2("1");
         this.mostrarCheck = true;
-        this.forma.get("idunidaddivision").setValue("auto");
+        this.forma.get("idunidaddivision").setValue("Automatico");
         this.forma.get("idunidaddivision").disable();
         this.initG.uniform();
         this.initG.labels();
@@ -188,7 +188,7 @@ export class Cont003Component implements OnDestroy {
         this.forma.get("dependencia").disable();
         return;
       case "salir":
-        this.placeholdeAuto = "auto";
+        this.placeholdeAuto = "Automatico";
         this.resetDatos();
         this.boolDisabled(true);
         this.dependenciaCont003 = [];
@@ -197,7 +197,7 @@ export class Cont003Component implements OnDestroy {
         this.resetDatos();
         this.dependenciaCont003 = [];
         this.cargarDependencia(this.auxmaModal.idunidaddivision);
-        this.placeholdeAuto = "auto";
+        this.placeholdeAuto = "Automatico";
         this.boolDisabled(true);
         this.boolBtnGrupo(true, false);
         return;
@@ -417,9 +417,9 @@ export class Cont003Component implements OnDestroy {
       this.forma.get("idunidaddivision").setValue("");
       this.placeholdeAuto = "introducir codigo";
     } else {
-      this.forma.get("idunidaddivision").setValue("auto");
+      this.forma.get("idunidaddivision").setValue("Automatico");
       this.forma.get("idunidaddivision").disable();
-      this.placeholdeAuto = "auto";
+      this.placeholdeAuto = "Automatico";
     }
     this.initG.labels();
   }

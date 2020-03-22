@@ -1,0 +1,68 @@
+<button
+  type="button"
+  class="btn btn-primary"
+  data-toggle="modal"
+  data-target="#exampleModal"
+>
+  Modal
+</button>
+<div
+  class="modal"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog"
+  tabindex="-1"
+  data-backdrop="static"
+  data-keyboard="false"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero
+          veniam ad iste aliquid deleniti voluptas molestias mollitia, maxime
+          est dicta sapiente suscipit animi minus nisi ducimus, esse corrupti
+          iure obcaecati tempore delectus harum commodi beatae, officia
+          reiciendis? Quo, culpa. Nostrum vero quis, ea provident assumenda a
+          delectus officia dolorem nulla molestias, libero eligendi, aliquam
+          incidunt maiores enim dolor at corporis obcaecati eaque iure
+          distinctio porro quos sequi non? Temporibus, in iure. Mollitia,
+          voluptatum at provident repellendus dolorum vero molestiae quam error,
+          fuga praesentium autem! Vel sed pariatur dignissimos repudiandae rem
+          animi! A ipsam tenetur consectetur. Illo aliquam, velit cupiditate
+          quidem ratione tenetur? Et, cum. Repellendus cupiditate beatae animi
+          porro sequi ullam suscipit ab fugit dignissimos totam adipisci,
+          pariatur nulla quaerat dolores perspiciatis eum, similique neque
+          voluptate recusandae! Minus unde mollitia recusandae aspernatur
+          tempora ipsa. Unde at expedita mollitia totam a, praesentium iste
+          repellat obcaecati ducimus in optio, dignissimos temporibus vel ullam
+          quia, rerum delectus quidem. Debitis ex quidem optio recusandae. Omnis
+          voluptatem itaque vero excepturi incidunt ratione, modi vel sed ipsam
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cerrar()"
+          [attr.data-dismiss]="cerrarmod"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

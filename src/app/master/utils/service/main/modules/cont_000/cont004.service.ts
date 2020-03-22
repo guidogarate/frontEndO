@@ -44,17 +44,7 @@ export class Cont004Service {
 
   upCont004(cont_004: Cont004, id_cod: string) {
     const url1 = `${url.prod}${cont004.upCont004}${id_cod}`;
-    let estado: string = "";
-    if (cont_004.estado) {
-      estado = "1";
-    } else {
-      estado = "0";
-    }
-    const json = JSON.stringify({
-      descripcion: cont_004.descripcion,
-      sigla: cont_004.sigla,
-      estado
-    });
+    const json = JSON.stringify(cont_004);
     return this.httpClient
       .put(url1, json, {
         headers: new HttpHeaders({
@@ -69,7 +59,8 @@ export class Cont004Service {
       );
   }
 
-  deCont004(id_cod: string) {
+  deCont004(cont_004: Cont004, id_cod: string) {
+    // const ctaAdic=
     const url1 = `${url.prod}${cont004.deCont004}${id_cod}`;
     return this.httpClient
       .delete(url1, {

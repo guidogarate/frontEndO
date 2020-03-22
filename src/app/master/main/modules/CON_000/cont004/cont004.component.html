@@ -119,8 +119,8 @@
                     class="icon-trash"
                     title="eliminar"
                     data-toggle="modal"
-                    data-target="#modal_cont_004_eliminar"
-                    (click)="OpcionesTable(cont004, 'eliminar')"
+                    data-target="#modal_cont_004"
+                    (click)="getCont004Moda(cont004, 'eliminar')"
                     class="icon-trash text-danger-600 puntero"
                   ></i>
                 </div>
@@ -160,12 +160,16 @@
   </div>
 </div>
 
-<div id="modal_cont_004" class="modal" tabindex="-1">
+<div
+  class="modal"
+  id="modal_cont_004"
+  data-backdrop="static"
+  data-keyboard="false"
+>
   <div class="modal-dialog">
-    <div class="modal-content animacionmodal haciadentro">
+    <div class="modal-content">
       <form
         [formGroup]="forma"
-        (ngSubmit)="OpcionesModal('guardar')"
         ngNativeValidate
         autocomplete="off"
         class="form"
@@ -175,10 +179,10 @@
           <div class="list-icons float-right">
             <a class="puntero" *ngIf="btnGrupo.BtnCance"
               ><i
-                class="icon-cancel-circle2 xxl"
+                class="icon-undo2 xxl"
                 data-toggle="tooltip"
                 data-placement="top"
-                (click)="OpcionesModal('cancelar')"
+                (click)="OpcionesModal('cancelar', true)"
                 title="Cancelar"
               >
               </i
@@ -188,7 +192,7 @@
                 data-toggle="tooltip"
                 data-placement="top"
                 class="icon-diff-added xxl"
-                (click)="OpcionesModal('nuevo')"
+                (click)="OpcionesModal('nuevo', true)"
                 title="nuevo"
               ></i>
             </a>
@@ -196,6 +200,7 @@
               *ngIf="btnGrupo.BtnGuard"
               style="padding: 1px;color: white;"
               type="submit"
+              (click)="OpcionesModal('guardar', true)"
               class="btn text-warning-600 btn-flat btn-icon btn-rounded"
             >
               <i
@@ -216,7 +221,7 @@
                 class="icon-pencil7 xxl"
                 data-toggle="tooltip"
                 data-placement="top"
-                (click)="OpcionesModal('editar')"
+                (click)="OpcionesModal('editar', true)"
                 title="editar"
               >
               </i
@@ -226,6 +231,7 @@
                 class="icon-trash xxl"
                 data-toggle="tooltip"
                 data-placement="top"
+                (click)="OpcionesModal('eliminar', true)"
                 title="Eliminar"
               >
               </i
@@ -234,9 +240,7 @@
               <i
                 class="icon-exit xxl"
                 (click)="OpcionesModal('salir')"
-                data-toggle="tooltip"
-                data-placement="top"
-                data-dismiss="modal"
+                [attr.data-dismiss]="oculto"
                 title="Salir"
               >
               </i
@@ -248,7 +252,7 @@
           <div class="modal-body ">
             <div class="row text-center">
               <div class="col-3 col-sm-2 col-md-2 col-lg-2">
-                <div class="form-group form-group-float">
+                <div class="form-group-float">
                   <label class="form-group-float-label">Codigo</label>
                   <input
                     type="text"
@@ -260,7 +264,7 @@
                 </div>
               </div>
               <div class="col-9 col-sm-5 col-md-5 col-lg-5">
-                <div class="form-group form-group-float">
+                <div class="form-group-float">
                   <label class="form-group-float-label">Descripcion</label>
                   <input
                     type="text"
@@ -272,7 +276,7 @@
                 </div>
               </div>
               <div class="col-6 col-sm-3 col-md-3 col-lg-3">
-                <div class="form-group form-group-float">
+                <div class="form-group-float">
                   <label class="form-group-float-label">Sigla</label>
                   <input
                     type="text"
@@ -306,17 +310,16 @@
               <div class="list-icons float-right">
                 <a class="puntero" *ngIf="btnGrupoSub.BtnCance"
                   ><i
-                    class="icon-cancel-circle2 xxl"
+                    class="icon-undo2 xxl"
                     data-toggle="tooltip"
                     data-placement="top"
-                    (click)="OpcionesModal('cancelar')"
+                    (click)="OpcionesModal('cancelar', false)"
                     title="Cancelar"
                   >
                   </i
                 ></a>
-                <!-- (click)="OpcionesModal('nuevo')" -->
-                <!-- <a class="puntero" *ngIf="btnGrupoSub.BtnNuevo"> -->
-                <a class="puntero" *ngIf="true">
+                <!-- (click)="OpcionesModal('nuevo',false)" -->
+                <a class="puntero" *ngIf="btnGrupoSub.BtnNuevo">
                   <i
                     data-toggle="tooltip"
                     data-placement="top"
@@ -329,6 +332,7 @@
                   *ngIf="btnGrupoSub.BtnGuard"
                   style="padding: 1px;color: white;"
                   type="submit"
+                  (click)="OpcionesModal('guardar', false)"
                   class="btn text-warning-600 btn-flat btn-icon btn-rounded"
                 >
                   <i
@@ -349,7 +353,7 @@
                     class="icon-pencil7 xxl"
                     data-toggle="tooltip"
                     data-placement="top"
-                    (click)="OpcionesModal('editar')"
+                    (click)="OpcionesModal('editar', false)"
                     title="editar"
                   >
                   </i
@@ -359,6 +363,7 @@
                     class="icon-trash xxl"
                     data-toggle="tooltip"
                     data-placement="top"
+                    (click)="OpcionesModal('eliminar', false)"
                     title="Eliminar"
                   >
                   </i
@@ -367,9 +372,7 @@
                   <i
                     class="icon-exit xxl"
                     (click)="OpcionesModal('salir')"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    data-dismiss="modal"
+                    [attr.data-dismiss]="oculto"
                     title="Salir"
                   >
                   </i
@@ -384,47 +387,46 @@
                 "
               >
                 <div class="row text-center" [formGroupName]="i">
-                  <div *ngIf="true" class="col-1 col-sm-1 col-md-1 col-lg-1">
+                  <div
+                    *ngIf="eliminarSub"
+                    class="col-1 col-sm-1 col-md-1 col-lg-1"
+                  >
                     <i
                       class="icon-trash puntero text-danger-600"
                       (click)="delSubforma(i)"
                     ></i>
                   </div>
                   <div class="col-3 col-sm-2 col-md-2 col-lg-2">
-                    <div class="form-group form-group-float">
-                      <label class="form-group-float-label">Codigo</label>
-                      <input
-                        type="text"
-                        class="form-control text-center"
-                        placeholder="Codigo"
-                        formControlName="id_cuenta"
-                        required
-                      />
-                    </div>
+                    <label *ngIf="i === 0" class="labelOpaco">Codigo</label>
+                    <input
+                      type="text"
+                      class="form-control text-center"
+                      placeholder="Codigo"
+                      formControlName="id_cuenta"
+                      required
+                    />
                   </div>
                   <div class="col-8 col-sm-5 col-md-5 col-lg-5">
-                    <div class="form-group form-group-float">
-                      <label class="form-group-float-label">Descripcion</label>
-                      <input
-                        type="text"
-                        class="form-control text-center"
-                        placeholder="Descripcion"
-                        formControlName="descripcion"
-                        required
-                      />
-                    </div>
+                    <label *ngIf="i === 0" class="labelOpaco"
+                      >Descripcion</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control text-center"
+                      placeholder="Descripcion"
+                      formControlName="descripcion"
+                      required
+                    />
                   </div>
                   <div class="col-6 col-sm-2 col-md-2 col-lg-2">
-                    <div class="form-group form-group-float">
-                      <label class="form-group-float-label">Sigla</label>
-                      <input
-                        type="text"
-                        class="form-control text-center text-center"
-                        placeholder="Sigla"
-                        formControlName="sigla"
-                        required
-                      />
-                    </div>
+                    <label *ngIf="i === 0" class="labelOpaco">Sigla</label>
+                    <input
+                      type="text"
+                      class="form-control text-center text-center"
+                      placeholder="Sigla"
+                      formControlName="sigla"
+                      required
+                    />
                   </div>
                   <div class="col-6 col-sm-2 col-md-2 col-lg-2">
                     <div class="custom-control custom-switch">
@@ -449,8 +451,9 @@
         </ng-container>
       </form>
       <!-- <p>
-        {{ this.forma.get("codigo").status }}
-      </p> -->
+          {{ this.forma.get("codigo").status }}
+        </p> -->
+      <pre>fue modificado? {{ forma.dirty }}</pre>
       <pre>{{ forma.value | json }}</pre>
     </div>
   </div>
