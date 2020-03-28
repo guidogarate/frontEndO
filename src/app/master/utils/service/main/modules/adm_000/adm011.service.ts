@@ -12,7 +12,7 @@ export class Adm011Service {
 
   getAdm011(modulo: string, indice: string, idModulo: number, texto: string) {
     const url1 = `${url.prod}${adm011.getAdm011}${modulo}/${indice}/${idModulo}/${texto}`;
-    console.log('url get: ', url1);
+    console.log("url get: ", url1);
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -68,8 +68,8 @@ export class Adm011Service {
 
   inAdm011(adm_011: Adm011) {
     const url1 = `${url.prod}${adm011.inAdm011}`;
-    console.info('url1 in: ', url1);
-    console.info('adm_011: ', adm_011);
+    console.info("url1 in: ", url1);
+    console.info("adm_011: ", adm_011);
     const json = JSON.stringify({
       id_modulo: adm_011.id_modulo,
       id_documento: adm_011.id_documento,
