@@ -544,7 +544,6 @@
                     >
                       <input
                         type="checkbox"
-                        required="true"
                         class="custom-control-input"
                         formControlName="checkauto"
                         (click)="habilitarAuto()"
@@ -605,14 +604,6 @@
                     </div>
                   </div>
                 </div>
-
-                <!-- <div class="row text-center">
-                  <div class="col-md-6">
-                      </div>
-                  <div class="col-md-6" *ngIf="ocultarSelect">
-                        
-                    </div>
-                </div> -->
               </div>
               <div class="row m0 p0">
                 <div class="col-xl-12">
@@ -679,25 +670,6 @@
         </div>
       </form>
       <hr />
-      <pre>idModulo {{ idModulo }}</pre>
-      <pre *ngIf="this.forma.get('id_modulo') != null">
-            id_Modulo {{ this.forma.get("id_modulo").value }}</pre
-      >
-      <pre *ngIf="this.forma.get('nombre_modulo') != null">
-            nombre_modulo {{ this.forma.get("nombre_modulo").value }}</pre
-      >
-      <pre *ngIf="this.forma.get('sigla') != null">
-            sigla {{ this.forma.get("sigla").value }}</pre
-      >
-      <pre *ngIf="this.forma.get('id_documento') != null">
-            id_documento {{ this.forma.get("id_documento").value }}</pre
-      >
-      <pre *ngIf="this.forma.get('checkauto') != null">
-            checkauto {{ this.forma.get("checkauto").value }}</pre
-      >
-      <!-- <pre>componente {{ this.forma.get("componente").value }}</pre>
-      <pre>estado {{ this.forma.get("estado").value }}</pre> -->
-      <pre>formControl  {{ this.forma }}</pre>
     </div>
   </div>
 </div>

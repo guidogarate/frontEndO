@@ -29,7 +29,8 @@ export class Adm011Service {
   }
 
   upAdm011(adm_011: Adm011, id_modulo: number, id_documento: string) {
-    const url1 = `${url.prod}${adm011.upAdm011}/${id_modulo}/${id_documento}`;
+    const url1 = `${url.prod}${adm011.upAdm011}${id_modulo}/${id_documento}`;
+    console.log("adm011", adm_011);
     const json = JSON.stringify({
       descripcion: adm_011.descripcion,
       sigla: adm_011.sigla,

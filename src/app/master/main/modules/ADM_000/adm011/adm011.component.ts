@@ -87,7 +87,6 @@ export class Adm011Component {
   }
 
   getAdm011(texto: string, numePag = "1") {
-    console.log("auxma init: ", this.auxma);
     this.start.Busca = true;
     let peticion: Observable<any>;
     if (texto.length === 0 || texto === "all_data") {
@@ -250,10 +249,10 @@ export class Adm011Component {
     let name: string = "";
     this.selecDivModal.forEach(element => {
       if (element.id_modulo == id) {
-        console.log("Elemento encontrado: ", element.modulo);
+        // console.log("Elemento encontrado: ", element.modulo);
         name = element.modulo;
       }
-      console.log("Elemento No encontrado: ", element.modulo);
+      // console.log("Elemento No encontrado: ", element.modulo);
     });
     return name;
   }
@@ -344,12 +343,11 @@ export class Adm011Component {
         }
         this.placeholdeAuto = "automatico";
         this.resetDatos();
-        // this.dependenciaAdm011 = [];
-        // this.cargarDependencia(this.auxmaModal.idunidaddivision);
         this.boolDisabled(true);
         this.boolBtnGrupo(true, false);
         return;
       case "guardar":
+        this.boolDisabled(false);
         console.log("Formulario Invalido?", this.forma);
         if (this.forma.invalid) {
           this.mostrarCheck = true;
@@ -358,16 +356,21 @@ export class Adm011Component {
         this.btnGrupo.BtnLoadi = true;
         this.btnGrupo.BtnCance = false;
         console.log("Formulario values", this.forma.value);
-        console.log(
-          "Forma id_documento: ",
-          this.forma.get("id_documento").value
-        );
-        if (this.forma.get("checkauto").value) {
-          this.forma.setValue({
-            id_documento: this.forma.get("id_documento").value,
-            id_modulo: this.forma.get("id_modulo").value
-          });
-        }
+        // if (this.forma.get("checkauto").value) {
+        //   this.forma.setValue({
+        //     id_documento:
+        //       this.forma.get("checkauto").value === true
+        //         ? "auto"
+        //         : this.forma.get("checkauto").value,
+        //     id_modulo: this.forma.get("id_modulo").value,
+        //     nombre_modulo: this.forma.get("nombre_modulo").value,
+        //     sigla: this.forma.get("sigla").value,
+        //     descripcion: this.forma.get("descripcion").value,
+        //     checkauto: this.forma.get("checkauto").value,
+        //     componente: this.forma.get("componente").value,
+        //     estado: this.forma.get("estado").value
+        //   });
+        // }
         this.guardarDatos(this.forma.value, this.start.CtrAc);
         return;
     }
@@ -386,6 +389,7 @@ export class Adm011Component {
       this.forma.get("componente").disable();
     } else {
       this.forma.get("checkauto").enable();
+      this.forma.get("id_modulo").enable();
       this.forma.get("estado").enable();
       this.forma.get("id_documento").enable();
       this.forma.get("descripcion").enable();
@@ -406,7 +410,7 @@ export class Adm011Component {
   }
 
   resetDatos() {
-    console.log("auxmodal valores: ", this.auxmaModal);
+    // console.log("auxmodal valores: ", this.auxmaModal);
     this.forma.reset(this.auxmaModal);
     this.initG.labels();
     this.initG.select();
@@ -430,7 +434,7 @@ export class Adm011Component {
   adm011Selectgest(gestion: string) {
     console.log("gestion change: ", gestion);
 
-    this.idModulo = +gestion;
+    this.idModulo = Number(gestion);
     this.getAdm011("all_data", "1");
   }
 
