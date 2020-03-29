@@ -280,6 +280,7 @@ export class Adm011Component {
         this.forma.get("id_documento").disable();
         break;
       case "eliminar":
+        // this.eliminarAdm011(adm_011);
         return;
       default:
         this.notyG.noty("error", "Operacion incorrecta", 5000);
@@ -356,21 +357,6 @@ export class Adm011Component {
         this.btnGrupo.BtnLoadi = true;
         this.btnGrupo.BtnCance = false;
         console.log("Formulario values", this.forma.value);
-        // if (this.forma.get("checkauto").value) {
-        //   this.forma.setValue({
-        //     id_documento:
-        //       this.forma.get("checkauto").value === true
-        //         ? "auto"
-        //         : this.forma.get("checkauto").value,
-        //     id_modulo: this.forma.get("id_modulo").value,
-        //     nombre_modulo: this.forma.get("nombre_modulo").value,
-        //     sigla: this.forma.get("sigla").value,
-        //     descripcion: this.forma.get("descripcion").value,
-        //     checkauto: this.forma.get("checkauto").value,
-        //     componente: this.forma.get("componente").value,
-        //     estado: this.forma.get("estado").value
-        //   });
-        // }
         this.guardarDatos(this.forma.value, this.start.CtrAc);
         return;
     }
@@ -474,7 +460,7 @@ export class Adm011Component {
     });
   }
 
-  eliminarCont003(adm011: Adm011) {
+  eliminarAdm011(adm011: Adm011) {
     let peticion: Observable<any>;
     peticion = this.adm011S.delAdm011(adm011.id_modulo, adm011.id_documento);
     let numPag = this.start.NumPa;

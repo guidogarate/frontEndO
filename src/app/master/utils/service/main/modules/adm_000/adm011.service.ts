@@ -52,7 +52,7 @@ export class Adm011Service {
   }
 
   delAdm011(id_modulo: number, id_documento: string) {
-    const url1 = `${url.prod}${adm011.delAdm011}/${id_modulo}/${id_documento}`;
+    const url1 = `${url.prod}${adm011.delAdm011}${id_modulo}/${id_documento}`;
     return this.httpClient
       .delete(url1, {
         headers: new HttpHeaders({

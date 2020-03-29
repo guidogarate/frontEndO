@@ -174,7 +174,6 @@
         </div>
         <div class="col-md-1"></div>
       </div>
-      <pre>idModulo {{ this.idModulo }}</pre>
       <div *ngIf="start.Loadi" class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
           <span class="sr-only">Loading...</span>
@@ -674,7 +673,7 @@
   </div>
 </div>
 
-<!-- <div id="modal_adm_011_eliminar" class="modal" tabindex="-1">
+<div id="modal_adm_011_eliminar" class="modal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -683,10 +682,11 @@
           &times;
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" *ngIf="auxmaModal != undefined">
         <h6 class="font-weight-semibold">
-          Desea eliminar dato con codigo: {{ id_cod }}
+          Desea eliminar dato con codigo: {{ auxmaModal.id_documento }}
         </h6>
+        <!-- <pre> {{  | json }}</pre> -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-link" data-dismiss="modal">
@@ -696,11 +696,11 @@
           type="button"
           class="btn bg-primary"
           data-dismiss="modal"
-          (click)="eliminarAdm006(id_cod)"
+          (click)="eliminarAdm011(auxmaModal)"
         >
           Aceptar
         </button>
       </div>
     </div>
   </div>
-</div> -->
+</div>
