@@ -409,9 +409,9 @@ export class Adm011Component {
       this.placeholdeAuto = "introducir codigo";
       // console.log("id_documento value: ", this.forma.get("id_documento"));
     } else {
-      this.forma.get("id_documento").setValue("automatico");
+      this.forma.get("id_documento").setValue("auto");
       this.forma.get("id_documento").disable();
-      this.placeholdeAuto = "auto";
+      this.placeholdeAuto = "automatico";
       // console.log("id_documento auto: ", this.forma.get("id_documento"));
     }
     this.initG.labels();
