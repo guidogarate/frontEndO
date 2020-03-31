@@ -1,5 +1,5 @@
 export interface Adm011 {
-  id_Modulo: number;
+  id_modulo: number;
   nombre_modulo: string;
   id_documento: string;
   descripcion: string;
@@ -9,6 +9,6 @@ export interface Adm011 {
 }
 
 export interface Adm011Select {
-  id_documento: number;
-  descripcion: string;
+  id_modulo: number;
+  modulo: string;
 }

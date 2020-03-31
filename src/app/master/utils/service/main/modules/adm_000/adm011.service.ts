@@ -12,6 +12,7 @@ export class Adm011Service {
 
   getAdm011(modulo: string, indice: string, idModulo: number, texto: string) {
     const url1 = `${url.prod}${adm011.getAdm011}${modulo}/${indice}/${idModulo}/${texto}`;
+    console.log("url get: ", url1);
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -28,7 +29,8 @@ export class Adm011Service {
   }
 
   upAdm011(adm_011: Adm011, id_modulo: number, id_documento: string) {
-    const url1 = `${url.prod}${adm011.upAdm011}/${id_modulo}/${id_documento}`;
+    const url1 = `${url.prod}${adm011.upAdm011}${id_modulo}/${id_documento}`;
+    console.log("adm011", adm_011);
     const json = JSON.stringify({
       descripcion: adm_011.descripcion,
       sigla: adm_011.sigla,
@@ -50,7 +52,7 @@ export class Adm011Service {
   }
 
   delAdm011(id_modulo: number, id_documento: string) {
-    const url1 = `${url.prod}${adm011.delAdm011}/${id_modulo}/${id_documento}`;
+    const url1 = `${url.prod}${adm011.delAdm011}${id_modulo}/${id_documento}`;
     return this.httpClient
       .delete(url1, {
         headers: new HttpHeaders({
@@ -67,8 +69,10 @@ export class Adm011Service {
 
   inAdm011(adm_011: Adm011) {
     const url1 = `${url.prod}${adm011.inAdm011}`;
+    console.info("url1 in: ", url1);
+    console.info("adm_011: ", adm_011);
     const json = JSON.stringify({
-      id_modulo: adm_011.id_Modulo,
+      id_modulo: adm_011.id_modulo,
       id_documento: adm_011.id_documento,
       descripcion: adm_011.descripcion,
       sigla: adm_011.sigla,
