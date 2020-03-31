@@ -251,6 +251,20 @@
         <ng-container *ngIf="start.ConMo">
           <div class="modal-body ">
             <div class="row text-center">
+              <div *ngIf="nuevoAutoma" class="col-1 col-sm-1 col-md-1 col-lg-1">
+                <div class="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    required="false"
+                    (click)="habilitarAuto()"
+                    formControlName="nuevo"
+                    class="custom-control-input"
+                    value="true"
+                    id="estadoCta2"
+                  />
+                  <label class="custom-control-label" for="estadoCta2">.</label>
+                </div>
+              </div>
               <div class="col-3 col-sm-2 col-md-2 col-lg-2">
                 <div class="form-group-float">
                   <label class="form-group-float-label">Codigo</label>
@@ -263,7 +277,7 @@
                   />
                 </div>
               </div>
-              <div class="col-9 col-sm-5 col-md-5 col-lg-5">
+              <div class="col-9 col-sm-4 col-md-4 col-lg-4">
                 <div class="form-group-float">
                   <label class="form-group-float-label">Descripcion</label>
                   <input
@@ -318,13 +332,12 @@
                   >
                   </i
                 ></a>
-                <!-- (click)="OpcionesModal('nuevo',false)" -->
                 <a class="puntero" *ngIf="btnGrupoSub.BtnNuevo">
                   <i
                     data-toggle="tooltip"
                     data-placement="top"
                     class="icon-diff-added xxl"
-                    (click)="addSubforma()"
+                    (click)="OpcionesModal('nuevo', false)"
                     title="nuevo"
                   ></i>
                 </a>
@@ -391,10 +404,15 @@
                     *ngIf="eliminarSub"
                     class="col-1 col-sm-1 col-md-1 col-lg-1"
                   >
-                    <i
-                      class="icon-trash puntero text-danger-600"
-                      (click)="delSubforma(i)"
-                    ></i>
+                    <div class="uniform-checker" style="margin: auto;">
+                      <input
+                        class="form-input-styled text-danger-600"
+                        value="false"
+                        type="checkbox"
+                        formControlName="eliminar"
+                        data-fouc=""
+                      />
+                    </div>
                   </div>
                   <div class="col-3 col-sm-2 col-md-2 col-lg-2">
                     <label *ngIf="i === 0" class="labelOpaco">Codigo</label>

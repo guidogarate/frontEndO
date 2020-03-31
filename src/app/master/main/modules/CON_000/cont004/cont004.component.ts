@@ -12,7 +12,10 @@ import glb002 from "src/app/master/config/glb000/glb002_start";
 import glb003 from "src/app/master/config/glb000/glb003_btn";
 import * as glb from "src/app/master/utils/global/index.global";
 import { Paginacion } from "src/app/master/utils/models/main/global/index.models";
-import { Cont004 } from "src/app/master/utils/models/main/cont_000/index.models";
+import {
+  Cont004,
+  Cont004Del
+} from "src/app/master/utils/models/main/cont_000/index.models";
 import { Observable, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
@@ -33,8 +36,10 @@ export class Cont004Component {
   table = false;
   forma: FormGroup;
   eliminarSub = false;
+  nuevoAutoma = false;
   oculto: string = "";
-  cantCtasAdic = 0;
+  eliminar: Cont004Del[] = [];
+  eliminarIdCta: number[] = [];
 
   constructor(
     private cont004S: Cont004Service,
@@ -59,12 +64,15 @@ export class Cont004Component {
 
   crearFormulario() {
     this.forma = this.fb.group({
+      nuevo: [false, []],
       id_cuenta: ["", [Validators.pattern("^([0-9]{3})$")]],
       descripcion: ["", [Validators.required]],
       sigla: ["", [Validators.required]],
       estado: ["", [Validators.required]],
       cuentas_adicionales: this.fb.array([
         this.fb.group({
+          nuevo: ["false"],
+          eliminar: ["false"],
           id_cuenta: ["", [Validators.required]],
           descripcion: ["", [Validators.required]],
           sigla: ["", [Validators.required]],
@@ -81,6 +89,7 @@ export class Cont004Component {
   addSubforma() {
     this.cuentas_adicionales.push(
       this.fb.group({
+        eliminar: [false, []],
         id_cuenta: ["", [Validators.required]],
         descripcion: ["", [Validators.required]],
         sigla: ["", [Validators.required]],
@@ -146,6 +155,15 @@ export class Cont004Component {
     });
   }
 
+  habilitarAuto() {
+    const nvo: boolean = this.forma.get("nuevo").value;
+    if (!nvo || nvo === null) {
+      console.log("auto");
+    } else {
+      console.log("manual");
+    }
+  }
+
   nuevoCont004() {
     this.initG.uniform();
     this.initG.labels();
@@ -154,16 +172,17 @@ export class Cont004Component {
 
   OpcionesTable(cont_004: Cont004, tipo: string) {
     this.start.IdCod = cont_004.id_cuenta_adicional.toString();
-    this.cantCtasAdic = this.cuentas_adicionales.length;
     switch (tipo) {
       case "visualizar":
         this.eliminarSub = false;
+        this.nuevoAutoma = false;
         this.btnSinCtaAdic();
         this.boolDisabled(true, true);
         this.boolDisabled(true, false);
         break;
       case "editar":
         this.eliminarSub = false;
+        this.nuevoAutoma = false;
         if (this.cuentas_adicionales.length > 0) {
           this.boolBtnGrupo(false, true, false);
         } else {
@@ -173,6 +192,8 @@ export class Cont004Component {
         this.boolDisabled(false, false);
         break;
       case "eliminar":
+        this.start.CtrAc = "eliminar";
+        this.nuevoAutoma = false;
         if (this.cuentas_adicionales.length > 0) {
           this.eliminarSub = true;
           this.boolBtnGrupo(false, true, false);
@@ -195,90 +216,192 @@ export class Cont004Component {
   OpcionesModal(tipo: string, tipoPadreHijo = true) {
     switch (tipo) {
       case "nuevo":
-        console.log("nuevo");
+        this.nuevoModal(tipo, tipoPadreHijo);
         return;
       case "editar":
-        this.eliminarSub = false;
-        this.start.CtrAc = tipo;
-        if (tipoPadreHijo) {
-          this.boolDisabled(false, true);
-          this.boolBtnGrupo(false, true, true);
-          this.boolBtnGrupo(false, false, false);
-        } else {
-          this.boolDisabled(false, false);
-          this.boolBtnGrupo(false, false, true);
-          this.boolBtnGrupo(false, true, false);
-        }
+        this.editarModal(tipo, tipoPadreHijo);
         return;
       case "salir":
-        const salirS = this.cuentas_adicionales.length;
-        if (this.forma.dirty || salirS !== this.cantCtasAdic) {
-          const resp = confirm("Desea Descartar Cambios");
-          if (!resp) {
-            this.oculto = "";
-            return;
-          }
-        }
-        this.oculto = "modal";
-        this.eliminarSub = false;
-        this.forma.reset();
-        break;
+        this.salirModal();
+        return;
       case "cancelar":
-        this.eliminarSub = false;
-        this.resetDatos();
-        if (tipoPadreHijo) {
-          this.boolDisabled(true, true);
-        } else {
-          this.boolDisabled(true, false);
-        }
-        this.btnSinCtaAdic();
+        this.cancelarModal(tipoPadreHijo);
         return;
       case "eliminar":
-        if (tipoPadreHijo) {
-          if (this.cuentas_adicionales.length > 0) {
-            this.notyG.noty(
-              "error",
-              "Primero Elimina Todas las Cuentas Adicionales",
-              3000
-            );
-          } else {
-            this.boolBtnGrupo(false, true, true);
-            this.boolBtnGrupo(false, false, false);
-          }
-        } else {
-          this.eliminarSub = true;
-          this.boolBtnGrupo(false, false, true);
-          this.boolBtnGrupo(false, true, false);
-        }
-        this.boolDisabled(true, true);
-        this.boolDisabled(true, false);
+        this.eliminarModal(tipo, tipoPadreHijo);
         return;
       case "guardar":
-        const salirG = this.cuentas_adicionales.length;
-        if (this.forma.dirty || salirG !== this.cantCtasAdic) {
-          if (tipoPadreHijo) {
-            if (this.forma.invalid) {
-              return;
-            }
-            this.boolDisabled(true, true);
-            this.btnGrupo.BtnLoadi = true;
-            this.btnGrupo.BtnCance = false;
-          } else {
-            if (this.cuentas_adicionales.invalid) {
-              return;
-            }
-            this.boolDisabled(true, false);
-            this.btnGrupoSub.BtnLoadi = true;
-            this.btnGrupoSub.BtnCance = false;
-          }
-          this.guardarDatos(this.forma.value, this.start.CtrAc);
-        } else {
-          this.notyG.noty("info", "Datos no han sido modificados", 2000);
-        }
+        this.guardarModal(tipoPadreHijo);
         return;
     }
+  }
+
+  nuevoModal(tipo: string, tipoPadreHijo: boolean) {
+    this.start.CtrAc = tipo;
+    if (tipoPadreHijo) {
+      const elim = confirm("esta seguro de crear,");
+      if (elim) {
+        this.boolDisabled(false, true);
+        this.boolBtnGrupo(false, true, true);
+        this.boolBtnGrupo(false, false, false);
+        this.eliminarCtaAdic();
+        this.forma.reset();
+        this.nuevoAutoma = true;
+        this.forma.get("nuevo").enable();
+        return;
+      }
+    } else {
+      this.addSubforma();
+      this.boolBtnGrupo(false, false, true);
+      this.boolBtnGrupo(false, false, false);
+      this.eliminarSub = true;
+      this.btnGrupoSub.BtnNuevo = true;
+      this.btnGrupoSub.BtnGuard = true;
+      this.btnGrupoSub.BtnCance = true;
+    }
+  }
+
+  editarModal(tipo: string, tipoPadreHijo: boolean): void {
+    this.eliminarSub = false;
+    this.nuevoAutoma = false;
+    this.start.CtrAc = tipo;
+    if (tipoPadreHijo) {
+      this.boolDisabled(false, true);
+      this.boolBtnGrupo(false, true, true);
+      this.boolBtnGrupo(false, false, false);
+    } else {
+      this.boolDisabled(false, false);
+      this.boolBtnGrupo(false, false, true);
+      this.boolBtnGrupo(false, true, false);
+    }
+  }
+
+  salirModal(): void {
+    if (this.forma.dirty) {
+      const resp = confirm("Desea Descartar Cambios");
+      if (!resp) {
+        this.oculto = "";
+        return;
+      }
+    }
+    this.eliminar = [];
+    this.eliminarIdCta = [];
+    this.oculto = "modal";
+    this.eliminarSub = false;
+    this.nuevoAutoma = false;
+    this.forma.reset();
     this.boolBtnGrupo(false, false, true);
     this.boolBtnGrupo(false, false, false);
+  }
+
+  cancelarModal(tipoPadreHijo: boolean): void {
+    this.eliminar = [];
+    this.eliminarIdCta = [];
+    this.eliminarSub = false;
+    this.nuevoAutoma = false;
+    this.resetDatos();
+    if (tipoPadreHijo) {
+      this.boolDisabled(true, true);
+    } else {
+      this.boolDisabled(true, false);
+    }
+    this.btnSinCtaAdic();
+  }
+
+  eliminarModal(tipo: string, tipoPadreHijo: boolean): void {
+    this.start.CtrAc = tipo;
+    if (tipoPadreHijo) {
+      if (this.cuentas_adicionales.length > 0) {
+        this.notyG.noty(
+          "error",
+          "Primero Elimina Todas las Cuentas Adicionales",
+          3000
+        );
+        return;
+      } else {
+        const elim = confirm("esta seguro de eliminar");
+        if (elim) {
+          this.eliminarPadre();
+          return;
+        }
+      }
+    } else {
+      this.eliminarSub = true;
+      this.nuevoAutoma = false;
+      this.boolBtnGrupo(false, false, true);
+      this.boolBtnGrupo(false, true, false);
+      this.initG.uniform();
+    }
+    this.boolDisabled(true, true);
+    this.boolDisabled(true, false);
+    this.habilitarCheck();
+  }
+
+  guardarModal(tipoPadreHijo: boolean): void {
+    const cantCtaAd = this.cuentas_adicionales.length;
+    console.log(this.start.CtrAc);
+
+    if (this.start.CtrAc === "nuevo") {
+      console.log(this.forma.valid);
+      return;
+    }
+    if (this.start.CtrAc === "eliminar") {
+      if (this.forma.dirty) {
+        this.boolDisabled(true, false);
+        for (let i = 0; i < cantCtaAd; i++) {
+          const element = this.cuentas_adicionales.value[i];
+          if (element.eliminar) {
+            this.eliminarIdCta.push(element.id_cuenta);
+            this.eliminar.push({
+              id_tipocuenta: this.start.IdCod,
+              id_cuenta: element.id_cuenta.toString()
+            });
+          }
+        }
+        if (this.eliminarIdCta.length === 0) {
+          this.habilitarCheck();
+          this.notyG.noty("info", "No ha seleccionado ningun elemento", 2000);
+        } else {
+          this.boolDisabled(true, false);
+          this.btnGrupoSub.BtnLoadi = true;
+          this.btnGrupoSub.BtnCance = false;
+          this.guardarDatos(this.eliminar, this.start.CtrAc);
+        }
+      } else {
+        this.habilitarCheck();
+        this.notyG.noty("info", "No ha seleccionado ningun elemento", 2000);
+      }
+    }
+    if (this.start.CtrAc === "editar") {
+      if (this.forma.dirty) {
+        if (tipoPadreHijo) {
+          if (this.forma.invalid) {
+            return;
+          }
+          this.boolDisabled(true, true);
+          this.btnGrupo.BtnLoadi = true;
+          this.btnGrupo.BtnCance = false;
+        } else {
+          if (this.cuentas_adicionales.invalid) {
+            return;
+          }
+          this.boolDisabled(true, false);
+          this.btnGrupoSub.BtnLoadi = true;
+          this.btnGrupoSub.BtnCance = false;
+        }
+        this.guardarDatos(this.forma.value, this.start.CtrAc);
+      } else {
+        this.editarModal(this.start.CtrAc, tipoPadreHijo);
+        this.notyG.noty("info", "No ha modificado datos", 2000);
+      }
+    }
+  }
+
+  habilitarCheck() {
+    const lengCtaAdic: number = this.cuentas_adicionales.length;
+    for (let i = 0; i < lengCtaAdic; i++) {
+      this.cuentas_adicionales.controls[i].get("eliminar").enable();
+    }
   }
 
   boolDisabled(bool: boolean, tipoPadreHijo: boolean) {
@@ -420,38 +543,91 @@ export class Cont004Component {
     }
   }
 
-  guardarDatos(cont_004: Cont004, contorlAccion: string) {
-    console.log(cont_004);
-    console.log(contorlAccion);
-    console.log(this.start.IdCod);
-    this.btnGrupo.BtnLoadi = false;
-    this.btnGrupoSub.BtnLoadi = false;
-    return;
-    // let peticion: Observable<any>;
-    // if (contorlAccion === "nuevo") {
-    //   peticion = this.cont004S.inCont004(cont_004);
-    // } else if (contorlAccion === "editar") {
-    //   peticion = this.cont004S.upCont004(cont_004, this.start.IdCod);
-    // } else {
-    //   this.notyG.noty("error", "control Accion Invalido", 2000);
-    //   return;
-    // }
-    // this.sus = peticion.subscribe(resp => {
-    //   this.btnGrupo.BtnLoadi = false;
-    //   this.btnGrupoSub.BtnLoadi = false;
-    //   if (resp["ok"]) {
-    //     if (contorlAccion === "nuevo") {
-    //       console.log("guardado con exito y reset datos(nuevo)");
-    //     } else {
-    //       this.auxmaModal[0] = cont_004;
-    //     }
-    //     this.resetDatos();
-    //     this.btnSinCtaAdic();
-    //     this.getCont004(this.start.Texto, this.start.NumPa.toString());
-    //     this.notyG.noty("success", resp["mensaje"], 1000);
-    //   } else {
-    //     this.notyG.noty("error", resp["mensaje"], 3000);
-    //   }
-    // });
+  eliminarIndex(index: number[]) {
+    const long: number = index.length;
+    for (let i = 0; i < long; i++) {
+      const el: any[] = this.cuentas_adicionales.value;
+      const lg = el.length;
+      for (let j = 0; j < lg; j++) {
+        if (el[j].id_cuenta === index[i]) {
+          this.delSubforma(j);
+          j = lg;
+        }
+      }
+    }
+  }
+
+  eliminarCtaAdic() {
+    const ctaAd: any[] = this.cuentas_adicionales.value;
+    for (const iterator of ctaAd) {
+      this.delSubforma(0);
+    }
+  }
+
+  guardarDatos(cont_004: any, controlAccion: string) {
+    let peticion: Observable<any>;
+    if (controlAccion === "nuevo") {
+      peticion = this.cont004S.inCont004(cont_004);
+    } else if (controlAccion === "editar") {
+      const cont004: Cont004 = cont_004;
+      peticion = this.cont004S.upCont004(cont004, this.start.IdCod);
+    } else if (controlAccion === "eliminar") {
+      const cont004: Cont004Del = cont_004;
+      peticion = this.cont004S.deCont004(cont004);
+    } else {
+      this.notyG.noty("error", "control Accion Invalido", 2000);
+      return;
+    }
+    this.sus = peticion.subscribe(resp => {
+      this.eliminarSub = false;
+      this.nuevoAutoma = false;
+      this.btnGrupo.BtnLoadi = false;
+      this.btnGrupoSub.BtnLoadi = false;
+      if (resp["ok"]) {
+        if (controlAccion === "nuevo") {
+          console.log("guardado con exito y reset datos(nuevo)");
+        } else if (controlAccion === "editar") {
+          this.auxmaModal[0] = cont_004;
+        } else if (controlAccion === "eliminar") {
+          this.eliminarIndex(this.eliminarIdCta);
+          this.auxmaModal[0] = this.forma.value;
+          this.eliminar = [];
+          this.eliminarIdCta = [];
+        }
+        this.resetDatos();
+        this.btnSinCtaAdic();
+        this.getCont004(this.start.Texto, this.start.NumPa.toString());
+        this.notyG.noty("success", resp["mensaje"], 1000);
+      } else {
+        this.notyG.noty("error", resp["mensaje"], 3000);
+      }
+    });
+  }
+
+  eliminarPadre() {
+    this.eliminar = [];
+    this.eliminar.push({
+      id_tipocuenta: this.start.IdCod,
+      id_cuenta: "0"
+    });
+    const cont_004: any = this.eliminar;
+    let peticion: Observable<any>;
+    peticion = this.cont004S.deCont004(cont_004);
+    let numPag = this.start.NumPa;
+    this.sus = peticion.subscribe(resp => {
+      if (resp["ok"]) {
+        if (this.auxma.length === 1) {
+          numPag--;
+        }
+        this.paginacion(numPag.toString(), false);
+        this.boolBtnGrupo(false, false, true);
+        this.boolBtnGrupo(false, false, false);
+        this.btnGrupo.BtnNuevo = true;
+        this.forma.reset();
+        this.initG.labels();
+      } else {
+        this.notyG.noty("success", resp["mensaje"], 1000);
+      }
+    });
   }
 }

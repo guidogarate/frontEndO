@@ -2,19 +2,16 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
-import {
-  Cont004,
-  Cont004Del
-} from "src/app/master/utils/models/main/cont_000/index.models";
-import cont004 from "src/app/master/config/cont000/cont004_url";
+import { Cont005 } from "src/app/master/utils/models/main/cont_000/index.models";
+import cont005 from "src/app/master/config/cont000/cont005_url";
 
 @Injectable()
-export class Cont004Service {
+export class Cont005Service {
   token = sessionStorage.getItem("id");
   constructor(private httpClient: HttpClient) {}
 
-  geCont004Ctas(modulo: string, indice: string, texto: string) {
-    const url1 = `${url.prod}${cont004.geCont004Ctas}${modulo}/${indice}/${texto}`;
+  geCont005(modulo: string, indice: string, mod: string, texto: string) {
+    const url1 = `${url.prod}${cont005.geCont005}${modulo}/${indice}/${mod}/${texto}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -30,7 +27,7 @@ export class Cont004Service {
   }
 
   geCont004Cta(modulo: string, idCta: number) {
-    const url1 = `${url.prod}${cont004.geCont004Cta}${modulo}/${idCta}`;
+    const url1 = `${url.prod}${cont005.geCont005Cta}${modulo}/${idCta}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -45,8 +42,8 @@ export class Cont004Service {
       );
   }
 
-  upCont004(cont_004: Cont004, id_cod: string) {
-    const url1 = `${url.prod}${cont004.upCont004}${id_cod}`;
+  upCont004(cont_004: Cont005, id_cod: string) {
+    const url1 = `${url.prod}${cont005.upCont005}${id_cod}`;
     const json = JSON.stringify(cont_004);
     return this.httpClient
       .put(url1, json, {
@@ -62,8 +59,8 @@ export class Cont004Service {
       );
   }
 
-  deCont004(cont_004: Cont004Del) {
-    const url1 = `${url.prod}${cont004.deCont004}`;
+  deCont004(cont_004: Cont005) {
+    const url1 = `${url.prod}${cont005.deCont005}`;
     const json = JSON.stringify({ cuentas: cont_004 });
     return this.httpClient
       .post(url1, json, {
@@ -79,8 +76,8 @@ export class Cont004Service {
       );
   }
 
-  inCont004(cont_004: Cont004) {
-    const url1 = `${url.prod}${cont004.inCont004}`;
+  inCont004(cont_004: Cont005) {
+    const url1 = `${url.prod}${cont005.inCont005}`;
     let estado: string = "";
     if (cont_004.estado === undefined) {
       cont_004.estado = false;

@@ -2,19 +2,16 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
-import {
-  Cont004,
-  Cont004Del
-} from "src/app/master/utils/models/main/cont_000/index.models";
-import cont004 from "src/app/master/config/cont000/cont004_url";
+import { Cont003 } from "src/app/master/utils/models/main/cont_000/index.models";
+import cont002 from "src/app/master/config/cont000/cont002_url";
 
 @Injectable()
-export class Cont004Service {
+export class Cont002Service {
   token = sessionStorage.getItem("id");
   constructor(private httpClient: HttpClient) {}
 
-  geCont004Ctas(modulo: string, indice: string, texto: string) {
-    const url1 = `${url.prod}${cont004.geCont004Ctas}${modulo}/${indice}/${texto}`;
+  geCont002(modulo: string, indice: string, gestion: string, texto: string) {
+    const url1 = `${url.prod}${cont002.geCont002}${modulo}/${indice}/${gestion}/${texto}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -29,25 +26,19 @@ export class Cont004Service {
       );
   }
 
-  geCont004Cta(modulo: string, idCta: number) {
-    const url1 = `${url.prod}${cont004.geCont004Cta}${modulo}/${idCta}`;
-    return this.httpClient
-      .get(url1, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json"
-        })
-      })
-      .pipe(
-        map(resp => {
-          return resp;
-        })
-      );
-  }
-
-  upCont004(cont_004: Cont004, id_cod: string) {
-    const url1 = `${url.prod}${cont004.upCont004}${id_cod}`;
-    const json = JSON.stringify(cont_004);
+  upCont002(cont_003: Cont003, gestion: string, id_cod: string) {
+    const url1 = `${url.prod}${cont002.upCont002}${gestion}/${id_cod}`;
+    let estado: string = "";
+    if (cont_003.estado) {
+      estado = "1";
+    } else {
+      estado = "0";
+    }
+    const json = JSON.stringify({
+      descripcion: cont_003.descripcion,
+      sigla: cont_003.sigla,
+      estado
+    });
     return this.httpClient
       .put(url1, json, {
         headers: new HttpHeaders({
@@ -62,11 +53,10 @@ export class Cont004Service {
       );
   }
 
-  deCont004(cont_004: Cont004Del) {
-    const url1 = `${url.prod}${cont004.deCont004}`;
-    const json = JSON.stringify({ cuentas: cont_004 });
+  deCont002(gestion: string, id_cod: string) {
+    const url1 = `${url.prod}${cont002.deCont002}${gestion}/${id_cod}`;
     return this.httpClient
-      .post(url1, json, {
+      .delete(url1, {
         headers: new HttpHeaders({
           authorization: this.token,
           "Content-Type": "application/json"
@@ -79,21 +69,30 @@ export class Cont004Service {
       );
   }
 
-  inCont004(cont_004: Cont004) {
-    const url1 = `${url.prod}${cont004.inCont004}`;
+  inCont002(cont_003: Cont003) {
+    const url1 = `${url.prod}${cont002.inCont002}`;
     let estado: string = "";
-    if (cont_004.estado === undefined) {
-      cont_004.estado = false;
+    let codigo: string = "";
+    if (cont_003.estado === undefined) {
+      cont_003.estado = false;
     }
-    if (cont_004.estado) {
+    if (cont_003.estado) {
       estado = "1";
     } else {
       estado = "0";
     }
+    if (cont_003.checkauto) {
+      codigo = "auto";
+    } else {
+      codigo = cont_003.idunidaddivision;
+    }
     const json = JSON.stringify({
-      descripcion: cont_004.descripcion,
-      sigla: cont_004.sigla,
-      estado
+      division: cont_003.division,
+      dependencia: cont_003.dependencia,
+      descripcion: cont_003.descripcion,
+      sigla: cont_003.sigla,
+      estado,
+      codigo
     });
     return this.httpClient
       .post(url1, json, {
