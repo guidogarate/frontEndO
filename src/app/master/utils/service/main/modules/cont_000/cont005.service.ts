@@ -2,7 +2,10 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
-import { Cont005 } from "src/app/master/utils/models/main/cont_000/index.models";
+import {
+  Cont005,
+  Cont005Mod
+} from "src/app/master/utils/models/main/cont_000/index.models";
 import cont005 from "src/app/master/config/cont000/cont005_url";
 
 @Injectable()
@@ -26,8 +29,8 @@ export class Cont005Service {
       );
   }
 
-  geCont004Cta(modulo: string, idCta: number) {
-    const url1 = `${url.prod}${cont005.geCont005Cta}${modulo}/${idCta}`;
+  geCont005Mod(mod: string, modulo: number, idCta: number) {
+    const url1 = `${url.prod}${cont005.geCont005Mod}${mod}/${modulo}/${idCta}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
@@ -42,9 +45,15 @@ export class Cont005Service {
       );
   }
 
-  upCont004(cont_004: Cont005, id_cod: string) {
-    const url1 = `${url.prod}${cont005.upCont005}${id_cod}`;
-    const json = JSON.stringify(cont_004);
+  upCont005(cont_004: Cont005Mod, modulo: string, id: string) {
+    const url1 = `${url.prod}${cont005.upCont005}${modulo}/${id}`;
+    const json = JSON.stringify({
+      descripcion: cont_004.descripcion,
+      sigla: cont_004.sigla,
+      estado: cont_004.estado,
+      tipo_transaccion: cont_004.tipo_transaccion.toString(),
+      formato_impresion: cont_004.formato_impresion.toString()
+    });
     return this.httpClient
       .put(url1, json, {
         headers: new HttpHeaders({
@@ -59,11 +68,10 @@ export class Cont005Service {
       );
   }
 
-  deCont004(cont_004: Cont005) {
-    const url1 = `${url.prod}${cont005.deCont005}`;
-    const json = JSON.stringify({ cuentas: cont_004 });
+  deCont005(modulo: string, id: string) {
+    const url1 = `${url.prod}${cont005.deCont005}${modulo}/${id}`;
     return this.httpClient
-      .post(url1, json, {
+      .delete(url1, {
         headers: new HttpHeaders({
           authorization: this.token,
           "Content-Type": "application/json"
@@ -76,7 +84,7 @@ export class Cont005Service {
       );
   }
 
-  inCont004(cont_004: Cont005) {
+  inCont005(cont_004: Cont005Mod, id_modulo: string) {
     const url1 = `${url.prod}${cont005.inCont005}`;
     let estado: string = "";
     if (cont_004.estado === undefined) {
@@ -88,7 +96,11 @@ export class Cont005Service {
       estado = "0";
     }
     const json = JSON.stringify({
+      id_modulo,
+      id_comprobante: "auto",
       descripcion: cont_004.descripcion,
+      tipo_transaccion: cont_004.tipo_transaccion,
+      formato_impresion: cont_004.formato_impresion,
       sigla: cont_004.sigla,
       estado
     });

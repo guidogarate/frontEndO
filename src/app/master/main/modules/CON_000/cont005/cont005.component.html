@@ -79,7 +79,7 @@
             <tr
               class="table-border-double PRL0"
               *ngFor="
-                let cont004 of auxma;
+                let cont005 of auxma;
                 let i = index;
                 let impar = odd;
                 let par = even
@@ -90,13 +90,13 @@
               }"
             >
               <td class="table-content-center text-center">
-                {{ cont004.id_tipocomprobante }}
+                {{ cont005.id_tipocomprobante }}
               </td>
               <td class="table-content-center text-center">
-                {{ cont004.descripcion }}
+                {{ cont005.descripcion }}
               </td>
               <td class="table-content-center text-center">
-                {{ cont004.sigla }}
+                {{ cont005.sigla }}
               </td>
               <td class="table-content-center text-center">
                 <div class="custom-control custom-switch">
@@ -104,8 +104,8 @@
                     type="checkbox"
                     class="custom-control-input"
                     [disabled]="true"
-                    [checked]="cont004.estado"
-                    title="cont004.estado"
+                    [checked]="cont005.estado"
+                    title="cont005.estado"
                     id="cont005estado{{ i }}"
                   />
                   <label
@@ -121,7 +121,7 @@
                     title="visualizar"
                     data-toggle="modal"
                     data-target="#modal_cont_005"
-                    (click)="getCont004Moda(cont004, 'visualizar')"
+                    (click)="getCont005Moda(cont005, 'visualizar')"
                     class="icon-file-eye text-primary-600 puntero"
                   ></i>
                   <i
@@ -129,15 +129,15 @@
                     title="editar"
                     data-toggle="modal"
                     data-target="#modal_cont_005"
-                    (click)="getCont004Moda(cont004, 'editar')"
+                    (click)="getCont005Moda(cont005, 'editar')"
                     class="icon-pencil7 text-teal-600 puntero"
                   ></i>
+                  <!-- data-toggle="modal"
+                    data-target="#modal_cont_005" -->
                   <i
                     class="icon-trash"
                     title="eliminar"
-                    data-toggle="modal"
-                    data-target="#modal_cont_005"
-                    (click)="getCont004Moda(cont004, 'eliminar')"
+                    (click)="eliminarTable(cont005)"
                     class="icon-trash text-danger-600 puntero"
                   ></i>
                 </div>
@@ -173,6 +173,225 @@
         </ul>
       </div>
       <br />
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<div
+  class="modal"
+  id="modal_cont_005"
+  data-backdrop="static"
+  data-keyboard="false"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form
+        [formGroup]="forma"
+        ngNativeValidate
+        autocomplete="off"
+        class="form"
+      >
+        <div class="modal-header bg-blue">
+          <h6 class="modal-title">Tipo Comprobante</h6>
+          <div class="list-icons float-right">
+            <a class="puntero" *ngIf="btnGrupo.BtnCance"
+              ><i
+                class="icon-undo2 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal('cancelar', true)"
+                title="Cancelar"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnGrupo.BtnNuevo">
+              <i
+                data-toggle="tooltip"
+                data-placement="top"
+                class="icon-diff-added xxl"
+                (click)="OpcionesModal('nuevo', true)"
+                title="nuevo"
+              ></i>
+            </a>
+            <button
+              *ngIf="btnGrupo.BtnGuard"
+              style="padding: 1px;color: white;"
+              type="submit"
+              (click)="OpcionesModal('guardar', true)"
+              class="btn text-warning-600 btn-flat btn-icon btn-rounded"
+            >
+              <i
+                *ngIf="!btnGrupo.BtnLoadi"
+                class="icon-floppy-disk xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+              ></i>
+            </button>
+            <i
+              *ngIf="btnGrupo.BtnLoadi"
+              class="icon-spinner spinner position-left"
+              title="Guardando..."
+            >
+            </i>
+            <a *ngIf="btnGrupo.BtnEdita" class="puntero">
+              <i
+                class="icon-pencil7 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal('editar', true)"
+                title="editar"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnGrupo.BtnElimi"
+              ><i
+                class="icon-trash xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal('eliminar', true)"
+                title="Eliminar"
+              >
+              </i
+            ></a>
+            <a class="puntero">
+              <i
+                class="icon-exit xxl"
+                (click)="OpcionesModal('salir')"
+                [attr.data-dismiss]="oculto"
+                title="Salir"
+              >
+              </i
+            ></a>
+          </div>
+        </div>
+        <app-cargacontent *ngIf="!start.ConMo"></app-cargacontent>
+        <ng-container *ngIf="start.ConMo">
+          <div class="modal-body ">
+            <div class="row m0 text">
+              <div class="col-sm-6 col-8 pad-row-title" style="margin: auto;">
+                <input
+                  style="width: inherit;
+                        border-radius: 1em;
+                        border-color: #03a9f4;
+                        background-color: white;"
+                  class="text-center"
+                  disabled="true"
+                  type="text"
+                  value="CONTABILIDAD"
+                />
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="custom-control custom-switch">
+                <input
+                  type="checkbox"
+                  required="false"
+                  class="custom-control-input"
+                  value="true"
+                  formControlName="estado"
+                  id="estadoCta"
+                />
+                <label class="custom-control-label" for="estadoCta"
+                  >Estado</label
+                >
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="row col-md-12">
+                <div class="col-md-4">
+                  <div class="form-group-float">
+                    <label class="form-group-float-label text-label"
+                      >Codigo</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control text-center"
+                      placeholder="Codigo"
+                      formControlName="id_tipocomprobante"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group-float">
+                    <label class="form-group-float-label text-label"
+                      >Descripcion</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control text-center"
+                      placeholder="Descripcion"
+                      formControlName="descripcion"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group-float">
+                    <label class="form-group-float-label text-label"
+                      >Sigla</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control text-center"
+                      placeholder="Sigla"
+                      formControlName="sigla"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row text-center" style="padding-bottom: 5px;">
+                <div class="col-md-6">
+                  <label class="form-group" style="padding-top: 5px;"
+                    >Tipo Transaccion</label
+                  >
+                  <select
+                    formControlName="tipo_transaccion"
+                    class="form-control selectpicker show-tick"
+                    name="division"
+                    required
+                  >
+                    <option
+                      *ngFor="let gruac of selecTipTrans"
+                      [value]="gruac.id_tipo_transaccion"
+                    >
+                      {{ gruac.descripcion }}</option
+                    >
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-group" style="padding-top: 5px;"
+                    >Formato Impresion</label
+                  >
+                  <select
+                    formControlName="formato_impresion"
+                    class="form-control selectpicker show-tick"
+                    name="formato_impresion"
+                    required
+                  >
+                    <option
+                      *ngFor="let gruac of selecFormImpr"
+                      [value]="gruac.id_formato"
+                    >
+                      {{ gruac.descripcion }}</option
+                    >
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </form>
+      <!-- <p>
+          {{ this.forma.get("codigo").status }}
+        </p> -->
+      <!-- <pre>fue modificado? {{ forma.dirty }}</pre>
+      <pre>es valido ? {{ forma.valid }}</pre>
+      <pre>{{ forma.value | json }}</pre> -->
     </div>
   </div>
 </div>
