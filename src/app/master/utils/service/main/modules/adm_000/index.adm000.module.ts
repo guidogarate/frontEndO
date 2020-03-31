@@ -11,7 +11,8 @@ import {
   Adm008Service,
   Adm009Service,
   Adm010Service,
-  Adm011Service
+  Adm011Service,
+  Adm012Service
 } from "./index.shared.service";
 
 @NgModule({
@@ -26,7 +27,8 @@ import {
     Adm008Service,
     Adm009Service,
     Adm010Service,
-    Adm011Service
+    Adm011Service,
+    Adm012Service
   ]
 })
 export class IndexAdm000Module {}
