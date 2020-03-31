@@ -6,3 +6,7 @@ export interface Cont004 {
   sigla: string;
   estado: boolean;
 }
+export interface Cont004Del {
+  id_tipocuenta: string;
+  id_cuenta: string;
+}

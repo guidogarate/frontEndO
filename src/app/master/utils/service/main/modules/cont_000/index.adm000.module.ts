@@ -3,6 +3,11 @@ import { NgModule } from "@angular/core";
 import * as cont from "./index.shared.service";
 
 @NgModule({
-  providers: [cont.Cont003Service, cont.Cont004Service]
+  providers: [
+    cont.Cont002Service,
+    cont.Cont003Service,
+    cont.Cont004Service,
+    cont.Cont005Service
+  ]
 })
 export class IndexCont000Module {}
