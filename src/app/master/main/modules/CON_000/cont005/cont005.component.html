@@ -1,4 +1,4 @@
-<div class="card haciadentro animaciones superior" *ngIf="start.Conte">
+<!-- <div class="card haciadentro animaciones superior" *ngIf="start.Conte">
   <div class="card-body pb-0" style="padding-bottom: 0px;">
     <div class="card-header header-elements-inline" style="padding: 0px;">
       <h5 class="card-title font-weight-bold">
@@ -133,7 +133,7 @@
                     class="icon-pencil7 text-teal-600 puntero"
                   ></i>
                   <!-- data-toggle="modal"
-                    data-target="#modal_cont_005" -->
+                    data-target="#modal_cont_005"
                   <i
                     class="icon-trash"
                     title="eliminar"
@@ -175,10 +175,10 @@
       <br />
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- modal -->
-<div
+<!-- <div
   class="modal"
   id="modal_cont_005"
   data-backdrop="static"
@@ -216,7 +216,7 @@
             </a>
             <button
               *ngIf="btnGrupo.BtnGuard"
-              style="padding: 1px;color: white;"
+              style="padding: 1px; color: white;"
               type="submit"
               (click)="OpcionesModal('guardar', true)"
               class="btn text-warning-600 btn-flat btn-icon btn-rounded"
@@ -267,14 +267,16 @@
         </div>
         <app-cargacontent *ngIf="!start.ConMo"></app-cargacontent>
         <ng-container *ngIf="start.ConMo">
-          <div class="modal-body ">
+          <div class="modal-body">
             <div class="row m0 text">
               <div class="col-sm-6 col-8 pad-row-title" style="margin: auto;">
                 <input
-                  style="width: inherit;
-                        border-radius: 1em;
-                        border-color: #03a9f4;
-                        background-color: white;"
+                  style="
+                    width: inherit;
+                    border-radius: 1em;
+                    border-color: #03a9f4;
+                    background-color: white;
+                  "
                   class="text-center"
                   disabled="true"
                   type="text"
@@ -389,9 +391,9 @@
       <!-- <p>
           {{ this.forma.get("codigo").status }}
         </p> -->
-      <!-- <pre>fue modificado? {{ forma.dirty }}</pre>
+<!-- <pre>fue modificado? {{ forma.dirty }}</pre>
       <pre>es valido ? {{ forma.valid }}</pre>
-      <pre>{{ forma.value | json }}</pre> -->
+      <pre>{{ forma.value | json }}</pre>
     </div>
   </div>
-</div>
+</div> -->

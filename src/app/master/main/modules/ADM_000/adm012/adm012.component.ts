@@ -4,12 +4,12 @@ import {
   Adm012SelectModulos,
   Adm012SelectMonedas,
   Adm012SelectTamImp,
-  Adm012SelectCodigoCuentas
+  Adm012SelectCodigoCuentas,
 } from "src/app/master/utils/models/main/adm_000/index.models";
 import { Adm012Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import {
   NotyGlobal,
-  InitGlobal
+  InitGlobal,
 } from "src/app/master/utils/global/index.global";
 import glb001 from "src/app/master/config/glb000/glb001_btn";
 import glb002 from "src/app/master/config/glb000/glb002_start";
@@ -17,7 +17,7 @@ import {
   FormControl,
   FormGroup,
   FormBuilder,
-  Validators
+  Validators,
 } from "@angular/forms";
 import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models";
 import { Observable, Subscription } from "rxjs";
@@ -25,7 +25,7 @@ import { debounceTime } from "rxjs/operators";
 @Component({
   selector: "app-adm012",
   templateUrl: "./adm012.component.html",
-  styleUrls: ["./adm012.component.css"]
+  styleUrls: ["./adm012.component.css"],
 })
 export class Adm012Component {
   textBuscarAdm012 = new FormControl("", []);
@@ -49,7 +49,7 @@ export class Adm012Component {
     codigo: true,
     descripci: true,
     sigla: true,
-    estado: true
+    estado: true,
   };
   id_adm012 = "";
   contorlAccion: string = "";
@@ -80,7 +80,7 @@ export class Adm012Component {
     this.crearFormulario();
     this.textBuscarAdm012.valueChanges
       .pipe(debounceTime(500))
-      .subscribe(value => {
+      .subscribe((value) => {
         if (value.length > 1) {
           this.getAdm012(value, "1");
         } else {
@@ -110,7 +110,7 @@ export class Adm012Component {
         this.start.Texto
       );
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       // this.gestion = resp.usr[0].datos_empresa[0].gestiones[0].gestion;
       if (!this.start.Conte) {
         this.start.Conte = true;
@@ -147,6 +147,7 @@ export class Adm012Component {
         } else {
           this.notyG.noty("error", resp["messagge"], 5000);
           this.selecModulos = [];
+
           this.auxma = [];
           this.pagi = [];
           this.table = true;
@@ -175,7 +176,7 @@ export class Adm012Component {
       codigo_qr: ["", [Validators.required]],
       logo_empresa: ["", [Validators.required]],
       checkauto: [""],
-      estado: ["", [Validators.required]]
+      estado: ["", [Validators.required]],
     });
     console.log("creando formulario: ", this.forma.value);
     // console.log("creando formulario: ", this.forma.value);
@@ -231,7 +232,7 @@ export class Adm012Component {
         );
       }
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       if (resp["ok"]) {
         this.auxma = resp.data[0].clase_documentos;
         this.pagi = resp["cant"];
@@ -251,7 +252,7 @@ export class Adm012Component {
       nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
       id_documento: "auto",
       estado: false,
-      checkauto: true
+      checkauto: true,
     });
     console.log("agregando nuevo: ", this.forma.value);
     this.start.CtrAc = "nuevo";
@@ -265,7 +266,7 @@ export class Adm012Component {
   }
   ObtenerNombreModulo(id: number) {
     let name: string = "";
-    this.selecModulos.forEach(element => {
+    this.selecModulos.forEach((element) => {
       if (element.id_modulo == id) {
         // console.log("Elemento encontrado: ", element.modulo);
         name = element.modulo;
@@ -328,7 +329,7 @@ export class Adm012Component {
           nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
           estado: false,
           id_documento: "auto",
-          checkauto: true
+          checkauto: true,
         }); // resetea todo a null y estado a false
         console.log("reseteando form opciones Modal: ", this.forma.value);
         this.boolDisabled(false);
@@ -457,7 +458,7 @@ export class Adm012Component {
     } else {
       this.notyG.noty("error", "control Accion Invalido", 2000);
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       this.btnGrupo.BtnLoadi = false;
       this.boolDisabled(true);
       this.boolBtnGrupo(true, false);
@@ -482,7 +483,7 @@ export class Adm012Component {
     let peticion: Observable<any>;
     peticion = this.adm012S.delAdm012(adm012.id_modulo, "" + adm012.id_formato);
     let numPag = this.start.NumPa;
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       if (resp["ok"]) {
         if (this.auxma.length === 1) {
           numPag--;
