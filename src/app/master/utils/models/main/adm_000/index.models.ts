@@ -5,3 +5,8 @@ export { Adm006 } from "./adm_006.models";
 export { Adm009 } from "./adm_009.models";
 export { Adm011 } from "./adm_011.models";
 export { Adm011Select } from "./adm_011.models";
+export { Adm012 } from "./adm_012.models";
+export { Adm012SelectModulos } from "./adm_012.models";
+export { Adm012SelectTamImp } from "./adm_012.models";
+export { Adm012SelectMonedas } from "./adm_012.models";
+export { Adm012SelectCodigoCuentas } from "./adm_012.models";

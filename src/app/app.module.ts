@@ -27,7 +27,7 @@ registerLocaleData(es);
 import { LOCALE_ID } from "@angular/core";
 // import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { ServiceWorkerModule } from "@angular/service-worker";
 @NgModule({
   declarations: [AppComponent, LoginComponent, NopagefoundComponent],
   imports: [
@@ -42,7 +42,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     SocketIoModule.forRoot(config),
     IndexGlobalModule,
     DeviceDetectorModule.forRoot(),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register("ngsw-worker.js", {
+      enabled: environment.production
+    })
   ],
   providers: [{ provide: LOCALE_ID, useValue: "es-ES" }],
   bootstrap: [AppComponent]
