@@ -4,7 +4,7 @@ import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
 import {
   Cont005,
-  Cont005Mod
+  Cont005Mod,
 } from "src/app/master/utils/models/main/cont_000/index.models";
 import cont005 from "src/app/master/config/cont000/cont005_url";
 
@@ -13,17 +13,17 @@ export class Cont005Service {
   token = sessionStorage.getItem("id");
   constructor(private httpClient: HttpClient) {}
 
-  geCont005(modulo: string, indice: string, mod: string, texto: string) {
-    const url1 = `${url.prod}${cont005.geCont005}${modulo}/${indice}/${mod}/${texto}`;
+  geCont005(modulo: string, indice: string, texto: string) {
+    const url1 = `${url.prod}${cont005.geCont005}${modulo}/${indice}/${texto}`;
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
           authorization: this.token,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           return resp;
         })
       );
@@ -35,11 +35,11 @@ export class Cont005Service {
       .get(url1, {
         headers: new HttpHeaders({
           authorization: this.token,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           return resp;
         })
       );
@@ -52,17 +52,17 @@ export class Cont005Service {
       sigla: cont_004.sigla,
       estado: cont_004.estado,
       tipo_transaccion: cont_004.tipo_transaccion.toString(),
-      formato_impresion: cont_004.formato_impresion.toString()
+      formato_impresion: cont_004.formato_impresion.toString(),
     });
     return this.httpClient
       .put(url1, json, {
         headers: new HttpHeaders({
           authorization: this.token,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           return resp;
         })
       );
@@ -74,11 +74,11 @@ export class Cont005Service {
       .delete(url1, {
         headers: new HttpHeaders({
           authorization: this.token,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           return resp;
         })
       );
@@ -102,17 +102,17 @@ export class Cont005Service {
       tipo_transaccion: cont_004.tipo_transaccion,
       formato_impresion: cont_004.formato_impresion,
       sigla: cont_004.sigla,
-      estado
+      estado,
     });
     return this.httpClient
       .post(url1, json, {
         headers: new HttpHeaders({
           authorization: this.token,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           return resp;
         })
       );

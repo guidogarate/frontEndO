@@ -11,7 +11,19 @@
     </div>
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <select
+        <input
+          style="
+            width: inherit;
+            border-radius: 1em;
+            border-color: #03a9f4;
+            background-color: white;
+          "
+          class="text-center"
+          disabled="true"
+          type="text"
+          value="CONTABILIDAD"
+        />
+        <!-- <select
           (change)="cargarDependencia2($event.target.value)"
           class="form-control selectpicker show-tick"
           name="division"
@@ -19,7 +31,7 @@
           <option *ngFor="let gruac of selectMod" [value]="gruac.id_modulo">
             {{ gruac.modulo }}</option
           >
-        </select>
+        </select> -->
       </div>
     </div>
     <div class="row">
@@ -216,7 +228,7 @@
             </a>
             <button
               *ngIf="btnGrupo.BtnGuard"
-              style="padding: 1px;color: white;"
+              style="padding: 1px; color: white;"
               type="submit"
               (click)="OpcionesModal('guardar', true)"
               class="btn text-warning-600 btn-flat btn-icon btn-rounded"
@@ -267,14 +279,16 @@
         </div>
         <app-cargacontent *ngIf="!start.ConMo"></app-cargacontent>
         <ng-container *ngIf="start.ConMo">
-          <div class="modal-body ">
+          <div class="modal-body">
             <div class="row m0 text">
               <div class="col-sm-6 col-8 pad-row-title" style="margin: auto;">
                 <input
-                  style="width: inherit;
-                        border-radius: 1em;
-                        border-color: #03a9f4;
-                        background-color: white;"
+                  style="
+                    width: inherit;
+                    border-radius: 1em;
+                    border-color: #03a9f4;
+                    background-color: white;
+                  "
                   class="text-center"
                   disabled="true"
                   type="text"
