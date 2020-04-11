@@ -10,18 +10,24 @@ export class Adm011Service {
   token = sessionStorage.getItem("id");
   constructor(private httpClient: HttpClient) {}
 
-  getAdm011(modulo: string, indice: string, idModulo: number, texto: string) {
-    const url1 = `${url.prod}${adm011.getAdm011}${modulo}/${indice}/${idModulo}/${texto}`;
+  getAdm011(
+    modulo: string,
+    indice: string,
+    idModulo: number,
+    nroRegistros: string,
+    texto: string
+  ) {
+    const url1 = `${url.prod}${adm011.getAdm011}${modulo}/${indice}/${idModulo}/${nroRegistros}/${texto}`;
     console.log("url get: ", url1);
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
           authorization: this.token,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           console.log(resp);
           return resp;
         })
@@ -35,17 +41,17 @@ export class Adm011Service {
       descripcion: adm_011.descripcion,
       sigla: adm_011.sigla,
       componente: adm_011.componente,
-      estado: adm_011.estado
+      estado: adm_011.estado,
     });
     return this.httpClient
       .put(url1, json, {
         headers: new HttpHeaders({
           authorization: this.token,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           return resp;
         })
       );
@@ -57,11 +63,11 @@ export class Adm011Service {
       .delete(url1, {
         headers: new HttpHeaders({
           authorization: this.token,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           return resp;
         })
       );
@@ -77,17 +83,17 @@ export class Adm011Service {
       descripcion: adm_011.descripcion,
       sigla: adm_011.sigla,
       componente: adm_011.componente,
-      estado: adm_011.estado
+      estado: adm_011.estado,
     });
     return this.httpClient
       .post(url1, json, {
         headers: new HttpHeaders({
           authorization: this.token,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           return resp;
         })
       );

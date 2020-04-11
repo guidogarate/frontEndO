@@ -65,7 +65,7 @@ export class Adm011Component {
   placeholdeAuto = "automatico";
   insertar = "fall";
   selectModulo: Adm011Select;
-
+  nroRegistros: string = "10";
   constructor(
     private adm011S: Adm011Service,
     private fb: FormBuilder,
@@ -95,6 +95,7 @@ export class Adm011Component {
         "90",
         numePag,
         this.idModulo,
+        this.nroRegistros,
         this.start.Texto
       );
     } else {
@@ -103,6 +104,7 @@ export class Adm011Component {
         "90",
         numePag,
         this.idModulo,
+        this.nroRegistros,
         this.start.Texto
       );
     }
@@ -178,6 +180,7 @@ export class Adm011Component {
         "90",
         this.numeroPag.toString(),
         this.idModulo,
+        this.nroRegistros,
         this.start.Texto
       );
     } else {
@@ -194,6 +197,7 @@ export class Adm011Component {
           "90",
           this.numeroPag.toString(),
           this.idModulo,
+          this.nroRegistros,
           this.start.Texto
         );
       } else if (numero === "999") {
@@ -209,6 +213,7 @@ export class Adm011Component {
           "90",
           this.numeroPag.toString(),
           this.idModulo,
+          this.nroRegistros,
           this.start.Texto
         );
       }
