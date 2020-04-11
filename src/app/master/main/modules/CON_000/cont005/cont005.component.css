@@ -30,3 +30,6 @@
 }
 
 /**COLOCAR MODAL EN MANERA GLOBAL*/
+.table-hover {
+  background-color: rgba(5, 161, 233, 0.3);
+}

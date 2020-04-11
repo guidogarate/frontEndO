@@ -8,7 +8,7 @@ import {
 import glb002 from "src/app/master/config/glb000/glb002_start";
 import { Cont005Service } from "src/app/master/utils/service/main/modules/cont_000/index.shared.service";
 import * as glb from "src/app/master/utils/global/index.global";
-import { debounceTime, retry } from "rxjs/operators";
+import { debounceTime } from "rxjs/operators";
 import { Observable, Subscription } from "rxjs";
 import { Paginacion } from "src/app/master/utils/models/main/global/index.models";
 import {
@@ -36,6 +36,9 @@ export class Cont005Component implements OnInit {
   pagi: Paginacion[];
   forma: FormGroup;
   oculto = "modal";
+
+  selectData = [10, 25, 50, 100];
+  cantData = "10";
   /* con005 */
   modulo: string = "0";
   selectMod: Cont005Sel[];
@@ -56,10 +59,10 @@ export class Cont005Component implements OnInit {
       .pipe(debounceTime(500))
       .subscribe((value) => {
         if (value.length > 1) {
-          this.getCont005(value, "1");
+          this.getCont005(value, "1", this.cantData);
         } else {
           this.start.Texto = "all_data";
-          this.getCont005(this.start.Texto, "1");
+          this.getCont005(this.start.Texto, "1", this.cantData);
         }
       });
   }
@@ -74,18 +77,22 @@ export class Cont005Component implements OnInit {
       formato_impresion: ["", [Validators.required]],
     });
   }
-
+  cargarData(data: string) {
+    console.log(data);
+    this.cantData = data;
+    this.getCont005(this.start.Texto, this.start.NumPa.toString(), data);
+  }
   ngOnInit() {}
 
-  getCont005(texto: string, numePag = "1") {
+  getCont005(texto: string, numePag = "1", cant = "10") {
     this.start.Busca = true;
     let peticion: Observable<any>;
     if (texto.length === 0 || texto === "all_data") {
       this.start.Texto = "all_data";
-      peticion = this.cont005S.geCont005("10", numePag, this.start.Texto);
+      peticion = this.cont005S.geCont005("10", numePag, cant, this.start.Texto);
     } else {
       this.start.Texto = texto;
-      peticion = this.cont005S.geCont005("10", numePag, this.start.Texto);
+      peticion = this.cont005S.geCont005("10", numePag, cant, this.start.Texto);
     }
     this.sus = peticion.subscribe((resp) => {
       if (!this.start.Conte) {
@@ -395,6 +402,7 @@ export class Cont005Component implements OnInit {
       peticion = this.cont005S.geCont005(
         "10",
         this.start.NumPa.toString(),
+        this.cantData,
         this.start.Texto
       );
     } else {
@@ -410,6 +418,7 @@ export class Cont005Component implements OnInit {
         peticion = this.cont005S.geCont005(
           "10",
           this.start.NumPa.toString(),
+          this.cantData,
           this.start.Texto
         );
       } else if (numero === "999") {
@@ -424,6 +433,7 @@ export class Cont005Component implements OnInit {
         peticion = this.cont005S.geCont005(
           "10",
           this.start.NumPa.toString(),
+          this.cantData,
           this.start.Texto
         );
       }
@@ -431,6 +441,7 @@ export class Cont005Component implements OnInit {
         peticion = this.cont005S.geCont005(
           "10",
           this.start.NumPa.toString(),
+          this.cantData,
           this.start.Texto
         );
       }
