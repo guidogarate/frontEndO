@@ -3,7 +3,7 @@ import {
   FormControl,
   FormGroup,
   FormBuilder,
-  Validators
+  Validators,
 } from "@angular/forms";
 import glb002 from "src/app/master/config/glb000/glb002_start";
 import { Cont005Service } from "src/app/master/utils/service/main/modules/cont_000/index.shared.service";
@@ -16,14 +16,14 @@ import {
   Cont005Mod,
   Cont005Sel,
   Cont005Trans,
-  Cont005Impre
+  Cont005Impre,
 } from "src/app/master/utils/models/main/cont_000/index.models";
 import glb001 from "src/app/master/config/glb000/glb001_btn";
 
 @Component({
   selector: "app-cont005",
   templateUrl: "./cont005.component.html",
-  styleUrls: ["./cont005.component.css"]
+  styleUrls: ["./cont005.component.css"],
 })
 export class Cont005Component implements OnInit {
   textBuscarCont005 = new FormControl("", []);
@@ -41,6 +41,8 @@ export class Cont005Component implements OnInit {
   selectMod: Cont005Sel[];
   selecTipTrans: Cont005Trans[];
   selecFormImpr: Cont005Impre[];
+  selecTipTransCopy: Cont005Trans[];
+  selecFormImprCopy: Cont005Impre[];
 
   constructor(
     private cont005S: Cont005Service,
@@ -52,7 +54,7 @@ export class Cont005Component implements OnInit {
     this.crearFormulario();
     this.textBuscarCont005.valueChanges
       .pipe(debounceTime(500))
-      .subscribe(value => {
+      .subscribe((value) => {
         if (value.length > 1) {
           this.getCont005(value, "1");
         } else {
@@ -69,26 +71,29 @@ export class Cont005Component implements OnInit {
       sigla: ["", [Validators.required]],
       estado: ["", [Validators.required]],
       tipo_transaccion: ["", [Validators.required]],
-      formato_impresion: ["", [Validators.required]]
+      formato_impresion: ["", [Validators.required]],
     });
   }
 
   ngOnInit() {}
 
-  getCont005(texto: string, numePag = "1", mod = "0") {
+  getCont005(texto: string, numePag = "1") {
     this.start.Busca = true;
     let peticion: Observable<any>;
     if (texto.length === 0 || texto === "all_data") {
       this.start.Texto = "all_data";
-      peticion = this.cont005S.geCont005("10", numePag, mod, this.start.Texto);
+      peticion = this.cont005S.geCont005("10", numePag, this.start.Texto);
     } else {
       this.start.Texto = texto;
-      peticion = this.cont005S.geCont005("10", numePag, mod, this.start.Texto);
+      peticion = this.cont005S.geCont005("10", numePag, this.start.Texto);
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       if (!this.start.Conte) {
         this.start.Conte = true;
       }
+      this.selecTipTransCopy = resp.data[0].tipos_transacion;
+      this.selecFormImprCopy = resp.data[0].formatos_impresion;
+      this.modulo = resp.data[0].modulos[0].id_modulo.toString();
       this.start.NumPa = Number(numePag);
       if (resp["ok"]) {
         this.auxma = resp.data[0].tipos_comprobantes;
@@ -116,7 +121,7 @@ export class Cont005Component implements OnInit {
       cont_005.id_modulo,
       cont_005.id_tipocomprobante
     );
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       if (resp["ok"]) {
         this.selecTipTrans = resp.data[0].tipos_transacion;
         this.selecFormImpr = resp.data[0].formatos_impresion;
@@ -128,6 +133,20 @@ export class Cont005Component implements OnInit {
       }
       this.start.ConMo = true;
     });
+  }
+
+  nuevoCont005() {
+    this.selecTipTrans = this.selecTipTransCopy;
+    this.selecFormImpr = this.selecFormImprCopy;
+    this.start.ConMo = true;
+    this.boolDisabled(false);
+    this.boolBtnGrupo(false, true);
+    this.btnGrupo.BtnCance = false;
+    this.forma.reset();
+    this.forma.get("id_tipocomprobante").setValue("automatico");
+    this.forma.get("estado").setValue(false);
+    this.forma.get("id_tipocomprobante").disable();
+    this.start.CtrAc = "nuevo";
   }
 
   OpcionesTable(cont_005: Cont005, tipo: string) {
@@ -234,11 +253,13 @@ export class Cont005Component implements OnInit {
       const resp = confirm("Desea Descartar Cambios");
       if (!resp) {
         this.oculto = "";
+        this.auxmaModal = null;
         return;
       }
     }
     this.oculto = "modal";
     this.forma.reset();
+    this.auxmaModal = null;
     this.start.CtrAc = "";
     this.boolBtnGrupo(false, false);
   }
@@ -285,7 +306,6 @@ export class Cont005Component implements OnInit {
 
   guardarModal(): void {
     if (this.forma.valid) {
-      console.log("valido");
       if (this.start.CtrAc === "nuevo") {
         this.boolDisabled(true);
         this.guardarDatos(this.forma.value, this.start.CtrAc);
@@ -318,21 +338,19 @@ export class Cont005Component implements OnInit {
       this.notyG.noty("error", "control Accion Invalido", 2000);
       return;
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       this.btnGrupo.BtnLoadi = false;
       if (resp["ok"]) {
         if (controlAccion === "nuevo") {
+          this.start.IdCod = resp["id_tipocomprobante"].toString();
+          this.forma.get("id_tipocomprobante").setValue(this.start.IdCod);
           this.auxmaModal = this.forma.value;
         } else if (controlAccion === "editar") {
           this.auxmaModal = cont_005;
         }
         this.resetDatos();
         this.boolBtnGrupo(true, false);
-        this.getCont005(
-          this.start.Texto,
-          this.start.NumPa.toString(),
-          this.modulo
-        );
+        this.getCont005(this.start.Texto, this.start.NumPa.toString());
         this.notyG.noty("success", resp["mensaje"], 1000);
       } else {
         this.notyG.noty("error", resp["mensaje"], 3000);
@@ -345,7 +363,7 @@ export class Cont005Component implements OnInit {
     let peticion: Observable<any>;
     peticion = this.cont005S.deCont005(this.modulo, this.start.IdCod);
     let numPag = this.start.NumPa;
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       this.btnGrupo.BtnLoadi = false;
       if (resp["ok"]) {
         if (this.auxma.length === 1) {
@@ -377,7 +395,6 @@ export class Cont005Component implements OnInit {
       peticion = this.cont005S.geCont005(
         "10",
         this.start.NumPa.toString(),
-        this.modulo,
         this.start.Texto
       );
     } else {
@@ -392,7 +409,6 @@ export class Cont005Component implements OnInit {
         }
         peticion = this.cont005S.geCont005(
           "10",
-          this.modulo,
           this.start.NumPa.toString(),
           this.start.Texto
         );
@@ -407,18 +423,27 @@ export class Cont005Component implements OnInit {
         }
         peticion = this.cont005S.geCont005(
           "10",
-          this.modulo,
+          this.start.NumPa.toString(),
+          this.start.Texto
+        );
+      }
+      if (numero === "0") {
+        peticion = this.cont005S.geCont005(
+          "10",
           this.start.NumPa.toString(),
           this.start.Texto
         );
       }
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       if (resp["ok"]) {
         this.auxma = resp.data[0].tipos_comprobantes;
         this.pagi = resp["cant"];
       } else {
-        this.notyG.noty("error", resp["mensaje"], 5000);
+        this.notyG.noty("error", resp["messagge"], 5000);
+        this.auxma = [];
+        this.pagi = [];
+        this.table = true;
       }
     });
   }

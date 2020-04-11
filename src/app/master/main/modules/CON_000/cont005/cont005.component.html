@@ -11,7 +11,19 @@
     </div>
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <select
+        <input
+          style="
+            width: inherit;
+            border-radius: 1em;
+            border-color: #03a9f4;
+            background-color: white;
+          "
+          class="text-center"
+          disabled="true"
+          type="text"
+          value="CONTABILIDAD"
+        />
+        <!-- <select
           (change)="cargarDependencia2($event.target.value)"
           class="form-control selectpicker show-tick"
           name="division"
@@ -19,7 +31,7 @@
           <option *ngFor="let gruac of selectMod" [value]="gruac.id_modulo">
             {{ gruac.modulo }}</option
           >
-        </select>
+        </select> -->
       </div>
     </div>
     <div class="row">
