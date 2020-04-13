@@ -1,4 +1,4 @@
-<!-- <div class="card haciadentro animaciones superior" *ngIf="start.Conte">
+<div class="card haciadentro animaciones superior" *ngIf="start.Conte">
   <div class="card-body pb-0" style="padding-bottom: 0px;">
     <div class="card-header header-elements-inline" style="padding: 0px;">
       <h5 class="card-title font-weight-bold">
@@ -9,34 +9,8 @@
         Tipo de comprobantes
       </h5>
     </div>
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <input
-          style="
-            width: inherit;
-            border-radius: 1em;
-            border-color: #03a9f4;
-            background-color: white;
-          "
-          class="text-center"
-          disabled="true"
-          type="text"
-          value="CONTABILIDAD"
-        />
-        <!-- <select
-          (change)="cargarDependencia2($event.target.value)"
-          class="form-control selectpicker show-tick"
-          name="division"
-        >
-          <option *ngFor="let gruac of selectMod" [value]="gruac.id_modulo">
-            {{ gruac.modulo }}</option
-          >
-        </select> -->
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-1 col-sm-1 col-md-3 col-lg-8"></div>
-      <div class="col-8 col-sm-9 col-md-6 col-lg-3">
+    <div class="row justify-content-end">
+      <div class="col-4">
         <div class="form-group form-group-feedback form-group-feedback-right">
           <input
             type="text"
@@ -55,16 +29,41 @@
           </div>
         </div>
       </div>
-      <div class="col-3 col-sm-2 col-md-3 col-lg-1" style="padding-top: 30px;">
-        <div class="form-control-feedback">
-          <i
-            data-toggle="modal"
-            data-target="#modal_cont_005"
-            (click)="nuevoCont005()"
-            class="icon-diff-added puntero xxl"
-            title="agregar"
-          ></i>
-        </div>
+      <div class="col-1">
+        <i
+          data-toggle="modal"
+          data-target="#modal_cont_005"
+          (click)="nuevoCont005()"
+          class="icon-diff-added puntero xxl"
+          title="agregar"
+        ></i>
+      </div>
+    </div>
+    <div class="row justify-content-start" style="padding-bottom: 15px;">
+      <div class="col-2">
+        <select
+          (change)="cargarData($event.target.value)"
+          class="form-control selectpicker show-tick"
+          name="division"
+        >
+          <option *ngFor="let gruac of selectData" [value]="gruac">
+            {{ gruac }}</option
+          >
+        </select>
+      </div>
+      <div class="col-md-6 offset-md-3">
+        <input
+          style="
+            width: inherit;
+            border-radius: 1em;
+            border-color: #03a9f4;
+            background-color: white;
+          "
+          class="text-center"
+          disabled="true"
+          type="text"
+          value="CONTABILIDAD"
+        />
       </div>
     </div>
   </div>
@@ -77,7 +76,7 @@
     <div *ngIf="!table" class="col-sm-12">
       <app-cargacontent *ngIf="start.Loadi"></app-cargacontent>
       <div class="table-responsive">
-        <table class="table table-sm table-hover table-bordered">
+        <table class="table table-borderless table-hover">
           <thead *ngIf="start.Table" class="text-center">
             <tr class="bg-blue">
               <th>Codigo</th>
@@ -89,7 +88,6 @@
           </thead>
           <tbody>
             <tr
-              class="table-border-double PRL0"
               *ngFor="
                 let cont005 of auxma;
                 let i = index;
@@ -144,8 +142,6 @@
                     (click)="getCont005Moda(cont005, 'editar')"
                     class="icon-pencil7 text-teal-600 puntero"
                   ></i>
-                  <!-- data-toggle="modal"
-                    data-target="#modal_cont_005"
                   <i
                     class="icon-trash"
                     title="eliminar"
@@ -187,7 +183,7 @@
       <br />
     </div>
   </div>
-</div> -->
+</div>
 
 <!-- modal -->
 <!-- <div

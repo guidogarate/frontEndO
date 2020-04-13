@@ -1,1 +1,56 @@
-<p>cont002 works!</p>
+<div class="card haciadentro animaciones superior" *ngIf="start.Conte">
+  <div class="card-body pb-0" style="padding-bottom: 0px;">
+    <div class="card-header header-elements-inline" style="padding: 0px;">
+      <h5 class="card-title font-weight-bold">
+        <img
+          src="https://trello-attachments.s3.amazonaws.com/5e00f87a7a953c871e9a19f0/37x37/026b03c4f5a191f167b26d1a634519ca/image.png"
+          alt=""
+        />
+        CATALOGOS DE CUENTAS
+      </h5>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col-4">
+        <div class="form-group form-group-feedback form-group-feedback-right">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar"
+            id="buscarGrupoLupa"
+            [formControl]="textBuscarCont002"
+          />
+          <div *ngIf="start.Busca" class="form-control-feedback">
+            <i class="icon-spinner2 spinner"></i>
+          </div>
+          <div *ngIf="!start.Busca" class="form-control-feedback">
+            <label for="buscarGrupoLupa">
+              <i class="icon-search4 puntero" title="buscar"></i
+            ></label>
+          </div>
+        </div>
+      </div>
+      <!-- (click)="nuevoCont005()" -->
+      <div class="col-1">
+        <i
+          data-toggle="modal"
+          data-target="#modal_cont_005"
+          class="icon-diff-added puntero xxl"
+          title="agregar"
+        ></i>
+      </div>
+    </div>
+    <div class="row justify-content-start" style="padding-bottom: 15px;">
+      <div class="col-2">
+        <!-- <select
+          (change)="cargarData($event.target.value)"
+          class="form-control selectpicker show-tick"
+          name="division"
+        >
+          <option *ngFor="let gruac of selectData" [value]="gruac">
+            {{ gruac }}</option
+          >
+        </select> -->
+      </div>
+    </div>
+  </div>
+</div>
