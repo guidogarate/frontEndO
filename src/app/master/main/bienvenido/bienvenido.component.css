@@ -14,10 +14,16 @@
   vertical-align: middle;
   border-radius: 50%;
   padding: 1em;
-  background: #8cc657;
+  background: #fcfb52;
+}
+.fondo-card {
+  background-color: #ececec;
 }
 @media screen and (max-width: 600px) {
   .logo-height {
     height: 7em;
+  }
+  .circulo {
+    padding: 0.5em;
   }
 }
