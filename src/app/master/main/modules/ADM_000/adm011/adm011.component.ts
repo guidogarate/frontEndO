@@ -1,12 +1,12 @@
 import { Component } from "@angular/core";
 import {
   Adm011,
-  Adm011Select
+  Adm011Select,
 } from "src/app/master/utils/models/main/adm_000/index.models";
 import { Adm011Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import {
   NotyGlobal,
-  InitGlobal
+  InitGlobal,
 } from "src/app/master/utils/global/index.global";
 import glb001 from "src/app/master/config/glb000/glb001_btn";
 import glb002 from "src/app/master/config/glb000/glb002_start";
@@ -14,7 +14,7 @@ import {
   FormControl,
   FormGroup,
   FormBuilder,
-  Validators
+  Validators,
 } from "@angular/forms";
 import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models";
 import { Observable, Subscription } from "rxjs";
@@ -22,7 +22,7 @@ import { debounceTime } from "rxjs/operators";
 @Component({
   selector: "app-adm011",
   templateUrl: "./adm011.component.html",
-  styleUrls: ["./adm011.component.css"]
+  styleUrls: ["./adm011.component.css"],
 })
 export class Adm011Component {
   textBuscarAdm011 = new FormControl("", []);
@@ -43,7 +43,7 @@ export class Adm011Component {
     codigo: true,
     descripci: true,
     sigla: true,
-    estado: true
+    estado: true,
   };
   id_adm011 = "";
   contorlAccion: string = "";
@@ -65,7 +65,7 @@ export class Adm011Component {
   placeholdeAuto = "automatico";
   insertar = "fall";
   selectModulo: Adm011Select;
-
+  nroRegistros: string = "10";
   constructor(
     private adm011S: Adm011Service,
     private fb: FormBuilder,
@@ -76,7 +76,7 @@ export class Adm011Component {
     this.crearFormulario();
     this.textBuscarAdm011.valueChanges
       .pipe(debounceTime(500))
-      .subscribe(value => {
+      .subscribe((value) => {
         if (value.length > 1) {
           this.getAdm011(value, "1");
         } else {
@@ -95,6 +95,7 @@ export class Adm011Component {
         "90",
         numePag,
         this.idModulo,
+        this.nroRegistros,
         this.start.Texto
       );
     } else {
@@ -103,10 +104,11 @@ export class Adm011Component {
         "90",
         numePag,
         this.idModulo,
+        this.nroRegistros,
         this.start.Texto
       );
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       // this.gestion = resp.usr[0].datos_empresa[0].gestiones[0].gestion;
       if (!this.start.Conte) {
         this.start.Conte = true;
@@ -157,7 +159,7 @@ export class Adm011Component {
       descripcion: ["", [Validators.required]],
       id_documento: ["", [Validators.required]],
       componente: ["", [Validators.required]],
-      estado: ["", [Validators.required]]
+      estado: ["", [Validators.required]],
     });
     console.log("creando formulario: ", this.forma.value);
     // console.log("creando formulario: ", this.forma.value);
@@ -178,6 +180,7 @@ export class Adm011Component {
         "90",
         this.numeroPag.toString(),
         this.idModulo,
+        this.nroRegistros,
         this.start.Texto
       );
     } else {
@@ -194,6 +197,7 @@ export class Adm011Component {
           "90",
           this.numeroPag.toString(),
           this.idModulo,
+          this.nroRegistros,
           this.start.Texto
         );
       } else if (numero === "999") {
@@ -209,11 +213,12 @@ export class Adm011Component {
           "90",
           this.numeroPag.toString(),
           this.idModulo,
+          this.nroRegistros,
           this.start.Texto
         );
       }
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       if (resp["ok"]) {
         this.auxma = resp.data[0].clase_documentos;
         this.pagi = resp["cant"];
@@ -233,7 +238,7 @@ export class Adm011Component {
       nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
       id_documento: "auto",
       estado: false,
-      checkauto: true
+      checkauto: true,
     });
     console.log("agregando nuevo: ", this.forma.value);
     this.start.CtrAc = "nuevo";
@@ -247,7 +252,7 @@ export class Adm011Component {
   }
   ObtenerNombreModulo(id: number) {
     let name: string = "";
-    this.selecDivModal.forEach(element => {
+    this.selecDivModal.forEach((element) => {
       if (element.id_modulo == id) {
         // console.log("Elemento encontrado: ", element.modulo);
         name = element.modulo;
@@ -310,7 +315,7 @@ export class Adm011Component {
           nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
           estado: false,
           id_documento: "auto",
-          checkauto: true
+          checkauto: true,
         }); // resetea todo a null y estado a false
         console.log("reseteando form opciones Modal: ", this.forma.value);
         this.boolDisabled(false);
@@ -439,7 +444,7 @@ export class Adm011Component {
     } else {
       this.notyG.noty("error", "control Accion Invalido", 2000);
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       this.btnGrupo.BtnLoadi = false;
       this.boolDisabled(true);
       this.boolBtnGrupo(true, false);
@@ -464,7 +469,7 @@ export class Adm011Component {
     let peticion: Observable<any>;
     peticion = this.adm011S.delAdm011(adm011.id_modulo, adm011.id_documento);
     let numPag = this.start.NumPa;
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       if (resp["ok"]) {
         if (this.auxma.length === 1) {
           numPag--;

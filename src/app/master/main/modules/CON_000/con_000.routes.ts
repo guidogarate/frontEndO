@@ -8,23 +8,23 @@ const cont000_Routes: Routes = [
   {
     path: "cont002",
     component: Cont002Component,
-    data: { titulo: "cont002" }
+    data: { titulo: "cont002" },
   },
   {
     path: "cont003",
     component: Cont003Component,
-    data: { titulo: "cont003" }
+    data: { titulo: "cont003" },
   },
   {
     path: "cont004",
     component: Cont004Component,
-    data: { titulo: "cont004" }
+    data: { titulo: "cont004" },
   },
   {
     path: "cont005",
     component: Cont005Component,
-    data: { titulo: "cont005" }
-  }
+    data: { titulo: "cont005" },
+  },
 ];
 
 export const CONT_000_MODULES_ROUTES = RouterModule.forChild(cont000_Routes);

@@ -11,17 +11,17 @@ export class Adm012Service {
   constructor(private httpClient: HttpClient) {}
 
   getAdm012(modulo: string, indice: string, idModulo: number, texto: string) {
-    const url1 = `${url.prod}${adm012.getFormatoImpresion}${modulo}/${indice}/${idModulo}/${texto}`;
+    const url1 = `${url.prod}${adm012.getListFormatoImpresion}${modulo}/${indice}/${idModulo}/${texto}`;
     console.log("url get: ", url1);
     return this.httpClient
       .get(url1, {
         headers: new HttpHeaders({
           authorization: this.token,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           console.log(resp);
           return resp;
         })
@@ -34,11 +34,11 @@ export class Adm012Service {
       .get(url1, {
         headers: new HttpHeaders({
           authorization: this.token,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           console.log(resp);
           return resp;
         })
@@ -57,17 +57,17 @@ export class Adm012Service {
       numero_copias: adm_012.numero_copias,
       codigo_qr: adm_012.codigo_qr,
       logo_empresa: adm_012.logo_empresa,
-      estado: adm_012.estado
+      estado: adm_012.estado,
     });
     return this.httpClient
       .put(url1, json, {
         headers: new HttpHeaders({
           authorization: this.token,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           return resp;
         })
       );
@@ -79,11 +79,11 @@ export class Adm012Service {
       .delete(url1, {
         headers: new HttpHeaders({
           authorization: this.token,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           return resp;
         })
       );
@@ -103,17 +103,17 @@ export class Adm012Service {
       codigo_cuenta: adm_012.codigo_cuenta,
       codigo_qr: adm_012.codigo_qr,
       logo_empresa: adm_012.logo_empresa,
-      estado: adm_012.estado
+      estado: adm_012.estado,
     });
     return this.httpClient
       .post(url1, json, {
         headers: new HttpHeaders({
           authorization: this.token,
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           return resp;
         })
       );
