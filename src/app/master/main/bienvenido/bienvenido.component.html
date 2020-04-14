@@ -118,18 +118,20 @@
 </div>
 <!-- Transacciones -->
 
-<div class="card fondo-card p-0 m-0">
-  <div class="row m-0 p-0" style="border-style: groove;">
-    <div class="col-sm-12" style="display: flex;">
-      <div class="col-sm-4">
-        <h3 class="card-title">
-          <i class="icon-pencil7"></i>
+<div class="card fondo-card p0 m0">
+  <div class="row m0 p0" style="border-style: groove;">
+    <div class="col-sm-12" style="display: flex; flex-wrap: wrap;">
+      <div class="col-sm-4 col-12">
+        <h2 class="card-title">
+          <i class="icon-pencil7 icon-size"></i>
           {{ data[0].titulo }}
-        </h3>
+        </h2>
       </div>
-      <div class="col-sm-4">
-        <div class="form-group form-group-float">
-          <label class="form-group-float-label font-weight-semibold"
+      <div class="col-sm-4 col-6">
+        <div class="form-group form-group-float text-center">
+          <label
+            class="form-group-float-label font-weight-semibold"
+            style="opacity: 1;"
             >Modulo
           </label>
           <select class="form-control selectCenter">
@@ -146,7 +148,7 @@
           </select>
         </div>
       </div>
-      <div class="col-sm-4" style="align-self: flex-end;">
+      <div class="col-sm-4 col-6" style="align-self: flex-end;">
         <div class="form-group form-group-feedback form-group-feedback-right">
           <input
             type="text"
@@ -169,15 +171,15 @@
 </div>
 
 <div class="card p-0 m-0" *ngFor="let item of data[0].subMenu">
-  <div class="row p-0 m-0" style="border-style: groove;">
-    <h3 style="padding-left: 1em;">{{ item.titulo }}</h3>
+  <div class="row p0 m0" style="border-style: groove;">
+    <h3 class="m0" style="padding-left: 1em;">{{ item.titulo }}</h3>
   </div>
   <div class="card m-0 p-0">
-    <div class="row p-0 m-0" style="border-style: groove;">
-      <h3 style="padding-left: 1em;">{{ item.proceso }}</h3>
+    <div class="row p0 m0" style="border-style: groove;">
+      <h3 class="m0" style="padding-left: 1em;">{{ item.proceso }}</h3>
     </div>
     <div class="card fondo-card p-0 m-0">
-      <div class="row p-0 m-0" style="border-style: groove;">
+      <div class="row p0 m0" style="border-style: groove;">
         <div class="col-sm-1 col-lg-1"></div>
         <div class="col-sm-10 col-lg-10 col-12">
           <div class="col-sm-12 m-auto" style="display: flex; flex-wrap: wrap;">

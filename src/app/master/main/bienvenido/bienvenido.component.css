@@ -19,11 +19,17 @@
 .fondo-card {
   background-color: #ececec;
 }
+.icon-size {
+  font-size: 2.5em;
+}
 @media screen and (max-width: 600px) {
   .logo-height {
     height: 7em;
   }
   .circulo {
-    padding: 0.5em;
+    padding: 1em;
+  }
+  .icon-size {
+    font-size: 1.5em;
   }
 }
