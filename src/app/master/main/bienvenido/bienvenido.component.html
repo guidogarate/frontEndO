@@ -1,8 +1,8 @@
-<div class="card m-0 p-0">
+<div class="card m0 p0" style="margin-top: 0.5em;">
   <div class="card-header header-elements-inline" style="align-self: center;">
     <h3 class="card-title text-center">ORMATE S.R.L.</h3>
   </div>
-  <div class="card-body">
+  <div class="card-body p0">
     <div class="row">
       <div class="col-sm-2"></div>
       <div class="col-sm-8 col-lg-8 col-12">
@@ -45,9 +45,26 @@
     </div>
     <div class="row">
       <div class="col-sm-2 col-lg-2"></div>
-      <div class="col-sm-8 col-lg-8 col-12">
-        <div class="col-sm-10 m-auto" style="display: flex; flex-wrap: wrap;">
-          <div class="col-sm-2 col-5 m-1">
+      <div class="col-sm-8 col-lg-8 col-12 p0">
+        <div
+          class="col-sm-12 m-auto p0 card-pad"
+          style="display: flex; flex-wrap: wrap;"
+        >
+          <div
+            class="col-sm-2 col-4 icon-margin icon-pad"
+            *ngFor="let fav of favoritos"
+          >
+            <img
+              class="img-fluid icon-width"
+              src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
+              alt=""
+              style="border-radius: 6em;"
+            />
+            <p class="text-center m0">
+              {{ fav.admndesc }}
+            </p>
+          </div>
+          <!-- <div class="col-sm-2 col-3 m-2">
             <img
               class="img-fluid"
               src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
@@ -56,7 +73,7 @@
             />
             <p class="text-center" style="padding-top: 1em;">titulo uno</p>
           </div>
-          <div class="col-sm-2 col-5 m-1">
+          <div class="col-sm-2 col-3 m-2">
             <img
               class="img-fluid"
               src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
@@ -65,7 +82,7 @@
             />
             <p class="text-center" style="padding-top: 1em;">titulo uno</p>
           </div>
-          <div class="col-sm-2 col-5 m-1">
+          <div class="col-sm-2 col-3 m-2">
             <img
               class="img-fluid"
               src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
@@ -74,7 +91,7 @@
             />
             <p class="text-center" style="padding-top: 1em;">titulo uno</p>
           </div>
-          <div class="col-sm-2 col-5 m-1">
+          <div class="col-sm-2 col-3 m-2">
             <img
               class="img-fluid"
               src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
@@ -83,7 +100,7 @@
             />
             <p class="text-center" style="padding-top: 1em;">titulo uno</p>
           </div>
-          <div class="col-sm-2 col-5 m-1">
+          <div class="col-sm-2 col-3 m-2">
             <img
               class="img-fluid"
               src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
@@ -92,7 +109,7 @@
             />
             <p class="text-center" style="padding-top: 1em;">titulo uno</p>
           </div>
-          <div class="col-sm-2 col-5 m-1">
+          <div class="col-sm-2 col-3 m-2">
             <img
               class="img-fluid"
               src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
@@ -100,16 +117,7 @@
               style="border-radius: 3em;"
             />
             <p class="text-center" style="padding-top: 1em;">titulo uno</p>
-          </div>
-          <div class="col-sm-2 col-5 m-1">
-            <img
-              class="img-fluid"
-              src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
-              alt=""
-              style="border-radius: 3em;"
-            />
-            <p class="text-center" style="padding-top: 1em;">titulo uno</p>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-sm-2 col-lg-2"></div>
@@ -118,7 +126,7 @@
 </div>
 <!-- Transacciones -->
 
-<div class="card fondo-card p0 m0">
+<div class="card fondo-card p0 m0" style="margin-top: 0.5em;">
   <div class="row m0 p0" style="border-style: groove;">
     <div class="col-sm-12" style="display: flex; flex-wrap: wrap;">
       <div class="col-sm-4 col-12">
@@ -168,131 +176,47 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="card p-0 m-0" *ngFor="let item of data[0].subMenu">
-  <div class="row p0 m0" style="border-style: groove;">
-    <h3 class="m0" style="padding-left: 1em;">{{ item.titulo }}</h3>
-  </div>
-  <div class="card m-0 p-0">
+  <div class="card p0 m0" *ngFor="let item of data[0].subMenu">
     <div class="row p0 m0" style="border-style: groove;">
-      <h3 class="m0" style="padding-left: 1em;">{{ item.proceso }}</h3>
+      <h3 class="m0" style="padding-left: 1em;">{{ item.titulo }}</h3>
     </div>
-    <div class="card fondo-card p-0 m-0">
+    <div class="card m0 p0">
       <div class="row p0 m0" style="border-style: groove;">
-        <div class="col-sm-1 col-lg-1"></div>
-        <div class="col-sm-10 col-lg-10 col-12">
-          <div class="col-sm-12 m-auto" style="display: flex; flex-wrap: wrap;">
-            <!-- TODO: COMPONENTES -->
+        <h3 class="m0" style="padding-left: 1em;">{{ item.proceso }}</h3>
+      </div>
+      <div class="card fondo-card p-0 m-0">
+        <div class="row p0 m0 card-pad-top" style="border-style: groove;">
+          <div class="col-sm-1 col-lg-1"></div>
+          <div class="col-sm-10 col-lg-10 col-12">
             <div
-              class="col-sm-2 col-5 m-1"
-              style="display: flex;"
-              *ngFor="let comp of item.componentes"
+              class="col-sm-12 m-auto"
+              style="display: flex; flex-wrap: wrap;"
             >
-              <div class="circulo">
-                {{ comp.id }}
+              <!-- TODO: COMPONENTES -->
+              <div
+                class="col-sm-2 col-5 p0 m-1"
+                style="display: flex;"
+                *ngFor="let comp of item.componentes"
+              >
+                <div class="circulo">
+                  {{ comp.id }}
+                </div>
+                <div>
+                  <img
+                    class="img-fluid icon-width"
+                    src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
+                    alt=""
+                    style="border-radius: 3em;"
+                  />
+                  <p class="text-center" style="padding-top: 1em;">
+                    {{ comp.titulo }}
+                  </p>
+                </div>
               </div>
-              <div>
-                <img
-                  class="img-fluid"
-                  src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
-                  alt=""
-                  style="border-radius: 3em;"
-                />
-                <p class="text-center" style="padding-top: 1em;">
-                  {{ comp.titulo }}
-                </p>
-              </div>
             </div>
-            <!-- <div class="col-sm-2 col-3 m-1">
-              <img
-                class="img-fluid"
-                src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
-                alt=""
-                style="border-radius: 3em;"
-              />
-              <p class="text-center" style="padding-top: 1em;">
-                RECEPCION DE ITEMS
-              </p>
-            </div>
-            <div class="col-sm-2 col-3 m-1">
-              <img
-                class="img-fluid"
-                src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
-                alt=""
-                style="border-radius: 3em;"
-              />
-              <p class="text-center" style="padding-top: 1em;">
-                INGRESO POR SALDO INICIAL
-              </p>
-            </div>
-            <div class="col-sm-2 col-3 m-1">
-              <img
-                class="img-fluid"
-                src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
-                alt=""
-                style="border-radius: 3em;"
-              />
-              <p class="text-center" style="padding-top: 1em;">
-                INGRESO POR AJUSTE DE INVENTARIO
-              </p>
-            </div>
-            <div class="col-sm-2 col-3 m-1">
-              <img
-                class="img-fluid"
-                src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
-                alt=""
-                style="border-radius: 3em;"
-              />
-              <p class="text-center" style="padding-top: 1em;">EGRESO POR AJUSTE</p>
-            </div>
-            <div class="col-sm-2 col-3 m-1">
-              <img
-                class="img-fluid"
-                src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
-                alt=""
-                style="border-radius: 3em;"
-              />
-              <p class="text-center" style="padding-top: 1em;">
-                INGRESO POR TRASPASO
-              </p>
-            </div>
-            <div class="col-sm-2 col-3 m-1">
-              <img
-                class="img-fluid"
-                src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
-                alt=""
-                style="border-radius: 3em;"
-              />
-              <p class="text-center" style="padding-top: 1em;">
-                EGRESO POR TRASPASO
-              </p>
-            </div>
-            <div class="col-sm-2 col-3 m-1">
-              <img
-                class="img-fluid"
-                src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
-                alt=""
-                style="border-radius: 3em;"
-              />
-              <p class="text-center" style="padding-top: 1em;">
-                SOLICITUD DE INVENTARIO
-              </p>
-            </div>
-            <div class="col-sm-2 col-3 m-1">
-              <img
-                class="img-fluid"
-                src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
-                alt=""
-                style="border-radius: 3em;"
-              />
-              <p class="text-center" style="padding-top: 1em;">
-                RECEPCION DE ITEMS
-              </p>
-            </div> -->
           </div>
+          <div class="col-sm-1 col-lg-1"></div>
         </div>
-        <div class="col-sm-1 col-lg-1"></div>
       </div>
     </div>
   </div>

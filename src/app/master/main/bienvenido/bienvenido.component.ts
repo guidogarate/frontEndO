@@ -57,6 +57,16 @@ export class BienvenidoComponent implements OnInit {
     },
   ];
 
+  favoritos = [
+    { admncori: 10, admndesc: "Fechas del Dia" },
+    { admncori: 26, admndesc: "Almacen por Usuario" },
+    { admncori: 32, admndesc: "Formas de Pago" },
+    { admncori: 42, admndesc: "Maestros de Item" },
+    { admncori: 68, admndesc: "Productos sin Movimiento" },
+    { admncori: 3, admndesc: "Fecha del Dia" },
+    { admncori: 7, admndesc: "Auxiliares de Maestros" },
+  ];
+
   constructor() {}
 
   ngOnInit() {}
