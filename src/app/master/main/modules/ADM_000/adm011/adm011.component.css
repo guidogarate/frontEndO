@@ -10,6 +10,8 @@
 .pad-row-title {
   padding: 0.5em;
 }
-.table tr:hover {
-  background-color: blue;
+.table tr.puntero:hover {
+  background-color: #a9d9ef;
+  border-style: groove;
+  border-color: #03a9f3;
 }

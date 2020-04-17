@@ -4,7 +4,7 @@
       <div class="card-header header-elements-inline">
         <h5 class="card-title font-weight-bold">
           <i class="icon-cog title-icon align-vertical-icon-0"></i>
-          Clase de Documentos
+          CLASE DE DOCUMENTOS
         </h5>
       </div>
       <div class="card-body pb0">
@@ -113,29 +113,29 @@
             <div class="table-responsive" *ngIf="auxma != undefined">
               <table class="table table-sm table-hover table-bordered">
                 <thead class="text-center">
-                  <tr class="bg-blue">
-                    <th>Codigo</th>
-                    <th>Descripcion</th>
-                    <th>Sigla</th>
-                    <th>Componente</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
+                  <tr>
+                    <th class="p-1">Codigo</th>
+                    <th class="p-1">Descripcion</th>
+                    <th class="p-1">Sigla</th>
+                    <th class="p-1">Componente</th>
+                    <th class="p-1">Estado</th>
+                    <!-- <th class="p-1">Acciones</th> -->
                   </tr>
                 </thead>
                 <tbody>
                   <tr
-                    class="table-border-double PRL0"
+                    class="puntero"
                     *ngFor="
                       let adm011 of auxma;
                       let i = index;
                       let impar = odd;
                       let par = even
                     "
-                    [ngClass]="{
-                      tablaCebradoPar: par,
-                      tablaCebradoImpar: impar
-                    }"
                   >
+                    <!-- [ngClass]="{
+                        tablaCebradoPar: par,
+                        tablaCebradoImpar: impar
+                      }" -->
                     <td class="text-center">{{ adm011.id_documento }}</td>
                     <td class="text-center">{{ adm011.descripcion }}</td>
                     <td class="text-center">{{ adm011.sigla }}</td>
@@ -155,8 +155,18 @@
                           for="adm011estado{{ i }}"
                         ></label>
                       </div>
+                      <div class="list-icons">
+                        <i
+                          class="icon-file-eye"
+                          title="visualizar"
+                          (click)="OpcionesTable(adm011, 'visualizar')"
+                          data-toggle="modal"
+                          data-target="#modal_adm_011"
+                          class="icon-file-eye text-primary-600 puntero"
+                        ></i>
+                      </div>
                     </td>
-                    <td class="text-center">
+                    <!-- <td class="text-center">
                       <div class="list-icons">
                         <i
                           class="icon-file-eye"
@@ -183,7 +193,7 @@
                           class="icon-trash text-danger-600 puntero"
                         ></i>
                       </div>
-                    </td>
+                    </td> -->
                   </tr>
                 </tbody>
               </table>
