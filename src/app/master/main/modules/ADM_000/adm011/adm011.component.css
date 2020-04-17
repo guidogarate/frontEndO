@@ -10,3 +10,6 @@
 .pad-row-title {
   padding: 0.5em;
 }
+.table tr:hover {
+  background-color: blue;
+}

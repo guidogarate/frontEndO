@@ -4,7 +4,8 @@ const url = {
   prod: "https://sage-back.herokuapp.com/",
   database: "sys_000/sys_001/database",
   ingresar: "sys_000/sys_001/ingresar",
-  principal: "/#/bienvenido", // pantalla inicio
+  principal: "/#/Mod-Administracion/adm011",
+  //principal: "/#/bienvenido", // pantalla inicio
   // principal: "/#/md/90/adm_003", // pantalla inicio
   bienvenido: "/bienvenido",
   cerrarSesion: "sys_000/sys_001/salir",
@@ -17,7 +18,7 @@ const url = {
   eliminarFto: "sys_000/sys_002/eliminar-favoritos",
   agregarFto: "sys_000/sys_002/agregar-favoritos",
   fotoDefecto:
-    "https://jumboargentina.vteximg.com.br/arquivos/ids/562659-750-750/Pantalon-Mujer-Velvet-Negro---I20-1-842345.jpg?v=637117606178670000"
+    "https://jumboargentina.vteximg.com.br/arquivos/ids/562659-750-750/Pantalon-Mujer-Velvet-Negro---I20-1-842345.jpg?v=637117606178670000",
 };
 
 export default url;

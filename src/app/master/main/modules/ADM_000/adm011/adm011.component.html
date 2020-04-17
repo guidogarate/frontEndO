@@ -9,30 +9,8 @@
       </div>
       <div class="card-body pb0">
         <div class="row">
-          <div class="col-0 col-sm-4 col-md-4 col-lg-4"></div>
-          <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-center">
-            <div class="form-group form-group-float">
-              <label class="form-group-float-label font-weight-semibold"
-                >Clase de Documentos</label
-              >
-              <select
-                class="form-control selectCenter"
-                (change)="adm011Selectgest($event.target.value)"
-              >
-                <option
-                  *ngFor="let item of selecDivModal; let i = index"
-                  [value]="item.id_modulo"
-                >
-                  {{ item.modulo }}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="col-0 col-sm-4 col-md-4 col-lg-4"></div>
-        </div>
-        <div class="row">
-          <div class="col-1 col-sm-3 col-md-4 col-lg-8"></div>
-          <div class="col-8 col-sm-7 col-md-5 col-lg-2">
+          <div class="col-0 col-sm-3 col-md-4 col-lg-8"></div>
+          <div class="col-6 col-sm-7 col-md-5 col-lg-2">
             <div
               class="form-group form-group-feedback form-group-feedback-right"
             >
@@ -54,7 +32,7 @@
             </div>
           </div>
           <div
-            class="col-3 col-sm-2 col-md-3 col-lg-2"
+            class="col-6 col-sm-2 col-md-3 col-lg-2"
             style="padding-top: 30px;"
           >
             <div class="form-control-feedback">
@@ -65,13 +43,27 @@
                 (click)="nuevoAdm011()"
                 title="agregar"
               ></i>
-              <!-- <i
+              <i
                 data-toggle="modal"
                 data-target="#modal_adm_011"
-                class="icon-pencil7 puntero xxl"
+                class="icon-printer puntero xxl"
                 (click)="nuevoAdm011()"
-                title="Editar"
-              ></i> -->
+                title="Imprimir"
+              ></i>
+              <i
+                data-toggle="modal"
+                data-target="#modal_adm_011"
+                class="icon-download puntero xxl"
+                (click)="nuevoAdm011()"
+                title="Exportar"
+              ></i>
+              <i
+                data-toggle="modal"
+                data-target="#modal_adm_011"
+                class="icon-exit puntero xxl"
+                (click)="nuevoAdm011()"
+                title="Salir"
+              ></i>
             </div>
             <!-- <div class="form-control-feedback">
               <i
@@ -91,14 +83,38 @@
             </div> -->
           </div>
         </div>
+
+        <div class="row">
+          <div class="col-0 col-sm-4 col-md-4 col-lg-4"></div>
+          <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-center">
+            <div class="form-group form-group-float">
+              <label class="form-group-float-label font-weight-semibold"
+                >Modulo</label
+              >
+              <select
+                class="form-control selectCenter"
+                (change)="adm011Selectgest($event.target.value)"
+              >
+                <option
+                  *ngFor="let item of selecDivModal; let i = index"
+                  [value]="item.id_modulo"
+                >
+                  {{ item.modulo }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-0 col-sm-4 col-md-4 col-lg-4"></div>
+        </div>
+
         <div class="row m0">
-          <div class="col-md-1"></div>
-          <div class="col-md-10">
+          <div class="col-md-0"></div>
+          <div class="col-md-12">
             <div class="table-responsive" *ngIf="auxma != undefined">
               <table class="table table-sm table-hover table-bordered">
-                <thead class=" text-center">
+                <thead class="text-center">
                   <tr class="bg-blue">
-                    <th>Identificador</th>
+                    <th>Codigo</th>
                     <th>Descripcion</th>
                     <th>Sigla</th>
                     <th>Componente</th>
@@ -174,7 +190,7 @@
               <br />
             </div>
           </div>
-          <div class="col-md-1"></div>
+          <div class="col-md-0"></div>
         </div>
       </div>
       <div *ngIf="start.Loadi" class="d-flex justify-content-center">
@@ -432,7 +448,7 @@
 
 <!-- TODO: new modal based on cont 003 -->
 <div id="modal_adm_011" class="modal p0" tabindex="-1" style="padding: 0em;">
-  <div class="modal-dialog ">
+  <div class="modal-dialog">
     <div class="modal-content animacionmodal haciadentro">
       <form
         [formGroup]="forma"
@@ -446,7 +462,7 @@
           <div class="list-icons float-right">
             <a class="puntero" *ngIf="btnGrupo.BtnCance"
               ><i
-                class="icon-cancel-circle2 xxl"
+                class="icon-undo2 xxl"
                 data-toggle="tooltip"
                 data-placement="top"
                 (click)="OpcionesModal('cancelar')"
@@ -465,7 +481,7 @@
             </a>
             <button
               *ngIf="btnGrupo.BtnGuard"
-              style="padding: 1px;color: white;"
+              style="padding: 1px; color: white;"
               type="submit"
               class="btn text-warning-600 btn-flat btn-icon btn-rounded"
             >
@@ -520,10 +536,12 @@
               <div class="row m0 text">
                 <div class="col-sm-6 col-8 pad-row-title" style="margin: auto;">
                   <input
-                    style="width: inherit;
-                          border-radius: 1em;
-                          border-color: #03a9f4;
-                          background-color: white;"
+                    style="
+                      width: inherit;
+                      border-radius: 1em;
+                      border-color: #03a9f4;
+                      background-color: white;
+                    "
                     class="text-center"
                     disabled="true"
                     type="text"
@@ -542,7 +560,7 @@
                   >
                     <div
                       class="custom-control custom-switch"
-                      style="margin:auto"
+                      style="margin: auto;"
                     >
                       <input
                         type="checkbox"
@@ -569,7 +587,7 @@
 
                     <div class="form-group form-group-float">
                       <label class="form-group-float-label text-label"
-                        >Identificador</label
+                        >Codigo</label
                       >
                       <input
                         style="text-align: center;"
