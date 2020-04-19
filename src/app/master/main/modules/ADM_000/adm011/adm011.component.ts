@@ -263,11 +263,11 @@ export class Adm011Component {
   }
 
   OpcionesTable(adm_011: Adm011, tipo: string) {
-    console.log("opciones table; ", adm_011);
+    // console.log("opciones table; ", adm_011);
     this.auxmaModal = adm_011;
-    console.log("auxma en opciones table: ", this.auxmaModal);
+    // console.log("auxma en opciones table: ", this.auxmaModal);
     this.forma.reset(this.auxmaModal);
-    console.log("forma despues de reset con auxmoda: ", this.forma.value);
+    // console.log("forma despues de reset con auxmoda: ", this.forma.value);
     // this.cargarDependencia(adm_011.idunidaddivision);
     this.start.IdCod = adm_011.id_documento;
     switch (tipo) {

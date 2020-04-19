@@ -1,125 +1,120 @@
 <div class="row haciadentro animaciones superior" style="height: 100%;">
   <div class="col-xl-12" style="margin-bottom: 0.5em;">
     <div class="card pb0 m0" style="height: 100%;">
-      <div class="card-header header-elements-inline">
-        <h5 class="card-title font-weight-bold">
-          <i class="icon-cog title-icon align-vertical-icon-0"></i>
-          CLASE DE DOCUMENTOS
-        </h5>
-      </div>
-      <div class="card-body pb0">
-        <div class="row">
-          <div class="col-0 col-sm-3 col-md-4 col-lg-8"></div>
-          <div class="col-6 col-sm-7 col-md-5 col-lg-2">
-            <div
-              class="form-group form-group-feedback form-group-feedback-right"
-            >
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Buscar"
-                id="buscarGrupoLupa"
-                [formControl]="textBuscarAdm011"
-              />
-              <div *ngIf="start.Busca" class="form-control-feedback">
-                <i class="icon-spinner2 spinner"></i>
-              </div>
-              <div *ngIf="!start.Busca" class="form-control-feedback">
-                <label for="buscarGrupoLupa">
-                  <i class="icon-search4 puntero" title="buscar"></i
-                ></label>
-              </div>
-            </div>
-          </div>
-          <div
-            class="col-6 col-sm-2 col-md-3 col-lg-2"
-            style="padding-top: 30px;"
-          >
-            <div class="form-control-feedback">
-              <i
-                data-toggle="modal"
-                data-target="#modal_adm_011"
-                class="icon-diff-added puntero xxl"
-                (click)="nuevoAdm011()"
-                title="agregar"
-              ></i>
-              <i
-                data-toggle="modal"
-                data-target="#modal_adm_011"
-                class="icon-printer puntero xxl"
-                (click)="nuevoAdm011()"
-                title="Imprimir"
-              ></i>
-              <i
-                data-toggle="modal"
-                data-target="#modal_adm_011"
-                class="icon-download puntero xxl"
-                (click)="nuevoAdm011()"
-                title="Exportar"
-              ></i>
-              <i
-                data-toggle="modal"
-                data-target="#modal_adm_011"
-                class="icon-exit puntero xxl"
-                (click)="nuevoAdm011()"
-                title="Salir"
-              ></i>
-            </div>
-            <!-- <div class="form-control-feedback">
-              <i
-                data-toggle="modal"
-                data-target="#modal_adm_011"
-                class="icon-diff-added puntero xxl"
-                (click)="nuevoAdm011()"
-                title="agregar1"
-              ></i>
-              <i
-                data-toggle="modal"
-                data-target="#modal_adm_011"
-                class="icon-pencil-2 puntero xxl"
-                (click)="nuevoAdm011()"
-                title="agregar2"
-              ></i>
-            </div> -->
-          </div>
+      <div
+        class="card"
+        style="
+          margin-bottom: 0.5em;
+          background: #eee;
+          border: 2px solid #2196f3;
+        "
+      >
+        <div
+          class="header-elements-inline"
+          style="padding: 2em; padding-bottom: 0em;"
+        >
+          <h5 class="card-title font-weight-bold m0">
+            <i class="icon-cog title-icon align-vertical-icon-0"></i>
+            CLASE DE DOCUMENTOS
+          </h5>
         </div>
-
-        <div class="row">
-          <div class="col-0 col-sm-4 col-md-4 col-lg-4"></div>
-          <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-center">
-            <div class="form-group form-group-float">
-              <label class="form-group-float-label font-weight-semibold"
-                >Modulo</label
+        <div class="card m0 pb0" style="background: #eee;">
+          <div class="row p0 m0">
+            <div class="col-0 col-sm-3 col-md-4 col-lg-7 p0"></div>
+            <div class="col-6 col-sm-7 col-md-5 col-lg-2">
+              <div
+                class="form-group form-group-feedback form-group-feedback-right m0"
               >
-              <select
-                class="form-control selectCenter"
-                (change)="adm011Selectgest($event.target.value)"
-              >
-                <option
-                  *ngFor="let item of selecDivModal; let i = index"
-                  [value]="item.id_modulo"
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Buscar"
+                  id="buscarGrupoLupa"
+                  [formControl]="textBuscarAdm011"
+                />
+                <div *ngIf="start.Busca" class="form-control-feedback">
+                  <i class="icon-spinner2 spinner"></i>
+                </div>
+                <div *ngIf="!start.Busca" class="form-control-feedback">
+                  <label for="buscarGrupoLupa">
+                    <i class="icon-search4 puntero" title="buscar"></i
+                  ></label>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-sm-2 col-md-3 col-lg-3">
+              <div class="form-control-feedback">
+                <i
+                  data-toggle="modal"
+                  data-target="#modal_adm_011"
+                  class="icon-diff-added puntero xxl"
+                  (click)="nuevoAdm011()"
+                  title="agregar"
+                ></i>
+                <i
+                  data-toggle="modal"
+                  data-target="#modal_adm_011"
+                  class="icon-printer puntero xxl"
+                  (click)="nuevoAdm011()"
+                  title="Imprimir"
+                ></i>
+                <i
+                  data-toggle="modal"
+                  data-target="#modal_adm_011"
+                  class="icon-download puntero xxl"
+                  (click)="nuevoAdm011()"
+                  title="Exportar"
+                ></i>
+                <i
+                  data-toggle="modal"
+                  data-target="#modal_adm_011"
+                  class="icon-exit puntero xxl"
+                  (click)="nuevoAdm011()"
+                  title="Salir"
+                ></i>
+              </div>
+            </div>
+          </div>
+          <div class="row p0 m0">
+            <div class="col-0 col-sm-4 col-md-4 col-lg-3"></div>
+            <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-center">
+              <div class="form-group form-group-float m0">
+                <label class="form-group-float-label font-weight-semibold"
+                  >Modulo</label
                 >
-                  {{ item.modulo }}
-                </option>
-              </select>
+                <select
+                  class="form-control selectCenter"
+                  (change)="adm011Selectgest($event.target.value)"
+                >
+                  <option
+                    *ngFor="let item of selecDivModal; let i = index"
+                    [value]="item.id_modulo"
+                  >
+                    {{ item.modulo }}
+                  </option>
+                </select>
+              </div>
             </div>
+            <div class="col-0 col-sm-4 col-md-4 col-lg-5"></div>
           </div>
-          <div class="col-0 col-sm-4 col-md-4 col-lg-4"></div>
         </div>
-
-        <div class="row m0">
+      </div>
+      <div class="card-body p0 m0">
+        <div class="row m0 p0">
           <div class="col-md-0"></div>
-          <div class="col-md-12">
+          <div class="col-md-12 p0">
             <div class="table-responsive" *ngIf="auxma != undefined">
-              <table class="table table-sm table-hover table-bordered">
-                <thead class="text-center">
-                  <tr>
+              <table
+                class="table table-sm table-hover"
+                style="border: 2px solid #03a9f3;"
+              >
+                <thead class="text-center" style="border: 2px solid #2196f3;">
+                  <tr style="background: #eee;">
                     <th class="p-1">CODIGO</th>
                     <th class="p-1">DESCRIPCION</th>
                     <th class="p-1">SIGLA</th>
                     <th class="p-1">COMPONENTE</th>
                     <th class="p-1">ESTADO</th>
-                    <!-- <th class="p-1">Acciones</th> -->
                   </tr>
                 </thead>
                 <tbody>
@@ -131,11 +126,12 @@
                       let impar = odd;
                       let par = even
                     "
+                    (click)="OpcionesTable(adm011, 'visualizar')"
+                    [ngClass]="{
+                      tablaCebradoPar: par,
+                      tablaCebradoImpar: impar
+                    }"
                   >
-                    <!-- [ngClass]="{
-                        tablaCebradoPar: par,
-                        tablaCebradoImpar: impar
-                      }" -->
                     <td class="text-center">{{ adm011.id_documento }}</td>
                     <td class="text-left">{{ adm011.descripcion }}</td>
                     <td class="text-left">{{ adm011.sigla }}</td>
@@ -168,34 +164,6 @@
                         </div>
                       </div>
                     </td>
-                    <!-- <td class="text-center">
-                      <div class="list-icons">
-                        <i
-                          class="icon-file-eye"
-                          title="visualizar"
-                          (click)="OpcionesTable(adm011, 'visualizar')"
-                          data-toggle="modal"
-                          data-target="#modal_adm_011"
-                          class="icon-file-eye text-primary-600 puntero"
-                        ></i>
-                        <i
-                          class="icon-pencil7"
-                          title="editar"
-                          (click)="OpcionesTable(adm011, 'editar')"
-                          data-toggle="modal"
-                          data-target="#modal_adm_011"
-                          class="icon-pencil7 text-teal-600 puntero"
-                        ></i>
-                        <i
-                          class="icon-trash"
-                          title="eliminar"
-                          (click)="OpcionesTable(adm011, 'eliminar')"
-                          data-toggle="modal"
-                          data-target="#modal_adm_011_eliminar"
-                          class="icon-trash text-danger-600 puntero"
-                        ></i>
-                      </div>
-                    </td> -->
                   </tr>
                 </tbody>
               </table>
@@ -238,7 +206,6 @@
     </div>
   </div>
 </div>
-<!-- <app-cargacontent *ngIf="!start.Conte"></app-cargacontent> -->
 <div></div>
 <!-- <div id="modal_adm_011" class="modal" tabindex="-1">
   <div class="modal-dialog">
@@ -525,6 +492,7 @@
                 class="icon-trash xxl"
                 data-toggle="tooltip"
                 data-placement="top"
+                (click)="OpcionesModal('eliminar')"
                 title="Eliminar"
               >
               </i
