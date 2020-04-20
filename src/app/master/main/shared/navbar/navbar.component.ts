@@ -5,15 +5,16 @@ import url from "src/app/master/config/url.config";
 @Component({
   selector: "app-navbar",
   templateUrl: "./navbar.component.html",
-  styleUrls: ["./navbar.component.css"]
+  styleUrls: ["./navbar.component.css"],
 })
 export class NavbarComponent implements OnInit {
   constructor(private loginS: LoginService) {}
 
   ngOnInit() {}
   salir() {
-    this.loginS.logout().subscribe(resp => {
-      window.open(url.salir, "_self");
+    this.loginS.logout().subscribe((resp) => {
+      location.reload(true);
+      // window.open(url.salir, "_self");
       // window.location.href = url.salir;
     });
   }

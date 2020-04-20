@@ -1,5 +1,6 @@
 import { RouterModule, Routes } from "@angular/router";
 
+import { Adm000Component } from "./adm000/adm000.component";
 import { Adm001Component } from "./adm001/adm001.component";
 import { Adm002Component } from "./adm002/adm002.component";
 import { Adm003Component } from "./adm003/adm003.component";
@@ -19,66 +20,66 @@ import { Adm012Component } from "./adm012/adm012.component";
 
 const adm000_Routes: Routes = [
   {
+    path: "",
+    component: Adm000Component,
+    data: { titulo: "adm000" },
+  },
+  {
     path: "adm001",
     component: Adm001Component,
-    data: { titulo: "adm001" }
+    data: { titulo: "adm001" },
   },
   {
     path: "adm002",
     component: Adm002Component,
-    data: { titulo: "adm002" }
+    data: { titulo: "adm002" },
   },
   {
     path: "adm003",
     component: Adm003Component,
-    data: { titulo: "adm003" }
+    data: { titulo: "adm003" },
   },
   {
     path: "adm004",
     component: Adm004Component,
-    data: { titulo: "adm004" }
+    data: { titulo: "adm004" },
   },
   { path: "adm005", component: Adm005Component, data: { titulo: "adm005" } },
   {
     path: "adm006",
     component: Adm006Component,
-    data: { titulo: "adm006" }
+    data: { titulo: "adm006" },
   },
   {
     path: "adm007",
     component: Adm007Component,
-    data: { titulo: "adm007" }
+    data: { titulo: "adm007" },
   },
   {
     path: "adm008",
     component: Adm008Component,
-    data: { titulo: "adm008" }
+    data: { titulo: "adm008" },
   },
   {
     path: "adm009",
     component: Adm009Component,
-    data: { titulo: "adm009" }
+    data: { titulo: "adm009" },
   },
   {
     path: "adm010",
     component: Adm010Component,
-    data: { titulo: "adm010" }
+    data: { titulo: "adm010" },
   },
   {
     path: "adm011",
     component: Adm011Component,
-    data: { titulo: "adm011" }
+    data: { titulo: "adm011" },
   },
   {
     path: "adm012",
     component: Adm012Component,
-    data: { titulo: "adm012" }
+    data: { titulo: "adm012" },
   },
-  {
-    path: "",
-    redirectTo: "/bienvenido",
-    pathMatch: "full"
-  }
 ];
 // const menu = JSON.parse(sessionStorage.getItem("menu"));
 // console.log(menu);
