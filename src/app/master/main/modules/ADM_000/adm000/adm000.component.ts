@@ -7,7 +7,7 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ["./adm000.component.css"],
 })
 export class Adm000Component implements OnInit {
-  data: any[] = JSON.parse(sessionStorage.getItem("menu2"));
+  data: any[] = JSON.parse(sessionStorage.getItem("menu"));
   datas: any[] = [];
 
   constructor(route: ActivatedRoute) {

@@ -76,7 +76,9 @@ const mainRoutes: Route[] = [
   },
 ];
 
-const menu = JSON.parse(sessionStorage.getItem("menu2")) || [];
+const menu = JSON.parse(sessionStorage.getItem("menu")) || [];
+console.log(menu);
+
 const menuR: Route[] = [
   {
     path: "",
@@ -85,13 +87,13 @@ const menuR: Route[] = [
   },
 ];
 for (let index = 0; index < menu.length; index++) {
-  const primerNiv: string = menu[index].id;
+  const primerNiv: string = menu[index].id_primernivel.toString();
   const result = mainRoutes.find((compon) => compon.path === primerNiv);
   if (result !== undefined) {
-    result.path = menu[index].ruta;
+    result.path = menu[index].componente;
     menuR.push(result);
   }
 }
-// console.log(menuR);
+console.log(menuR);
 
 export const MODULES_ROUTES = RouterModule.forChild(menuR);

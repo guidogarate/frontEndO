@@ -98,8 +98,7 @@ export class LoginService {
         map((resp) => {
           if (resp["ok"]) {
             this.guardarToken(resp["datos"], resp["token"]);
-            this.guardarMenu(resp["data"]);
-            this.guardarMenu2();
+            this.guardarMenu(resp["favoritos"], resp["menu"]);
             return resp;
           } else {
             return resp;
@@ -135,109 +134,9 @@ export class LoginService {
     sessionStorage.setItem("id", token);
   }
 
-  private guardarMenu(usuario: any) {
-    sessionStorage.setItem("favoritos", JSON.stringify(usuario[0].favoritos));
-    sessionStorage.setItem(
-      "menu_principal",
-      JSON.stringify(usuario[0].menu_principal)
-    );
-    sessionStorage.setItem("submenus", JSON.stringify(usuario[0].submenus));
-  }
-  private guardarMenu2() {
-    const data = [
-      {
-        titulo: "Contabilidad",
-        id: "10",
-        ruta: "conta",
-        log: "null",
-        subMenu: [
-          {
-            titulo: "SUB-CONT1",
-            proceso: "Componente de SUB-CONT1",
-            ruta: "",
-            nivel3: true,
-            componentes: [
-              { titulo: "Maestros de Item", id: "42", ruta: " " },
-              { titulo: "Auxiliares de Maestros", id: "43", ruta: " " },
-              { titulo: "Almacenes", id: "44", ruta: " " },
-              { titulo: "Conceptos de transacciones", id: "45", ruta: " " },
-              { titulo: "Equivalentes codigo de Barra", id: "46", ruta: "" },
-              { titulo: "Item por Almacen", id: "47", ruta: " " },
-              { titulo: "Ubicaciones", id: "48", ruta: "" },
-            ],
-          },
-          {
-            titulo: "SUB-CONT1",
-            proceso: "Componente de SUB-CONT1",
-            ruta: "",
-            nivel3: true,
-            componentes: [
-              { titulo: "Maestros de Item", id: "50", ruta: " " },
-              { titulo: "Auxiliares de Maestros", id: "51", ruta: " " },
-              { titulo: "Almacenes", id: "52", ruta: " " },
-              { titulo: "Conceptos de transacciones", id: "53", ruta: " " },
-              { titulo: "Equivalentes codigo de Barra", id: "54", ruta: " " },
-              { titulo: "Item por Almacen", id: "55", ruta: " " },
-              { titulo: "Ubicaciones", id: "56", ruta: "" },
-            ],
-          },
-          {
-            titulo: "SUB-CONT3",
-            proceso: "",
-            ruta: "",
-            nivel3: false,
-            componentes: [
-              { titulo: "Maestros de Item", id: "50", ruta: " " },
-              { titulo: "Auxiliares de Maestros", id: "51", ruta: " " },
-              { titulo: "Almacenes", id: "52", ruta: " " },
-              { titulo: "Conceptos de transacciones", id: "53", ruta: " " },
-              { titulo: "Equivalentes codigo de Barra", id: "54", ruta: " " },
-              { titulo: "Item por Almacen", id: "55", ruta: " " },
-              { titulo: "Ubicaciones", id: "56", ruta: "" },
-            ],
-          },
-        ],
-      },
-      {
-        titulo: "Administracion",
-        id: "90",
-        ruta: "admin",
-        log: "null",
-        subMenu: [
-          {
-            titulo: "SUB-ADMIN1",
-            proceso: "",
-            ruta: "",
-            nivel3: false,
-            componentes: [
-              { titulo: "Maestros de Item", id: "42", ruta: " " },
-              { titulo: "Auxiliares de Maestros", id: "43", ruta: " " },
-              { titulo: "Almacenes", id: "44", ruta: " " },
-              { titulo: "Conceptos de transacciones", id: "45", ruta: " " },
-              { titulo: "Equivalentes codigo de Barra", id: "46", ruta: "" },
-              { titulo: "Item por Almacen", id: "47", ruta: " " },
-              { titulo: "Ubicaciones", id: "48", ruta: "" },
-            ],
-          },
-          {
-            titulo: "SUB-ADMIN2",
-            proceso: "",
-            ruta: "",
-            nivel3: false,
-            componentes: [
-              { titulo: "Maestros de Item", id: "50", ruta: " " },
-              { titulo: "Auxiliares de Maestros", id: "51", ruta: " " },
-              { titulo: "Almacenes", id: "52", ruta: " " },
-              { titulo: "Conceptos de transacciones", id: "53", ruta: " " },
-              { titulo: "Equivalentes codigo de Barra", id: "54", ruta: " " },
-              { titulo: "Item por Almacen", id: "55", ruta: " " },
-              { titulo: "Ubicaciones", id: "56", ruta: "" },
-            ],
-          },
-        ],
-      },
-    ];
-    sessionStorage.setItem("menu2", JSON.stringify(data));
+  private guardarMenu(favor: any, menu: any) {
+    sessionStorage.setItem("favoritos", JSON.stringify(favor));
+    sessionStorage.setItem("menu", JSON.stringify(menu));
   }
 
   // metodo para guard(login.guard.ts)

@@ -26,7 +26,7 @@ export class SidebarComponent {
   }
 
   cargarMenuFavo() {
-    const menu: string = sessionStorage.getItem("menu2");
+    const menu: string = sessionStorage.getItem("menu");
     if (menu) {
       this.menuPrin = JSON.parse(menu);
       this.cargandoMenu = false;
