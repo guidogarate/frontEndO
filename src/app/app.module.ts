@@ -2,7 +2,8 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 
-import { AppRoutingModule } from "./app.routes";
+import { APP_ROUTES } from "./app.routes";
+import { MainModule } from "./master/main/main.module";
 
 import { SocketIoModule, SocketIoConfig } from "ngx-socket-io";
 const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
@@ -37,7 +38,8 @@ import { ServiceWorkerModule } from "@angular/service-worker";
     BrowserAnimationsModule,
     SocketIoModule.forRoot(config),
     IndexGlobalModule,
-    AppRoutingModule,
+    MainModule,
+    APP_ROUTES,
     DeviceDetectorModule.forRoot(),
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,

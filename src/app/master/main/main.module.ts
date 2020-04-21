@@ -8,18 +8,12 @@ import { PipesModule } from "../utils/pipe/pipes.module";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { MainComponent } from "./main.component";
-import { GlobalModule } from "./global/global.module";
+import { ModulesGuard } from "../utils/guard/modules.guard";
 
 @NgModule({
   declarations: [MainComponent],
   exports: [],
-  imports: [
-    CommonModule,
-    SharedModule,
-    FormsModule,
-    MAIN_ROUTES,
-    PipesModule,
-    GlobalModule,
-  ],
+  providers: [ModulesGuard],
+  imports: [CommonModule, SharedModule, FormsModule, MAIN_ROUTES, PipesModule],
 })
 export class MainModule {}

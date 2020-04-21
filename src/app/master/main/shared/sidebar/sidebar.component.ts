@@ -26,7 +26,7 @@ export class SidebarComponent {
   }
 
   cargarMenuFavo() {
-    const menu: string = sessionStorage.getItem("menu_principal");
+    const menu: string = sessionStorage.getItem("menu2");
     if (menu) {
       this.menuPrin = JSON.parse(menu);
       this.cargandoMenu = false;
@@ -34,7 +34,7 @@ export class SidebarComponent {
   }
 
   menuComponent(menu: string) {
-    console.log(menu);
-    // this.router.navigate(["/mod", "90"]);
+    //  console.log(menu);
+    //  this.router.navigate(["/mod", menu]);
   }
 }

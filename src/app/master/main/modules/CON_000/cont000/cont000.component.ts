@@ -2,14 +2,13 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: "app-adm000",
-  templateUrl: "./adm000.component.html",
-  styleUrls: ["./adm000.component.css"],
+  selector: "app-cont000",
+  templateUrl: "./cont000.component.html",
+  styleUrls: ["./cont000.component.css"],
 })
-export class Adm000Component implements OnInit {
+export class Cont000Component implements OnInit {
   data: any[] = JSON.parse(sessionStorage.getItem("menu2"));
   datas: any[] = [];
-
   constructor(route: ActivatedRoute) {
     this.filtrar(route.snapshot.data.titulo);
   }

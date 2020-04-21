@@ -20,6 +20,7 @@ import { PipesModule } from "../../../utils/pipe/pipes.module";
 import { Adm009Component } from "./adm009/adm009.component";
 import { Adm011Component } from "./adm011/adm011.component";
 import { Adm012Component } from "./adm012/adm012.component";
+console.log("modules adm");
 
 @NgModule({
   declarations: [

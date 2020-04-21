@@ -72,9 +72,10 @@
     </div>
     <ng-container *ngFor="let menu of menuPrin">
       <li class="nav-item nav-item-submenu animaciones haciadentro">
+        <!-- (click)="menuComponent(menu.ruta)" -->
         <!-- routerLink="/{{ menu.ruta }}/{{ menu.ruta }}" -->
-        <a (click)="menuComponent(menu.componente)" class="nav-link puntero"
-          ><i class="icon-stack"></i> <span>{{ menu.descripcion }}</span></a
+        <a routerLink="/mod/{{ menu.ruta }}" class="nav-link puntero"
+          ><i class="icon-stack"></i> <span>{{ menu.titulo }}</span></a
         >
         <ul class="nav nav-group-sub" data-submenu-title="Starter kit"></ul>
       </li>
