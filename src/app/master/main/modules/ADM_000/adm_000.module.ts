@@ -5,6 +5,7 @@ import { IndexAdm000Module } from "src/app/master/utils/service/main/modules/adm
 
 import { ADM_000_MODULES_ROUTES } from "./adm_000.routes";
 
+import { Adm000Component } from "./adm000/adm000.component";
 import { Adm001Component } from "./adm001/adm001.component";
 import { Adm002Component } from "./adm002/adm002.component";
 import { Adm003Component } from "./adm003/adm003.component";
@@ -17,11 +18,13 @@ import { Adm010Component } from "./adm010/adm010.component";
 
 import { PipesModule } from "../../../utils/pipe/pipes.module";
 import { Adm009Component } from "./adm009/adm009.component";
-import { Adm011Component } from './adm011/adm011.component';
-import { Adm012Component } from './adm012/adm012.component';
+import { Adm011Component } from "./adm011/adm011.component";
+import { Adm012Component } from "./adm012/adm012.component";
+console.log("modules adm");
 
 @NgModule({
   declarations: [
+    Adm000Component,
     Adm001Component,
     Adm002Component,
     Adm003Component,
@@ -33,7 +36,7 @@ import { Adm012Component } from './adm012/adm012.component';
     Adm009Component,
     Adm010Component,
     Adm011Component,
-    Adm012Component
+    Adm012Component,
   ],
   providers: [DatePipe],
   imports: [
@@ -42,7 +45,7 @@ import { Adm012Component } from './adm012/adm012.component';
     FormsModule,
     ReactiveFormsModule,
     IndexAdm000Module,
-    PipesModule
-  ]
+    PipesModule,
+  ],
 })
 export class ADM00Module {}

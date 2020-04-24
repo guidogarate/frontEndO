@@ -12,6 +12,6 @@ import { BienvenidoComponent } from "./bienvenido.component";
   declarations: [BienvenidoComponent],
   exports: [],
   providers: [],
-  imports: [CommonModule, FormsModule, GlobalModule, BIENVENIDO_ROUTES]
+  imports: [CommonModule, FormsModule, GlobalModule, BIENVENIDO_ROUTES],
 })
 export class BienvenidoModule {}

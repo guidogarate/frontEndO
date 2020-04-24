@@ -14,6 +14,6 @@ import { ModulesGuard } from "../utils/guard/modules.guard";
   declarations: [MainComponent],
   exports: [],
   providers: [ModulesGuard],
-  imports: [CommonModule, SharedModule, FormsModule, MAIN_ROUTES, PipesModule]
+  imports: [CommonModule, SharedModule, FormsModule, MAIN_ROUTES, PipesModule],
 })
 export class MainModule {}

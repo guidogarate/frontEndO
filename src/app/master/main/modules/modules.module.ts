@@ -12,6 +12,6 @@ import { ModulesComponent } from "./modules.component";
   declarations: [ModulesComponent],
   exports: [],
   providers: [],
-  imports: [CommonModule, FormsModule, GlobalModule, MODULES_ROUTES]
+  imports: [CommonModule, FormsModule, GlobalModule, MODULES_ROUTES],
 })
 export class ModulesModule {}

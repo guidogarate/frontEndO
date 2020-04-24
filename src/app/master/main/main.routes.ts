@@ -6,20 +6,24 @@ const mainRoutes: Routes = [
   {
     path: "",
     component: MainComponent,
-    canActivate: [ModulesGuard],
     children: [
       {
-        path: "",
+        path: "mod",
+        canLoad: [ModulesGuard],
         loadChildren: () =>
-          import("./modules/modules.module").then(m => m.ModulesModule)
+          import("./modules/modules.module").then((m) => m.ModulesModule),
       },
       {
         path: "bienvenido",
+        canActivate: [ModulesGuard],
         loadChildren: () =>
-          import("./bienvenido/bienvenido.module").then(m => m.BienvenidoModule)
-      }
-    ]
-  }
+          import("./bienvenido/bienvenido.module").then(
+            (m) => m.BienvenidoModule
+          ),
+      },
+      { path: "", redirectTo: "/mod", pathMatch: "full" },
+    ],
+  },
 ];
 
 export const MAIN_ROUTES = RouterModule.forRoot(mainRoutes);

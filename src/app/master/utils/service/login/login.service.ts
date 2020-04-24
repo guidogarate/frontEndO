@@ -1,4 +1,4 @@
-import { Injectable, Inject } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from "rxjs/operators";
 
@@ -6,7 +6,7 @@ import { LoginModels } from "../../models/login/login.models";
 import url from "src/app/master/config/url.config";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class LoginService {
   userToken: string;
@@ -20,11 +20,11 @@ export class LoginService {
     return this.httpClient
       .post(url1, null, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           if (resp["ok"]) {
             return resp["newDatabase"];
           } else {
@@ -37,17 +37,17 @@ export class LoginService {
   estaRegistrado(usuario: LoginModels) {
     const json = JSON.stringify({
       cod_user: usuario.cod_user,
-      id_database: usuario.databaseid
+      id_database: usuario.databaseid,
     });
     const url1 = `${url.prod}${url.validarUser}`;
     return this.httpClient
       .post(url1, json, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           return resp;
         })
       );
@@ -67,14 +67,15 @@ export class LoginService {
     return this.httpClient
       .post(url1, null, {
         headers: new HttpHeaders({
-          authorization: sessionStorage.getItem("id")
-        })
+          authorization: sessionStorage.getItem("id"),
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           sessionStorage.clear();
           // actualizando el token
           this.leerToken();
+
           return resp;
         })
       );
@@ -84,19 +85,20 @@ export class LoginService {
     const json = JSON.stringify({
       id_database: usuario.databaseid,
       cod_user: usuario.cod_user,
-      passw: usuario.passw
+      passw: usuario.passw,
     });
     const url1 = `${url.prod}${url.ingresar}`;
     return this.httpClient
       .post(url1, json, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           if (resp["ok"]) {
             this.guardarToken(resp["datos"], resp["token"]);
+            this.guardarMenu(resp["favoritos"], resp["menu"]);
             return resp;
           } else {
             return resp;
@@ -110,17 +112,17 @@ export class LoginService {
       id_database: usuario.databaseid,
       cod_user: usuario.cod_user,
       passw1: usuario.passw,
-      passw2: usuario.passs
+      passw2: usuario.passs,
     });
     const url1 = `${url.prod}${url.regContra}`;
     return this.httpClient
       .post(url1, json, {
         headers: new HttpHeaders({
-          "Content-Type": "application/json"
-        })
+          "Content-Type": "application/json",
+        }),
       })
       .pipe(
-        map(resp => {
+        map((resp) => {
           return resp;
         })
       );
@@ -130,6 +132,11 @@ export class LoginService {
     this.userToken = token;
     sessionStorage.setItem("datos_user", JSON.stringify(usuario));
     sessionStorage.setItem("id", token);
+  }
+
+  private guardarMenu(favor: any, menu: any) {
+    sessionStorage.setItem("favoritos", JSON.stringify(favor));
+    sessionStorage.setItem("menu", JSON.stringify(menu));
   }
 
   // metodo para guard(login.guard.ts)

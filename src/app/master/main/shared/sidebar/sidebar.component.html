@@ -2,7 +2,10 @@
 <div class="sidebar-user-material">
   <div
     class="sidebar-user-material-body"
-    style="background-image:url(../assets/global_assets/images/backgrounds/user_bg4.jpg); background-size: cover;"
+    style="
+      background-image: url(../assets/global_assets/images/backgrounds/user_bg4.jpg);
+      background-size: cover;
+    "
   >
     <div class="card-body text-center">
       <a href="#">
@@ -23,26 +26,13 @@
         {{ email | emailpipe }}</span
       >
     </div>
-    <div class="col-md-12">
-      <input
-        style="padding-left: 25px;"
-        class="form-control text-white"
-        type="text"
-        placeholder="Buscar"
-        (keyup)="buscarComponente(buscarTexto.value)"
-        #buscarTexto
-      />
-      <div class="form-control-feedback" style="color:white">
-        <i class="icon-search4"></i>
-      </div>
-    </div>
 
     <div class="sidebar-user-material-footer">
       <a
         href="#user-nav"
         class="d-flex justify-content-between align-items-center text-shadow-dark dropdown-toggle"
         data-toggle="collapse"
-        ><span>Mis favoritos</span></a
+        ><span>Configuracion</span></a
       >
     </div>
   </div>
@@ -80,39 +70,14 @@
         <span class="sr-only">Loading...</span>
       </div>
     </div>
-    <ng-container *ngFor="let menu of datos">
+    <ng-container *ngFor="let menu of menuPrin">
       <li class="nav-item nav-item-submenu animaciones haciadentro">
-        <a href="#" class="nav-link"
-          ><i class="icon-stack"></i> <span>{{ menu.titulo }}</span></a
+        <!-- (click)="menuComponent(menu.ruta)" -->
+        <!-- routerLink="/{{ menu.ruta }}/{{ menu.ruta }}" -->
+        <a routerLink="/mod/{{ menu.componente }}" class="nav-link puntero"
+          ><i class="icon-stack"></i> <span>{{ menu.descripcion }}</span></a
         >
-        <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
-          <ng-container *ngFor="let submenu of menu.subMenu">
-            <li class="nav-item nav-item-submenu">
-              <a href="#" class="nav-link">{{ submenu.titulo }}</a>
-              <ul class="nav nav-group-sub">
-                <ng-container *ngFor="let component of submenu.componentes">
-                  <li class="nav-item">
-                    <!-- (click)="menuComponent(menu.titulo)" -->
-                    <!-- routerLink="/Mod-Administracion/adm_003" -->
-                    <!-- routerLink="/{{ menu.ruta }}/adm_003" -->
-                    <!-- (click)="menuComponent(component)" -->
-                    <!-- routerLink="/{{menu.titulo}}""/Mod-Administracion/adm_003" -->
-                    <a
-                      routerLink="/{{ menu.ruta }}/{{ component.ruta }}"
-                      class="nav-link puntero"
-                      >{{ component.titulo }}
-                      <span
-                        class="badge bg-blue-400 align-self-center ml-auto"
-                        (click)="agregarFavorito(component.id)"
-                        >+</span
-                      >
-                    </a>
-                  </li>
-                </ng-container>
-              </ul>
-            </li>
-          </ng-container>
-        </ul>
+        <ul class="nav nav-group-sub" data-submenu-title="Starter kit"></ul>
       </li>
     </ng-container>
   </ul>
