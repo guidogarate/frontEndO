@@ -18,3 +18,7 @@
 .icon-white {
   color: #ffffff;
 }
+.pad-modal-title {
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+}
