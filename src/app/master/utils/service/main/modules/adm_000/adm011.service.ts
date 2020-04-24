@@ -129,6 +129,7 @@ export class Adm011Service {
       })
       .pipe(
         map((resp) => {
+          window.open(url1);
           console.log(resp);
           return resp;
         })

@@ -53,7 +53,7 @@ export class Adm011Component {
   controlLoginModal = "";
   // TODO: new variables
   id_cod = "";
-  idModulo = 0;
+  idModulo = 10;
   ListDocumentos: any = [];
   forma: FormGroup;
   table = false;
@@ -488,7 +488,6 @@ export class Adm011Component {
 
   GetAdm011Pdf() {
     console.log("exportar a pdf");
-
     this.adm011S.getAdm011Pdf("90", this.idModulo).subscribe((resp) => {
       if (resp["ok"]) {
         console.log("download pdf: ");
@@ -503,11 +502,12 @@ export class Adm011Component {
     this.adm011S.getAdm011Excel("90", this.idModulo).subscribe((resp) => {
       if (resp["ok"]) {
         console.log("download Excel: ");
+        //window.open();
       } else {
         console.log("error: ", resp["mensaje"]);
       }
     });
   }
 
-  nada() {}
+  algo() {}
 }

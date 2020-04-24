@@ -53,30 +53,39 @@
                 ></i>
                 <div class="list-icons">
                   <div class="dropdown">
-                    <a href="#" class="list-icons-item" data-toggle="dropdown">
-                      <i class="icon-menu9"></i>
+                    <a
+                      href="#"
+                      class="list-icons-item"
+                      data-toggle="dropdown"
+                      title="exportar a .."
+                    >
+                      <i class="icon-menu9 xxl"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                       <a
-                        routerLink="nada()"
-                        routerLinkActive="router-link-active"
+                        [routerLink]="algo()"
+                        target="_blank"
                         class="dropdown-item"
                         (click)="GetAdm011Pdf()"
-                        ><i class="icon-file-pdf"></i> Export to .pdf</a
                       >
+                        <i class="icon-file-pdf"></i>
+                        Export to .pdf
+                      </a>
                       <a
-                        routerLink="nada()"
-                        routerLinkActive="router-link-active"
+                        [routerLink]="algo()"
+                        target="_blank"
                         class="dropdown-item"
                         (click)="GetAdm011Excel()"
-                        ><i class="icon-file-excel"></i> Export to .xls</a
                       >
+                        <i class="icon-file-excel"></i> Export to .xls
+                      </a>
                       <a
-                        [routerLink]="nada()"
+                        [routerLink]="algo()"
                         routerLinkActive="router-link-active"
                         class="dropdown-item"
-                        ><i class="icon-file-word"></i> Export to .doc</a
                       >
+                        <i class="icon-file-word"></i> Export to .doc
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -94,13 +103,13 @@
                   (click)="nuevoAdm011()"
                   title="Exportar"
                 ></i> -->
-                <i
+                <!-- <i
                   data-toggle="modal"
                   data-target="#modal_adm_011"
                   class="icon-exit puntero xxl"
                   (click)="nuevoAdm011()"
                   title="Salir"
-                ></i>
+                ></i> -->
               </div>
             </div>
           </div>
@@ -128,16 +137,16 @@
           </div>
         </div>
       </div>
-      <div class="card-body p0 m0">
+      <div class="card-body p0 m0" style="border: 2px solid #2196f3;">
         <div class="row m0 p0">
           <div class="col-md-0"></div>
           <div class="col-md-12 p0">
             <div class="table-responsive" *ngIf="auxma != undefined">
-              <table
-                class="table table-sm table-hover"
-                style="border: 2px solid #03a9f3;"
-              >
-                <thead class="text-center" style="border: 2px solid #2196f3;">
+              <table class="table table-sm table-hover">
+                <thead
+                  class="text-center"
+                  style="border-bottom: 2px solid #2196f3;"
+                >
                   <tr style="background: #eee;">
                     <th class="p-1">CODIGO</th>
                     <th class="p-1">DESCRIPCION</th>
@@ -209,7 +218,15 @@
           <span class="sr-only">Loading...</span>
         </div>
       </div>
-      <div class="row m0">
+      <div
+        class="row m0"
+        style="
+          margin-bottom: 0.5em;
+          background: #eee;
+          border: 2px solid #2196f3;
+          padding-top: 0.5em;
+        "
+      >
         <div class="col-lg-4 col-0">
           <label class="form-control">App: Test</label>
         </div>
@@ -258,7 +275,7 @@
   tabindex="-1"
   data-backdrop="static"
   data-keyboard="false"
-  style="padding-left: 0em;"
+  style="padding: 0em;"
 >
   <div class="modal-dialog">
     <div class="modal-content animacionmodal haciadentro">
