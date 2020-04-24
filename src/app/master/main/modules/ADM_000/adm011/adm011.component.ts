@@ -53,7 +53,7 @@ export class Adm011Component {
   controlLoginModal = "";
   // TODO: new variables
   id_cod = "";
-  idModulo = 10;
+  idModulo = 0;
   ListDocumentos: any = [];
   forma: FormGroup;
   table = false;
@@ -429,10 +429,8 @@ export class Adm011Component {
   }
 
   guardarDatos(adm_011: Adm011, contorlAccion: string) {
-    console.log("guardando datos-Accion: ", adm_011, contorlAccion);
     let peticion: Observable<any>;
     if (contorlAccion === "nuevo") {
-      // console.log("Nuevo para guardar: ", adm_011, contorlAccion);
       peticion = this.adm011S.inAdm011(adm_011);
     } else if (contorlAccion === "editar") {
       peticion = this.adm011S.upAdm011(
@@ -487,4 +485,29 @@ export class Adm011Component {
     $("#modal_adm_011").modal("hide");
     // $("#modal_adm_011_eliminar").modal("hide");
   }
+
+  GetAdm011Pdf() {
+    console.log("exportar a pdf");
+
+    this.adm011S.getAdm011Pdf("90", this.idModulo).subscribe((resp) => {
+      if (resp["ok"]) {
+        console.log("download pdf: ");
+      } else {
+        console.log("error: ", resp["mensaje"]);
+      }
+    });
+  }
+
+  GetAdm011Excel() {
+    console.log("exportar a Excel");
+    this.adm011S.getAdm011Excel("90", this.idModulo).subscribe((resp) => {
+      if (resp["ok"]) {
+        console.log("download Excel: ");
+      } else {
+        console.log("error: ", resp["mensaje"]);
+      }
+    });
+  }
+
+  nada() {}
 }

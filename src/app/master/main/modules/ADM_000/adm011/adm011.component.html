@@ -51,7 +51,37 @@
                   (click)="nuevoAdm011()"
                   title="agregar"
                 ></i>
-                <i
+                <div class="list-icons">
+                  <div class="dropdown">
+                    <a href="#" class="list-icons-item" data-toggle="dropdown">
+                      <i class="icon-menu9"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <a
+                        [routerLink]="nada()"
+                        routerLinkActive="router-link-active"
+                        class="dropdown-item"
+                        (click)="GetAdm011Pdf()"
+                        ><i class="icon-file-pdf"></i> Export to .pdf</a
+                      >
+                      <a
+                        [routerLink]="nada()"
+                        routerLinkActive="router-link-active"
+                        class="dropdown-item"
+                        (click)="GetAdm011Excel()"
+                        data-target=""
+                        ><i class="icon-file-excel"></i> Export to .xls</a
+                      >
+                      <a
+                        [routerLink]="nada()"
+                        routerLinkActive="router-link-active"
+                        class="dropdown-item"
+                        ><i class="icon-file-word"></i> Export to .doc</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- <i
                   data-toggle="modal"
                   data-target="#modal_adm_011"
                   class="icon-printer puntero xxl"
@@ -64,7 +94,7 @@
                   class="icon-download puntero xxl"
                   (click)="nuevoAdm011()"
                   title="Exportar"
-                ></i>
+                ></i> -->
                 <i
                   data-toggle="modal"
                   data-target="#modal_adm_011"
@@ -229,7 +259,7 @@
   tabindex="-1"
   data-backdrop="static"
   data-keyboard="false"
-  style='padding-left: 0em;'
+  style="padding-left: 0em;"
 >
   <div class="modal-dialog">
     <div class="modal-content animacionmodal haciadentro">
