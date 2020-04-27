@@ -5,7 +5,6 @@ import { IndexAdm000Module } from "src/app/master/utils/service/main/modules/adm
 
 import { ADM_000_MODULES_ROUTES } from "./adm_000.routes";
 
-import { Adm000Component } from "./adm000/adm000.component";
 import { Adm001Component } from "./adm001/adm001.component";
 import { Adm002Component } from "./adm002/adm002.component";
 import { Adm003Component } from "./adm003/adm003.component";
@@ -20,11 +19,9 @@ import { PipesModule } from "../../../utils/pipe/pipes.module";
 import { Adm009Component } from "./adm009/adm009.component";
 import { Adm011Component } from "./adm011/adm011.component";
 import { Adm012Component } from "./adm012/adm012.component";
-console.log("modules adm");
 
 @NgModule({
   declarations: [
-    Adm000Component,
     Adm001Component,
     Adm002Component,
     Adm003Component,

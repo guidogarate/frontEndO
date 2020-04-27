@@ -4,7 +4,7 @@ const url = {
   prod: "https://sage-back.herokuapp.com/",
   database: "sys_000/sys_001/database",
   ingresar: "sys_000/sys_001/ingresar",
-  principal: "/#/mod",
+  principal: "/#/bienvenido",
   // principal: "/#/bienvenido", // pantalla inicio
   // principal: "/#/md/90/adm_003", // pantalla inicio
   bienvenido: "/bienvenido",

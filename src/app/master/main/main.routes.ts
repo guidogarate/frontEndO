@@ -8,6 +8,11 @@ const mainRoutes: Routes = [
     component: MainComponent,
     children: [
       {
+        path: "modulo/:nivel",
+        canActivate: [ModulesGuard],
+        loadChildren: () => import("./mod/mod.module").then((m) => m.ModModule),
+      },
+      {
         path: "mod",
         canLoad: [ModulesGuard],
         loadChildren: () =>
@@ -21,12 +26,12 @@ const mainRoutes: Routes = [
             (m) => m.BienvenidoModule
           ),
       },
-      { path: "", redirectTo: "/mod", pathMatch: "full" },
+      { path: "", redirectTo: "/bienvenido", pathMatch: "full" },
     ],
   },
 ];
 
-export const MAIN_ROUTES = RouterModule.forRoot(mainRoutes);
+export const MAIN_ROUTES = RouterModule.forChild(mainRoutes);
 
 // export const MAIN_ROUTES = RouterModule.forRoot(mainRoutes, {
 //   preloadingStrategy: PreloadAllModules

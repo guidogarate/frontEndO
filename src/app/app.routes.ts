@@ -1,4 +1,3 @@
-import { NgModule } from "@angular/core";
 import { Routes, RouterModule, PreloadAllModules } from "@angular/router";
 
 import { LoginComponent } from "./master/login/login.component";

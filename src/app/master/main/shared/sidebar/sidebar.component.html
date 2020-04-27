@@ -42,10 +42,7 @@
       <ng-container *ngFor="let fto of favoritos">
         <li class="nav-item">
           <a href="#" class="nav-link">
-            <i
-              class="icon-close2 rojo"
-              (click)="eliminarFavorito(fto.admncori)"
-            ></i>
+            <i class="icon-close2 rojo"></i>
             <span>{{ fto.admndesc }}</span>
           </a>
         </li>
@@ -74,7 +71,8 @@
       <li class="nav-item nav-item-submenu animaciones haciadentro">
         <!-- (click)="menuComponent(menu.ruta)" -->
         <!-- routerLink="/{{ menu.ruta }}/{{ menu.ruta }}" -->
-        <a routerLink="/mod/{{ menu.componente }}" class="nav-link puntero"
+        <!-- routerLink="/modulo/{{ menu.componente }}" -->
+        <a (click)="menuComponent(menu.componente)" class="nav-link puntero"
           ><i class="icon-stack"></i> <span>{{ menu.descripcion }}</span></a
         >
         <ul class="nav nav-group-sub" data-submenu-title="Starter kit"></ul>

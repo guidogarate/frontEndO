@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Socket } from "ngx-socket-io";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class SocketService {
   public socketStatus = false;
@@ -12,6 +12,7 @@ export class SocketService {
 
   checkStatus() {
     this.socket.on("connect", () => {
+      console.log("conectado al servidor");
       this.socketStatus = true;
       this.salir("macc");
     });
@@ -23,7 +24,7 @@ export class SocketService {
   }
 
   salir(nombre: string) {
-    this.socket.emit("salir", { nombre }, resp => {
+    this.socket.emit("salir", { nombre }, (resp) => {
       console.log("saliendo-angular");
     });
   }
