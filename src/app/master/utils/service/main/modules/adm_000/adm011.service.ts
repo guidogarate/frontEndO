@@ -98,4 +98,41 @@ export class Adm011Service {
         })
       );
   }
+
+  getAdm011Pdf(usuario: string, idModulo: number) {
+    const url1 = `${url.prod}${adm011.getPdf}${usuario}/${idModulo}`;
+    console.log("url get: ", url1);
+    return this.httpClient
+      .get(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+          "Content-Type": "application/pdf",
+        }),
+      })
+      .pipe(
+        map((resp) => {
+          console.log(resp);
+          return resp;
+        })
+      );
+  }
+
+  getAdm011Excel(usuario: string, idModulo: number) {
+    console.log("excel");
+    const url1 = `${url.prod}${adm011.getPdf}${usuario}/${idModulo}`;
+    console.log("url get: ", url1);
+    return this.httpClient
+      .get(url1, {
+        headers: new HttpHeaders({
+          authorization: this.token,
+        }),
+      })
+      .pipe(
+        map((resp) => {
+          window.open(url1);
+          console.log(resp);
+          return resp;
+        })
+      );
+  }
 }

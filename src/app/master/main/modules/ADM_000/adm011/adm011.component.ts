@@ -19,6 +19,8 @@ import {
 import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models";
 import { Observable, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
+declare var $: any;
+
 @Component({
   selector: "app-adm011",
   templateUrl: "./adm011.component.html",
@@ -49,17 +51,12 @@ export class Adm011Component {
   contorlAccion: string = "";
   loadingSub = false;
   controlLoginModal = "";
-  // dependenciaAdm011: any[] = [];
   // TODO: new variables
   id_cod = "";
   idModulo = 10;
   ListDocumentos: any = [];
-  // ListModulos: any = [];
-
-  // new variables
   forma: FormGroup;
   table = false;
-  // gestion = "0";
   ocultarSelect = true;
   mostrarCheck = false;
   placeholdeAuto = "automatico";
@@ -161,7 +158,7 @@ export class Adm011Component {
       componente: ["", [Validators.required]],
       estado: ["", [Validators.required]],
     });
-    console.log("creando formulario: ", this.forma.value);
+    //console.log("creando formulario: ", this.forma.value);
     // console.log("creando formulario: ", this.forma.value);
   }
 
@@ -240,7 +237,7 @@ export class Adm011Component {
       estado: false,
       checkauto: true,
     });
-    console.log("agregando nuevo: ", this.forma.value);
+    //console.log("agregando nuevo: ", this.forma.value);
     this.start.CtrAc = "nuevo";
     this.ocultarSelect = false;
     this.mostrarCheck = true;
@@ -263,17 +260,15 @@ export class Adm011Component {
   }
 
   OpcionesTable(adm_011: Adm011, tipo: string) {
-    // console.log("opciones table; ", adm_011);
     this.auxmaModal = adm_011;
-    // console.log("auxma en opciones table: ", this.auxmaModal);
     this.forma.reset(this.auxmaModal);
-    // console.log("forma despues de reset con auxmoda: ", this.forma.value);
-    // this.cargarDependencia(adm_011.idunidaddivision);
     this.start.IdCod = adm_011.id_documento;
     switch (tipo) {
       case "visualizar":
         this.btnGrupo.BtnEdita = true;
         this.btnGrupo.BtnNuevo = true;
+        this.btnGrupo.BtnElimi = true;
+        console.log("visualisando y activando eliminar");
         this.boolDisabled(true);
         break;
       case "editar":
@@ -284,9 +279,8 @@ export class Adm011Component {
         this.forma.get("checkauto").disable();
         this.forma.get("id_documento").disable();
         break;
-      case "eliminar":
-        // this.eliminarAdm011(adm_011);
-        return;
+      // case "eliminar":
+      //   return;
       default:
         this.notyG.noty("error", "Operacion incorrecta", 5000);
         break;
@@ -296,9 +290,6 @@ export class Adm011Component {
 
   OpcionesModal(tipo: string) {
     this.mostrarCheck = false;
-    console.log("entro oopciones Modal");
-    console.log("tipo: ", tipo);
-
     switch (tipo) {
       case "nuevo":
         if (this.insertar === "exito") {
@@ -308,8 +299,10 @@ export class Adm011Component {
         }
         this.start.CtrAc = tipo;
         this.boolBtnGrupo(false, true);
+        this.btnGrupo.BtnElimi = false;
+        console.log("modal nuevo off delete");
         this.btnGrupo.BtnCance = true;
-        // this.dependenciaAdm011 = [];
+
         this.forma.reset({
           id_modulo: this.idModulo,
           nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
@@ -317,9 +310,8 @@ export class Adm011Component {
           id_documento: "auto",
           checkauto: true,
         }); // resetea todo a null y estado a false
-        console.log("reseteando form opciones Modal: ", this.forma.value);
+        // console.log("reseteando form opciones Modal: ", this.forma.value);
         this.boolDisabled(false);
-        // this.cargarDependencia2("1");
         this.mostrarCheck = true;
         this.forma.get("id_documento").setValue("auto");
         this.forma.get("id_documento").disable();
@@ -331,14 +323,19 @@ export class Adm011Component {
         this.start.CtrAc = tipo;
         this.boolDisabled(false);
         this.boolBtnGrupo(false, true);
+        this.btnGrupo.BtnElimi = false;
+
         this.forma.get("id_documento").disable();
         this.forma.get("checkauto").disable();
         return;
+      case "eliminar":
+        break;
       case "salir":
         this.insertar = "fall";
         this.placeholdeAuto = "automatico";
         this.resetDatos();
         this.boolDisabled(true);
+        this.btnGrupo.BtnElimi = false;
         break;
       case "cancelar":
         console.log(this.start.CtrAc);
@@ -351,6 +348,7 @@ export class Adm011Component {
         this.resetDatos();
         this.boolDisabled(true);
         this.boolBtnGrupo(true, false);
+        this.btnGrupo.BtnElimi = true;
         return;
       case "guardar":
         this.boolDisabled(false);
@@ -365,8 +363,9 @@ export class Adm011Component {
         this.guardarDatos(this.forma.value, this.start.CtrAc);
         return;
     }
-    this.boolBtnGrupo(true, true);
+    // this.boolBtnGrupo(true, true);
     this.boolBtnGrupo(false, false);
+    // this.btnGrupo.BtnElimi = true;
   }
 
   boolDisabled(bool: boolean) {
@@ -395,7 +394,7 @@ export class Adm011Component {
   boolBtnGrupo(editNuevo: boolean, cancelGuardar: boolean) {
     this.btnGrupo.BtnCance = cancelGuardar;
     this.btnGrupo.BtnEdita = editNuevo;
-    this.btnGrupo.BtnElimi = false;
+    // this.btnGrupo.BtnElimi = true;
     this.btnGrupo.BtnGuard = cancelGuardar;
     this.btnGrupo.BtnNuevo = editNuevo;
   }
@@ -430,10 +429,8 @@ export class Adm011Component {
   }
 
   guardarDatos(adm_011: Adm011, contorlAccion: string) {
-    console.log("guardando datos-Accion: ", adm_011, contorlAccion);
     let peticion: Observable<any>;
     if (contorlAccion === "nuevo") {
-      console.log("Nuevo para guardar: ", adm_011, contorlAccion);
       peticion = this.adm011S.inAdm011(adm_011);
     } else if (contorlAccion === "editar") {
       peticion = this.adm011S.upAdm011(
@@ -477,9 +474,40 @@ export class Adm011Component {
         this.paginacion(numPag.toString(), false);
         this.start.IdCod = "";
         this.notyG.noty("success", resp["mensaje"], 3000);
+        this.cerrarModal();
       } else {
         this.notyG.noty("error", resp["mensaje"], 3000);
       }
     });
   }
+  cerrarModal() {
+    console.log("intentando cerrar modal");
+    $("#modal_adm_011").modal("hide");
+    // $("#modal_adm_011_eliminar").modal("hide");
+  }
+
+  GetAdm011Pdf() {
+    console.log("exportar a pdf");
+    this.adm011S.getAdm011Pdf("90", this.idModulo).subscribe((resp) => {
+      if (resp["ok"]) {
+        console.log("download pdf: ");
+      } else {
+        console.log("error: ", resp["mensaje"]);
+      }
+    });
+  }
+
+  GetAdm011Excel() {
+    console.log("exportar a Excel");
+    this.adm011S.getAdm011Excel("90", this.idModulo).subscribe((resp) => {
+      if (resp["ok"]) {
+        console.log("download Excel: ");
+        //window.open();
+      } else {
+        console.log("error: ", resp["mensaje"]);
+      }
+    });
+  }
+
+  algo() {}
 }
