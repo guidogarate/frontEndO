@@ -20,7 +20,7 @@
         </div>
         <div class="card m0 pb0" style="background: #eee;">
           <div class="row p0 m0">
-            <div class="col-0 col-sm-3 col-md-4 col-lg-7 p0"></div>
+            <div class="col-0 col-sm-3 col-md-4 col-lg-8 p0"></div>
             <div class="col-6 col-sm-7 col-md-5 col-lg-2">
               <div
                 class="form-group form-group-feedback form-group-feedback-right m0"
@@ -42,7 +42,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-6 col-sm-2 col-md-3 col-lg-3">
+            <div class="col-6 col-sm-2 col-md-3 col-lg-2">
               <div class="form-control-feedback">
                 <i
                   data-toggle="modal"
@@ -50,6 +50,11 @@
                   class="icon-diff-added puntero xxl"
                   (click)="nuevoAdm011()"
                   title="agregar"
+                ></i>
+                <i
+                  class="icon-printer2 puntero xxl"
+                  (click)="GetAdm011Excel()"
+                  title="Imprimir"
                 ></i>
                 <div class="list-icons">
                   <div class="dropdown">
@@ -59,7 +64,7 @@
                       data-toggle="dropdown"
                       title="exportar a .."
                     >
-                      <i class="icon-menu9 xxl"></i>
+                      <i class="icon-file-download xxl"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                       <a
@@ -90,36 +95,41 @@
                   </div>
                 </div>
                 <!-- <i
-                  data-toggle="modal"
-                  data-target="#modal_adm_011"
-                  class="icon-printer puntero xxl"
-                  (click)="nuevoAdm011()"
-                  title="Imprimir"
-                ></i>
-                <i
-                  data-toggle="modal"
-                  data-target="#modal_adm_011"
-                  class="icon-download puntero xxl"
-                  (click)="nuevoAdm011()"
+                  class="icon-file-excel puntero xxl"
+                  (click)="GetAdm011Excel()"
                   title="Exportar"
                 ></i> -->
-                <!-- <i
-                  data-toggle="modal"
-                  data-target="#modal_adm_011"
-                  class="icon-exit puntero xxl"
-                  (click)="nuevoAdm011()"
-                  title="Salir"
-                ></i> -->
+                <i
+                  (click)="IrDashboard()"
+                  class="navbar-nav-link puntero"
+                  class="icon-exit xxl"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Ir a la página Principal"
+                ></i>
               </div>
             </div>
           </div>
           <div class="row p0 m0">
-            <div class="col-0 col-sm-4 col-md-4 col-lg-3"></div>
+            <div class="col-12 col-sm-1 col-md-1 col-lg-1">
+              <select
+                class="form-control selectCenter"
+                (change)="adm011SelectRegistro($event.target.value)"
+              >
+                <option
+                  *ngFor="let item of selecRegistros; let i = index"
+                  [value]="item.id_registro"
+                >
+                  {{ item.cantidad }}
+                </option>
+              </select>
+            </div>
+            <div class="col-0 col-sm-3 col-md-3 col-lg-3"></div>
             <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-center">
               <div class="form-group form-group-float m0">
-                <label class="form-group-float-label font-weight-semibold"
+                <!-- <label class="form-group-float-label font-weight-semibold" 
                   >Modulo</label
-                >
+                > -->
                 <select
                   class="form-control selectCenter"
                   (change)="adm011Selectgest($event.target.value)"
@@ -133,7 +143,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-0 col-sm-4 col-md-4 col-lg-5"></div>
+            <div class="col-0 col-sm-4 col-md-4 col-lg-4"></div>
           </div>
         </div>
       </div>
@@ -288,7 +298,7 @@
       >
         <div class="modal-header bg-blue">
           <h6 class="modal-title">
-            <i class="icon-cog title-icon align-vertical-icon-0"></i>
+            <i class="icon-books align-vertical-icon-0"></i>
             CLASE DE DOCUMENTOS
           </h6>
           <div class="list-icons float-right">

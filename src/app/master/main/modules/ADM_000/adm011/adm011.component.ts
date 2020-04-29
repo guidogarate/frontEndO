@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import {
   Adm011,
   Adm011Select,
+  Adm011SelectRegistros,
 } from "src/app/master/utils/models/main/adm_000/index.models";
 import { Adm011Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import {
@@ -19,6 +20,7 @@ import {
 import { Paginacion } from "src/app/master/utils/models/main/global/pagin.models";
 import { Observable, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
+import url from "src/app/master/config/url.config";
 declare var $: any;
 
 @Component({
@@ -35,6 +37,7 @@ export class Adm011Component {
   auxma: Adm011[];
   auxmaModal: Adm011;
   selecDivModal: Adm011Select[];
+  selecRegistros: Adm011SelectRegistros[];
   pagi: Paginacion[];
   loading = true;
   btnGrupo = glb001;
@@ -61,8 +64,9 @@ export class Adm011Component {
   mostrarCheck = false;
   placeholdeAuto = "automatico";
   insertar = "fall";
-  selectModulo: Adm011Select;
-  nroRegistros: string = "10";
+  // selectModulo: Adm011Select;
+  idNroRegistro: string = "10";
+
   constructor(
     private adm011S: Adm011Service,
     private fb: FormBuilder,
@@ -71,6 +75,7 @@ export class Adm011Component {
   ) {
     this.getAdm011(this.start.Texto);
     this.crearFormulario();
+    this.cargarSelecRegistros();
     this.textBuscarAdm011.valueChanges
       .pipe(debounceTime(500))
       .subscribe((value) => {
@@ -92,7 +97,7 @@ export class Adm011Component {
         "90",
         numePag,
         this.idModulo,
-        this.nroRegistros,
+        this.idNroRegistro,
         this.start.Texto
       );
     } else {
@@ -101,7 +106,7 @@ export class Adm011Component {
         "90",
         numePag,
         this.idModulo,
-        this.nroRegistros,
+        this.idNroRegistro,
         this.start.Texto
       );
     }
@@ -147,6 +152,14 @@ export class Adm011Component {
     });
   }
 
+  cargarSelecRegistros() {
+    this.selecRegistros = [
+      { id_registro: 1, cantidad: "10" },
+      { id_registro: 2, cantidad: "25" },
+      { id_registro: 3, cantidad: "50" },
+      { id_registro: 4, cantidad: "100" },
+    ];
+  }
   crearFormulario() {
     this.forma = this.fb.group({
       id_modulo: ["10", [Validators.required]],
@@ -177,7 +190,7 @@ export class Adm011Component {
         "90",
         this.numeroPag.toString(),
         this.idModulo,
-        this.nroRegistros,
+        this.idNroRegistro,
         this.start.Texto
       );
     } else {
@@ -194,7 +207,7 @@ export class Adm011Component {
           "90",
           this.numeroPag.toString(),
           this.idModulo,
-          this.nroRegistros,
+          this.idNroRegistro,
           this.start.Texto
         );
       } else if (numero === "999") {
@@ -210,7 +223,7 @@ export class Adm011Component {
           "90",
           this.numeroPag.toString(),
           this.idModulo,
-          this.nroRegistros,
+          this.idNroRegistro,
           this.start.Texto
         );
       }
@@ -423,8 +436,13 @@ export class Adm011Component {
 
   adm011Selectgest(gestion: string) {
     console.log("gestion change: ", gestion);
-
     this.idModulo = Number(gestion);
+    this.getAdm011("all_data", "1");
+  }
+
+  adm011SelectRegistro(idRegistro: string) {
+    console.log("Registro change: ", idRegistro);
+    this.idNroRegistro = idRegistro;
     this.getAdm011("all_data", "1");
   }
 
@@ -500,14 +518,17 @@ export class Adm011Component {
   GetAdm011Excel() {
     console.log("exportar a Excel");
     this.adm011S.getAdm011Excel("90", this.idModulo).subscribe((resp) => {
-      if (resp["ok"]) {
-        console.log("download Excel: ");
-        //window.open();
-      } else {
-        console.log("error: ", resp["mensaje"]);
-      }
+      // if (resp["ok"]) {
+      //   console.log("download Excel: ");
+      //   console.log(resp);
+      //   // window.open();
+      // } else {
+      console.log("error: ", resp);
+      // }
     });
   }
-
+  IrDashboard() {
+    window.location.href = url.principal;
+  }
   algo() {}
 }
