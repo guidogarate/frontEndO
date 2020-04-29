@@ -12,3 +12,7 @@ export interface Adm011Select {
   id_modulo: number;
   modulo: string;
 }
+export interface Adm011SelectRegistros {
+  id_registro: number;
+  cantidad: string;
+}

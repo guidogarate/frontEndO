@@ -12,8 +12,10 @@
 }
 .table tr.puntero:hover {
   background-color: #a9d9ef;
-  border-style: groove;
-  border-color: #03a9f3;
+  /* border-style: groove; */
+  /* border-color: #03a9f3; */
+  border-top: 2px solid #03a9f3;
+  border-bottom: 2px solid #03a9f3;
 }
 .icon-white {
   color: #ffffff;
