@@ -1,6 +1,5 @@
 import { RouterModule, Routes } from "@angular/router";
 
-import { Adm000Component } from "./adm000/adm000.component";
 import { Adm001Component } from "./adm001/adm001.component";
 import { Adm002Component } from "./adm002/adm002.component";
 import { Adm003Component } from "./adm003/adm003.component";
@@ -14,18 +13,7 @@ import { Adm009Component } from "./adm009/adm009.component";
 import { Adm011Component } from "./adm011/adm011.component";
 import { Adm012Component } from "./adm012/adm012.component";
 
-console.log("admin00 routes");
-
-// console.log(window.location);
-// console.log(window.location.href);
-// console.log(window.location.search);
-
 const adm000_Routes: Routes = [
-  {
-    path: "",
-    component: Adm000Component,
-    data: { titulo: "admin" },
-  },
   {
     path: "adm001",
     component: Adm001Component,
@@ -81,6 +69,11 @@ const adm000_Routes: Routes = [
     path: "adm012",
     component: Adm012Component,
     data: { titulo: "adm012" },
+  },
+  {
+    path: "",
+    redirectTo: "/bienvenido",
+    pathMatch: "full",
   },
 ];
 // const menu = JSON.parse(sessionStorage.getItem("menu"));

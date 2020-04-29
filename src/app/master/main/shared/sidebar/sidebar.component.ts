@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { SocketService } from "src/app/master/utils/service/socket/socket.service";
 import { Router } from "@angular/router";
+import { ComunicacionService } from "src/app/master/utils/service/comunicacion/comunicacion.service";
 
 @Component({
   selector: "app-sidebar",
@@ -11,11 +12,16 @@ export class SidebarComponent {
   menuPrin: any;
   cargandoMenu = true;
   datosUser: any = JSON.parse(sessionStorage.getItem("datos_user"));
+  favoritos: any = JSON.parse(sessionStorage.getItem("favoritos"));
   imagen: string;
   nombre: string;
   email: string;
 
-  constructor(public wsService: SocketService, public router: Router) {
+  constructor(
+    public wsService: SocketService,
+    public router: Router,
+    public comunicacionService: ComunicacionService
+  ) {
     if (this.datosUser === null) {
       return;
     }
@@ -33,8 +39,8 @@ export class SidebarComponent {
     }
   }
 
-  menuComponent(menu: string) {
-    //  console.log(menu);
-    //  this.router.navigate(["/mod", menu]);
+  menuComponent(ruta: string) {
+    this.comunicacionService.cambiarNivel(ruta);
+    this.router.navigate(["/modulo", ruta]);
   }
 }
