@@ -34,6 +34,17 @@
 .card-pad-top {
   padding-top: 0.5em;
 }
+/* icons 1 level */
+.icon-size-head {
+  font-size: 3rem;
+}
+.icon-size-text {
+  font-size: 0.6rem;
+}
+.icon-align-center {
+  display: flex;
+  justify-content: center;
+}
 @media screen and (max-width: 600px) {
   .logo-height {
     height: 7em;
