@@ -38,12 +38,27 @@
 .icon-size-head {
   font-size: 3rem;
 }
+.fondo-hover:hover {
+  background-color: #ececec;
+}
 .icon-size-text {
   font-size: 0.6rem;
 }
 .icon-align-center {
   display: flex;
   justify-content: center;
+}
+.icon-module {
+  font-size: 1.5rem;
+}
+.card-background {
+  background: #ececec;
+}
+.icon-circle {
+  box-sizing: content-box;
+}
+.card-circle {
+  border-radius: 4em;
 }
 @media screen and (max-width: 600px) {
   .logo-height {
