@@ -61,6 +61,33 @@
   border-radius: 4em;
 }
 
+.component-radius {
+  border-radius: 1em;
+}
+.card-border {
+  border: 1px solid #000;
+}
+
+.pad-tb-0 {
+  padding-top: 0em !important;
+  padding-bottom: 0em !important;
+}
+.pad-b-0 {
+  padding-bottom: 0em !important;
+}
+.card-background-gradient {
+  background: #c9d6ff; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #e2e2e2,
+    #c9d6ff
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #e2e2e2,
+    #c9d6ff
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
 @media screen and (max-width: 600px) {
   .logo-height {
     height: 7em;
