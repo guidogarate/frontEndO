@@ -29,6 +29,7 @@
             class="col-sm-2 col-4 icon-margin icon-pad"
             *ngFor="let fav of favoritos"
           >
+            <span class="badge badge-pill bg-warning-400 mr-auto">9</span>
             <img
               class="img-fluid icon-width"
               src="https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn.png"
@@ -49,7 +50,10 @@
 <div class="card m0 p0" style="margin-top: 0.5em;">
   <div class="row m0 p0">
     <div class="col-lg-12">
-      <div class="list-icons icon-align-center">
+      <div
+        class="list-icons icon-align-center"
+        style="display: flex; flex-wrap: wrap;"
+      >
         <div class="col-lg-1">
           <div class="card m0 fondo-hover">
             <i
@@ -186,103 +190,620 @@
             <!-- TODO:  componentes -->
             <div class="row m0 p0">
               <div class="col-lg-12">
-                <div class="list-icons icon-align-center">
-                  <div class="col-lg-1 icon-circle">
-                    <div class="card m0 fondo-hover card-circle">
-                      <span class="badge badge-pill bg-warning-400 mr-auto"
-                        >9</span
-                      >
-
-                      <i
-                        title="visualizar"
-                        class="icon-file-eye icon-size-head puntero"
-                      ></i>
-
-                      <div class="caption card-pad-top">
-                        <p class="text-center icon-size-text">
-                          Solicitud de Inventario
-                        </p>
+                <div
+                  class="list-icons icon-align-center"
+                  style="display: flex; flex-wrap: wrap;"
+                >
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-lg-1 icon-circle">
-                    <div class="card m0 fondo-hover card-circle">
-                      <span class="badge badge-pill bg-warning-400 mr-auto"
-                        >9</span
-                      >
-                      <i
-                        title="visualizar"
-                        class="icon-file-eye icon-size-head puntero"
-                      ></i>
-                      <div class="caption card-pad-top">
-                        <p class="text-center icon-size-text">
-                          Recepcion de Items
-                        </p>
-                      </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
                     </div>
                   </div>
-                  <div class="col-lg-1 icon-circle">
-                    <div class="card m0 fondo-hover card-circle">
-                      <span class="badge badge-pill bg-warning-400 mr-auto"
-                        >9</span
-                      >
-                      <i
-                        title="visualizar"
-                        class="icon-file-eye icon-size-head puntero"
-                      ></i>
-                      <div class="caption card-pad-top">
-                        <p class="icon-size-text text-center">
-                          Ingresos por saldos iniciales
-                        </p>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-lg-1 icon-circle">
-                    <div class="card m0 fondo-hover card-circle">
-                      <span class="badge badge-pill bg-warning-400 mr-auto"
-                        >9</span
-                      >
-                      <i
-                        title="visualizar"
-                        class="icon-file-eye icon-size-head puntero"
-                      ></i>
-                      <div class="caption card-pad-top">
-                        <p class="icon-size-text text-center">
-                          Ingresos por Ajuste de Inventario
-                        </p>
-                      </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
                     </div>
                   </div>
-                  <div class="col-lg-1 icon-circle">
-                    <div class="card m0 fondo-hover card-circle">
-                      <span class="badge badge-pill bg-warning-400 mr-auto"
-                        >9</span
-                      >
-                      <i
-                        title="visualizar"
-                        class="icon-file-eye icon-size-head puntero"
-                      ></i>
-                      <div class="caption card-pad-top">
-                        <p class="icon-size-text text-center">
-                          Egreso por ajuste de Inventario
-                        </p>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
                       </div>
                     </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
                   </div>
-                  <div class="col-lg-1 icon-circle">
-                    <div class="card m0 fondo-hover">
-                      <span class="badge badge-pill bg-warning-400 mr-auto"
-                        >9</span
-                      >
-                      <i
-                        title="visualizar"
-                        class="icon-file-eye icon-size-head puntero"
-                      ></i>
-                      <div class="caption card-pad-top">
-                        <p class="icon-size-text text-center">
-                          Título de la imagen
-                        </p>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
                       </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- TODO : end componentes -->
+            <div class="row p0 m0"></div>
+          </div>
+        </div>
+        <hr />
+        <!-- TODO: SEGUNDO COMPONENTE -->
+        <div class="row p0 m0">
+          <div class="col-lg-12">
+            <div class="card-header header-elements-inline ml-4">
+              <h6>
+                <i class="icon-printer2 icon-module mr-2"> </i>
+                Proceso Traspaso
+              </h6>
+            </div>
+            <!-- TODO:  componentes -->
+            <div class="row m0 p0">
+              <div class="col-lg-12">
+                <div
+                  class="list-icons icon-align-center"
+                  style="display: flex; flex-wrap: wrap;"
+                >
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-6 p0 fondo-hover">
+                    <div class="row p0 m0">
+                      <div class="col-lg-12 col-12 p0">
+                        <span
+                          class="badge badge-pill bg-warning-400"
+                          style="
+                            margin-right: 1.5em;
+                            margin-left: -3.5em;
+                            vertical-align: top;
+                          "
+                          >00</span
+                        >
+                        <div class="card m0 fondo-hover circulo">
+                          <i
+                            title="visualizar"
+                            class="icon-file-eye icon-size-head puntero"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row"> -->
+                    <div class="caption card-pad-top">
+                      <p class="text-center icon-size-text">
+                        Ajuste por Ingreso de Inventario
+                      </p>
+                      <!-- </div> -->
                     </div>
                   </div>
                 </div>

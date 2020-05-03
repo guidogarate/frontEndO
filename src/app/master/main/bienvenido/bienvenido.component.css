@@ -14,7 +14,7 @@
   vertical-align: middle;
   border-radius: 50%;
   padding: 1em;
-  background: #fcfb52;
+  background: #fff;
 }
 .fondo-card {
   background-color: #f5f5f5;
@@ -36,13 +36,13 @@
 }
 /* icons 1 level */
 .icon-size-head {
-  font-size: 3rem;
+  font-size: 2rem;
 }
 .fondo-hover:hover {
-  background-color: #ececec;
+  background: #fff;
 }
 .icon-size-text {
-  font-size: 0.6rem;
+  font-size: 0.8rem;
 }
 .icon-align-center {
   display: flex;
@@ -60,6 +60,7 @@
 .card-circle {
   border-radius: 4em;
 }
+
 @media screen and (max-width: 600px) {
   .logo-height {
     height: 7em;
