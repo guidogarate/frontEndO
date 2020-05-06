@@ -9,8 +9,8 @@ import { ComunicacionService } from "src/app/master/utils/service/comunicacion/c
 })
 export class ModComponent implements OnInit, OnDestroy {
   data: any[] = JSON.parse(sessionStorage.getItem("menu"));
-  datas: any[] = [];
-  titulo: string = "";
+  modulos: any[] = [];
+  modulos2: any[] = [];
   constructor(
     route: ActivatedRoute,
     public router: Router,
@@ -21,13 +21,14 @@ export class ModComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.comunicacionService.cambiarNivelObservable.subscribe((ruta) => {
-      this.datas = [];
+      this.modulos = [];
+      this.modulos2 = [];
       this.filtrar(ruta);
     });
   }
   ngOnDestroy() {
-    this.datas = null;
-    console.log(this.datas);
+    this.modulos = null;
+    this.modulos2 = null;
   }
 
   filtrar(modulo: string) {
@@ -35,12 +36,22 @@ export class ModComponent implements OnInit, OnDestroy {
     for (let i = 0; i < len; i++) {
       const mod = this.data[i].id_primernivel.toString();
       if (mod === modulo) {
-        this.titulo = this.data[i].descripcion;
-        this.datas.push(this.data[i].modulo);
+        this.modulos = this.data[i].modulo;
+        this.modulos2 = this.data[i].modulo;
         return;
       }
     }
     this.router.navigate(["/bienvenido"]);
+  }
+
+  clickmodulo(id_segundonivel: number) {
+    const len: number = this.modulos2.length;
+    for (let i = 0; i < len; i++) {
+      if (this.modulos2[i].id_segundonivel === id_segundonivel) {
+        this.modulos = [];
+        this.modulos.push(this.modulos2[i]);
+      }
+    }
   }
 
   component(submodulo: number, componente: string) {

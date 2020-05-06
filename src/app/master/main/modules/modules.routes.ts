@@ -3,34 +3,82 @@ import { ModulesComponent } from "./modules.component";
 
 const mainRoutes: Route[] = [
   {
-    path: "10",
+    path: "10", // MODULO CONTABILIDAD
     component: ModulesComponent,
     loadChildren: () =>
-      import("./MANT_000/mant_000.module").then((mod) => mod.MANT00Module),
+      import("./CONT_000/con_000.module").then((mod) => mod.CONT00Module),
   },
   {
-    path: "20",
+    path: "15", // MODULO ADQUISICIONES
     component: ModulesComponent,
     loadChildren: () =>
-      import("./TRAN_000/tran_000.module").then((mod) => mod.TRAN00Module),
+      import("./RRHH_000/rrhh_000.module").then((mod) => mod.RRHH00Module),
   },
   {
-    path: "30",
+    path: "17", // MODULO INVENTARIO
     component: ModulesComponent,
     loadChildren: () =>
-      import("./REPO_000/repo_000.module").then((mod) => mod.REPO00Module),
+      import("./RRHH_000/rrhh_000.module").then((mod) => mod.RRHH00Module),
   },
   {
-    path: "40",
+    path: "19", // MODULO FACTURACION
     component: ModulesComponent,
     loadChildren: () =>
-      import("./CON_000/con_000.module").then((mod) => mod.CONT00Module),
+      import("./RRHH_000/rrhh_000.module").then((mod) => mod.RRHH00Module),
   },
   {
-    path: "90",
+    path: "22", // MODULO TESORERIA
     component: ModulesComponent,
     loadChildren: () =>
-      import("./ADM_000/adm_000.module").then((mod) => mod.ADM00Module),
+      import("./RRHH_000/rrhh_000.module").then((mod) => mod.RRHH00Module),
+  },
+  {
+    path: "24", // MODULO CARTERA
+    component: ModulesComponent,
+    loadChildren: () =>
+      import("./RRHH_000/rrhh_000.module").then((mod) => mod.RRHH00Module),
+  },
+  {
+    path: "26", // MODULO OBLIGACIONES
+    component: ModulesComponent,
+    loadChildren: () =>
+      import("./RRHH_000/rrhh_000.module").then((mod) => mod.RRHH00Module),
+  },
+  {
+    path: "30", // MODULO SERVICIOS
+    component: ModulesComponent,
+    loadChildren: () =>
+      import("./RRHH_000/rrhh_000.module").then((mod) => mod.RRHH00Module),
+  },
+  {
+    path: "35", // MODULO IMPUESTOS
+    component: ModulesComponent,
+    loadChildren: () =>
+      import("./RRHH_000/rrhh_000.module").then((mod) => mod.RRHH00Module),
+  },
+  {
+    path: "40", // MODULO RECURSOS HUMANOS
+    component: ModulesComponent,
+    loadChildren: () =>
+      import("./RRHH_000/rrhh_000.module").then((mod) => mod.RRHH00Module),
+  },
+  {
+    path: "45", // MODULO BIENES DE USO
+    component: ModulesComponent,
+    loadChildren: () =>
+      import("./RRHH_000/rrhh_000.module").then((mod) => mod.RRHH00Module),
+  },
+  {
+    path: "48", // MODULO SOCIOS
+    component: ModulesComponent,
+    loadChildren: () =>
+      import("./RRHH_000/rrhh_000.module").then((mod) => mod.RRHH00Module),
+  },
+  {
+    path: "90", // MODULO ADMINISTRACION
+    component: ModulesComponent,
+    loadChildren: () =>
+      import("./ADMI_000/adm_000.module").then((mod) => mod.ADM00Module),
   },
 ];
 
