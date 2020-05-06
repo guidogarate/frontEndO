@@ -38,6 +38,9 @@
 .icon-size-head {
   font-size: 2rem;
 }
+.icon-size-menu {
+  font-size: 3rem;
+}
 .fondo-hover:hover {
   background: #fff;
 }
@@ -88,6 +91,16 @@
     #c9d6ff
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+.menu-head-center {
+  justify-content: center;
+  display: flex;
+}
+.fondo-menu:hover {
+  background-color: #dfe1e6;
+}
+.card-mt {
+  margin-top: 1.3em;
+}
 @media screen and (max-width: 600px) {
   .logo-height {
     height: 7em;
@@ -103,5 +116,8 @@
   }
   .icon-pad {
     padding-top: 0.5em;
+  }
+  .menu-head-center {
+    justify-content: left;
   }
 }
