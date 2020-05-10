@@ -2,10 +2,62 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ComunicacionService } from "src/app/master/utils/service/comunicacion/comunicacion.service";
 
+import {
+  trigger,
+  style,
+  transition,
+  animate,
+  state,
+} from "@angular/animations";
+
 @Component({
   selector: "app-mod",
   templateUrl: "./mod.component.html",
   styleUrls: ["./mod.component.css"],
+  animations: [
+    trigger("contenidoModulo", [
+      state(
+        "void",
+        style({
+          transform: "scale(0.5)",
+          opacity: 0,
+        })
+      ),
+      transition(":enter", [
+        animate(
+          1000,
+          style({
+            transform: "scale(1)",
+            opacity: 1,
+          })
+        ),
+      ]),
+    ]),
+    trigger("enterState", [
+      state(
+        "void",
+        style({
+          transform: "translateX(-100%)",
+          opacity: 0,
+        })
+      ),
+      transition(":enter", [
+        animate(
+          300,
+          style({
+            transform: "translateX(0)",
+            opacity: 1,
+          })
+        ),
+      ]),
+    ]),
+    // trigger("contenidoModulo", [
+    //   state("show", style({ transform: "scale(0.3)" })),
+    //   state("hide", style({ transform: "scale(1)" })),
+    //   transition("show => hide", animate("2000ms ease-out")),
+    //   transition("* => *", animate("500ms ease-in")),
+    // ]),
+  ],
 })
 export class ModComponent implements OnInit, OnDestroy {
   data: any[] = JSON.parse(sessionStorage.getItem("menu"));

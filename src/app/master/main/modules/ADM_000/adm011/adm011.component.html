@@ -94,11 +94,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- <i
-                  class="icon-file-excel puntero xxl"
-                  (click)="GetAdm011Excel()"
-                  title="Exportar"
-                ></i> -->
                 <i
                   (click)="IrDashboard()"
                   class="navbar-nav-link puntero"
@@ -162,7 +157,7 @@
                     <th class="p-1">DESCRIPCION</th>
                     <th class="p-1">SIGLA</th>
                     <th class="p-1">COMPONENTE</th>
-                    <th class="p-1">ESTADO</th>
+                    <th class="p-1">ESTADOs</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -186,9 +181,27 @@
                     <td class="text-left">{{ adm011.descripcion }}</td>
                     <td class="text-left">{{ adm011.sigla }}</td>
                     <td class="text-left">{{ adm011.componente }}</td>
+                    <td
+                      class="text-left"
+                      [disabled]="true"
+                      [checked]="adm011.estado"
+                      title="adm011.estado"
+                      *ngIf="adm011.estado"
+                    >
+                      Vigente
+                    </td>
+                    <td
+                      class="text-left"
+                      [disabled]="true"
+                      [checked]="adm011.estado"
+                      title="adm011.estado"
+                      *ngIf="adm011.componente"
+                    >
+                      Inactivo
+                    </td>
                     <td class="table-content-center text-center">
                       <div class="row p0 m0">
-                        <div class="custom-control custom-switch m-auto">
+                        <!-- <div class="custom-control custom-switch m-auto">
                           <input
                             type="checkbox"
                             class="custom-control-input"
@@ -201,16 +214,13 @@
                             class="custom-control-label"
                             for="adm011estado{{ i }}"
                           ></label>
-                        </div>
+                        </div> -->
                         <div class="list-icons">
                           <i
                             class="icon-file-eye"
                             title="visualizar"
                             class="icon-file-eye icon-white puntero"
                           ></i>
-                          <!-- data-toggle="modal"
-                            data-target="#modal_adm_011" -->
-                          <!-- (click)="OpcionesTable(adm011, 'visualizar')" -->
                         </div>
                       </div>
                     </td>

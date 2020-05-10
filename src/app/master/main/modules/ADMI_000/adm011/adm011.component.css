@@ -27,3 +27,7 @@
 .modal-head-back-color {
   background-color: #eeeeee;
 }
+.scroll-Table-Gestion {
+  height: calc(100%);
+  overflow-y: overlay;
+}

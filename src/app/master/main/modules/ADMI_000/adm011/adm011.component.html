@@ -114,7 +114,7 @@
             <div class="col-12 col-sm-1 col-md-1 col-lg-1">
               <select
                 class="form-control selectCenter"
-                (change)="adm011SelectRegistro($event.target.value)"
+                (change)="adm011SelectRegistro(item.cantidad)"
               >
                 <option
                   *ngFor="let item of selecRegistros; let i = index"
@@ -151,7 +151,10 @@
         <div class="row m0 p0">
           <div class="col-md-0"></div>
           <div class="col-md-12 p0">
-            <div class="table-responsive" *ngIf="auxma != undefined">
+            <div
+              class="table-responsive scroll-Table-Gestion"
+              *ngIf="auxma != undefined"
+            >
               <table class="table table-sm table-hover">
                 <thead
                   class="text-center"
@@ -186,7 +189,18 @@
                     <td class="text-left">{{ adm011.descripcion }}</td>
                     <td class="text-left">{{ adm011.sigla }}</td>
                     <td class="text-left">{{ adm011.componente }}</td>
-                    <td class="table-content-center text-center">
+                    <td class="text-left" *ngIf="adm011.estado; else content">
+                      Vigente
+                    </td>
+                    <ng-template #content>
+                      <td class="text-left">
+                        Inactivo
+                      </td>
+                    </ng-template>
+                    <!--                     
+                    <td class="text-left" *ngIf="adm011.estado"="adm011.estado">Inactivo</td> -->
+
+                    <!-- <td class="table-content-center text-center">
                       <div class="row p0 m0">
                         <div class="custom-control custom-switch m-auto">
                           <input
@@ -208,12 +222,9 @@
                             title="visualizar"
                             class="icon-file-eye icon-white puntero"
                           ></i>
-                          <!-- data-toggle="modal"
-                            data-target="#modal_adm_011" -->
-                          <!-- (click)="OpcionesTable(adm011, 'visualizar')" -->
                         </div>
                       </div>
-                    </td>
+                    </td> -->
                   </tr>
                 </tbody>
               </table>
@@ -309,7 +320,7 @@
             border-top-right-radius: 1em;
           "
         >
-          <h6 class="modal-title">
+          <h6 class="modal-title font-title">
             <i class="icon-books align-vertical-icon-0"></i>
             CLASE DE DOCUMENTOS
           </h6>
@@ -400,7 +411,7 @@
                     border-color: #03a9f4;
                     background-color: #eee;
                   "
-                  class="text-center"
+                  class="text-center font-title"
                   disabled="true"
                   type="text"
                   formControlName="nombre_modulo"
@@ -409,19 +420,19 @@
               <div class="col-sm-4 col-0"></div>
             </div>
             <div class="row">
-              <div class="col-md-3 col-12 pad-modal-title text-center">
+              <div class="col-md-2 col-12 pad-modal-title text-center">
                 <div class="form-group form-group-float">
                   <label class="form-group-float-label text-label"
                     >Numeracion</label
                   >
-                  <div class="custom-control custom-switch p0">
+                  <div class="custom-control custom-switch p0 ml-4">
                     <input
                       type="checkbox"
                       class="custom-control-input"
                       formControlName="checkauto"
                       (click)="habilitarAuto()"
                       title="auxmaModal.estado"
-                      name="estado"
+                      name="identificador"
                       id="check1"
                     />
                     <label
@@ -439,16 +450,16 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-2 col-12 pad-modal-title">
-                <label class="col-lg-12 col-12 m0 text-label"
-                  >Identificador</label
+              <div class="col-sm-2 col-12 pad-modal-title modal-title-pb">
+                <label class="col-lg-12 col-12 text-label text-center"
+                  >Codigo</label
                 >
                 <div class="col-lg-12 col-12">
                   <input
                     style="text-align: center;"
                     type="text"
                     class="form-control"
-                    oninvalid="this.setCustomValidity('Introducir Identificador')"
+                    oninvalid="this.setCustomValidity('codigo')"
                     oninput="setCustomValidity('')"
                     placeholder="{{ placeholdeAuto }}"
                     formControlName="id_documento"
@@ -458,10 +469,7 @@
                   />
                 </div>
               </div>
-              <div
-                class="col-md-4 col-12 pad-modal-title"
-                style="margin-bottom: 1.25rem;"
-              >
+              <div class="col-md-5 col-12 pad-modal-title modal-title-pb">
                 <label class="col-lg-12 col-12 text-center text-label"
                   >Descripcion</label
                 >
@@ -478,30 +486,10 @@
                     required
                   />
                 </div>
-
-                <!-- <div class="form-group form-group-float">
-                <label class="form-group-float-label text-label"
-                  >Descripcion</label
-                >
-                <input
-                  style="text-align: center;"
-                  type="text"
-                  class="form-control"
-                  oninvalid="this.setCustomValidity('Introducir Descripcion')"
-                  oninput="setCustomValidity('')"
-                  placeholder="Introducir Descripcion"
-                  formControlName="descripcion"
-                  name="descripcion"
-                  required
-                />
-              </div> -->
               </div>
-              <div
-                class="col-md-3 col-12 pad-modal-title"
-                style="margin-bottom: 1.25rem;"
-              >
-                <label class="col-lg-12 col-12 m0 text-label"
-                  >Descripcion Corta</label
+              <div class="col-md-3 col-12 pad-modal-title modal-title-pb">
+                <label class="col-lg-12 col-12 m0 text-label text-center"
+                  >Sigla</label
                 >
                 <div class="col-lg-12 col-12">
                   <input
@@ -516,106 +504,13 @@
                     required
                   />
                 </div>
-
-                <!-- <div class="form-group form-group-float">
-                <label class="form-group-float-label text-label"
-                   >Descripcion Corta</label
-                >
-                <input
-                  style="text-align: center;"
-                  type="text"
-                  class="form-control"
-                  oninvalid="this.setCustomValidity('Introducir Sigla')"
-                  oninput="setCustomValidity('')"
-                  placeholder="Introducir Sigla"
-                  formControlName="sigla"
-                  name="sigla"
-                  required
-                />
-              </div> -->
               </div>
-
-              <!-- <div class="col-sm-4 col-12 pad-modal-title text-center">
-                <div class="form-group form-group-float">
-                  <label class="form-group-float-label text-label"
-                    >Estado</label
-                  >
-                  <div class="custom-control custom-switch p0">
-                    <input
-                      type="checkbox"
-                      required="false"
-                      class="custom-control-input"
-                      formControlName="estado"
-                      title="auxmaModal.estado"
-                      name="estado"
-                      id="estado"
-                    />
-                    <label
-                      *ngIf="this.forma.get('estado').value"
-                      class="custom-control-label"
-                      for="estado"
-                      >Activo</label
-                    >
-                    <label
-                      *ngIf="!this.forma.get('estado').value"
-                      class="custom-control-label"
-                      for="estado"
-                      >Inactivo</label
-                    >
-                  </div>
-                </div>
-              </div> -->
             </div>
             <div class="row">
               <div class="col-xl-12">
                 <div class="row text-center">
-                  <!-- <div
-                    class="col-md-4 col-12 pad-modal-title"
-                    style="margin-bottom: 1.25rem;"
-                  >
-                    <label class="col-lg-12 col-12 m0 text-label"
-                      >Descripcion</label
-                    >
-                    <div class="col-lg-12 col-12">
-                      <input
-                        style="text-align: center;"
-                        type="text"
-                        class="form-control"
-                        oninvalid="this.setCustomValidity('Introducir Descripcion')"
-                        oninput="setCustomValidity('')"
-                        placeholder="Introducir Descripcion"
-                        formControlName="descripcion"
-                        name="descripcion"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div
-                    class="col-md-4 col-12 pad-modal-title"
-                    style="margin-bottom: 1.25rem;"
-                  >
-                    <label class="col-lg-12 col-12 m0 text-label"
-                      >Descripcion Corta</label
-                    >
-                    <div class="col-lg-12 col-12">
-                      <input
-                        style="text-align: center;"
-                        type="text"
-                        class="form-control"
-                        oninvalid="this.setCustomValidity('Introducir Sigla')"
-                        oninput="setCustomValidity('')"
-                        placeholder="Introducir Sigla"
-                        formControlName="sigla"
-                        name="sigla"
-                        required
-                      />
-                    </div>
-                  </div> -->
                   <div class="col-lg-2 d-none d-sm-none d-md-block"></div>
-                  <div
-                    class="col-md-5 col-12 pad-modal-title"
-                    style="margin-bottom: 1.25rem;"
-                  >
+                  <div class="col-md-5 col-12 pad-modal-title modal-title-pb">
                     <label class="col-lg-12 col-12 m0 text-label"
                       >Componente</label
                     >
@@ -632,29 +527,13 @@
                         required
                       />
                     </div>
-                    <!-- <div class="form-group form-group-float">
-                      <label class="form-group-float-label text-label"
-                        >Componente</label
-                      >
-                      <input
-                        style="text-align: center;"
-                        type="text"
-                        class="form-control"
-                        oninvalid="this.setCustomValidity('Introducir Componente')"
-                        oninput="setCustomValidity('')"
-                        placeholder="Introducir Componente"
-                        formControlName="componente"
-                        name="componente"
-                        required
-                      />
-                    </div> -->
                   </div>
                   <div class="col-sm-3 col-12 pad-modal-title text-center">
                     <div class="form-group form-group-float">
                       <label class="form-group-float-label text-label"
                         >Estado</label
                       >
-                      <div class="custom-control custom-switch p0">
+                      <div class="custom-control custom-switch p0 ml-4">
                         <input
                           type="checkbox"
                           required="false"

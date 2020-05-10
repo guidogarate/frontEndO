@@ -450,6 +450,7 @@ export class Adm011Component {
     let peticion: Observable<any>;
     if (contorlAccion === "nuevo") {
       peticion = this.adm011S.inAdm011(adm_011);
+      this.cerrarModal();
     } else if (contorlAccion === "editar") {
       peticion = this.adm011S.upAdm011(
         adm_011,
