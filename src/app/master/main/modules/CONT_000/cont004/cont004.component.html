@@ -41,6 +41,15 @@
           ></i>
         </div>
       </div>
+      <div class="col-3 col-sm-2 col-md-3 col-lg-1" style="padding-top: 30px;">
+        <div class="form-control-feedback">
+          <i
+            class="icon-printer2 puntero xxl"
+            (click)="imprimir()"
+            title="imprimir"
+          ></i>
+        </div>
+      </div>
     </div>
   </div>
   <div class="row p0 m0">
@@ -198,7 +207,7 @@
             </a>
             <button
               *ngIf="btnGrupo.BtnGuard"
-              style="padding: 1px;color: white;"
+              style="padding: 1px; color: white;"
               type="submit"
               (click)="OpcionesModal('guardar', true)"
               class="btn text-warning-600 btn-flat btn-icon btn-rounded"
@@ -249,7 +258,7 @@
         </div>
         <app-cargacontent *ngIf="!start.ConMo"></app-cargacontent>
         <ng-container *ngIf="start.ConMo">
-          <div class="modal-body ">
+          <div class="modal-body">
             <div class="row text-center">
               <div *ngIf="nuevoAutoma" class="col-1 col-sm-1 col-md-1 col-lg-1">
                 <div class="custom-control custom-switch">
@@ -343,7 +352,7 @@
                 </a>
                 <button
                   *ngIf="btnGrupoSub.BtnGuard"
-                  style="padding: 1px;color: white;"
+                  style="padding: 1px; color: white;"
                   type="submit"
                   (click)="OpcionesModal('guardar', false)"
                   class="btn text-warning-600 btn-flat btn-icon btn-rounded"
@@ -471,8 +480,8 @@
       <!-- <p>
           {{ this.forma.get("codigo").status }}
         </p> -->
-      <pre>fue modificado? {{ forma.dirty }}</pre>
-      <pre>{{ forma.value | json }}</pre>
+      <!-- <pre>fue modificado? {{ forma.dirty }}</pre>
+      <pre>{{ forma.value | json }}</pre> -->
     </div>
   </div>
 </div>

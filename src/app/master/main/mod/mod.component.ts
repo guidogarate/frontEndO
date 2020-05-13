@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ComunicacionService } from "src/app/master/utils/service/comunicacion/comunicacion.service";
+import { ComunicacionService } from "src/app/master/utils/service/main/global/comunicacion.service";
 
 @Component({
   selector: "app-mod",
@@ -11,6 +11,8 @@ export class ModComponent implements OnInit, OnDestroy {
   data: any[] = JSON.parse(sessionStorage.getItem("menu"));
   modulos: any[] = [];
   modulos2: any[] = [];
+  numeroMod: number = -1;
+
   constructor(
     route: ActivatedRoute,
     public router: Router,
@@ -24,11 +26,14 @@ export class ModComponent implements OnInit, OnDestroy {
       this.modulos = [];
       this.modulos2 = [];
       this.filtrar(ruta);
+      this.numeroMod = -1;
     });
   }
   ngOnDestroy() {
     this.modulos = null;
     this.modulos2 = null;
+    this.numeroMod = null;
+    this.data = null;
   }
 
   filtrar(modulo: string) {
@@ -49,6 +54,7 @@ export class ModComponent implements OnInit, OnDestroy {
     for (let i = 0; i < len; i++) {
       if (this.modulos2[i].id_segundonivel === id_segundonivel) {
         this.modulos = [];
+        this.numeroMod = i;
         this.modulos.push(this.modulos2[i]);
       }
     }

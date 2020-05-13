@@ -5,10 +5,14 @@
       style="padding-top: 1rem; padding-bottom: 1rem; overflow-x: overlay;"
     >
       <div class="list-icons menu-head-center" style="white-space: nowrap;">
-        <ng-container *ngFor="let modulo of modulos2; index as i">
+        <ng-container *ngFor="let modulo of modulos2; let i = index">
           <div
-            class="col-lg-1 col-5 fondo-menu component-radius"
+            class="col-lg-1 col-5 component-radius fondo-menu"
             style="display: inline-block;"
+            [ngClass]="{
+              puntero: true,
+              'fondo-menu-click': numeroMod === i
+            }"
             (click)="clickmodulo(modulo.id_segundonivel)"
           >
             <div class="row p0 m0">
@@ -16,7 +20,7 @@
                 <div class="card card-mt m0 fondo-hover">
                   <i
                     title="visualizar"
-                    class="icon-file-eye icon-size-menu puntero"
+                    class="icon-file-eye icon-size-menu"
                   ></i>
                 </div>
               </div>
