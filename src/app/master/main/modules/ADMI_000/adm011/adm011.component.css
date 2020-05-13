@@ -31,3 +31,6 @@
   height: calc(100%);
   overflow-y: overlay;
 }
+.card-border {
+  border: 2px solid #2196f3;
+}

@@ -2,8 +2,8 @@
   <div class="col-xl-12" style="margin-bottom: 0.5em;">
     <div class="card pb0 m0" style="height: 100%;">
       <div
-        class="card modal-head-back-color"
-        style="margin-bottom: 0.5em; border: 2px solid #2196f3;"
+        class="card modal-head-back-color card-border"
+        style="margin-bottom: 0.5em;"
       >
         <div
           class="header-elements-inline"
@@ -80,13 +80,6 @@
                       >
                         <i class="icon-file-excel"></i> Export to .xls
                       </a>
-                      <a
-                        [routerLink]="algo()"
-                        routerLinkActive="router-link-active"
-                        class="dropdown-item"
-                      >
-                        <i class="icon-file-word"></i> Export to .doc
-                      </a>
                     </div>
                   </div>
                 </div>
@@ -140,7 +133,7 @@
           </div>
         </div>
       </div>
-      <div class="card-body p0 m0" style="border: 2px solid #2196f3;">
+      <div class="card-body p0 m0 card-border">
         <div class="row m0 p0">
           <div class="col-md-0"></div>
           <div class="col-md-12 p0">
@@ -182,9 +175,9 @@
                     <td class="text-left">{{ adm011.descripcion }}</td>
                     <td class="text-left">{{ adm011.sigla }}</td>
                     <td class="text-left">{{ adm011.componente }}</td>
-                    <td class="text-left" *ngIf="adm011.estado; else content">
+                    <td class="text-center" *ngIf="adm011.estado; else content">
                       Vigente
-                      <div class="list-icons">
+                      <div class="list-icons d-inline-block float-right">
                         <i
                           class="icon-file-eye"
                           title="visualizar"
@@ -193,9 +186,9 @@
                       </div>
                     </td>
                     <ng-template #content>
-                      <td class="text-left">
+                      <td class="text-center">
                         Inactivo
-                        <div class="list-icons">
+                        <div class="list-icons d-inline-block float-right">
                           <i
                             class="icon-file-eye"
                             title="visualizar"
@@ -204,34 +197,6 @@
                         </div>
                       </td>
                     </ng-template>
-                    <!--                     
-                    <td class="text-left" *ngIf="adm011.estado"="adm011.estado">Inactivo</td> -->
-
-                    <!-- <td class="table-content-center text-center">
-                      <div class="row p0 m0">
-                        <div class="custom-control custom-switch m-auto">
-                          <input
-                            type="checkbox"
-                            class="custom-control-input"
-                            [disabled]="true"
-                            [checked]="adm011.estado"
-                            title="adm011.estado"
-                            id="adm011estado{{ i }}"
-                          />
-                          <label
-                            class="custom-control-label"
-                            for="adm011estado{{ i }}"
-                          ></label>
-                        </div>
-                        <div class="list-icons">
-                          <i
-                            class="icon-file-eye"
-                            title="visualizar"
-                            class="icon-file-eye icon-white puntero"
-                          ></i>
-                        </div>
-                      </div>
-                    </td> -->
                   </tr>
                 </tbody>
               </table>
@@ -247,12 +212,8 @@
         </div>
       </div>
       <div
-        class="row m0 modal-head-back-color"
-        style="
-          margin-bottom: 0.5em;
-          border: 2px solid #2196f3;
-          padding-top: 0.5em;
-        "
+        class="row m0 modal-head-back-color card-border border-top-0"
+        style="margin-bottom: 0.5em; padding-top: 0.5em;"
       >
         <div class="col-lg-4 d-none d-sm-none d-md-block">
           <label class="form-control">App: Test</label>
