@@ -7,8 +7,8 @@
       <div class="list-icons menu-head-center" style="white-space: nowrap;">
         <ng-container *ngFor="let modulo of modulos2; let i = index">
           <div
-            @enterState
-            class="col-lg-1 col-5 fondo-menu component-radius"
+            *ngIf="modulo.animacion"
+            class="col-lg-1 col-5 fondo-menu component-radius animate__animated animate__fadeInRightBig"
             style="display: inline-block;"
             [ngClass]="{
               puntero: true,

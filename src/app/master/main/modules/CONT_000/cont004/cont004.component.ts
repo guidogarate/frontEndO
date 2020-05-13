@@ -640,7 +640,7 @@ export class Cont004Component {
     //   console.log(data2);
     // });
     const htmlStart: string =
-      "<html><head><title>Imprimir</title><link href='http://localhost:4200/assets/assets/css/bootstrap.css'  rel='stylesheet' type='text/css'/> </head><body>";
+      "<html><head><title>Imprimir</title><link href='https://sage-bo.herokuapp.com/assets/assets/css/bootstrap.css'  rel='stylesheet' type='text/css'/> </head><body>";
     const header: string =
       "<header><div style='padding: 5px 0; margin: auto;'><div style='display: flex; font-size: 10px; margin: auto;'><div style='width: 50%; display: flex;'><div><img src='https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn_400x400.png' style='width: 100px; height: 100px;'/></div><div style='padding-left: 25;'><p>ORMATE</p><p>Direccion : Av. Monseñor Salvatierra # 150</p><p>Telf: 33-339868</p><p>Santa Cruz - Bolivia</p></div></div><div style='padding-left: 30%;'><p>Fecha: 18/05/2020</p><p>Impresión: 15:15:30</p></div></div><div style='display: flex;'><div style='width: 25%;'></div><div style='width: 50%; text-align: center; justify-self: center;'><p style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p style='font-size: 14px;'>administracion</p></div><div style='width: 25%;'></div></div></div></header>";
     const tableStart: string = "<table class='table'>";
