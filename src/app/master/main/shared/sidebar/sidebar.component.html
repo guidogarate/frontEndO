@@ -72,7 +72,11 @@
         <!-- (click)="menuComponent(menu.ruta)" -->
         <!-- routerLink="/{{ menu.ruta }}/{{ menu.ruta }}" -->
         <!-- routerLink="/modulo/{{ menu.componente }}" -->
-        <a (click)="menuComponent(menu.componente)" class="nav-link puntero"
+        <a
+          (click)="menuComponent(menu.componente)"
+          routerLink="/modulo/{{ menu.componente }}"
+          routerLinkActive="active"
+          class="nav-link puntero"
           ><i class="icon-stack"></i> <span>{{ menu.descripcion }}</span></a
         >
         <ul class="nav nav-group-sub" data-submenu-title="Starter kit"></ul>

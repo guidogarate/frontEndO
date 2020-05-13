@@ -7,22 +7,22 @@ import { Cont005Component } from "./cont005/cont005.component";
 
 const cont000_Routes: Routes = [
   {
-    path: "cont002",
+    path: "con002",
     component: Cont002Component,
     data: { titulo: "cont002" },
   },
   {
-    path: "cont003",
+    path: "con003",
     component: Cont003Component,
     data: { titulo: "cont003" },
   },
   {
-    path: "cont004",
+    path: "con004",
     component: Cont004Component,
     data: { titulo: "cont004" },
   },
   {
-    path: "cont005",
+    path: "con005",
     component: Cont005Component,
     data: { titulo: "cont005" },
   },

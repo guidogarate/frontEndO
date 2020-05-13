@@ -4,7 +4,7 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  FormArray
+  FormArray,
 } from "@angular/forms";
 import { Cont004Service } from "src/app/master/utils/service/main/modules/cont_000/index.shared.service";
 import glb001 from "src/app/master/config/glb000/glb001_btn";
@@ -14,7 +14,7 @@ import * as glb from "src/app/master/utils/global/index.global";
 import { Paginacion } from "src/app/master/utils/models/main/global/index.models";
 import {
   Cont004,
-  Cont004Del
+  Cont004Del,
 } from "src/app/master/utils/models/main/cont_000/index.models";
 import { Observable, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
@@ -22,7 +22,7 @@ import { debounceTime } from "rxjs/operators";
 @Component({
   selector: "app-cont004",
   templateUrl: "./cont004.component.html",
-  styleUrls: ["./cont004.component.css"]
+  styleUrls: ["./cont004.component.css"],
 })
 export class Cont004Component {
   btnGrupo = glb001;
@@ -52,7 +52,7 @@ export class Cont004Component {
     this.delSubforma(0);
     this.textBuscarCont004.valueChanges
       .pipe(debounceTime(500))
-      .subscribe(value => {
+      .subscribe((value) => {
         if (value.length > 1) {
           this.getCont004(value, "1");
         } else {
@@ -76,9 +76,9 @@ export class Cont004Component {
           id_cuenta: ["", [Validators.required]],
           descripcion: ["", [Validators.required]],
           sigla: ["", [Validators.required]],
-          estado: ["", [Validators.required]]
-        })
-      ])
+          estado: ["", [Validators.required]],
+        }),
+      ]),
     });
   }
 
@@ -93,7 +93,7 @@ export class Cont004Component {
         id_cuenta: ["", [Validators.required]],
         descripcion: ["", [Validators.required]],
         sigla: ["", [Validators.required]],
-        estado: [false, [Validators.required]]
+        estado: [false, [Validators.required]],
       })
     );
   }
@@ -112,7 +112,7 @@ export class Cont004Component {
       this.start.Texto = texto;
       peticion = this.cont004S.geCont004Ctas("10", numePag, this.start.Texto);
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       if (!this.start.Conte) {
         this.start.Conte = true;
       }
@@ -142,7 +142,7 @@ export class Cont004Component {
     let peticion: Observable<any>;
     const idCta: number = cont_004.id_cuenta_adicional;
     peticion = this.cont004S.geCont004Cta("10", idCta);
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       if (resp["ok"]) {
         this.auxmaModal = resp.ctas[0].cuenta_adicional;
         this.resetDatos();
@@ -354,7 +354,7 @@ export class Cont004Component {
             this.eliminarIdCta.push(element.id_cuenta);
             this.eliminar.push({
               id_tipocuenta: this.start.IdCod,
-              id_cuenta: element.id_cuenta.toString()
+              id_cuenta: element.id_cuenta.toString(),
             });
           }
         }
@@ -498,7 +498,7 @@ export class Cont004Component {
         );
       }
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       if (resp["ok"]) {
         this.auxma = resp.data[0].cuentas_adicionales;
         this.pagi = resp["cant"];
@@ -578,7 +578,7 @@ export class Cont004Component {
       this.notyG.noty("error", "control Accion Invalido", 2000);
       return;
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       this.eliminarSub = false;
       this.nuevoAutoma = false;
       this.btnGrupo.BtnLoadi = false;
@@ -608,13 +608,13 @@ export class Cont004Component {
     this.eliminar = [];
     this.eliminar.push({
       id_tipocuenta: this.start.IdCod,
-      id_cuenta: "0"
+      id_cuenta: "0",
     });
     const cont_004: any = this.eliminar;
     let peticion: Observable<any>;
     peticion = this.cont004S.deCont004(cont_004);
     let numPag = this.start.NumPa;
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       if (resp["ok"]) {
         if (this.auxma.length === 1) {
           numPag--;
@@ -629,5 +629,47 @@ export class Cont004Component {
         this.notyG.noty("success", resp["mensaje"], 1000);
       }
     });
+  }
+
+  imprimir() {
+    // let peticion: Observable<any>;
+    // peticion = this.cont004S.geCont004Ctas("10", "2", "all_data");
+    // this.sus = peticion.subscribe((resp) => {
+    //   console.log(resp);
+    //   const data2 = (this.auxma = resp.data[0].cuentas_adicionales);
+    //   console.log(data2);
+    // });
+    const htmlStart: string =
+      "<html><head><title>Imprimir</title><link href='https://sage-bo.herokuapp.com/assets/assets/css/bootstrap.css'  rel='stylesheet' type='text/css'/> </head><body>";
+    const header: string =
+      "<header><div style='padding: 5px 0; margin: auto;'><div style='display: flex; font-size: 10px; margin: auto;'><div style='width: 50%; display: flex;'><div><img src='https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn_400x400.png' style='width: 100px; height: 100px;'/></div><div style='padding-left: 25;'><p>ORMATE</p><p>Direccion : Av. Monseñor Salvatierra # 150</p><p>Telf: 33-339868</p><p>Santa Cruz - Bolivia</p></div></div><div style='padding-left: 30%;'><p>Fecha: 18/05/2020</p><p>Impresión: 15:15:30</p></div></div><div style='display: flex;'><div style='width: 25%;'></div><div style='width: 50%; text-align: center; justify-self: center;'><p style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p style='font-size: 14px;'>administracion</p></div><div style='width: 25%;'></div></div></div></header>";
+    const tableStart: string = "<table class='table'>";
+    const tableHead: string =
+      "<thead class='text-center'><tr class='bg-blue'><th>Codigo</th><th>Descripcion</th><th>Estado</th></tr></thead>";
+    let tableData: string = "<tbody>";
+    const long = this.auxma.length - 1;
+    for (let i = long; i >= 0; i--) {
+      tableData =
+        `<tr><td>${this.auxma[i].id_cuenta_adicional} </td><td>${this.auxma[i].descripcion} </td><td>${this.auxma[i].estado} </td></tr>` +
+        tableData;
+    }
+    tableData = tableData + "</tbody>";
+    const tableEnd: string = "</table>";
+    const htmlEnd: string = "</body></html>";
+    const mandarImprimir: string =
+      htmlStart +
+      header +
+      tableStart +
+      tableHead +
+      tableData +
+      tableEnd +
+      htmlEnd;
+    const w = window.open();
+    w.document.write(mandarImprimir);
+    w.document.close();
+    setTimeout(() => {
+      w.print();
+      w.close();
+    }, 100);
   }
 }

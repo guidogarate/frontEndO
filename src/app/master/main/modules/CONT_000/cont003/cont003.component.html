@@ -12,17 +12,17 @@
     </div>
     <div class="row p0 m0" *ngFor="let data of dataEmpres">
       <div class="col-sm-2 col-12">
-        <div class="card card-padding margin-botton-card ">
+        <div class="card card-padding margin-botton-card">
           <img
             src="{{ data.logo_empresa | imagenpipe }}"
             alt="sin imagen"
             class="img-responsive rounded img-fluid"
-            style="height: 116px;width: 100px; align-self: center;"
+            style="height: 116px; width: 100px; align-self: center;"
           />
         </div>
       </div>
       <div class="col-sm-10 col-12">
-        <div class="card card-padding margin-botton-card ">
+        <div class="card card-padding margin-botton-card">
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group form-group-feedback m0">
@@ -67,7 +67,7 @@
                     class="col-sm-5 col-12 form-group form-group-float m0"
                     style="padding-bottom: 5px;"
                   >
-                    <label class="form-group" style="margin-bottom: .25rem;"
+                    <label class="form-group" style="margin-bottom: 0.25rem;"
                       >Gestion</label
                     >
                     <select
@@ -277,7 +277,7 @@
   data-backdrop="static"
   data-keyboard="false"
 >
-  <div class="modal-dialog ">
+  <div class="modal-dialog">
     <div class="modal-content animacionmodal haciadentro">
       <form
         [formGroup]="forma"
@@ -310,7 +310,7 @@
             </a>
             <button
               *ngIf="btnGrupo.BtnGuard"
-              style="padding: 1px;color: white;"
+              style="padding: 1px; color: white;"
               type="submit"
               class="btn text-warning-600 btn-flat btn-icon btn-rounded"
             >
@@ -405,7 +405,7 @@
                   <div
                     *ngIf="mostrarCheck"
                     class="form-group"
-                    style="padding-left: 15px;padding-top: 20px;"
+                    style="padding-left: 15px; padding-top: 20px;"
                   >
                     <div class="uniform-checker" style="margin: auto;">
                       <input

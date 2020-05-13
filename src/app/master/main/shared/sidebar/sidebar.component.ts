@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { SocketService } from "src/app/master/utils/service/socket/socket.service";
 import { Router } from "@angular/router";
-import { ComunicacionService } from "src/app/master/utils/service/comunicacion/comunicacion.service";
+import { ComunicacionService } from "src/app/master/utils/service/main/global/comunicacion.service";
 
 @Component({
   selector: "app-sidebar",
@@ -41,6 +41,6 @@ export class SidebarComponent {
 
   menuComponent(ruta: string) {
     this.comunicacionService.cambiarNivel(ruta);
-    this.router.navigate(["/modulo", ruta]);
+    //  this.router.navigate(["/modulo", ruta]);
   }
 }
