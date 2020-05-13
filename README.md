@@ -213,3 +213,8 @@ unir las ramas `git merge nombre-rama`</br>
 
             <!-- Latest compiled and minified JavaScript -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+## descargas archivos pdf y exel
+
+npm install file-saver
+`https://www.npmjs.com/package/file-saver`
