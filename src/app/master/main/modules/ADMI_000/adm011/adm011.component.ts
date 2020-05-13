@@ -154,10 +154,10 @@ export class Adm011Component {
 
   cargarSelecRegistros() {
     this.selecRegistros = [
-      { id_registro: 1, cantidad: "10" },
-      { id_registro: 2, cantidad: "25" },
-      { id_registro: 3, cantidad: "50" },
-      { id_registro: 4, cantidad: "100" },
+      { id_registro: 10, cantidad: "10" },
+      { id_registro: 25, cantidad: "25" },
+      { id_registro: 50, cantidad: "50" },
+      { id_registro: 100, cantidad: "100" },
     ];
   }
   crearFormulario() {
@@ -450,6 +450,7 @@ export class Adm011Component {
     let peticion: Observable<any>;
     if (contorlAccion === "nuevo") {
       peticion = this.adm011S.inAdm011(adm_011);
+      this.cerrarModal();
     } else if (contorlAccion === "editar") {
       peticion = this.adm011S.upAdm011(
         adm_011,

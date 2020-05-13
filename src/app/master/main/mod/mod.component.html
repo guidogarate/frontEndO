@@ -7,7 +7,8 @@
       <div class="list-icons menu-head-center" style="white-space: nowrap;">
         <ng-container *ngFor="let modulo of modulos2; let i = index">
           <div
-            class="col-lg-1 col-5 component-radius fondo-menu"
+            @enterState
+            class="col-lg-1 col-5 fondo-menu component-radius"
             style="display: inline-block;"
             [ngClass]="{
               puntero: true,
@@ -38,7 +39,10 @@
   </div>
 
   <!-- TODO: Card Principal -->
-  <div class="row p0 m0 card-pad-top">
+  <div
+    class="row p0 m0 card-pad-top animate__animated animate__zoomIn"
+    *ngIf="animacionFade"
+  >
     <div class="col-lg-12">
       <div class="card card-background-gradient card-border">
         <ng-container *ngFor="let modulo of modulos; index as i">
