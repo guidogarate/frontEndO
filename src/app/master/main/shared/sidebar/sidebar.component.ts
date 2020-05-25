@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { SocketService } from "src/app/master/utils/service/socket/socket.service";
 import { Router } from "@angular/router";
 import { ComunicacionService } from "src/app/master/utils/service/main/global/comunicacion.service";
@@ -8,7 +8,7 @@ import { ComunicacionService } from "src/app/master/utils/service/main/global/co
   templateUrl: "./sidebar.component.html",
   styleUrls: ["./sidebar.component.css"],
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnDestroy {
   menuPrin: any;
   cargandoMenu = true;
   datosUser: any = JSON.parse(sessionStorage.getItem("datos_user"));
@@ -30,6 +30,8 @@ export class SidebarComponent {
     this.email = this.datosUser.adusemai;
     this.cargarMenuFavo();
   }
+
+  ngOnDestroy() {}
 
   cargarMenuFavo() {
     const menu: string = sessionStorage.getItem("menu");

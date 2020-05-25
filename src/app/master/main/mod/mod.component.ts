@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ComunicacionService } from "src/app/master/utils/service/main/global/comunicacion.service";
+import { Observable, Subscription } from "rxjs";
 
 @Component({
   selector: "app-mod",
@@ -14,6 +15,7 @@ export class ModComponent implements OnInit, OnDestroy {
   numeroMod: number = -1;
   animacionFade = true;
   animacionUp = false;
+  sus: Subscription;
 
   constructor(
     route: ActivatedRoute,
@@ -24,23 +26,28 @@ export class ModComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.comunicacionService.cambiarNivelObservable.subscribe((ruta) => {
-      this.modulos = [];
-      this.modulos2 = [];
-      this.filtrar(ruta);
-      this.numeroMod = -1;
-    });
+    this.sus = this.comunicacionService.cambiarNivelObservable.subscribe(
+      (ruta) => {
+        this.modulos = [];
+        this.modulos2 = [];
+        this.filtrar(ruta);
+        this.numeroMod = -1;
+      }
+    );
   }
+
   ngOnDestroy() {
     this.modulos = null;
     this.modulos2 = null;
     this.numeroMod = null;
-    this.data = null;
+    this.animacionFade = null;
+    this.animacionUp = null;
+    this.sus.unsubscribe();
   }
 
   filtrar(modulo: string) {
     this.animacionFade = false;
-    const len: number = this.data.length;
+    const len: number = this.data.length || 0;
     for (let i = 0; i < len; i++) {
       const mod = this.data[i].id_primernivel.toString();
       if (mod === modulo) {
@@ -69,7 +76,7 @@ export class ModComponent implements OnInit, OnDestroy {
 
   clickmodulo(id_segundonivel: number) {
     this.animacionFade = false;
-    const len: number = this.modulos2.length;
+    const len: number = this.modulos2.length || 0;
     for (let i = 0; i < len; i++) {
       if (this.modulos2[i].id_segundonivel === id_segundonivel) {
         this.modulos = [];
