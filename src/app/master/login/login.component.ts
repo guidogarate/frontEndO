@@ -11,7 +11,7 @@ import { DeviceDetectorService } from "ngx-device-detector";
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"]
+  styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit {
   usuario: LoginModels = new LoginModels("", "", "", null);
@@ -43,16 +43,12 @@ export class LoginComponent implements OnInit {
   }
 
   cargarDB() {
-    this.loginS.cargarDB().subscribe(resp => {
+    this.loginS.cargarDB().subscribe((resp) => {
       this.databases = resp;
       setTimeout(() => {
         init_select();
       }, 1000);
     });
-  }
-
-  cargarLista(value: any) {
-    console.log(value);
   }
 
   ingresar(form: NgForm) {
@@ -71,7 +67,7 @@ export class LoginComponent implements OnInit {
       peticion = this.loginS.regContra(this.usuario);
     }
     this.desabiliContra = false;
-    peticion.subscribe(resp => {
+    peticion.subscribe((resp) => {
       this.btnRegis = "Registrar Contraseña";
       this.loadingReg = false;
       this.loading = false;
@@ -104,7 +100,7 @@ export class LoginComponent implements OnInit {
     } else {
       if (this.usuario.cod_user !== "") {
         this.desabiliContra = false;
-        this.loginS.estaRegistrado(this.usuario).subscribe(resp => {
+        this.loginS.estaRegistrado(this.usuario).subscribe((resp) => {
           if (resp["messagge"] === "Registrar contraseña") {
             this.passw2 = true;
             this.ingresarContra = true;

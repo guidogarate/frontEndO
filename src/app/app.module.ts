@@ -10,7 +10,7 @@ const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
 import { DeviceDetectorModule } from "ngx-device-detector";
 
 import { CommonModule } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { IndexGlobalModule } from "./master/utils/global/index.global.module";
 
@@ -25,6 +25,7 @@ import { registerLocaleData } from "@angular/common";
 registerLocaleData(es);
 import { LOCALE_ID } from "@angular/core";
 import { environment } from "../environments/environment";
+import { InterceptorService } from "./master/utils/service/main/global/Interceptor.service";
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, NopagefoundComponent],
@@ -39,7 +40,14 @@ import { environment } from "../environments/environment";
     APP_ROUTES,
     DeviceDetectorModule.forRoot(),
   ],
-  providers: [{ provide: LOCALE_ID, useValue: "es-ES" }],
+  providers: [
+    { provide: LOCALE_ID, useValue: "es-ES" },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
