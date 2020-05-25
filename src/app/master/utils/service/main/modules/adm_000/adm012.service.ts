@@ -10,8 +10,14 @@ export class Adm012Service {
   token = sessionStorage.getItem("id");
   constructor(private httpClient: HttpClient) {}
 
-  getAdm012(modulo: string, indice: string, idModulo: number, texto: string) {
-    const url1 = `${url.prod}${adm012.getListFormatoImpresion}${modulo}/${indice}/${idModulo}/${texto}`;
+  getAdm012(
+    modulo: string,
+    indice: string,
+    idModulo: number,
+    nroRegistros: string,
+    texto: string
+  ) {
+    const url1 = `${url.prod}${adm012.getListFormatoImpresion}${modulo}/${indice}/${idModulo}/${nroRegistros} ${texto}`;
     console.log("url get: ", url1);
     return this.httpClient
       .get(url1, {
@@ -27,8 +33,8 @@ export class Adm012Service {
         })
       );
   }
-  getAdm012Full(modulo: string, idModulo: number, id_formato: string) {
-    const url1 = `${url.prod}${adm012.getListFormatoImpresion}${modulo}/${idModulo}/${id_formato}`;
+  getAdm012Formato(modulo: string, idModulo: number, id_formato: string) {
+    const url1 = `${url.prod}${adm012.getFormatoImpresion}${modulo}/${idModulo}/${id_formato}`;
     console.log("url get: ", url1);
     return this.httpClient
       .get(url1, {
@@ -47,7 +53,7 @@ export class Adm012Service {
 
   upAdm012(adm_012: Adm012, id_modulo: number, id_formato: string) {
     const url1 = `${url.prod}${adm012.upAdm012}${id_modulo}/${id_formato}`;
-    console.log("adm012", adm_012);
+    console.log("UPD adm012", adm_012);
     const json = JSON.stringify({
       descripcion: adm_012.descripcion,
       sigla: adm_012.sigla,
@@ -91,8 +97,8 @@ export class Adm012Service {
 
   inAdm012(adm_012: Adm012) {
     const url1 = `${url.prod}${adm012.inAdm012}`;
-    console.info("url1 in: ", url1);
-    console.info("adm_012: ", adm_012);
+    console.info("url INS 012: ", url1);
+    console.info("INS adm_012: ", adm_012);
     const json = JSON.stringify({
       id_modulo: adm_012.id_modulo,
       id_formato: adm_012.id_formato,
@@ -101,6 +107,7 @@ export class Adm012Service {
       tamaño_impresion: adm_012.tamaño_impresion,
       moneda: adm_012.moneda,
       codigo_cuenta: adm_012.codigo_cuenta,
+      numero_copias: adm_012.numero_copias,
       codigo_qr: adm_012.codigo_qr,
       logo_empresa: adm_012.logo_empresa,
       estado: adm_012.estado,

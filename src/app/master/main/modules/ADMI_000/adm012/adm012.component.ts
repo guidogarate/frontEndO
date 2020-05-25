@@ -68,6 +68,7 @@ export class Adm012Component {
   mostrarCheck = false;
   placeholdeAuto = "automatico";
   insertar = "fall";
+  nroRegistros: string = '10';
   // selectModulo: Adm011Select;
 
   constructor(
@@ -99,6 +100,7 @@ export class Adm012Component {
         "90",
         numePag,
         this.idModulo,
+        this.nroRegistros,
         this.start.Texto
       );
     } else {
@@ -107,6 +109,7 @@ export class Adm012Component {
         "90",
         numePag,
         this.idModulo,
+        this.nroRegistros,
         this.start.Texto
       );
     }
@@ -197,6 +200,7 @@ export class Adm012Component {
         "90",
         this.numeroPag.toString(),
         this.idModulo,
+        this.nroRegistros,
         this.start.Texto
       );
     } else {
@@ -213,6 +217,7 @@ export class Adm012Component {
           "90",
           this.numeroPag.toString(),
           this.idModulo,
+          this.nroRegistros,
           this.start.Texto
         );
       } else if (numero === "999") {
@@ -228,6 +233,7 @@ export class Adm012Component {
           "90",
           this.numeroPag.toString(),
           this.idModulo,
+          this.nroRegistros,
           this.start.Texto
         );
       }
