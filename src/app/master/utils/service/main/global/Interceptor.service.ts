@@ -18,12 +18,14 @@ export class InterceptorService implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    console.log("interceptor");
-
     let headers = new HttpHeaders({ "Content-Type": "application/json" });
     const token: string = sessionStorage.getItem("id") || "";
     if (token.length !== 0) {
       headers = headers.append("authorization", token);
+      if (sessionStorage.getItem("img") === "1") {
+        headers = headers.delete("Content-Type");
+        sessionStorage.removeItem("img");
+      }
     }
     const reqClone = req.clone({ headers });
     return next.handle(reqClone).pipe(catchError(this.manejarError));

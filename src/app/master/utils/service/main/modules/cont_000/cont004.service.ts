@@ -1,82 +1,53 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
 import {
   Cont004,
-  Cont004Del
+  Cont004Del,
 } from "src/app/master/utils/models/main/cont_000/index.models";
 import cont004 from "src/app/master/config/cont000/cont004_url";
 
 @Injectable()
 export class Cont004Service {
-  token = sessionStorage.getItem("id");
   constructor(private httpClient: HttpClient) {}
 
   geCont004Ctas(modulo: string, indice: string, texto: string) {
     const url1 = `${url.prod}${cont004.geCont004Ctas}${modulo}/${indice}/${texto}`;
-    return this.httpClient
-      .get(url1, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json"
-        })
+    return this.httpClient.get(url1).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map(resp => {
-          return resp;
-        })
-      );
+    );
   }
 
   geCont004Cta(modulo: string, idCta: number) {
     const url1 = `${url.prod}${cont004.geCont004Cta}${modulo}/${idCta}`;
-    return this.httpClient
-      .get(url1, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json"
-        })
+    return this.httpClient.get(url1).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map(resp => {
-          return resp;
-        })
-      );
+    );
   }
 
   upCont004(cont_004: Cont004, id_cod: string) {
     const url1 = `${url.prod}${cont004.upCont004}${id_cod}`;
     const json = JSON.stringify(cont_004);
-    return this.httpClient
-      .put(url1, json, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json"
-        })
+    return this.httpClient.put(url1, json).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map(resp => {
-          return resp;
-        })
-      );
+    );
   }
 
   deCont004(cont_004: Cont004Del) {
     const url1 = `${url.prod}${cont004.deCont004}`;
     const json = JSON.stringify({ cuentas: cont_004 });
-    return this.httpClient
-      .post(url1, json, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json"
-        })
+    return this.httpClient.post(url1, json).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map(resp => {
-          return resp;
-        })
-      );
+    );
   }
 
   inCont004(cont_004: Cont004) {
@@ -93,19 +64,12 @@ export class Cont004Service {
     const json = JSON.stringify({
       descripcion: cont_004.descripcion,
       sigla: cont_004.sigla,
-      estado
+      estado,
     });
-    return this.httpClient
-      .post(url1, json, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json"
-        })
+    return this.httpClient.post(url1, json).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map(resp => {
-          return resp;
-        })
-      );
+    );
   }
 }
