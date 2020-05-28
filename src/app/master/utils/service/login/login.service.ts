@@ -17,21 +17,15 @@ export class LoginService {
 
   cargarDB() {
     const url1 = `${url.prod}${url.database}`;
-    return this.httpClient
-      .post(url1, null, {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-        }),
+    return this.httpClient.post(url1, null).pipe(
+      map((resp) => {
+        if (resp["ok"]) {
+          return resp["newDatabase"];
+        } else {
+          return resp;
+        }
       })
-      .pipe(
-        map((resp) => {
-          if (resp["ok"]) {
-            return resp["newDatabase"];
-          } else {
-            return resp;
-          }
-        })
-      );
+    );
   }
 
   estaRegistrado(usuario: LoginModels) {
@@ -40,17 +34,7 @@ export class LoginService {
       id_database: usuario.databaseid,
     });
     const url1 = `${url.prod}${url.validarUser}`;
-    return this.httpClient
-      .post(url1, json, {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-        }),
-      })
-      .pipe(
-        map((resp) => {
-          return resp;
-        })
-      );
+    return this.httpClient.post(url1, json).pipe(map((resp) => resp));
   }
 
   leerToken() {
@@ -64,21 +48,14 @@ export class LoginService {
 
   logout() {
     const url1 = `${url.prod}${url.cerrarSesion}`;
-    return this.httpClient
-      .post(url1, null, {
-        headers: new HttpHeaders({
-          authorization: sessionStorage.getItem("id"),
-        }),
+    return this.httpClient.post(url1, null).pipe(
+      map((resp) => {
+        sessionStorage.clear();
+        // actualizando el token
+        this.leerToken();
+        return resp;
       })
-      .pipe(
-        map((resp) => {
-          sessionStorage.clear();
-          // actualizando el token
-          this.leerToken();
-
-          return resp;
-        })
-      );
+    );
   }
 
   login(usuario: LoginModels) {
@@ -88,23 +65,17 @@ export class LoginService {
       passw: usuario.passw,
     });
     const url1 = `${url.prod}${url.ingresar}`;
-    return this.httpClient
-      .post(url1, json, {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-        }),
+    return this.httpClient.post(url1, json).pipe(
+      map((resp) => {
+        if (resp["ok"]) {
+          this.guardarToken(resp["datos"], resp["token"]);
+          this.guardarMenu(resp["favoritos"], resp["menu"]);
+          return resp;
+        } else {
+          return resp;
+        }
       })
-      .pipe(
-        map((resp) => {
-          if (resp["ok"]) {
-            this.guardarToken(resp["datos"], resp["token"]);
-            this.guardarMenu(resp["favoritos"], resp["menu"]);
-            return resp;
-          } else {
-            return resp;
-          }
-        })
-      );
+    );
   }
 
   regContra(usuario: LoginModels) {
@@ -115,17 +86,11 @@ export class LoginService {
       passw2: usuario.passs,
     });
     const url1 = `${url.prod}${url.regContra}`;
-    return this.httpClient
-      .post(url1, json, {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-        }),
+    return this.httpClient.post(url1, json).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map((resp) => {
-          return resp;
-        })
-      );
+    );
   }
 
   private guardarToken(usuario: any, token: string) {

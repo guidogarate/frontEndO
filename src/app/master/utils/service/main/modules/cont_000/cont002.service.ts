@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
 import { Cont003 } from "src/app/master/utils/models/main/cont_000/index.models";
@@ -7,23 +7,15 @@ import cont002 from "src/app/master/config/cont000/cont002_url";
 
 @Injectable()
 export class Cont002Service {
-  token = sessionStorage.getItem("id");
   constructor(private httpClient: HttpClient) {}
 
   geCont002(modulo: string, indice: string, gestion: string, texto: string) {
     const url1 = `${url.prod}${cont002.geCont002}${modulo}/${indice}/${gestion}/${texto}`;
-    return this.httpClient
-      .get(url1, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json"
-        })
+    return this.httpClient.get(url1).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map(resp => {
-          return resp;
-        })
-      );
+    );
   }
 
   upCont002(cont_003: Cont003, gestion: string, id_cod: string) {
@@ -37,36 +29,22 @@ export class Cont002Service {
     const json = JSON.stringify({
       descripcion: cont_003.descripcion,
       sigla: cont_003.sigla,
-      estado
+      estado,
     });
-    return this.httpClient
-      .put(url1, json, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json"
-        })
+    return this.httpClient.put(url1, json).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map(resp => {
-          return resp;
-        })
-      );
+    );
   }
 
   deCont002(gestion: string, id_cod: string) {
     const url1 = `${url.prod}${cont002.deCont002}${gestion}/${id_cod}`;
-    return this.httpClient
-      .delete(url1, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json"
-        })
+    return this.httpClient.delete(url1).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map(resp => {
-          return resp;
-        })
-      );
+    );
   }
 
   inCont002(cont_003: Cont003) {
@@ -92,19 +70,12 @@ export class Cont002Service {
       descripcion: cont_003.descripcion,
       sigla: cont_003.sigla,
       estado,
-      codigo
+      codigo,
     });
-    return this.httpClient
-      .post(url1, json, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json"
-        })
+    return this.httpClient.post(url1, json).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map(resp => {
-          return resp;
-        })
-      );
+    );
   }
 }

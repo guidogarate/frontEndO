@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
 import {
@@ -10,39 +10,24 @@ import cont005 from "src/app/master/config/cont000/cont005_url";
 
 @Injectable()
 export class Cont005Service {
-  token = sessionStorage.getItem("id");
   constructor(private httpClient: HttpClient) {}
 
   geCont005(modulo: string, indice: string, cantDat: string, texto: string) {
     const url1 = `${url.prod}${cont005.geCont005}${modulo}/${indice}/${cantDat}/${texto}`;
-    return this.httpClient
-      .get(url1, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json",
-        }),
+    return this.httpClient.get(url1).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map((resp) => {
-          return resp;
-        })
-      );
+    );
   }
 
   geCont005Mod(mod: string, modulo: number, idCta: number) {
     const url1 = `${url.prod}${cont005.geCont005Mod}${mod}/${modulo}/${idCta}`;
-    return this.httpClient
-      .get(url1, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json",
-        }),
+    return this.httpClient.get(url1).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map((resp) => {
-          return resp;
-        })
-      );
+    );
   }
 
   upCont005(cont_004: Cont005Mod, modulo: string, id: string) {
@@ -54,34 +39,20 @@ export class Cont005Service {
       tipo_transaccion: cont_004.tipo_transaccion.toString(),
       formato_impresion: cont_004.formato_impresion.toString(),
     });
-    return this.httpClient
-      .put(url1, json, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json",
-        }),
+    return this.httpClient.put(url1, json).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map((resp) => {
-          return resp;
-        })
-      );
+    );
   }
 
   deCont005(modulo: string, id: string) {
     const url1 = `${url.prod}${cont005.deCont005}${modulo}/${id}`;
-    return this.httpClient
-      .delete(url1, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json",
-        }),
+    return this.httpClient.delete(url1).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map((resp) => {
-          return resp;
-        })
-      );
+    );
   }
 
   inCont005(cont_004: Cont005Mod, id_modulo: string) {
@@ -104,17 +75,10 @@ export class Cont005Service {
       sigla: cont_004.sigla,
       estado,
     });
-    return this.httpClient
-      .post(url1, json, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json",
-        }),
+    return this.httpClient.post(url1, json).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map((resp) => {
-          return resp;
-        })
-      );
+    );
   }
 }

@@ -9,6 +9,8 @@ export class ComunicacionService {
   private cambiarNivelSubject = new Subject<string>();
   cambiarNivelObservable = this.cambiarNivelSubject.asObservable();
 
+  constructor() {}
+
   cambiarNivel(ruta: string) {
     this.ruta = ruta;
     this.cambiarNivelSubject.next(ruta);
