@@ -10,3 +10,4 @@ export { Adm009Service } from "./adm009.service";
 export { Adm010Service } from "./adm010.service";
 export { Adm011Service } from "./adm011.service";
 export { Adm012Service } from "./adm012.service";
+export { Adm013Service } from "./adm013.service";
