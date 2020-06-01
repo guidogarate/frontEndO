@@ -521,10 +521,11 @@ export class Adm011Component {
 
   printDoc() {
     const htmlStart: string =
-      "<html><head><title>Imprimir</title><link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'  rel='stylesheet' type='text/css'/> </head><body>";
+      "<html><head><title>Ormate</title><link href='assets/assets/css/bootstrap.css' rel='stylesheet' type='text/css'/><link href='assets/assets/css/print.css' rel='stylesheet' type='text/css'/></head><body>";
     const header: string =
-      "<header><div style='padding: 5px 0; margin: auto;'><div style='display: flex; font-size: 10px; margin: auto;'><div style='width: 50%; display: flex;'><div><img src='https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn_400x400.png' style='width: 100px; height: 100px;'/></div><div style='padding-left: 25;'><p>ORMATE</p><p>Direccion : Av. Monseñor Salvatierra # 150</p><p>Telf: 33-339868</p><p>Santa Cruz - Bolivia</p></div></div><div style='padding-left: 30%;'><p>Fecha: 18/05/2020</p><p>Impresión: 15:15:30</p></div></div><div style='display: flex;'><div style='width: 25%;'></div><div style='width: 50%; text-align: center; justify-self: center;'><p style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p style='font-size: 14px;'>administracion</p></div><div style='width: 25%;'></div></div></div></header>";
-    const tableStart: string = "<table class='table'>";
+      "<thead class='report-header'><tr><th class='report-header-cell'><div class='header-info'><div  class= 'm-auto' style='padding: 5px 0; margin: auto;'><div  class='d-flex m-auto' style='display: flex; font-size: 10px; margin: auto;'><div class='w-50 d-flex' style='width: 50%; display: flex;'><div><img src='https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn_400x400.png'style='width: 100px; height: 100px;'/></div><div style='padding-left:25;'><p>ORMATE</p><p>Direccion : Av. Monseñor Salvatierra # 150</p><p>Telf: 33-339868</p><p>Santa Cruz - Bolivia</p></div></div><div style='padding-left: 30%;'><p>Fecha: 18/05/2020</p><p>Impresión: 15:15:30</p></div></div><div class='d-flex' style='display: flex;'><div class='w-25' style='width: 25%;'></div><div class='w-50 text-center' style='width: 50%; text-align: center; justify-self: center;'><p style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p style='font-size: 14px;'>Administracion</p></div><div class='w-25' style='width: 25%;'></div></div></div></div></th></tr></thead>";
+    const tableStart: string =
+      "<tbody class='report-content'><tr><td class='report-content-cell'><div class='main'> <table class='table'>";
     const tableHead: string =
       "<thead class='text-center'><tr class='bg-blue'><th>Codigo</th><th>Descripcion</th><th>Sigla</th><th>Componente</th><th>Estado</th></tr></thead>";
     let tableData: string = "<tbody>";
@@ -535,7 +536,11 @@ export class Adm011Component {
         tableData;
     }
     tableData = tableData + "</tbody>";
-    const tableEnd: string = "</table>";
+    const tableEnd: string = "</table> </div></td></tr></tbody>";
+
+    const tableFooter: string =
+      "<tfoot class='report-footer'><tr> <td class='report-footer-cell'><footer class='footer-print'><div class='footer-info'><div class='footer-div'><div class='footer-empr'>Aplic: Ormate</div><div class='footer-user'>Usuario: Admin</div></div></div></footer></td></tr></tfoot> ";
+
     const htmlEnd: string = "</body></html>";
     const mandarImprimir: string =
       htmlStart +
@@ -544,6 +549,7 @@ export class Adm011Component {
       tableHead +
       tableData +
       tableEnd +
+      tableFooter +
       htmlEnd;
     const w = window.open();
     w.document.write(mandarImprimir);
@@ -552,7 +558,44 @@ export class Adm011Component {
       w.print();
       w.close();
     }, 100);
+    console.log("printDoc");
   }
+
+  // printDoc2() {
+  //   const htmlStart: string =
+  //     "<html><head><title>Ormate</title><link href='assets/assets/css/bootstrap.css' rel='stylesheet' type='text/css'/><link href='assets/assets/css/print.css' rel='stylesheet' type='text/css'/></head><body>";
+  //   const header: string =
+  //     "<header><div style='padding: 5px 0; margin: auto;'><div style='display: flex; font-size: 10px; margin: auto;'><div style='width: 50%; display: flex;'><div><img src='https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn_400x400.png' style='width: 100px; height: 100px;'/></div><div style='padding-left: 25;'><p>ORMATE</p><p>Direccion : Av. Monseñor Salvatierra # 150</p><p>Telf: 33-339868</p><p>Santa Cruz - Bolivia</p></div></div><div style='padding-left: 30%;'><p>Fecha: 18/05/2020</p><p>Impresión: 15:15:30</p></div></div><div style='display: flex;'><div style='width: 25%;'></div><div style='width: 50%; text-align: center; justify-self: center;'><p style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p style='font-size: 14px;'>administracion</p></div><div style='width: 25%;'></div></div></div></header>";
+  //   const tableStart: string = "<table class='table'>";
+  //   const tableHead: string =
+  //     "<thead class='text-center'><tr class='bg-blue'><th>Codigo</th><th>Descripcion</th><th>Sigla</th><th>Componente</th><th>Estado</th></tr></thead>";
+  //   let tableData: string = "<tbody>";
+  //   const long = this.auxma.length - 1;
+  //   for (let i = long; i >= 0; i--) {
+  //     tableData =
+  //       `<tr><td>${this.auxma[i].id_documento} </td><td>${this.auxma[i].descripcion} </td><td>${this.auxma[i].sigla} </td><td>${this.auxma[i].componente} </td><td>${this.auxma[i].estado} </td></tr>` +
+  //       tableData;
+  //   }
+  //   tableData = tableData + "</tbody>";
+  //   const tableEnd: string = "</table>";
+  //   const htmlEnd: string = "</body></html>";
+  //   const mandarImprimir: string =
+  //     htmlStart +
+  //     header +
+  //     tableStart +
+  //     tableHead +
+  //     tableData +
+  //     tableEnd +
+  //     htmlEnd;
+  //   const w = window.open();
+  //   w.document.write(mandarImprimir);
+  //   w.document.close();
+  //   setTimeout(() => {
+  //     w.print();
+  //     w.close();
+  //   }, 100);
+  //   console.log("printDoc");
+  // }
   IrDashboard() {
     window.location.href = url.principal;
   }

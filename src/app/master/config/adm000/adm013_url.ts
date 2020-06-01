@@ -4,5 +4,7 @@ const adm013 = {
   inAdm013: "adm_000/adm_013/insert-tipos-transaccion",
   upAdm013: "adm_000/adm_013/update-tipos-transaccion/",
   delAdm013: "adm_000/adm_013/delete-tipos-transaccion/",
+  getPdf: "adm_000/adm_013/get-pdf/",
+  getExcel: "adm_000/adm_013/get-excel/",
 };
 export default adm013;

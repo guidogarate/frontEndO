@@ -1,0 +1,44 @@
+.footer-print {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+.footer-div {
+  display: flex;
+  width: 100%;
+  font-size: 15px;
+  padding-bottom: 15px 0;
+  margin: auto;
+  border-bottom: 0.5px solid black;
+}
+.footer-empr {
+  width: 20%;
+}
+.footer-user {
+  width: 75%;
+  text-align: right;
+}
+/* ==========================================================================
+   Estilos para impressão
+   ========================================================================== */
+
+@media print {
+  @page {
+    margin: 1.5cm;
+	margin-bottom: 0.9cm;
+  }
+}
+
+
+/* adicion para pruebas*/
+table.report-container {
+    page-break-after:always;
+}
+thead.report-header {
+    display:table-header-group;
+}
+tfoot.report-footer {
+    display:table-footer-group;
+} 
