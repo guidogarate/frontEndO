@@ -16,6 +16,10 @@ export interface Adm012SelectModulos {
   id_modulo: number;
   modulo: string;
 }
+export interface Adm012SelectRegistros {
+  id_registro: number;
+  cantidad: string;
+}
 export interface Adm012SelectTamImp {
   id_tamano: number;
   descripcion: string;

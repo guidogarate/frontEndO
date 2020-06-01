@@ -3,6 +3,7 @@ import {
   Adm012,
   Adm012SelectModulos,
   Adm012SelectMonedas,
+  Adm012SelectRegistros,
   Adm012SelectTamImp,
   Adm012SelectCodigoCuentas,
 } from "src/app/master/utils/models/main/adm_000/index.models";
@@ -40,6 +41,7 @@ export class Adm012Component {
   auxma: Adm012[];
   auxmaModal: Adm012;
   selecModulos: Adm012SelectModulos[];
+  selectCantReg: Adm012SelectRegistros[];
   selecModalCodCuenta: Adm012SelectCodigoCuentas[];
   selecModalMoneda: Adm012SelectMonedas[];
   selecModalTamImpr: Adm012SelectTamImp[];
@@ -69,7 +71,6 @@ export class Adm012Component {
   placeholdeAuto = "automatico";
   insertar = "fall";
   nroRegistros: string = "10";
-  // selectModulo: Adm011Select;
 
   constructor(
     private adm012S: Adm012Service,
@@ -79,6 +80,7 @@ export class Adm012Component {
   ) {
     this.getAdm012(this.start.Texto);
     this.crearFormulario();
+    this.cargarSelecRegistros();
     this.textBuscarAdm012.valueChanges
       .pipe(debounceTime(500))
       .subscribe((value) => {
@@ -114,7 +116,6 @@ export class Adm012Component {
       );
     }
     this.sus = peticion.subscribe((resp) => {
-      // this.gestion = resp.usr[0].datos_empresa[0].gestiones[0].gestion;
       if (!this.start.Conte) {
         this.start.Conte = true;
       }
@@ -165,10 +166,18 @@ export class Adm012Component {
     });
   }
 
+  cargarSelecRegistros() {
+    this.selectCantReg = [
+      { id_registro: 10, cantidad: "10" },
+      { id_registro: 25, cantidad: "25" },
+      { id_registro: 50, cantidad: "50" },
+      { id_registro: 100, cantidad: "100" },
+    ];
+  }
+
   crearFormulario() {
     this.forma = this.fb.group({
       id_modulo: ["0", [Validators.required]],
-      nombre_modulo: [""],
       id_formato: ["", [Validators.required]],
       descripcion: ["", [Validators.required]],
       sigla: ["", [Validators.required]],
@@ -242,7 +251,6 @@ export class Adm012Component {
       if (resp["ok"]) {
         this.auxma = resp.data[0].clase_documentos;
         this.pagi = resp["cant"];
-        // this.auxma = resp.data[0].clase_documentos[0];
       } else {
         this.notyG.noty("error", resp["mensaje"], 5000);
       }
@@ -399,13 +407,19 @@ export class Adm012Component {
       this.forma.get("sigla").disable();
       this.forma.get("componente").disable();
     } else {
-      this.forma.get("checkauto").enable();
       this.forma.get("id_modulo").enable();
-      this.forma.get("estado").enable();
-      this.forma.get("id_documento").enable();
+      this.forma.get("id_formato").enable();
       this.forma.get("descripcion").enable();
       this.forma.get("sigla").enable();
-      this.forma.get("componente").enable();
+      this.forma.get("tamaño_impresion").enable();
+      this.forma.get("moneda").enable();
+      this.forma.get("checkauto").enable();
+      this.forma.get("codigo_cuenta").enable();
+      this.forma.get("numero_cuenta").enable();
+      this.forma.get("numero_copias").enable();
+      this.forma.get("codigo_qr").enable();
+      this.forma.get("logo_empresa").enable();
+      this.forma.get("estado").enable();
     }
     this.initG.labels();
     this.initG.select();

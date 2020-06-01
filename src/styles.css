@@ -170,3 +170,47 @@ body {
 }
 
 /**-------------fin de global en todos los componentes--------------------*/
+/** css para componentes ADM */
+
+.title-icon {
+  font-size: 1.8em;
+  color: #03a9f4;
+}
+.text-label {
+  width: 100%;
+  color: white;
+  background-color: #03a9f3;
+}
+.pad-row-title {
+  padding: 0.5em;
+}
+.table tr.puntero:hover {
+  background-color: #a9d9ef;
+  border-top: 2px solid #03a9f3;
+  border-bottom: 2px solid #03a9f3;
+}
+.icon-white {
+  color: #ffffff;
+}
+.pad-modal-title {
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+}
+.modal-head-back-color {
+  background-color: #eeeeee;
+}
+.scroll-Table-Gestion {
+  height: calc(100%);
+  overflow-y: overlay;
+}
+.card-border {
+  border: 2px solid #2196f3;
+}
+.modal-pad-center {
+  padding-left: calc(20%);
+}
+@media screen and (max-width: 600px) {
+  .modal-pad-center {
+    padding-left: 0px;
+  }
+}

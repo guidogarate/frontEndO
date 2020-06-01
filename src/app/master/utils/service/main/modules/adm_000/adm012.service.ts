@@ -17,7 +17,7 @@ export class Adm012Service {
     nroRegistros: string,
     texto: string
   ) {
-    const url1 = `${url.prod}${adm012.getListFormatoImpresion}${modulo}/${indice}/${idModulo}/${nroRegistros} ${texto}`;
+    const url1 = `${url.prod}${adm012.getListFormatoImpresion}${modulo}/${indice}/${idModulo}/${nroRegistros}/${texto}`;
     console.log("url get: ", url1);
     return this.httpClient
       .get(url1, {

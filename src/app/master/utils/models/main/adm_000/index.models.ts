@@ -8,6 +8,7 @@ export { Adm011Select } from "./adm_011.models";
 export { Adm011SelectRegistros } from "./adm_011.models";
 export { Adm012 } from "./adm_012.models";
 export { Adm012SelectModulos } from "./adm_012.models";
+export { Adm012SelectRegistros } from "./adm_012.models";
 export { Adm012SelectTamImp } from "./adm_012.models";
 export { Adm012SelectMonedas } from "./adm_012.models";
 export { Adm012SelectCodigoCuentas } from "./adm_012.models";
