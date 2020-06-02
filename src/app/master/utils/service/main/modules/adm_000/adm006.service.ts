@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import adm006 from "src/app/master/config/adm000/adm006_url";
+import { adm000 } from "src/app/master/config/adm000/adm000_url";
 import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
 import { Adm006 } from "src/app/master/utils/models/main/adm_000/index.models";
@@ -10,7 +10,7 @@ export class Adm006Service {
   constructor(private httpClient: HttpClient) {}
 
   geAdm006(modulo: string, indice: string, texto: string) {
-    const url1 = `${url.prod}${adm006.geAdm006}${modulo}/${indice}/${texto}`;
+    const url1 = `${url.prod}${adm000.adm006.getAdm006}${modulo}/${indice}/${texto}`;
     return this.httpClient.get(url1).pipe(
       map((resp) => {
         return resp;
@@ -19,7 +19,7 @@ export class Adm006Service {
   }
 
   geAdm006getUser(modulo: string, texto: string) {
-    const url1 = `${url.prod}${adm006.geAdm006getUser}${modulo}/${texto}`;
+    const url1 = `${url.prod}${adm000.adm006.geAdm006User}${modulo}/${texto}`;
     return this.httpClient.get(url1).pipe(
       map((resp) => {
         return resp;
@@ -29,7 +29,7 @@ export class Adm006Service {
 
   upAdm006(adm_006: Adm006, login: string, img: File, foto_url: string) {
     sessionStorage.setItem("img", "1");
-    const url1 = `${url.prod}${adm006.upAdm006}${login}`;
+    const url1 = `${url.prod}${adm000.adm006.updAdm006}${login}`;
     const fd = new FormData();
     fd.append("login", adm_006.login);
     fd.append("descripcion", adm_006.descripcion);
@@ -47,7 +47,7 @@ export class Adm006Service {
   }
 
   deAdm006(login: string) {
-    const url1 = `${url.prod}${adm006.deAdm006}${login}`;
+    const url1 = `${url.prod}${adm000.adm006.delAdm006}${login}`;
     return this.httpClient.delete(url1).pipe(
       map((resp) => {
         return resp;
@@ -57,7 +57,7 @@ export class Adm006Service {
 
   inAdm006(adm_006: Adm006, img: File) {
     sessionStorage.setItem("img", "1");
-    const url1 = `${url.prod}${adm006.inAdm006}`;
+    const url1 = `${url.prod}${adm000.adm006.insAdm006}`;
     const fd = new FormData();
     fd.append("login", adm_006.login);
     fd.append("descripcion", adm_006.descripcion);

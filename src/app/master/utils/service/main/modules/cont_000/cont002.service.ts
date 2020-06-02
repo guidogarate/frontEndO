@@ -3,14 +3,14 @@ import { HttpClient } from "@angular/common/http";
 import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
 import { Cont003 } from "src/app/master/utils/models/main/cont_000/index.models";
-import cont002 from "src/app/master/config/cont000/cont002_url";
+import { cont000 } from "src/app/master/config/cont000/cont000_url";
 
 @Injectable()
 export class Cont002Service {
   constructor(private httpClient: HttpClient) {}
 
   geCont002(modulo: string, indice: string, gestion: string, texto: string) {
-    const url1 = `${url.prod}${cont002.geCont002}${modulo}/${indice}/${gestion}/${texto}`;
+    const url1 = `${url.prod}${cont000.cont002.getCont002}${modulo}/${indice}/${gestion}/${texto}`;
     return this.httpClient.get(url1).pipe(
       map((resp) => {
         return resp;
@@ -19,7 +19,7 @@ export class Cont002Service {
   }
 
   upCont002(cont_003: Cont003, gestion: string, id_cod: string) {
-    const url1 = `${url.prod}${cont002.upCont002}${gestion}/${id_cod}`;
+    const url1 = `${url.prod}${cont000.cont002.updCont002}${gestion}/${id_cod}`;
     let estado: string = "";
     if (cont_003.estado) {
       estado = "1";
@@ -39,7 +39,7 @@ export class Cont002Service {
   }
 
   deCont002(gestion: string, id_cod: string) {
-    const url1 = `${url.prod}${cont002.deCont002}${gestion}/${id_cod}`;
+    const url1 = `${url.prod}${cont000.cont002.delCont002}${gestion}/${id_cod}`;
     return this.httpClient.delete(url1).pipe(
       map((resp) => {
         return resp;
@@ -48,7 +48,7 @@ export class Cont002Service {
   }
 
   inCont002(cont_003: Cont003) {
-    const url1 = `${url.prod}${cont002.inCont002}`;
+    const url1 = `${url.prod}${cont000.cont002.insCont002}`;
     let estado: string = "";
     let codigo: string = "";
     if (cont_003.estado === undefined) {

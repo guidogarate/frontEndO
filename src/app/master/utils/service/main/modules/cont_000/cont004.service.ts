@@ -2,18 +2,22 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
+// import {
+//   Cont004,
+//   Cont004Del,
+// } from "src/app/master/utils/models/main/cont_000/index.models";
 import {
   Cont004,
   Cont004Del,
 } from "src/app/master/utils/models/main/cont_000/index.models";
-import cont004 from "src/app/master/config/cont000/cont004_url";
+import { cont000 } from "src/app/master/config/cont000/cont000_url";
 
 @Injectable()
 export class Cont004Service {
   constructor(private httpClient: HttpClient) {}
 
   geCont004Ctas(modulo: string, indice: string, texto: string) {
-    const url1 = `${url.prod}${cont004.geCont004Ctas}${modulo}/${indice}/${texto}`;
+    const url1 = `${url.prod}${cont000.cont004.getCont004Ctas}${modulo}/${indice}/${texto}`;
     return this.httpClient.get(url1).pipe(
       map((resp) => {
         return resp;
@@ -22,7 +26,7 @@ export class Cont004Service {
   }
 
   geCont004Cta(modulo: string, idCta: number) {
-    const url1 = `${url.prod}${cont004.geCont004Cta}${modulo}/${idCta}`;
+    const url1 = `${url.prod}${cont000.cont004.getCont004Cta}${modulo}/${idCta}`;
     return this.httpClient.get(url1).pipe(
       map((resp) => {
         return resp;
@@ -31,7 +35,7 @@ export class Cont004Service {
   }
 
   upCont004(cont_004: Cont004, id_cod: string) {
-    const url1 = `${url.prod}${cont004.upCont004}${id_cod}`;
+    const url1 = `${url.prod}${cont000.cont004.updCont004}${id_cod}`;
     const json = JSON.stringify(cont_004);
     return this.httpClient.put(url1, json).pipe(
       map((resp) => {
@@ -41,7 +45,7 @@ export class Cont004Service {
   }
 
   deCont004(cont_004: Cont004Del) {
-    const url1 = `${url.prod}${cont004.deCont004}`;
+    const url1 = `${url.prod}${cont000.cont004.delCont004}`;
     const json = JSON.stringify({ cuentas: cont_004 });
     return this.httpClient.post(url1, json).pipe(
       map((resp) => {
@@ -51,7 +55,7 @@ export class Cont004Service {
   }
 
   inCont004(cont_004: Cont004) {
-    const url1 = `${url.prod}${cont004.inCont004}`;
+    const url1 = `${url.prod}${cont000.cont004.insCont004}`;
     let estado: string = "";
     if (cont_004.estado === undefined) {
       cont_004.estado = false;
