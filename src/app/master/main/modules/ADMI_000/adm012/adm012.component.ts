@@ -189,6 +189,7 @@ export class Adm012Component {
       logo_empresa: ["", [Validators.required]],
       checkauto: [""],
       estado: ["", [Validators.required]],
+      nombre_modulo: [""],
     });
     console.log("creando formulario: ", this.forma.value);
     // console.log("creando formulario: ", this.forma.value);
@@ -402,10 +403,12 @@ export class Adm012Component {
       this.forma.get("nombre_modulo").disable();
       this.forma.get("checkauto").disable();
       this.forma.get("estado").disable();
-      this.forma.get("id_documento").disable();
+      this.forma.get("id_formato").disable();
       this.forma.get("descripcion").disable();
       this.forma.get("sigla").disable();
-      this.forma.get("componente").disable();
+      this.forma.get("tamaño_impresion").disable();
+      this.forma.get("logo_empresa").disable();
+      this.forma.get("estado").disable();
     } else {
       this.forma.get("id_modulo").enable();
       this.forma.get("id_formato").enable();
@@ -516,6 +519,10 @@ export class Adm012Component {
       }
     });
   }
+  // adm012SelectRegistro(nombre: string) {}
+  // printDoc() {}
+  // IrDashboard() {}
+  // downloadPdfExel(tipo: string) {}
 
   /* Metodos para imprimir y exportar adm 012*/
   // printDoc() {

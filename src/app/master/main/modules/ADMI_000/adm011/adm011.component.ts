@@ -174,11 +174,7 @@ export class Adm011Component {
       componente: ["", [Validators.required]],
       estado: ["", [Validators.required]],
     });
-    //console.log("creando formulario: ", this.forma.value);
-    // console.log("creando formulario: ", this.forma.value);
   }
-
-  // añadir metodos
 
   paginacion(numero: string, eliminar = true) {
     const nume = Number(numero);
@@ -267,10 +263,8 @@ export class Adm011Component {
     let name: string = "";
     this.selecDivModal.forEach((element) => {
       if (element.id_modulo == id) {
-        // console.log("Elemento encontrado: ", element.modulo);
         name = element.modulo;
       }
-      // console.log("Elemento No encontrado: ", element.modulo);
     });
     return name;
   }
