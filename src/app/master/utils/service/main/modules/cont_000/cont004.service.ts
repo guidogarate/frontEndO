@@ -1,16 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
-// import {
-//   Cont004,
-//   Cont004Del,
-// } from "src/app/master/utils/models/main/cont_000/index.models";
+import { cont000 } from "src/app/master/config/cont000/cont000_url";
+import url from "src/app/master/config/url.config";
 import {
   Cont004,
   Cont004Del,
 } from "src/app/master/utils/models/main/cont_000/index.models";
-import { cont000 } from "src/app/master/config/cont000/cont000_url";
 
 @Injectable()
 export class Cont004Service {
@@ -35,6 +31,8 @@ export class Cont004Service {
   }
 
   upCont004(cont_004: Cont004, id_cod: string) {
+    console.log("editando");
+
     const url1 = `${url.prod}${cont000.cont004.updCont004}${id_cod}`;
     const json = JSON.stringify(cont_004);
     return this.httpClient.put(url1, json).pipe(
