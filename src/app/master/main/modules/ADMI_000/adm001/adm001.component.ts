@@ -10,7 +10,7 @@ declare function init_validations();
 @Component({
   selector: "app-adm001",
   templateUrl: "./adm001.component.html",
-  styleUrls: ["./adm001.component.css"]
+  styleUrls: ["./adm001.component.css"],
 })
 export class Adm001Component implements OnInit {
   predeterminado: any;
@@ -31,7 +31,7 @@ export class Adm001Component implements OnInit {
     { id: 9, name: "Septiembre" },
     { id: 10, name: "Octubre" },
     { id: 11, name: "Noviembre" },
-    { id: 12, name: "Diciembre" }
+    { id: 12, name: "Diciembre" },
   ];
 
   listaAnhos = [];
@@ -70,7 +70,7 @@ export class Adm001Component implements OnInit {
     this.loading = false;
   }
   cargarPredeterminado() {
-    this._adm001Service.CargarPredeterminados().subscribe(resp => {
+    this._adm001Service.CargarPredeterminados().subscribe((resp) => {
       if (resp["ok"]) {
         this.predeterminado = resp["adm_001_mostrarTodo"][0];
         this.predeterminado.fecha = this.datePipe.transform(
@@ -90,7 +90,7 @@ export class Adm001Component implements OnInit {
     this.loading = true;
     this._adm001Service
       .CargarListaTipoCambio(this.indice, this.mes, this.anho)
-      .subscribe(resp => {
+      .subscribe((resp) => {
         if (resp["ok"]) {
           this.ListTipoCambio = resp["adm_001_mostrarTodo"];
           console.log(
@@ -113,7 +113,7 @@ export class Adm001Component implements OnInit {
       tc_venta: item.tc_venta,
       tc_ufv: item.tc_ufv,
       estado: item.estado == 1,
-      pred: item.pred == 1
+      pred: item.pred == 1,
     };
     setTimeout(() => {
       initLabels();
@@ -125,7 +125,7 @@ export class Adm001Component implements OnInit {
   Paginacion() {
     console.log("anho: ", this.anho);
     console.log("mes: ", this.mes);
-    this._adm001Service.paginado(this.mes, this.anho).subscribe(resp => {
+    this._adm001Service.paginado(this.mes, this.anho).subscribe((resp) => {
       if (resp["ok"]) {
         this.totalPaginacion = resp["total"];
         console.log("Total paginacion: ", this.totalPaginacion);
@@ -144,9 +144,9 @@ export class Adm001Component implements OnInit {
       adtctipv: this.tipoCambio.tc_venta,
       adtccufv: this.tipoCambio.tc_ufv,
       adtcesta: this.tipoCambio.estado ? "1" : "0",
-      adtcpred: this.tipoCambio.pred ? "1" : "0"
+      adtcpred: this.tipoCambio.pred ? "1" : "0",
     };
-    this._adm001Service.agregar(this.tipoCambioSend).subscribe(resp => {
+    this._adm001Service.agregar(this.tipoCambioSend).subscribe((resp) => {
       if (resp["ok"]) {
         this.notyG.noty("success", "Guardando ", 3500);
         console.log("Guardando: ", resp);
@@ -175,10 +175,10 @@ export class Adm001Component implements OnInit {
       adtctipv: this.tipoCambio.tc_venta,
       adtccufv: this.tipoCambio.tc_ufv,
       adtcesta: this.tipoCambio.estado ? "1" : "0",
-      adtcpred: this.tipoCambio.pred ? "1" : "0"
+      adtcpred: this.tipoCambio.pred ? "1" : "0",
     };
     console.log("para actualizar: ", this.tipoCambioSend);
-    this._adm001Service.actualizar(this.tipoCambioSend).subscribe(resp => {
+    this._adm001Service.actualizar(this.tipoCambioSend).subscribe((resp) => {
       if (resp["ok"]) {
         this.notyG.noty("success", "Actualizando ..", 3500);
         console.log("Actualizando: ", resp);
@@ -202,7 +202,7 @@ export class Adm001Component implements OnInit {
       tc_venta: "",
       tc_ufv: "",
       estado: true,
-      pred: true
+      pred: true,
     };
   }
 
@@ -211,7 +211,7 @@ export class Adm001Component implements OnInit {
     let confirmar = confirm("desea eliminar");
     if (confirmar) {
       this.loading = true;
-      this._adm001Service.eliminar(item.fecha).subscribe(resp => {
+      this._adm001Service.eliminar(item.fecha).subscribe((resp) => {
         if (resp["ok"]) {
           this.notyG.noty("success", "Eliminando ..", 3500);
           this.Limpiar();
@@ -245,7 +245,7 @@ export class Adm001Component implements OnInit {
   /* Fin Paginacion */
 
   ObtenerGestion() {
-    this._adm001Service.obtenerGestiones().subscribe(resp => {
+    this._adm001Service.obtenerGestiones().subscribe((resp) => {
       if (resp["ok"]) {
         this.listaAnhos = resp["gestDispo"];
         this.anho = this.listaAnhos[1].fecha;
@@ -263,7 +263,7 @@ export class Adm001Component implements OnInit {
   ObtenerGestionesPredeterminado() {
     this._adm001Service
       .obtenerGestionesDisponiblesPredeterminado()
-      .subscribe(resp => {
+      .subscribe((resp) => {
         if (resp["ok"]) {
           this.listaAnhos = resp["gestDispo"];
           this.anho = this.listaAnhos[1].fecha;
@@ -303,7 +303,7 @@ export class Adm001Component implements OnInit {
         tc_venta: this.predeterminado.tc_venta,
         tc_ufv: this.predeterminado.tc_ufv,
         estado: true,
-        pred: true
+        pred: true,
       };
       setTimeout(() => {
         initLabels();

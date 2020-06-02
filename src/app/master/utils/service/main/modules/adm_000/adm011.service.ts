@@ -7,7 +7,6 @@ import { Adm011 } from "src/app/master/utils/models/main/adm_000/index.models";
 
 @Injectable()
 export class Adm011Service {
-  token = sessionStorage.getItem("id");
   constructor(private httpClient: HttpClient) {}
 
   getAdm011(
@@ -19,19 +18,12 @@ export class Adm011Service {
   ) {
     const url1 = `${url.prod}${adm011.getAdm011}${modulo}/${indice}/${idModulo}/${nroRegistros}/${texto}`;
     console.log("url get: ", url1);
-    return this.httpClient
-      .get(url1, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json",
-        }),
+    return this.httpClient.get(url1).pipe(
+      map((resp) => {
+        console.log(resp);
+        return resp;
       })
-      .pipe(
-        map((resp) => {
-          console.log(resp);
-          return resp;
-        })
-      );
+    );
   }
 
   upAdm011(adm_011: Adm011, id_modulo: number, id_documento: string) {
@@ -43,34 +35,20 @@ export class Adm011Service {
       componente: adm_011.componente,
       estado: adm_011.estado,
     });
-    return this.httpClient
-      .put(url1, json, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json",
-        }),
+    return this.httpClient.put(url1, json).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map((resp) => {
-          return resp;
-        })
-      );
+    );
   }
 
   delAdm011(id_modulo: number, id_documento: string) {
     const url1 = `${url.prod}${adm011.delAdm011}${id_modulo}/${id_documento}`;
-    return this.httpClient
-      .delete(url1, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json",
-        }),
+    return this.httpClient.delete(url1).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map((resp) => {
-          return resp;
-        })
-      );
+    );
   }
 
   inAdm011(adm_011: Adm011) {
@@ -85,29 +63,17 @@ export class Adm011Service {
       componente: adm_011.componente,
       estado: adm_011.estado,
     });
-    return this.httpClient
-      .post(url1, json, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-          "Content-Type": "application/json",
-        }),
+    return this.httpClient.post(url1, json).pipe(
+      map((resp) => {
+        return resp;
       })
-      .pipe(
-        map((resp) => {
-          return resp;
-        })
-      );
+    );
   }
 
   getAdm011Pdf(usuario: string, idModulo: number) {
     const url1 = `${url.prod}${adm011.getPdf}${usuario}/${idModulo}`;
     console.log("url get: ", url1);
-    return this.httpClient.get(url1, {
-      headers: new HttpHeaders({
-        authorization: this.token,
-        "Content-Type": "application/pdf",
-      }),
-    });
+    return this.httpClient.get(url1);
     // .pipe(
     //   map((resp) => {
     //     console.log("descargando en el service");
@@ -121,18 +87,12 @@ export class Adm011Service {
     console.log("excel");
     const url1 = `${url.prod}${adm011.getPdf}${usuario}/${idModulo}`;
     console.log("url get: ", url1);
-    return this.httpClient
-      .get(url1, {
-        headers: new HttpHeaders({
-          authorization: this.token,
-        }),
+    return this.httpClient.get(url1).pipe(
+      map((resp) => {
+        window.open(url1);
+        console.log(resp);
+        return resp;
       })
-      .pipe(
-        map((resp) => {
-          window.open(url1);
-          console.log(resp);
-          return resp;
-        })
-      );
+    );
   }
 }
