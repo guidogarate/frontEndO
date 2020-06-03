@@ -199,8 +199,8 @@ body {
 .modal-head-back-color {
   background-color: #eeeeee;
 }
-.scroll-Table-Gestion {
-  height: calc(100%);
+.scroll-Table-Documentos {
+  height: 330px;
   overflow-y: overlay;
 }
 .card-border {
