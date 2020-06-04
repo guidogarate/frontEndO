@@ -519,7 +519,7 @@ export class Adm011Component {
     const header: string =
       "<thead class='report-header'><tr><th class='report-header-cell'><div class='header-info'><div  class= 'm-auto' style='padding: 5px 0; margin: auto;'><div  class='d-flex m-auto' style='display: flex; font-size: 10px; margin: auto;'><div class='w-50 d-flex' style='width: 50%; display: flex;'><div><img src='https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn_400x400.png'style='width: 100px; height: 100px;'/></div><div style='padding-left:25;'><p class='size-nombre'>ORMATE</p><p>Direccion : Av. Monseñor Salvatierra # 150</p><p>Telf: 33-339868</p><p>Santa Cruz - Bolivia</p></div></div><div class='col-md-6 text-right' ><p>Fecha: 18-may-2020</p><p>Impresión: 15:15:30</p></div></div><div class='d-flex' style='display: flex;'><div class='w-25' style='width: 25%;'></div><div class='w-50 text-center' style='width: 50%; text-align: center; justify-self: center;'><p style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p style='font-size: 14px;'>Administracion</p></div><div class='w-25' style='width: 25%;'></div></div></div></div></th></tr></thead>";
     const tableStart: string =
-      "<tbody class='report-content'><tr><td class='report-content-cell'><div class='main'> <table class='table'>";
+      "<tbody class='report-content'><tr><td class='report-content-cell'><div class='main' style='margin-botton:0.5rem'> <table class='table'>";
     const tableHead: string =
       "<thead class='text-center'><tr class='bg-blue'><th>Codigo</th><th>Descripcion</th><th>Sigla</th><th>Componente</th><th>Estado</th></tr></thead>";
     let tableData: string = "<tbody>";
@@ -527,11 +527,15 @@ export class Adm011Component {
     let cant = 50;
     for (let i = long; i >= 0; i--) {
       tableData =
-        `<tr><td class='text-center'>${this.auxma[i].id_documento} </td><td>${
+        `<tr><td class='table-content-center text-center'>${
+          this.auxma[i].id_documento
+        } </td><td class='table-content-center text-center'>${
           this.auxma[i].descripcion
-        } </td><td>${this.auxma[i].sigla} </td><td>${
+        } </td><td class='table-content-center text-center'>${
+          this.auxma[i].sigla
+        } </td><td class='table-content-center text-center'>${
           this.auxma[i].componente
-        } </td><td class='text-center'>
+        } </td><td class='table-content-center text-center'>
         
         ${this.auxma[i].estado === true ? "activo" : "inactivo"} </td></tr>` +
         tableData;

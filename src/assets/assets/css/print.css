@@ -11,7 +11,7 @@
   font-size: 15px;
   padding-bottom: 15px 0;
   margin: auto;
-  border-bottom: 0.5px solid black;
+  border-top: 0.3px solid black;
 }
 .footer-empr {
   width: 20%;
@@ -27,6 +27,7 @@
 @media print {
   @page {
     margin: 1.5cm;
+    margin-bottom: 2.2cm;
   }
 }
 
@@ -41,5 +42,5 @@ tfoot.report-footer {
   display: table-footer-group;
 }
 .size-nombre {
-  font-size: 12px;
+  font-size: 14px;
 }
