@@ -7,5 +7,5 @@ export {
   Cont005Sel,
   Cont005Trans,
   Cont005Impre,
-  Cont005Up
+  Cont005Up,
 } from "./cont_005.models";

@@ -6,14 +6,14 @@ import {
   Cont005,
   Cont005Mod,
 } from "src/app/master/utils/models/main/cont_000/index.models";
-import cont005 from "src/app/master/config/cont000/cont005_url";
+import { cont000 } from "src/app/master/config/cont000/cont000_url";
 
 @Injectable()
 export class Cont005Service {
   constructor(private httpClient: HttpClient) {}
 
   geCont005(modulo: string, indice: string, cantDat: string, texto: string) {
-    const url1 = `${url.prod}${cont005.geCont005}${modulo}/${indice}/${cantDat}/${texto}`;
+    const url1 = `${url.prod}${cont000.cont005.getCont005}${modulo}/${indice}/${cantDat}/${texto}`;
     return this.httpClient.get(url1).pipe(
       map((resp) => {
         return resp;
@@ -22,7 +22,7 @@ export class Cont005Service {
   }
 
   geCont005Mod(mod: string, modulo: number, idCta: number) {
-    const url1 = `${url.prod}${cont005.geCont005Mod}${mod}/${modulo}/${idCta}`;
+    const url1 = `${url.prod}${cont000.cont005.getCont005Mod}${mod}/${modulo}/${idCta}`;
     return this.httpClient.get(url1).pipe(
       map((resp) => {
         return resp;
@@ -31,7 +31,7 @@ export class Cont005Service {
   }
 
   upCont005(cont_004: Cont005Mod, modulo: string, id: string) {
-    const url1 = `${url.prod}${cont005.upCont005}${modulo}/${id}`;
+    const url1 = `${url.prod}${cont000.cont005.updCont005}${modulo}/${id}`;
     const json = JSON.stringify({
       descripcion: cont_004.descripcion,
       sigla: cont_004.sigla,
@@ -47,7 +47,7 @@ export class Cont005Service {
   }
 
   deCont005(modulo: string, id: string) {
-    const url1 = `${url.prod}${cont005.deCont005}${modulo}/${id}`;
+    const url1 = `${url.prod}${cont000.cont005.delCont005}${modulo}/${id}`;
     return this.httpClient.delete(url1).pipe(
       map((resp) => {
         return resp;
@@ -56,7 +56,7 @@ export class Cont005Service {
   }
 
   inCont005(cont_004: Cont005Mod, id_modulo: string) {
-    const url1 = `${url.prod}${cont005.inCont005}`;
+    const url1 = `${url.prod}${cont000.cont005.insCont005}`;
     let estado: string = "";
     if (cont_004.estado === undefined) {
       cont_004.estado = false;

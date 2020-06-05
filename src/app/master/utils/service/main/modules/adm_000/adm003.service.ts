@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import adm0003 from "src/app/master/config/adm000/adm003_url";
+import { adm000 } from "src/app/master/config/adm000/adm000_url";
 import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
 
@@ -9,7 +9,7 @@ export class Adm003Service {
   constructor(private httpClient: HttpClient) {}
 
   buscarAdm003(modulo: string, indice: string, texto: string) {
-    const url1 = `${url.prod}${adm0003.cargarDato}${modulo}/${indice}/${texto}`;
+    const url1 = `${url.prod}${adm000.adm003.getAdm003}${modulo}/${indice}/${texto}`;
     return this.httpClient.get(url1).pipe(
       map((resp) => {
         return resp;
@@ -25,7 +25,7 @@ export class Adm003Service {
       adamesta: dato.adamesta,
       adamsigl: dato.adamsigl,
     });
-    const url1 = `${url.prod}${adm0003.nuevoDato}`;
+    const url1 = `${url.prod}${adm000.adm003.insAdm003}`;
     return this.httpClient.post(url1, json).pipe(
       map((resp) => {
         return resp;
@@ -34,7 +34,7 @@ export class Adm003Service {
   }
 
   editarAdm003(adamcodm: string, adamtipa: string, datos: any) {
-    const url1 = `${url.prod}${adm0003.editarDato}${adamcodm}/${adamtipa}`;
+    const url1 = `${url.prod}${adm000.adm003.updAdm003}${adamcodm}/${adamtipa}`;
     return this.httpClient.put(url1, datos).pipe(
       map((resp) => {
         return resp;
@@ -43,7 +43,7 @@ export class Adm003Service {
   }
 
   buscarAdm003Sub(adamtipa: string) {
-    const url1 = `${url.prod}${adm0003.cargarDatoSub}${adamtipa}`;
+    const url1 = `${url.prod}${adm000.adm003.getAdm003Sub}${adamtipa}`;
     return this.httpClient.get(url1).pipe(
       map((resp) => {
         return resp;
@@ -58,7 +58,7 @@ export class Adm003Service {
       adamtipa,
       datos,
     });
-    const url1 = `${url.prod}${adm0003.nuevoDatoSub}`;
+    const url1 = `${url.prod}${adm000.adm003.insAdm003Sub}`;
     return this.httpClient.post(url1, json).pipe(
       map((resp) => {
         return resp;
@@ -67,7 +67,7 @@ export class Adm003Service {
   }
 
   editarAdm003Sub(adamcodm: string, adamtipa: string, datos: any) {
-    const url1 = `${url.prod}${adm0003.editarDatoSub}${adamcodm}/${adamtipa}`;
+    const url1 = `${url.prod}${adm000.adm003.updAdm003Sub}${adamcodm}/${adamtipa}`;
     return this.httpClient.put(url1, datos).pipe(
       map((resp) => {
         return resp;
@@ -76,7 +76,7 @@ export class Adm003Service {
   }
 
   eliminarAdm003Ambos(adamcodm: string, adamtipa: string, adamidea: string) {
-    const url1 = `${url.prod}${adm0003.eliminDatoAmbos}${adamcodm}/${adamtipa}/${adamidea}`;
+    const url1 = `${url.prod}${adm000.adm003.delAdm003}${adamcodm}/${adamtipa}/${adamidea}`;
     return this.httpClient.delete(url1).pipe(
       map((resp) => {
         return resp;
