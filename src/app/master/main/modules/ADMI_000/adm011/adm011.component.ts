@@ -521,7 +521,7 @@ export class Adm011Component {
     const tableStart: string =
       "<tbody class='report-content'><tr><td class='report-content-cell'><div class='main' style='margin-botton:0.5rem'> <table class='table'>";
     const tableHead: string =
-      "<thead class='text-center'><tr class='bg-blue'><th>Codigo</th><th>Descripcion</th><th>Sigla</th><th>Componente</th><th>Estado</th></tr></thead>";
+      "<thead class='text-center'><tr class='bg-blue'><th style='width:10%'>Codigo</th><th style='width:35%'>Descripcion</th><th style='width:25%'>Sigla</th><th style='width:20%'>Componente</th><th style='width:10%'>Estado</th></tr></thead>";
     let tableData: string = "<tbody>";
     const long = this.auxma.length - 1;
     let cant = 50;
