@@ -23,6 +23,7 @@ export class ModComponent implements OnInit, OnDestroy {
     public comunicacionService: ComunicacionService
   ) {
     this.filtrar(route.snapshot.params.nivel);
+    console.log(this.data);
   }
 
   ngOnInit() {
@@ -91,6 +92,7 @@ export class ModComponent implements OnInit, OnDestroy {
 
   component(submodulo: number, componente: string) {
     const segNivel = submodulo.toString();
+
     this.router.navigate(["/mod", segNivel, componente]);
     // console.log("mod", segNivel, componente);
   }

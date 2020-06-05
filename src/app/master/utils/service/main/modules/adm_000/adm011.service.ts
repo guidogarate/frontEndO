@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import adm011 from "src/app/master/config/adm000/adm011_url";
 import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
@@ -20,7 +20,6 @@ export class Adm011Service {
     console.log("url get: ", url1);
     return this.httpClient.get(url1).pipe(
       map((resp) => {
-        console.log(resp);
         return resp;
       })
     );
@@ -80,7 +79,17 @@ export class Adm011Service {
     //     console.log(resp);
     //     return resp;
     //   })
-    //);
+    // );
+  }
+
+  getAdm011Impr(idMod: string, pag: string, texto: string) {
+    const url1 = `${url.prod}${adm011.getAdm011Impr}${idMod}/${pag}/${texto}`;
+    console.log(url1);
+    return this.httpClient.get(url1).pipe(
+      map((resp) => {
+        return resp;
+      })
+    );
   }
 
   getAdm011Excel(usuario: string, idModulo: number) {

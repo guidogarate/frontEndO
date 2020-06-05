@@ -4,6 +4,7 @@ const adm011 = {
   upAdm011: "adm_000/adm_011/update-clase-documentos/",
   delAdm011: "adm_000/adm_011/delete-clase-documentos/",
   getPdf: "adm_000/adm_011/get-pdf/",
+  getAdm011Impr: "adm_000/adm_011/get-impresion/",
   getExcel: "adm_000/adm_011/get-excel/",
 };
 

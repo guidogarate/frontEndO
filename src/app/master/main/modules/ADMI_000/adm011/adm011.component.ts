@@ -249,7 +249,6 @@ export class Adm011Component {
       estado: false,
       checkauto: true,
     });
-    //console.log("agregando nuevo: ", this.forma.value);
     this.start.CtrAc = "nuevo";
     this.ocultarSelect = false;
     this.mostrarCheck = true;
@@ -278,7 +277,6 @@ export class Adm011Component {
         this.btnGrupo.BtnEdita = true;
         this.btnGrupo.BtnNuevo = true;
         this.btnGrupo.BtnElimi = true;
-        console.log("visualisando y activando eliminar");
         this.boolDisabled(true);
         break;
       case "editar":
@@ -310,7 +308,6 @@ export class Adm011Component {
         this.start.CtrAc = tipo;
         this.boolBtnGrupo(false, true);
         this.btnGrupo.BtnElimi = false;
-        console.log("modal nuevo off delete");
         this.btnGrupo.BtnCance = true;
 
         this.forma.reset({
@@ -320,7 +317,6 @@ export class Adm011Component {
           id_documento: "auto",
           checkauto: true,
         }); // resetea todo a null y estado a false
-        // console.log("reseteando form opciones Modal: ", this.forma.value);
         this.boolDisabled(false);
         this.mostrarCheck = true;
         this.forma.get("id_documento").setValue("auto");
@@ -329,7 +325,6 @@ export class Adm011Component {
         this.initG.labels();
         return;
       case "editar":
-        console.log("editando");
         this.start.CtrAc = tipo;
         this.boolDisabled(false);
         this.boolBtnGrupo(false, true);
@@ -348,7 +343,6 @@ export class Adm011Component {
         this.btnGrupo.BtnElimi = false;
         break;
       case "cancelar":
-        console.log(this.start.CtrAc);
         if (this.insertar === "exito") {
           this.boolDisabled(true);
           this.boolBtnGrupo(true, false);
@@ -362,14 +356,12 @@ export class Adm011Component {
         return;
       case "guardar":
         this.boolDisabled(false);
-        console.log("Formulario Invalido?", this.forma);
         if (this.forma.invalid) {
           this.mostrarCheck = true;
           return;
         }
         this.btnGrupo.BtnLoadi = true;
         this.btnGrupo.BtnCance = false;
-        console.log("Formulario values", this.forma.value);
         this.guardarDatos(this.forma.value, this.start.CtrAc);
         return;
     }
@@ -410,7 +402,6 @@ export class Adm011Component {
   }
 
   resetDatos() {
-    // console.log("auxmodal valores: ", this.auxmaModal);
     this.forma.reset(this.auxmaModal);
     this.initG.labels();
     this.initG.select();
@@ -421,7 +412,6 @@ export class Adm011Component {
       this.forma.get("id_documento").enable();
       this.forma.get("id_documento").setValue("");
       this.placeholdeAuto = "introducir codigo";
-      // console.log("id_documento value: ", this.forma.get("id_documento"));
     } else {
       this.forma.get("id_documento").setValue("auto");
       this.forma.get("id_documento").disable();
@@ -514,104 +504,72 @@ export class Adm011Component {
   }
 
   printDoc() {
-    const htmlStart: string =
-      "<html><head><title>Ormate</title><link href='assets/assets/css/bootstrap.css' rel='stylesheet' type='text/css'/><link href='assets/assets/css/print.css' rel='stylesheet' type='text/css'/></head><body> <table class='report-container w-100'>";
-    const header: string =
-      "<thead class='report-header'><tr><th class='report-header-cell'><div class='header-info'><div  class= 'm-auto' style='padding: 5px 0; margin: auto;'><div  class='d-flex m-auto' style='display: flex; font-size: 10px; margin: auto;'><div class='w-50 d-flex' style='width: 50%; display: flex;'><div><img src='https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn_400x400.png'style='width: 100px; height: 100px;'/></div><div style='padding-left:25;'><p class='size-nombre'>ORMATE</p><p>Direccion : Av. Monseñor Salvatierra # 150</p><p>Telf: 33-339868</p><p>Santa Cruz - Bolivia</p></div></div><div class='col-md-6 text-right' ><p>Fecha: 18-may-2020</p><p>Impresión: 15:15:30</p></div></div><div class='d-flex' style='display: flex;'><div class='w-25' style='width: 25%;'></div><div class='w-50 text-center' style='width: 50%; text-align: center; justify-self: center;'><p style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p style='font-size: 14px;'>Administracion</p></div><div class='w-25' style='width: 25%;'></div></div></div></div></th></tr></thead>";
-    const tableStart: string =
-      "<tbody class='report-content'><tr><td class='report-content-cell'><div class='main' style='margin-botton:0.5rem'> <table class='table'>";
-    const tableHead: string =
-      "<thead class='text-center'><tr class='bg-blue'><th style='width:10%'>Codigo</th><th style='width:35%'>Descripcion</th><th style='width:25%'>Sigla</th><th style='width:20%'>Componente</th><th style='width:10%'>Estado</th></tr></thead>";
-    let tableData: string = "<tbody>";
-    const long = this.auxma.length - 1;
-    let cant = 50;
-    for (let i = long; i >= 0; i--) {
-      tableData =
-        `<tr><td class='table-content-center text-center'>${
-          this.auxma[i].id_documento
-        } </td><td class='table-content-center text-center'>${
-          this.auxma[i].descripcion
-        } </td><td class='table-content-center text-center'>${
-          this.auxma[i].sigla
-        } </td><td class='table-content-center text-center'>${
-          this.auxma[i].componente
-        } </td><td class='table-content-center text-center'>
-        
-        ${this.auxma[i].estado === true ? "activo" : "inactivo"} </td></tr>` +
-        tableData;
-      if (i < cant) {
-        cant--;
-        i++;
+    let peticion: Observable<any>;
+    peticion = this.adm011S.getAdm011Impr("90", "0", this.start.Texto);
+    this.sus = peticion.subscribe((resp) => {
+      if (resp["ok"]) {
+        const feImpr: string = resp["fecha"];
+        const hrImpr: string = resp["horaImpresion"];
+        const logoEmpr: string = resp.data[0].datos_empresa[0].logo_empresa;
+        const sglEmpre: string = resp.data[0].datos_empresa[0].sigla;
+        const htmlStart: string =
+          "<html><head><title>Ormate</title><link href='assets/assets/css/bootstrap.css' rel='stylesheet' type='text/css'/><link href='assets/assets/css/print.css' rel='stylesheet' type='text/css'/></head><body> <table class='report-container w-100'>";
+        const header: string = `<thead class='report-header'><tr><th class='report-header-cell'><div class='header-info'><div  class= 'm-auto' style='padding: 5px 0; margin: auto;'><div  class='d-flex m-auto' style='display: flex; font-size: 10px; margin: auto;'><div class='w-50 d-flex' style='width: 50%; display: flex;'><div><img src=${logoEmpr} style='width: 100px; height: 100px;'/></div><div style='padding-left:25;'><p class='size-nombre'>${sglEmpre}</p><p>Direccion : Av. Monseñor Salvatierra # 150</p><p>Telf: 33-339868</p><p>Santa Cruz - Bolivia</p></div></div><div class='col-md-6 text-right' ><p>Fecha: ${feImpr}</p><p>Impresión: ${hrImpr}</p></div></div><div class='d-flex' style='display: flex;'><div class='w-25' style='width: 25%;'></div><div class='w-50 text-center' style='width: 50%; text-align: center; justify-self: center;'><p style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p style='font-size: 14px;'>Administracion</p></div><div class='w-25' style='width: 25%;'></div></div></div></div></th></tr></thead>`;
+        const tableStart: string =
+          "<tbody class='report-content'><tr><td class='report-content-cell'><div class='main' style='margin-botton:0.5rem'> <table class='table'>";
+        const tableHead: string =
+          "<thead class='text-center'><tr class='bg-blue'><th style='width:10%'>Codigo</th><th style='width:35%'>Descripcion</th><th style='width:25%'>Sigla</th><th style='width:20%'>Componente</th><th style='width:10%'>Estado</th></tr></thead>";
+        let tableData: string = "<tbody>";
+        const data: Adm011[] = resp.data[0].clase_documentos;
+        const long = data.length - 1;
+        for (let i = long; i >= 0; i--) {
+          tableData =
+            `<tr><td class='table-content-center text-center'>${
+              data[i].id_documento
+            } </td><td class='table-content-center text-center'>${
+              data[i].descripcion
+            } </td><td class='table-content-center text-center'>${
+              data[i].sigla
+            } </td><td class='table-content-center text-center'>${
+              data[i].componente
+            } </td><td class='table-content-center text-center'>
+        ${data[i].estado === true ? "activo" : "inactivo"} </td></tr>` +
+            tableData;
+        }
+        tableData = tableData + "</tbody>";
+        const tableEnd: string = "</table> </div></td></tr></tbody>";
+        const tableFooter: string =
+          "<tfoot class='report-footer'><tr> <td class='report-footer-cell'><footer class='footer-print'><div class='footer-info'><div class='footer-div'><div class='footer-empr'>Aplic: Ormate</div><div class='footer-user'>Usuario: Admin</div></div></div></footer></td></tr></tfoot> ";
+        const htmlEnd: string = "</table></body></html>";
+        const mandarImprimir: string =
+          htmlStart +
+          header +
+          tableStart +
+          tableHead +
+          tableData +
+          tableEnd +
+          tableFooter +
+          htmlEnd;
+        const w = window.open();
+        w.document.write(mandarImprimir);
+        w.document.close();
+        setTimeout(() => {
+          w.print();
+          w.close();
+        }, 100);
+      } else {
+        this.notyG.noty("error", "Error al mandar a imprimir", 3000);
       }
-    }
-    tableData = tableData + "</tbody>";
-    const tableEnd: string = "</table> </div></td></tr></tbody>";
-
-    const tableFooter: string =
-      "<tfoot class='report-footer'><tr> <td class='report-footer-cell'><footer class='footer-print'><div class='footer-info'><div class='footer-div'><div class='footer-empr'>Aplic: Ormate</div><div class='footer-user'>Usuario: Admin</div></div></div></footer></td></tr></tfoot> ";
-
-    const htmlEnd: string = "</table></body></html>";
-    const mandarImprimir: string =
-      htmlStart +
-      header +
-      tableStart +
-      tableHead +
-      tableData +
-      tableEnd +
-      tableFooter +
-      htmlEnd;
-    const w = window.open();
-    w.document.write(mandarImprimir);
-    w.document.close();
-    setTimeout(() => {
-      w.print();
-      // w.close();
-    }, 100);
-    console.log("printDoc");
+    });
   }
 
-  // printDoc2() {
-  //   const htmlStart: string =
-  //     "<html><head><title>Ormate</title><link href='assets/assets/css/bootstrap.css' rel='stylesheet' type='text/css'/><link href='assets/assets/css/print.css' rel='stylesheet' type='text/css'/></head><body>";
-  //   const header: string =
-  //     "<header><div style='padding: 5px 0; margin: auto;'><div style='display: flex; font-size: 10px; margin: auto;'><div style='width: 50%; display: flex;'><div><img src='https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn_400x400.png' style='width: 100px; height: 100px;'/></div><div style='padding-left: 25;'><p>ORMATE</p><p>Direccion : Av. Monseñor Salvatierra # 150</p><p>Telf: 33-339868</p><p>Santa Cruz - Bolivia</p></div></div><div style='padding-left: 30%;'><p>Fecha: 18/05/2020</p><p>Impresión: 15:15:30</p></div></div><div style='display: flex;'><div style='width: 25%;'></div><div style='width: 50%; text-align: center; justify-self: center;'><p style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p style='font-size: 14px;'>administracion</p></div><div style='width: 25%;'></div></div></div></header>";
-  //   const tableStart: string = "<table class='table'>";
-  //   const tableHead: string =
-  //     "<thead class='text-center'><tr class='bg-blue'><th>Codigo</th><th>Descripcion</th><th>Sigla</th><th>Componente</th><th>Estado</th></tr></thead>";
-  //   let tableData: string = "<tbody>";
-  //   const long = this.auxma.length - 1;
-  //   for (let i = long; i >= 0; i--) {
-  //     tableData =
-  //       `<tr><td>${this.auxma[i].id_documento} </td><td>${this.auxma[i].descripcion} </td><td>${this.auxma[i].sigla} </td><td>${this.auxma[i].componente} </td><td>${this.auxma[i].estado} </td></tr>` +
-  //       tableData;
-  //   }
-  //   tableData = tableData + "</tbody>";
-  //   const tableEnd: string = "</table>";
-  //   const htmlEnd: string = "</body></html>";
-  //   const mandarImprimir: string =
-  //     htmlStart +
-  //     header +
-  //     tableStart +
-  //     tableHead +
-  //     tableData +
-  //     tableEnd +
-  //     htmlEnd;
-  //   const w = window.open();
-  //   w.document.write(mandarImprimir);
-  //   w.document.close();
-  //   setTimeout(() => {
-  //     w.print();
-  //     w.close();
-  //   }, 100);
-  //   console.log("printDoc");
-  // }
   IrDashboard() {
     window.location.href = url.principal;
   }
   downloadPdfExel(tipo: string) {
     let peticion: Observable<any>;
-    const rutaPdf: string = "adm_000/adm_011/get-pdf/90/0";
-    const rutaExel: string = "adm_000/adm_011/get-excel/90/0";
+    const rutaPdf: string = "adm_000/adm_011/get-pdf/90/0/all_data";
+    const rutaExel: string = "adm_000/adm_011/get-excel/90/0/all_data";
     let tipoFile: string = "";
     const fileName: string = "adm011";
     switch (tipo) {

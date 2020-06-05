@@ -6,7 +6,6 @@ import url from "src/app/master/config/url.config";
   providedIn: "root",
 })
 export class FileService {
-  token = sessionStorage.getItem("id");
   constructor(private http: HttpClient) {}
 
   downloadFile(data, ruta: string) {
@@ -15,9 +14,6 @@ export class FileService {
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
       responseType: "arraybuffer",
-      headers: new HttpHeaders({
-        authorization: this.token,
-      }),
     });
   }
 }
