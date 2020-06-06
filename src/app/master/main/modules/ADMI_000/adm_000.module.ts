@@ -19,6 +19,7 @@ import { PipesModule } from "../../../utils/pipe/pipes.module";
 import { Adm009Component } from "./adm009/adm009.component";
 import { Adm011Component } from "./adm011/adm011.component";
 import { Adm012Component } from "./adm012/adm012.component";
+import { GlobalModule } from "../../global/global.module";
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { Adm012Component } from "./adm012/adm012.component";
     ReactiveFormsModule,
     IndexAdm000Module,
     PipesModule,
+    GlobalModule,
   ],
 })
 export class ADM00Module {}
