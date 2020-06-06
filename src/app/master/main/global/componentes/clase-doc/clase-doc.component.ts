@@ -78,7 +78,8 @@ export class ClaseDocComponent {
   ) {
     setTimeout(() => {
       this.getAdm011(this.start.Texto);
-    }, 100);
+      console.log(this.idenMod);
+    }, 1500);
 
     this.crearFormulario();
     this.cargarSelecRegistros();

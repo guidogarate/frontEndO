@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 
 import { MOD_ROUTES } from "./mod.routes";
 
-import { GlobalModule } from "../global/global.module";
+import { GlobalElemModule } from "../global/elementos/globalEleme.module";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { ModComponent } from "./mod.component";
@@ -11,6 +11,6 @@ import { ModComponent } from "./mod.component";
   declarations: [ModComponent],
   exports: [],
   providers: [],
-  imports: [CommonModule, FormsModule, GlobalModule, MOD_ROUTES],
+  imports: [CommonModule, FormsModule, GlobalElemModule, MOD_ROUTES],
 })
 export class ModModule {}

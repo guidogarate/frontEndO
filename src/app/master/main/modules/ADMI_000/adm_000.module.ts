@@ -19,7 +19,8 @@ import { PipesModule } from "../../../utils/pipe/pipes.module";
 import { Adm009Component } from "./adm009/adm009.component";
 import { Adm011Component } from "./adm011/adm011.component";
 import { Adm012Component } from "./adm012/adm012.component";
-import { GlobalModule } from "../../global/global.module";
+import { GlobalElemModule } from "../../global/elementos/globalEleme.module";
+import { GlobalCompoModule } from "../../global/componentes/globalCompo.module";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { GlobalModule } from "../../global/global.module";
     ReactiveFormsModule,
     IndexAdm000Module,
     PipesModule,
-    GlobalModule,
+    GlobalElemModule,
+    GlobalCompoModule,
   ],
 })
 export class ADM00Module {}

@@ -9,5 +9,7 @@ export class Adm011Component {
   idModPadre: string = "90";
   nomModPadre: string = "ADMINISTRACION";
 
-  constructor() {}
+  constructor() {
+    console.log(this.idModPadre);
+  }
 }
