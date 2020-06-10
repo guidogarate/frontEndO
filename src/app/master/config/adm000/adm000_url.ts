@@ -70,6 +70,7 @@ export const adm000 = {
     inAdm011: "adm_000/adm_011/insert-clase-documentos",
     upAdm011: "adm_000/adm_011/update-clase-documentos/",
     delAdm011: "adm_000/adm_011/delete-clase-documentos/",
+    getAdm011Impr: "adm_000/adm_011/get-impresion/",
     getPdf: "adm_000/adm_011/get-pdf/",
     getExcel: "adm_000/adm_011/get-excel/",
   },
