@@ -517,33 +517,49 @@ export class ClaseDocComponent {
         const logoEmpr: string = resp.data[0].datos_empresa[0].logo_empresa;
         const sglEmpre: string = resp.data[0].datos_empresa[0].sigla;
         const htmlStart: string =
-          "<html><head><title>Ormate</title><link href='assets/assets/css/bootstrap.css' rel='stylesheet' type='text/css'/><link href='assets/assets/css/print.css' rel='stylesheet' type='text/css'/></head><body> <table class='report-container w-100'>";
-        const header: string = `<thead class='report-header'><tr><th class='report-header-cell'><div class='header-info'><div  class= 'm-auto' style='padding: 5px 0; margin: auto;'><div  class='d-flex m-auto' style='display: flex; font-size: 10px; margin: auto;'><div class='w-50 d-flex' style='width: 50%; display: flex;'><div><img src=${logoEmpr} style='width: 100px; height: 100px;'/></div><div style='padding-left:25;'><p class='size-nombre'>${sglEmpre}</p><p>Direccion : Av. Monseñor Salvatierra # 150</p><p>Telf: 33-339868</p><p>Santa Cruz - Bolivia</p></div></div><div class='col-md-6 text-right' ><p>Fecha: ${feImpr}</p><p>Impresión: ${hrImpr}</p></div></div><div class='d-flex' style='display: flex;'><div class='w-25' style='width: 25%;'></div><div class='w-50 text-center' style='width: 50%; text-align: center; justify-self: center;'><p style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p style='font-size: 14px;'>Administracion</p></div><div class='w-25' style='width: 25%;'></div></div></div></div></th></tr></thead>`;
+          "<html><head><title>Ormate</title></head><style type='text/css'> .footer-print { position: fixed;left: 0; bottom: 0;width: 100%;text-align: center;} .footer-div {display: flex;width: 100%;font-size: 15px;padding-bottom: 15px 0;margin: auto;border-bottom: 0.3px solid black;} .footer-empr {width: 50%;text-align: left;padding-top: 0.5rem;} .footer-user {width: 50%;text-align: right;padding-top: 0.5rem;} @media print {@page {margin: 1.5cm;margin-bottom: 2cm;}} table.report-container {page-break-after: always;} thead.report-header {display: table-header-group;}tfoot.report-footer {display: table-footer-group;} .table th, .table td { padding: 0.75rem 1.25rem;vertical-align: top;border-top: 1px solid #ddd;}         .centrado {text-align: center;}.font-size-title-comp {font-size: 20px;}     .font-size-title-name {font-size: 14px;} body {margin: 0;} </style> <body><table class='report-container' style='width: 100%;'>";
+        const header: string = `<thead class='report-header'>
+        <tr>
+            <th class='report-header-cell'>
+              <div class='header-info'>
+                <div  style='margin: auto;'>
+                  <div
+                    style='display: flex; font-size: 10px; margin: auto;'
+                  >
+                    <div  style='width: 50%; display: flex;'>
+                      <div>
+                        <img
+                          src=${logoEmpr} style='width: 100px; height: 100px;'
+                          />
+                        </div>
+                        <div style='padding-left: 25; text-align: left;'>
+                          <p class='font-weight-bold' style='font-size: 16px;'>${sglEmpre}</p>
+                          <p>Direccion : Av. Monseñor Salvatierra # 150</p>
+                          <p>Telf: 33-339868</p>
+                          <p>Santa Cruz - Bolivia</p>
+                        </div>
+                      </div>
+                      <div style='width: 50%; text-align: right;'>
+                        <p>Fecha: ${feImpr}</p><p>Impresión: ${hrImpr}</p> </div> </div> <div class='d-flex' style='display: flex;'><div class='w-25' style='width: 25%;'></div><div class='w-50 text-center' style='width: 50%; text-align: center; justify-self: center;'><p style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p style='font-size: 14px;'>Administracion</p></div><div class='w-25' style='width: 25%;'></div></div></div></div></th></tr></thead>`;
         const tableStart: string =
-          "<tbody class='report-content'><tr><td class='report-content-cell'><div class='main' style='margin-botton:0.5rem'> <table class='table'>";
+          "<tbody class='report-content'><tr><td class='report-content-cell'><div class='main' style='margin-botton:0.5rem'> <table class='table' style='width: 100%;' >";
         const tableHead: string =
-          "<thead class='text-center'><tr class='bg-blue'><th style='width:10%'>Codigo</th><th style='width:35%'>Descripcion</th><th style='width:25%'>Sigla</th><th style='width:20%'>Componente</th><th style='width:10%'>Estado</th></tr></thead>";
+          "<thead class='centrado'><tr class='bg-blue'><th style='width:10%'>Codigo</th><th style='width:35%'>Descripcion</th><th style='width:25%'>Sigla</th><th style='width:20%'>Componente</th><th style='width:10%'>Estado</th></tr></thead>";
         let tableData: string = "<tbody>";
         const data: Adm011[] = resp.data[0].clase_documentos;
         const long = data.length - 1;
         for (let i = long; i >= 0; i--) {
           tableData =
-            `<tr><td class='table-content-center text-center'>${
-              data[i].id_documento
-            } </td><td class='table-content-center text-center'>${
+            `<tr><td class='centrado'>${data[i].id_documento} </td><td>${
               data[i].descripcion
-            } </td><td class='table-content-center text-center'>${
-              data[i].sigla
-            } </td><td class='table-content-center text-center'>${
-              data[i].componente
-            } </td><td class='table-content-center text-center'>
+            } </td><td>${data[i].sigla} </td><td>${data[i].componente} </td><td>
         ${data[i].estado === true ? "activo" : "inactivo"} </td></tr>` +
             tableData;
         }
         tableData = tableData + "</tbody>";
         const tableEnd: string = "</table> </div></td></tr></tbody>";
         const tableFooter: string =
-          "<tfoot class='report-footer'><tr> <td class='report-footer-cell'><footer class='footer-print'><div class='footer-info'><div class='footer-div'><div class='footer-empr'>Aplic: Ormate</div><div class='footer-user'>Usuario: Admin</div></div></div></footer></td></tr></tfoot> ";
+          "<tfoot class='report-footer'> <tr> <td class='report-footer-cell'> <footer class='footer-print'> <div class='footer-info'> <div class='footer-div'> <div class='footer-empr'>Aplic: Ormate</div> <div class='footer-user'>Usuario: Admin</div> </div> </div> </footer> </td> </tr> </tfoot>";
         const htmlEnd: string = "</table></body></html>";
         const mandarImprimir: string =
           htmlStart +
