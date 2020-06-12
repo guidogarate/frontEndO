@@ -56,7 +56,6 @@ export class ClaseDocComponent {
   contorlAccion: string = "";
   loadingSub = false;
   controlLoginModal = "";
-  // TODO: new variables
   id_cod = "";
   idModulo = 10;
   ListDocumentos: any = [];
@@ -66,7 +65,6 @@ export class ClaseDocComponent {
   mostrarCheck = false;
   placeholdeAuto = "automatico";
   insertar = "fall";
-  // selectModulo: Adm011Select;
   idNroRegistro: string = "10";
 
   constructor(
@@ -78,7 +76,7 @@ export class ClaseDocComponent {
   ) {
     setTimeout(() => {
       this.getAdm011(this.start.Texto);
-      console.log(this.idenMod);
+      // console.log(this.idenMod);
     }, 1500);
 
     this.crearFormulario();
@@ -118,7 +116,6 @@ export class ClaseDocComponent {
       );
     }
     this.sus = peticion.subscribe((resp) => {
-      // this.gestion = resp.usr[0].datos_empresa[0].gestiones[0].gestion;
       if (!this.start.Conte) {
         this.start.Conte = true;
       }
@@ -235,7 +232,6 @@ export class ClaseDocComponent {
       if (resp["ok"]) {
         this.auxma = resp.data[0].clase_documentos;
         this.pagi = resp["cant"];
-        // this.auxma = resp.data[0].clase_documentos[0];
       } else {
         this.notyG.noty("error", resp["mensaje"], 5000);
       }
@@ -420,19 +416,16 @@ export class ClaseDocComponent {
       this.forma.get("id_documento").setValue("auto");
       this.forma.get("id_documento").disable();
       this.placeholdeAuto = "automatico";
-      // console.log("id_documento auto: ", this.forma.get("id_documento"));
     }
     this.initG.labels();
   }
 
   adm011Selectgest(gestion: string) {
-    console.log("gestion change: ", gestion);
     this.idModulo = Number(gestion);
     this.getAdm011("all_data", "1");
   }
 
   adm011SelectRegistro(idRegistro: string) {
-    console.log("Registro change: ", idRegistro);
     this.idNroRegistro = idRegistro;
     this.getAdm011("all_data", "1");
   }
@@ -491,18 +484,15 @@ export class ClaseDocComponent {
     });
   }
   cerrarModal() {
-    console.log("intentando cerrar modal");
     $("#modal_adm_011").modal("hide");
     // $("#modal_adm_011_eliminar").modal("hide");
   }
 
   GetAdm011Pdf() {
-    console.log("exportar a pdf");
     this.adm011S.getAdm011Pdf("90", this.idModulo).subscribe((resp) => {
       if (resp["ok"]) {
-        console.log("download pdf: ");
       } else {
-        console.log("error: ", resp["mensaje"]);
+        // console.log("error: ", resp["mensaje"]);
       }
     });
   }
@@ -517,7 +507,7 @@ export class ClaseDocComponent {
         const logoEmpr: string = resp.data[0].datos_empresa[0].logo_empresa;
         const sglEmpre: string = resp.data[0].datos_empresa[0].sigla;
         const htmlStart: string =
-          "<html><head><title>Ormate</title></head><style type='text/css'> .footer-print { position: fixed;left: 0; bottom: 0;width: 100%;text-align: center;} .footer-div {display: flex;width: 100%;font-size: 15px;padding-bottom: 15px 0;margin: auto;border-bottom: 0.3px solid black;} .footer-empr {width: 50%;text-align: left;padding-top: 0.5rem;} .footer-user {width: 50%;text-align: right;padding-top: 0.5rem;} @media print {@page {margin: 1.5cm;margin-bottom: 2cm;}} table.report-container {page-break-after: always;} thead.report-header {display: table-header-group;}tfoot.report-footer {display: table-footer-group;} .table th, .table td { padding: 0.75rem 1.25rem;vertical-align: top;border-top: 1px solid #ddd;}         .centrado {text-align: center;}.font-size-title-comp {font-size: 20px;}     .font-size-title-name {font-size: 14px;} body {margin: 0;} </style> <body><table class='report-container' style='width: 100%;'>";
+          "<html> <head> <title>Ormate</title></head> <style type = 'text/css' > .footer-print { position: fixed; left: 0; bottom: 0; width: 100%; text-align: center;} .footer-div { display: flex; width: 100%; font-size: 15px; margin: auto; border-bottom: 0.3px solid black;} .footer-empr { width: 50%; text-align: left; padding-top: 0.5rem; } .footer-user { width: 50%; text-align: right; padding-top: 0.5rem; } @media print { @page { margin: 1.5cm; margin-bottom: 2cm; } table.report-container { page-break-after: always; } thead.report-header { display: table-header-group; } tfoot.report-footer { display: table-footer-group; } .table th, .table td { padding: 0.75rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; }      .centrado { text-align: center; } .font-size-title-comp { font-size: 20px;} .font-size-title-name { font-size: 14px; } body { margin: 0; } .margin-top-bottom { margin : 0.5rem 0} </style> <body style= 'margin : 0'> <table class='report-container' style='width: 100%;'>";
         const header: string = `<thead class='report-header'>
         <tr>
             <th class='report-header-cell'>
@@ -533,14 +523,14 @@ export class ClaseDocComponent {
                           />
                         </div>
                         <div style='padding-left: 25; text-align: left;'>
-                          <p class='font-weight-bold' style='font-size: 16px;'>${sglEmpre}</p>
+                          <p class='font-weight-bold margin-top-bottom' style='font-size: 16px;'>${sglEmpre}</p>
                           <p>Direccion : Av. Monseñor Salvatierra # 150</p>
                           <p>Telf: 33-339868</p>
                           <p>Santa Cruz - Bolivia</p>
                         </div>
                       </div>
                       <div style='width: 50%; text-align: right;'>
-                        <p>Fecha: ${feImpr}</p><p>Impresión: ${hrImpr}</p> </div> </div> <div class='d-flex' style='display: flex;'><div class='w-25' style='width: 25%;'></div><div class='w-50 text-center' style='width: 50%; text-align: center; justify-self: center;'><p style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p style='font-size: 14px;'>Administracion</p></div><div class='w-25' style='width: 25%;'></div></div></div></div></th></tr></thead>`;
+                        <p class = 'margin-top-bottom'>Fecha: ${feImpr}</p><p class = 'margin-top-bottom'>Impresión: ${hrImpr}</p> </div> </div> <div style='display: flex;'><div style='width: 25%;'></div><div style='width: 50%; text-align: center; justify-self: center;'><p class = 'margin-top-bottom' style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p class = 'margin-top-bottom' style='font-size: 14px;'>Administracion</p></div><div style='width: 25%;'></div></div></div></div></th></tr></thead>`;
         const tableStart: string =
           "<tbody class='report-content'><tr><td class='report-content-cell'><div class='main' style='margin-botton:0.5rem'> <table class='table' style='width: 100%;' >";
         const tableHead: string =
@@ -550,7 +540,7 @@ export class ClaseDocComponent {
         const long = data.length - 1;
         for (let i = long; i >= 0; i--) {
           tableData =
-            `<tr><td class='centrado'>${data[i].id_documento} </td><td>${
+            `<tr  class='centrado' ><td>${data[i].id_documento} </td><td>${
               data[i].descripcion
             } </td><td>${data[i].sigla} </td><td>${data[i].componente} </td><td>
         ${data[i].estado === true ? "activo" : "inactivo"} </td></tr>` +

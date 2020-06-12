@@ -1,24 +1,22 @@
-.title-icon {
+/* .title-icon {
   font-size: 1.8em;
   color: #03a9f4;
 }
 .text-label {
   width: 100%;
   color: white;
-  background-color: #03a9f3;
+  background-color: #34728f;
 }
 .pad-row-title {
   padding: 0.5em;
 }
 .table tr.puntero:hover {
   background-color: #a9d9ef;
-  /* border-style: groove; */
-  /* border-color: #03a9f3; */
   border-top: 2px solid #03a9f3;
   border-bottom: 2px solid #03a9f3;
 }
 .icon-white {
-  color: #ffffff;
+  color: #ffffff; 
 }
 .pad-modal-title {
   padding-left: 0.3em;
@@ -27,10 +25,6 @@
 .modal-head-back-color {
   background-color: #eeeeee;
 }
-/* .scroll-Table-Documentos {
-  height: 330px;
-  overflow-y: overlay;
-} */
 .card-border {
   border: 2px solid #2196f3;
 }
@@ -41,4 +35,4 @@
   .modal-pad-center {
     padding-left: 0px;
   }
-}
+} */
