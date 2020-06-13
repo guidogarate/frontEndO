@@ -8,16 +8,16 @@
       style="padding-top: 1rem; padding-bottom: 1rem;"
     >
       <div class="list-icons menu-head-center" style="white-space: nowrap;">
-        <ng-container *ngFor="let modulo of modulos2; let i = index">
+        <ng-container *ngFor="let modulo2 of modulos2; let i = index">
           <div
-            *ngIf="modulo.animacion"
+            *ngIf="modulo2.animacion"
             class="col-lg-1 col-5 fondo-menu component-radius animate__animated animate__fadeInRightBig"
             style="display: inline-block;"
             [ngClass]="{
               puntero: true,
               'fondo-menu-click': numeroMod === i
             }"
-            (click)="clickmodulo(modulo.id_segundonivel)"
+            (click)="clickmodulo(modulo2.id_segundonivel)"
           >
             <div class="row p0 m0">
               <div class="col-lg-12 col-12 p0">
@@ -32,7 +32,7 @@
 
             <div class="caption card-pad-top">
               <p class="text-center icon-size-text">
-                {{ modulo.descripcion | lowercase }}
+                {{ modulo2.descripcion | lowercase }}
               </p>
             </div>
           </div>
@@ -78,7 +78,7 @@
                         <div
                           class="col-lg-2 col-5 p0 fondo-hover component-radius puntero"
                           (click)="
-                            component(submod.id_segundonivel, comp.componente)
+                            component(modulo.componente, comp.componente)
                           "
                         >
                           <div class="row p0 m0">

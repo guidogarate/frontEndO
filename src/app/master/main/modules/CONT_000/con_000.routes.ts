@@ -33,4 +33,31 @@ const cont000_Routes: Routes = [
   },
 ];
 
+// const menuR: Routes = [
+//   {
+//     path: "",
+//     redirectTo: "/bienvenido",
+//     pathMatch: "full",
+//   },
+// ];
+
+// const modulo = JSON.parse(sessionStorage.getItem("modulo")) || [];
+// const modLeng = modulo.length;
+// for (let i = 0; i < modLeng; i++) {
+//   if (modulo[i].idModulo === 10) {
+//     const componente: any[] = modulo[i].compArray || [];
+//     for (let j = 0; j < componente.length; j++) {
+//       const idMod: string = modulo[j].idModulo.toString();
+//       const result = cont000_Routes.find((compon) => compon.path === idMod);
+//       if (result !== undefined) {
+//         result.path = modulo[j].componente;
+//         menuR.push(result);
+//       }
+//     }
+//     i = modulo.length;
+//   }
+// }
+// console.log(mainRoutes);
+// console.log(modulo);
+
 export const CONT_000_MODULES_ROUTES = RouterModule.forChild(cont000_Routes);

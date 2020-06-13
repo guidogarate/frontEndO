@@ -81,8 +81,6 @@ const mainRoutes: Route[] = [
       import("./ADMI_000/adm_000.module").then((mod) => mod.ADM00Module),
   },
 ];
-
-const menu = JSON.parse(sessionStorage.getItem("menu")) || [];
 const menuR: Route[] = [
   {
     path: "",
@@ -90,15 +88,17 @@ const menuR: Route[] = [
     pathMatch: "full",
   },
 ];
-for (let index = 0; index < menu.length; index++) {
-  const primerNiv: string = menu[index].id_primernivel.toString();
-  const result = mainRoutes.find((compon) => compon.path === primerNiv);
+
+const modulo = JSON.parse(sessionStorage.getItem("modulo")) || [];
+for (let index = 0; index < modulo.length; index++) {
+  const idMod: string = modulo[index].idModulo.toString();
+  const result = mainRoutes.find((compon) => compon.path === idMod);
   if (result !== undefined) {
-    result.path = menu[index].componente;
+    result.path = modulo[index].componente;
     menuR.push(result);
   }
 }
-// console.log(menuR);
-// console.log(mainRoutes);
 
-export const MODULES_ROUTES = RouterModule.forChild(mainRoutes);
+// console.log(mainRoutes);
+// console.log(modulo);
+export const MODULES_ROUTES = RouterModule.forChild(menuR);
