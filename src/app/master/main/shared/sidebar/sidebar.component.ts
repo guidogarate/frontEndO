@@ -43,6 +43,6 @@ export class SidebarComponent implements OnDestroy {
 
   menuComponent(ruta: string) {
     this.comunicacionService.cambiarNivel(ruta);
-    //  this.router.navigate(["/modulo", ruta]);
+    // this.router.navigate(["/menu", ruta]);
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ComunicacionService } from "src/app/master/utils/service/main/global/comunicacion.service";
-import { Observable, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-mod",
@@ -45,12 +45,13 @@ export class ModComponent implements OnInit, OnDestroy {
     this.sus.unsubscribe();
   }
 
-  filtrar(modulo: string) {
+  filtrar(ruta: string) {
+    const idMenu = this.findIdMenu(ruta);
     this.animacionFade = false;
     const len: number = this.data.length || 0;
     for (let i = 0; i < len; i++) {
       const mod = this.data[i].id_primernivel.toString();
-      if (mod === modulo) {
+      if (mod === idMenu) {
         this.modulos = this.data[i].modulo;
         setTimeout(() => {
           this.animacionFade = true;
@@ -74,6 +75,18 @@ export class ModComponent implements OnInit, OnDestroy {
     this.router.navigate(["/bienvenido"]);
   }
 
+  findIdMenu(ruta: string): string {
+    let idMod: string = "";
+    const len: number = this.data.length || 0;
+    for (let i = 0; i < len; i++) {
+      const mod = this.data[i].componente.toString();
+      if (mod === ruta) {
+        idMod = this.data[i].id_primernivel.toString();
+      }
+    }
+    return idMod;
+  }
+
   clickmodulo(id_segundonivel: number) {
     this.animacionFade = false;
     const len: number = this.modulos2.length || 0;
@@ -89,10 +102,12 @@ export class ModComponent implements OnInit, OnDestroy {
     }
   }
 
-  component(submodulo: number, componente: string) {
-    const segNivel = submodulo.toString();
+  component(modulo: string, componente: string) {
+    this.router.navigate(["/mod", modulo, componente]);
+    this.moduCompUsuario(this.data);
+  }
 
-    this.router.navigate(["/mod", segNivel, componente]);
-    // console.log("mod", segNivel, componente);
+  moduCompUsuario(data: any) {
+    console.log(JSON.parse(sessionStorage.getItem("modulo")));
   }
 }

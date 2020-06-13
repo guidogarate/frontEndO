@@ -8,7 +8,7 @@ const mainRoutes: Routes = [
     component: MainComponent,
     children: [
       {
-        path: "modulo/:nivel",
+        path: "menu/:nivel",
         canActivate: [ModulesGuard],
         loadChildren: () => import("./mod/mod.module").then((m) => m.ModModule),
       },

@@ -70,6 +70,7 @@ export class LoginService {
         if (resp["ok"]) {
           this.guardarToken(resp["datos"], resp["token"]);
           this.guardarMenu(resp["favoritos"], resp["menu"]);
+          this.moduCompUsuario(resp["menu"]);
           return resp;
         } else {
           return resp;
@@ -93,6 +94,56 @@ export class LoginService {
     );
   }
 
+  moduCompUsuario(data: any) {
+    const moduloUser: Modulo[] = [];
+    const componUser: Componente[] = [];
+    const menu = data || [];
+    for (let i = 0; i < menu.length; i++) {
+      const modulo = menu[i].modulo || [];
+      for (let j = 0; j < modulo.length; j++) {
+        const mod = modulo[j].id_segundonivel;
+        const comp = modulo[j].componente;
+        moduloUser.push({ idModulo: mod, componente: comp });
+        const subModulo = modulo[j].sub_modulo || [];
+        for (let k = 0; k < subModulo.length; k++) {
+          const component = subModulo[k].componentes || [];
+          for (let l = 0; l < component.length; l++) {
+            const modComp = component[l].id_unico;
+            const compCom = component[l].componente;
+            const idSegNivel = modulo[j].id_segundonivel;
+            componUser.push({
+              idComponen: modComp,
+              componente: compCom,
+              idSegNivel,
+            });
+          }
+        }
+      }
+    }
+    const sinRepetidos: Modulo[] = moduloUser.filter(
+      (valorActual, indiceActual, arreglo) => {
+        return (
+          arreglo.findIndex(
+            (valorDelArreglo) =>
+              JSON.stringify(valorDelArreglo) === JSON.stringify(valorActual)
+          ) === indiceActual
+        );
+      }
+    );
+    for (let j = 0; j < sinRepetidos.length; j++) {
+      const agregarModulo: Componente[] = [];
+      const componUserLneg = componUser.length;
+      const idM: string = sinRepetidos[j].idModulo.toString();
+      for (let i = 0; i < componUserLneg; i++) {
+        if (idM === componUser[i].idSegNivel.toString()) {
+          agregarModulo.push(componUser[i]);
+        }
+      }
+      sinRepetidos[j].compArray = agregarModulo;
+    }
+    sessionStorage.setItem("modulo", JSON.stringify(sinRepetidos));
+  }
+
   private guardarToken(usuario: any, token: string) {
     this.userToken = token;
     sessionStorage.setItem("datos_user", JSON.stringify(usuario));
@@ -104,11 +155,21 @@ export class LoginService {
     sessionStorage.setItem("menu", JSON.stringify(menu));
   }
 
-  // metodo para guard(login.guard.ts)
   estaAutenticado(): boolean {
     if (this.userToken.length < 1) {
       return false;
     }
     return true;
   }
+}
+
+export interface Modulo {
+  idModulo: number;
+  componente: string;
+  compArray?: Componente[];
+}
+export interface Componente {
+  idComponen: number;
+  componente: string;
+  idSegNivel: number;
 }
