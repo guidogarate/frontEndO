@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import {
   Adm012,
+  Adm012SelectRegistros,
   Adm012SelectModulos,
   Adm012SelectMonedas,
-  Adm012SelectRegistros,
   Adm012SelectTamImp,
   Adm012SelectCodigoCuentas,
 } from "src/app/master/utils/models/main/adm_000/index.models";
@@ -122,16 +122,16 @@ export class Adm012Component {
       this.start.NumPa = Number(numePag);
       if (resp["ok"]) {
         this.auxma = resp.data[0].formatos_impresion;
-        if (this.selecModulos == undefined) {
+        if (this.selecModulos === undefined) {
           this.selecModulos = resp.data[0].modulos;
         }
-        if (this.selecModalMoneda == undefined) {
+        if (this.selecModalMoneda === undefined) {
           this.selecModalMoneda = resp.data[0].tipo_moneda;
         }
-        if (this.selecModalCodCuenta == undefined) {
+        if (this.selecModalCodCuenta === undefined) {
           this.selecModalCodCuenta = resp.data[0].codigo_cuenta;
         }
-        if (this.selecModalTamImpr == undefined) {
+        if (this.selecModalTamImpr === undefined) {
           this.selecModalTamImpr = resp.data[0].tamaño_impresion;
         }
         this.initG.labels();
@@ -140,7 +140,7 @@ export class Adm012Component {
         this.table = false;
       } else {
         if (resp["messagge"] === "No se encontraron registros") {
-          if (this.selecModulos == undefined) {
+          if (this.selecModulos === undefined) {
             this.selecModulos = resp.data[0].modulos;
           }
           this.auxma = [];
@@ -283,7 +283,6 @@ export class Adm012Component {
     let name: string = "";
     this.selecModulos.forEach((element) => {
       if (element.id_modulo === id) {
-        // console.log("Elemento encontrado: ", element.modulo);
         name = element.modulo;
       }
       // console.log("Elemento No encontrado: ", element.modulo);
@@ -338,7 +337,6 @@ export class Adm012Component {
         this.start.CtrAc = tipo;
         this.boolBtnGrupo(false, true);
         this.btnGrupo.BtnCance = true;
-        // this.dependenciaAdm011 = [];
         this.forma.reset({
           id_modulo: this.idModulo,
           nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
@@ -348,7 +346,6 @@ export class Adm012Component {
         }); // resetea todo a null y estado a false
         console.log("reseteando form opciones Modal: ", this.forma.value);
         this.boolDisabled(false);
-        // this.cargarDependencia2("1");
         this.mostrarCheck = true;
         this.forma.get("id_documento").setValue("auto");
         this.forma.get("id_documento").disable();

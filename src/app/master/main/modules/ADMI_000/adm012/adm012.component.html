@@ -916,58 +916,157 @@
                 </div>
               </div>
             </div>
+            <!-- TODO: Segunda fila -->
             <div class="row">
               <div class="col-xl-12">
                 <div class="row text-center">
                   <!-- <div class="col-lg-2 d-none d-sm-none d-md-block"></div> -->
-                  <div class="col-md-4 col-12 pad-modal-title modal-title-pb">
-                    <label class="col-lg-12 col-12 m0 text-label"
-                      >Tamaño de Impresion</label
-                    >
-                    <div class="col-lg-12 col-12">
-                      <input
-                        type="text"
-                        class="form-control text-center"
-                        oninvalid="this.setCustomValidity('Introducir Tamaño')"
-                        oninput="setCustomValidity('')"
-                        placeholder="Introducir Tamaño de Impresion"
-                        formControlName="tamano_impresion"
-                        name="tamano_impresion"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div class="col-sm-3 col-12 pad-modal-title text-center">
+                  <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-center">
                     <div class="form-group form-group-float">
-                      <label class="form-group-float-label text-label"
-                        >Estado</label
+                      <label class="form-group-float-label font-weight-semibold"
+                        >Tamaño de Impresion</label
                       >
-                      <div class="custom-control custom-switch p0 ml-4">
-                        <input
-                          type="checkbox"
-                          required="false"
-                          class="custom-control-input"
-                          formControlName="estado"
-                          title="auxmaModal.estado"
-                          name="estado"
-                          id="estado"
-                        />
-                        <label
-                          *ngIf="this.forma.get('estado').value"
-                          class="custom-control-label"
-                          for="estado"
-                          >Vigente</label
+                      <select
+                        class="form-control selectCenter"
+                        (change)="adm012Selectgest($event.target.value)"
+                      >
+                        <option
+                          *ngFor="let item of selecModulos; let i = index"
+                          [value]="item.id_modulo"
                         >
-                        <label
-                          *ngIf="!this.forma.get('estado').value"
-                          class="custom-control-label"
-                          for="estado"
-                          >Inactivo</label
-                        >
-                      </div>
+                          {{ item.modulo }}
+                        </option>
+                      </select>
                     </div>
                   </div>
-                  <div class="col-lg-2 d-none d-sm-none d-md-block"></div>
+                  <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-center">
+                    <div class="form-group form-group-float">
+                      <label class="form-group-float-label font-weight-semibold"
+                        >Moneda Imprimir</label
+                      >
+                      <select
+                        class="form-control selectCenter"
+                        (change)="adm012Selectgest($event.target.value)"
+                      >
+                        <option
+                          *ngFor="let item of selecModulos; let i = index"
+                          [value]="item.id_modulo"
+                        >
+                          {{ item.modulo }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-center">
+                    <div class="form-group form-group-float">
+                      <label class="form-group-float-label font-weight-semibold"
+                        >Codigo de cuenta a Imprimir</label
+                      >
+                      <select
+                        class="form-control selectCenter"
+                        (change)="adm012Selectgest($event.target.value)"
+                      >
+                        <option
+                          *ngFor="let item of selecModulos; let i = index"
+                          [value]="item.id_modulo"
+                        >
+                          {{ item.modulo }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- TODO: 3er fila  -->
+            <div class="row">
+              <div class="col-md-3 col-12 pad-modal-title modal-title-pb">
+                <label class="col-lg-12 col-12 text-center text-label"
+                  >Numero de Copia</label
+                >
+                <div class="col-lg-12 col-12">
+                  <input
+                    type="text"
+                    class="form-control text-center"
+                    oninvalid="this.setCustomValidity('Introducir numero de copias')"
+                    oninput="setCustomValidity('')"
+                    placeholder="Introducir numero de copias"
+                    formControlName="numero_copias"
+                    name="numero_copias"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="col-md-2 col-12 text-center p0">
+                <div class="form-group form-group-float">
+                  <label class="form-group-float-label text-label"
+                    >codigo_qr</label
+                  >
+                  <div class="custom-control custom-switch p0">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      formControlName="codigo_qr"
+                      (click)="habilitarAuto()"
+                      title="auxmaModal.codigo_qr"
+                      name="codigo_qr"
+                      id="codigo_qr"
+                    />
+                    <label class="custom-control-label" for="codigo_qr"></label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 col-12 text-center p0">
+                <div class="form-group form-group-float">
+                  <label class="form-group-float-label text-label"
+                    >Logo de la Empresa</label
+                  >
+                  <div class="custom-control custom-switch p0">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      formControlName="logo_empresa"
+                      (click)="habilitarAuto()"
+                      title="auxmaModal.estado"
+                      name="logo_empresa"
+                      id="logo_empresa"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="logo_empresa"
+                    ></label>
+                    <!-- <label
+                      *ngIf="this.forma.get('checkauto').value"
+                      class="custom-control-label"
+                      for="check1"
+                      >Auto</label
+                    > -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 col-12 text-center p0">
+                <div class="form-group form-group-float">
+                  <label class="form-group-float-label text-label"
+                    >Estado</label
+                  >
+                  <div class="custom-control custom-switch p0">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      formControlName="estado"
+                      (click)="habilitarAuto()"
+                      title="Estado"
+                      name="estado"
+                      id="estado"
+                    />
+                    <label class="custom-control-label" for="estado"></label>
+                    <!-- <label
+                      *ngIf="this.forma.get('checkauto').value"
+                      class="custom-control-label"
+                      for="check1"
+                      >Auto</label
+                    > -->
+                  </div>
                 </div>
               </div>
             </div>
