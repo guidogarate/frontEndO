@@ -282,7 +282,7 @@ export class Adm012Component {
   ObtenerNombreModulo(id: number) {
     let name: string = "";
     this.selecModulos.forEach((element) => {
-      if (element.id_modulo == id) {
+      if (element.id_modulo === id) {
         // console.log("Elemento encontrado: ", element.modulo);
         name = element.modulo;
       }
@@ -406,8 +406,9 @@ export class Adm012Component {
       this.forma.get("id_formato").disable();
       this.forma.get("descripcion").disable();
       this.forma.get("sigla").disable();
-      this.forma.get("tamaño_impresion").disable();
+      this.forma.get("tamano_impresion").disable();
       this.forma.get("logo_empresa").disable();
+      this.forma.get("codigo_qr").disable();
       this.forma.get("estado").disable();
     } else {
       this.forma.get("id_modulo").enable();
