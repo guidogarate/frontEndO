@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import adm012 from "src/app/master/config/adm000/adm012_url";
+import { adm000 } from "src/app/master/config/adm000/adm000_url";
 import url from "src/app/master/config/url.config";
 import { map } from "rxjs/operators";
 import { Adm012 } from "src/app/master/utils/models/main/adm_000/index.models";
@@ -17,7 +17,7 @@ export class Adm012Service {
     nroRegistros: string,
     texto: string
   ) {
-    const url1 = `${url.prod}${adm012.getListFormatoImpresion}${modulo}/${indice}/${idModulo}/${nroRegistros}/${texto}`;
+    const url1 = `${url.prod}${adm000.adm012.getListFormatoImpresion}${modulo}/${indice}/${idModulo}/${nroRegistros}/${texto}`;
     console.log("url get: ", url1);
     return this.httpClient
       .get(url1, {
@@ -34,7 +34,7 @@ export class Adm012Service {
       );
   }
   getAdm012Formato(modulo: string, idModulo: number, id_formato: string) {
-    const url1 = `${url.prod}${adm012.getFormatoImpresion}${modulo}/${idModulo}/${id_formato}`;
+    const url1 = `${url.prod}${adm000.adm012.getFormatoImpresion}${modulo}/${idModulo}/${id_formato}`;
     console.log("url get: ", url1);
     return this.httpClient
       .get(url1, {
@@ -52,7 +52,7 @@ export class Adm012Service {
   }
 
   upAdm012(adm_012: Adm012, id_modulo: number, id_formato: string) {
-    const url1 = `${url.prod}${adm012.upAdm012}${id_modulo}/${id_formato}`;
+    const url1 = `${url.prod}${adm000.adm012.upAdm012}${id_modulo}/${id_formato}`;
     console.log("UPD adm012", adm_012);
     const json = JSON.stringify({
       descripcion: adm_012.descripcion,
@@ -80,7 +80,7 @@ export class Adm012Service {
   }
 
   delAdm012(id_modulo: number, id_formato: string) {
-    const url1 = `${url.prod}${adm012.delAdm012}${id_modulo}/${id_formato}`;
+    const url1 = `${url.prod}${adm000.adm012.delAdm012}${id_modulo}/${id_formato}`;
     return this.httpClient
       .delete(url1, {
         headers: new HttpHeaders({
@@ -96,7 +96,7 @@ export class Adm012Service {
   }
 
   inAdm012(adm_012: Adm012) {
-    const url1 = `${url.prod}${adm012.inAdm012}`;
+    const url1 = `${url.prod}${adm000.adm012.inAdm012}`;
     console.info("url INS 012: ", url1);
     console.info("INS adm_012: ", adm_012);
     const json = JSON.stringify({
@@ -126,7 +126,7 @@ export class Adm012Service {
       );
   }
   getAdm012Pdf(usuario: string, idModulo: number) {
-    const url1 = `${url.prod}${adm012.getPdf}${usuario}/${idModulo}`;
+    const url1 = `${url.prod}${adm000.adm012.getPdf}${usuario}/${idModulo}`;
     console.log("url get: ", url1);
     return this.httpClient.get(url1, {
       headers: new HttpHeaders({
@@ -138,7 +138,7 @@ export class Adm012Service {
 
   getAdm012Excel(usuario: string, idModulo: number) {
     console.log("excel");
-    const url1 = `${url.prod}${adm012.getPdf}${usuario}/${idModulo}`;
+    const url1 = `${url.prod}${adm000.adm012.getPdf}${usuario}/${idModulo}`;
     console.log("url get: ", url1);
     return this.httpClient
       .get(url1, {
