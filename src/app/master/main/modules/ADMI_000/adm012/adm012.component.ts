@@ -71,6 +71,9 @@ export class Adm012Component {
   placeholdeAuto = "automatico";
   insertar = "fall";
   nroRegistros: string = "10";
+  id_tamano: string = "1";
+  id_moneda: string = "1";
+  id_codigo: string = "1";
 
   constructor(
     private adm012S: Adm012Service,
@@ -192,10 +195,7 @@ export class Adm012Component {
       nombre_modulo: [""],
     });
     console.log("creando formulario: ", this.forma.value);
-    // console.log("creando formulario: ", this.forma.value);
   }
-
-  // añadir metodos
 
   paginacion(numero: string, eliminar = true) {
     const nume = Number(numero);
@@ -285,7 +285,6 @@ export class Adm012Component {
       if (element.id_modulo === id) {
         name = element.modulo;
       }
-      // console.log("Elemento No encontrado: ", element.modulo);
     });
     return name;
   }
@@ -296,7 +295,6 @@ export class Adm012Component {
     console.log("auxma en opciones table: ", this.auxmaModal);
     this.forma.reset(this.auxmaModal);
     console.log("forma despues de reset con auxmoda: ", this.forma.value);
-    // this.cargarDependencia(adm_011.idunidaddivision);
     this.start.IdCod = "" + adm_012.id_formato;
     switch (tipo) {
       case "visualizar":
