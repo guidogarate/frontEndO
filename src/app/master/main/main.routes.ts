@@ -26,6 +26,7 @@ const mainRoutes: Routes = [
             (m) => m.BienvenidoModule
           ),
       },
+
       { path: "", redirectTo: "/bienvenido", pathMatch: "full" },
     ],
   },
