@@ -8,6 +8,9 @@ import {
   Adm012SelectCodigoCuentas,
 } from "src/app/master/utils/models/main/adm_000/index.models";
 import { Adm012Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
+import url from "src/app/master/config/url.config";
+import { FileService } from "src/app/master/utils/service/main/global/file.service";
+import { saveAs } from "file-saver";
 import {
   NotyGlobal,
   InitGlobal,
@@ -77,7 +80,8 @@ export class Adm012Component {
     private adm012S: Adm012Service,
     private fb: FormBuilder,
     private notyG: NotyGlobal,
-    private initG: InitGlobal
+    private initG: InitGlobal,
+    private fileS: FileService
   ) {
     this.getAdm012(this.start.Texto);
     this.crearFormulario();
@@ -133,7 +137,7 @@ export class Adm012Component {
           this.selecModalCodCuenta = resp.data[0].codigo_cuenta;
         }
         if (this.selecModalTamImpr === undefined) {
-          this.selecModalTamImpr = resp.data[0].tamaño_impresion;
+          this.selecModalTamImpr = resp.data[0].tamano_impresion;
         }
         this.initG.labels();
         this.initG.select();
@@ -415,7 +419,7 @@ export class Adm012Component {
       this.forma.get("id_formato").enable();
       this.forma.get("descripcion").enable();
       this.forma.get("sigla").enable();
-      this.forma.get("tamaño_impresion").enable();
+      this.forma.get("tamano_impresion").enable();
       this.forma.get("moneda").enable();
       this.forma.get("checkauto").enable();
       this.forma.get("codigo_cuenta").enable();
@@ -501,8 +505,6 @@ export class Adm012Component {
         if (contorlAccion === "nuevo") {
           this.start.IdCod = resp["id_registro"];
           this.insertar = "exito";
-          // para que, cuando le de x, resetee el valor que
-          // se ha insertado recientemente entonces vamos a opcionModal en editar
         }
         this.getAdm012(this.start.Texto, this.start.NumPa.toString());
         this.notyG.noty("success", resp["mensaje"], 1000);
@@ -531,7 +533,7 @@ export class Adm012Component {
       }
     });
   }
-  // adm012SelectRegistro(nombre: string) {}
+
   // printDoc() {}
   // IrDashboard() {}
   // downloadPdfExel(tipo: string) {}
@@ -571,30 +573,31 @@ export class Adm012Component {
   //     w.close();
   //   }, 100);
   // }
-  // IrDashboard() {
-  //   window.location.href = url.principal;
-  // }
-  // downloadPdfExel(tipo: string) {
-  //   let peticion: Observable<any>;
-  //   const rutaPdf: string = "adm_000/adm_011/get-pdf/90/0";
-  //   const rutaExel: string = "adm_000/adm_011/get-excel/90/0";
-  //   let tipoFile: string = "";
-  //   const fileName: string = "adm011";
-  //   switch (tipo) {
-  //     case "pdf":
-  //       tipoFile = "application/pdf";
-  //       peticion = this.fileS.downloadFile({ fileName }, rutaPdf);
-  //       break;
-  //     case "exel":
-  //       tipoFile = "application/vnd.ms-excel";
-  //       peticion = this.fileS.downloadFile({ fileName }, rutaExel);
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  //   this.sus = peticion.subscribe((resp) => {
-  //     const archivo = new Blob([resp], { type: tipoFile });
-  //     saveAs(archivo, fileName);
-  //   });
-  // }
+  IrDashboard() {
+    window.location.href = url.principal;
+  }
+
+  downloadPdfExel(tipo: string) {
+    let peticion: Observable<any>;
+    const rutaPdf: string = "adm_000/adm_012/get-pdf/90/0";
+    const rutaExel: string = "adm_000/adm_012/get-excel/90/0";
+    let tipoFile: string = "";
+    const fileName: string = "adm012";
+    switch (tipo) {
+      case "pdf":
+        tipoFile = "application/pdf";
+        peticion = this.fileS.downloadFile({ fileName }, rutaPdf);
+        break;
+      case "exel":
+        tipoFile = "application/vnd.ms-excel";
+        peticion = this.fileS.downloadFile({ fileName }, rutaExel);
+        break;
+      default:
+        break;
+    }
+    this.sus = peticion.subscribe((resp) => {
+      const archivo = new Blob([resp], { type: tipoFile });
+      saveAs(archivo, fileName);
+    });
+  }
 }
