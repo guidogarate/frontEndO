@@ -30,8 +30,6 @@ import { debounceTime } from "rxjs/operators";
 })
 export class Adm012Component {
   textBuscarAdm012 = new FormControl("", []);
-  // buscar = true;
-  // texto = "all_data";
   sus: Subscription;
   numeroPag = 1;
   loading = true;
@@ -71,9 +69,9 @@ export class Adm012Component {
   placeholdeAuto = "automatico";
   insertar = "fall";
   nroRegistros: string = "10";
-  id_tamano: string = "1";
-  id_moneda: string = "1";
-  id_codigo: string = "1";
+  id_tamano: number = 1;
+  id_moneda: number = 1;
+  id_codigo: number = 1;
 
   constructor(
     private adm012S: Adm012Service,
@@ -184,7 +182,7 @@ export class Adm012Component {
       id_formato: ["", [Validators.required]],
       descripcion: ["", [Validators.required]],
       sigla: ["", [Validators.required]],
-      tamaño_impresion: ["", [Validators.required]],
+      tamano_impresion: ["", [Validators.required]],
       moneda: ["", [Validators.required]],
       codigo_cuenta: ["", [Validators.required]],
       numero_copias: ["", [Validators.required]],
@@ -265,7 +263,10 @@ export class Adm012Component {
     this.forma.reset({
       id_modulo: this.idModulo,
       nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
-      id_documento: "auto",
+      id_formato: "auto",
+      tamano_impresion: this.id_tamano,
+      moneda: this.id_moneda,
+      codigo_cuenta: this.id_codigo,
       estado: false,
       checkauto: true,
     });
@@ -273,8 +274,8 @@ export class Adm012Component {
     this.start.CtrAc = "nuevo";
     this.ocultarSelect = false;
     this.mostrarCheck = true;
-    this.forma.get("id_documento").setValue("auto");
-    this.forma.get("id_documento").disable();
+    this.forma.get("id_formato").setValue("auto");
+    this.forma.get("id_formato").disable();
     this.initG.uniform();
     this.initG.labels();
     this.initG.select();
@@ -292,9 +293,9 @@ export class Adm012Component {
   OpcionesTable(adm_012: Adm012, tipo: string) {
     console.log("opciones table; ", adm_012);
     this.auxmaModal = adm_012;
-    console.log("auxma en opciones table: ", this.auxmaModal);
+    // console.log("auxma en opciones table: ", this.auxmaModal);
     this.forma.reset(this.auxmaModal);
-    console.log("forma despues de reset con auxmoda: ", this.forma.value);
+    // console.log("forma despues de reset con auxmoda: ", this.forma.value);
     this.start.IdCod = "" + adm_012.id_formato;
     switch (tipo) {
       case "visualizar":
@@ -308,7 +309,7 @@ export class Adm012Component {
         this.boolDisabled(false);
         this.forma.get("nombre_modulo").disable();
         this.forma.get("checkauto").disable();
-        this.forma.get("id_documento").disable();
+        this.forma.get("id_formato").disable();
         break;
       case "eliminar":
         // this.eliminarAdm011(adm_011);
@@ -339,14 +340,16 @@ export class Adm012Component {
           id_modulo: this.idModulo,
           nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
           estado: false,
-          id_documento: "auto",
+          id_formato: "auto",
+          logo_empresa: true,
+          codigo_qr: true,
           checkauto: true,
         }); // resetea todo a null y estado a false
-        console.log("reseteando form opciones Modal: ", this.forma.value);
+        // console.log("reseteando form opciones Modal: ", this.forma.value);
         this.boolDisabled(false);
         this.mostrarCheck = true;
-        this.forma.get("id_documento").setValue("auto");
-        this.forma.get("id_documento").disable();
+        this.forma.get("id_formato").setValue("auto");
+        this.forma.get("id_formato").disable();
         this.initG.uniform();
         this.initG.labels();
         return;
@@ -355,7 +358,7 @@ export class Adm012Component {
         this.start.CtrAc = tipo;
         this.boolDisabled(false);
         this.boolBtnGrupo(false, true);
-        this.forma.get("id_documento").disable();
+        this.forma.get("id_formato").disable();
         this.forma.get("checkauto").disable();
         return;
       case "salir":
@@ -385,7 +388,7 @@ export class Adm012Component {
         }
         this.btnGrupo.BtnLoadi = true;
         this.btnGrupo.BtnCance = false;
-        console.log("Formulario values", this.forma.value);
+        // console.log("Formulario values", this.forma.value);
         this.guardarDatos(this.forma.value, this.start.CtrAc);
         return;
     }
@@ -397,13 +400,15 @@ export class Adm012Component {
     if (bool) {
       this.forma.get("nombre_modulo").disable();
       this.forma.get("checkauto").disable();
-      this.forma.get("estado").disable();
       this.forma.get("id_formato").disable();
       this.forma.get("descripcion").disable();
       this.forma.get("sigla").disable();
       this.forma.get("tamano_impresion").disable();
-      this.forma.get("logo_empresa").disable();
+      this.forma.get("moneda").disable();
+      this.forma.get("codigo_cuenta").disable();
+      this.forma.get("numero_copias").disable();
       this.forma.get("codigo_qr").disable();
+      this.forma.get("logo_empresa").disable();
       this.forma.get("estado").disable();
     } else {
       this.forma.get("id_modulo").enable();
@@ -442,13 +447,13 @@ export class Adm012Component {
 
   habilitarAuto() {
     if (this.forma.get("checkauto").value) {
-      this.forma.get("id_documento").enable();
-      this.forma.get("id_documento").setValue("");
+      this.forma.get("id_formato").enable();
+      this.forma.get("id_formato").setValue("");
       this.placeholdeAuto = "introducir codigo";
       // console.log("id_documento value: ", this.forma.get("id_documento"));
     } else {
-      this.forma.get("id_documento").setValue("auto");
-      this.forma.get("id_documento").disable();
+      this.forma.get("id_formato").setValue("auto");
+      this.forma.get("id_formato").disable();
       this.placeholdeAuto = "automatico";
       // console.log("id_documento auto: ", this.forma.get("id_documento"));
     }
@@ -457,9 +462,20 @@ export class Adm012Component {
 
   adm012Selectgest(gestion: string) {
     console.log("gestion change: ", gestion);
-
     this.idModulo = Number(gestion);
     this.getAdm012("all_data", "1");
+  }
+  adm012SelectTamImpr(tamano: string) {
+    // this.forma.get("id_formato").setValue("auto");
+    this.id_tamano = Number(tamano);
+  }
+  adm012SelectMoneda(gestion: string) {
+    // this.forma.get("id_formato").setValue("auto");
+    this.id_moneda = Number(gestion);
+  }
+  adm012SelectCodigo(gestion: string) {
+    // this.forma.get("id_formato").setValue("auto");
+    this.id_codigo = Number(gestion);
   }
 
   guardarDatos(adm_012: Adm012, contorlAccion: string) {
