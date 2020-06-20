@@ -78,7 +78,11 @@
                         <div
                           class="col-lg-2 col-5 p0 fondo-hover component-radius puntero"
                           (click)="
-                            component(modulo.componente, comp.componente)
+                            component(
+                              modulo.componente,
+                              comp.componente,
+                              comp.global
+                            )
                           "
                         >
                           <div class="row p0 m0">

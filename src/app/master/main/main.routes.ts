@@ -19,6 +19,14 @@ const mainRoutes: Routes = [
           import("./modules/modules.module").then((m) => m.ModulesModule),
       },
       {
+        path: "glb/:modulo",
+        canLoad: [ModulesGuard],
+        loadChildren: () =>
+          import("./global/componentes/globalCompo.module").then(
+            (m) => m.ClaseDocCompoModule
+          ),
+      },
+      {
         path: "bienvenido",
         canActivate: [ModulesGuard],
         loadChildren: () =>
@@ -26,7 +34,6 @@ const mainRoutes: Routes = [
             (m) => m.BienvenidoModule
           ),
       },
-
       { path: "", redirectTo: "/bienvenido", pathMatch: "full" },
     ],
   },

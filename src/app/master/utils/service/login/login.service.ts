@@ -67,6 +67,7 @@ export class LoginService {
     const url1 = `${url.prod}${url.ingresar}`;
     return this.httpClient.post(url1, json).pipe(
       map((resp) => {
+        console.log(resp);
         if (resp["ok"]) {
           this.guardarToken(resp["datos"], resp["token"]);
           this.guardarMenu(resp["favoritos"], resp["menu"]);
@@ -111,10 +112,12 @@ export class LoginService {
             const modComp = component[l].id_unico;
             const compCom = component[l].componente;
             const idSegNivel = modulo[j].id_segundonivel;
+            const global = modulo[j].global;
             componUser.push({
               idComponen: modComp,
               componente: compCom,
               idSegNivel,
+              global,
             });
           }
         }
@@ -172,4 +175,5 @@ export interface Componente {
   idComponen: number;
   componente: string;
   idSegNivel: number;
+  global: boolean;
 }

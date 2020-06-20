@@ -1,7 +1,7 @@
 import { RouterModule, Route } from "@angular/router";
 import { ModulesComponent } from "./modules.component";
 
-const mainRoutes: Route[] = [
+let mainRoutes: Route[] = [
   {
     path: "10", // MODULO CONTABILIDAD
     component: ModulesComponent,
@@ -89,7 +89,7 @@ const menuR: Route[] = [
   },
 ];
 
-const modulo = JSON.parse(sessionStorage.getItem("modulo")) || [];
+let modulo = JSON.parse(sessionStorage.getItem("modulo")) || [];
 for (let index = 0; index < modulo.length; index++) {
   const idMod: string = modulo[index].idModulo.toString();
   const result = mainRoutes.find((compon) => compon.path === idMod);
@@ -99,6 +99,8 @@ for (let index = 0; index < modulo.length; index++) {
   }
 }
 
-// console.log(mainRoutes);
-// console.log(modulo);
+setTimeout(() => {
+  mainRoutes = null;
+  modulo = null;
+}, 3500);
 export const MODULES_ROUTES = RouterModule.forChild(menuR);

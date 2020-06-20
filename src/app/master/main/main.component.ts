@@ -4,7 +4,7 @@ import { InitGlobal } from "src/app/master/utils/global/index.global";
 @Component({
   selector: "app-main",
   templateUrl: "./main.component.html",
-  styleUrls: ["./main.component.css"]
+  styleUrls: ["./main.component.css"],
 })
 export class MainComponent implements OnInit {
   animacion = true;

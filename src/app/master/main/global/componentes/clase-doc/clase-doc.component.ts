@@ -1,4 +1,5 @@
-import { Component, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import {
   Adm011,
   Adm011Select,
@@ -29,9 +30,9 @@ import { saveAs } from "file-saver";
   templateUrl: "./clase-doc.component.html",
   styleUrls: ["./clase-doc.component.css"],
 })
-export class ClaseDocComponent {
-  @Input() idenMod: string;
-  @Input() nombMod: string;
+export class ClaseDocComponent implements OnInit {
+  idenMod: string = "90";
+  nombMod: string = "administravcion";
 
   textBuscarAdm011 = new FormControl("", []);
   sus: Subscription;
@@ -72,11 +73,13 @@ export class ClaseDocComponent {
     private fb: FormBuilder,
     private notyG: NotyGlobal,
     private initG: InitGlobal,
-    private fileS: FileService
+    private fileS: FileService,
+    route: ActivatedRoute,
+    public router: Router
   ) {
+    console.log(route.snapshot);
     setTimeout(() => {
       this.getAdm011(this.start.Texto);
-      // console.log(this.idenMod);
     }, 1500);
 
     this.crearFormulario();
@@ -92,7 +95,7 @@ export class ClaseDocComponent {
         }
       });
   }
-
+  ngOnInit(): void {}
   getAdm011(texto: string, numePag = "1") {
     this.start.Busca = true;
     let peticion: Observable<any>;
