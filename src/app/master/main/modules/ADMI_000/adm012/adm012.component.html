@@ -382,12 +382,12 @@
                   style="
                     width: inherit;
                     border-radius: 1em;
-                    border-color: #03a9f4;
+                    border-color: #080c0e;
                   "
                   class="text-center font-title modal-head-back-color"
                   disabled="true"
                   type="text"
-                  formControlName="nombre_modulo"
+                  value="Contabilidad"
                 />
               </div>
               <div class="col-sm-4 d-none d-sm-none d-md-block"></div>
@@ -546,7 +546,7 @@
             </div>
             <!-- TODO: 3er fila  -->
             <div class="row">
-              <div class="col-md-3 col-12 pad-modal-title modal-title-pb">
+              <div class="col-md-3 col-12 p0 pad-modal-title modal-title-pb">
                 <label class="col-lg-12 col-12 text-center text-label"
                   >Numero de Copia</label
                 >
@@ -556,24 +556,24 @@
                     class="form-control text-center"
                     oninvalid="this.setCustomValidity('Introducir numero de copias')"
                     oninput="setCustomValidity('')"
-                    placeholder="Introducir numero de copias"
+                    placeholder="numero de copias"
                     formControlName="numero_copias"
                     name="numero_copias"
                     required
                   />
                 </div>
               </div>
-              <div class="col-md-2 col-12 text-center p0">
-                <div class="form-group form-group-float">
-                  <label class="form-group-float-label text-label"
-                    >codigo_qr</label
+              <div class="col-md-1 d-none d-sm-none d-md-block"></div>
+              <div class="col-md-5 col-12 text-center p0">
+                <div class="row p0 m0" style="padding-bottom: 0.5rem;">
+                  <label class="col-sm-8 col-8 m0 text-label text-left"
+                    >Qr de Documento</label
                   >
-                  <div class="custom-control custom-switch p0">
+                  <div class="col-sm-4 col-4 m0 custom-control custom-switch">
                     <input
                       type="checkbox"
                       class="custom-control-input"
                       formControlName="codigo_qr"
-                      (click)="habilitarAuto()"
                       title="auxmaModal.codigo_qr"
                       name="codigo_qr"
                       id="codigo_qr"
@@ -581,19 +581,16 @@
                     <label class="custom-control-label" for="codigo_qr"></label>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-2 col-12 text-center p0">
-                <div class="form-group form-group-float">
-                  <label class="form-group-float-label text-label"
+                <div class="row p0 m0" style="padding-bottom: 0.5rem;">
+                  <label class="col-sm-8 col-8 m0 text-label text-left"
                     >Logo de la Empresa</label
                   >
-                  <div class="custom-control custom-switch p0">
+                  <div class="col-sm-4 col-4 m0 custom-control custom-switch">
                     <input
                       type="checkbox"
                       class="custom-control-input"
                       formControlName="logo_empresa"
-                      (click)="habilitarAuto()"
-                      title="auxmaModal.estado"
+                      title="auxmaModal.logo_empresa"
                       name="logo_empresa"
                       id="logo_empresa"
                     />
@@ -601,37 +598,24 @@
                       class="custom-control-label"
                       for="logo_empresa"
                     ></label>
-                    <!-- <label
-                      *ngIf="this.forma.get('checkauto').value"
-                      class="custom-control-label"
-                      for="check1"
-                      >Auto</label
-                    > -->
                   </div>
                 </div>
               </div>
-              <div class="col-md-2 col-12 text-center p0">
-                <div class="form-group form-group-float">
-                  <label class="form-group-float-label text-label"
+              <div class="col-md-3 col-12 text-center p0">
+                <div class="row p0 m0">
+                  <label class="col-sm-6 col-8 m0 text-label text-left"
                     >Estado</label
                   >
-                  <div class="custom-control custom-switch p0">
+                  <div class="col-sm-6 col-4 m0 custom-control custom-switch">
                     <input
                       type="checkbox"
                       class="custom-control-input"
                       formControlName="estado"
-                      (click)="habilitarAuto()"
-                      title="Estado"
+                      title="auxmaModal.estado"
                       name="estado"
                       id="estado"
                     />
                     <label class="custom-control-label" for="estado"></label>
-                    <!-- <label
-                      *ngIf="this.forma.get('checkauto').value"
-                      class="custom-control-label"
-                      for="check1"
-                      >Auto</label
-                    > -->
                   </div>
                 </div>
               </div>
@@ -645,7 +629,7 @@
 </div>
 
 <!-- TODO: Eliminar Modal -->
-<!-- <div id="modal_adm_012_eliminar" class="modal" tabindex="-1">
+<div id="modal_adm_012_eliminar" class="modal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -656,7 +640,7 @@
       </div>
       <div class="modal-body" *ngIf="auxmaModal != undefined">
         <h6 class="font-weight-semibold">
-          Desea eliminar dato con codigo: {{ auxmaModal.id_documento }}
+          Desea eliminar dato con codigo: {{ auxmaModal.id_formato }}
         </h6>
       </div>
       <div class="modal-footer">
@@ -674,4 +658,4 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>

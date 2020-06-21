@@ -196,7 +196,6 @@ export class Adm012Component {
       estado: ["", [Validators.required]],
       nombre_modulo: [""],
     });
-    console.log("creando formulario: ", this.forma.value);
   }
 
   paginacion(numero: string, eliminar = true) {
@@ -274,7 +273,7 @@ export class Adm012Component {
       estado: false,
       checkauto: true,
     });
-    console.log("agregando nuevo: ", this.forma.value);
+
     this.start.CtrAc = "nuevo";
     this.ocultarSelect = false;
     this.mostrarCheck = true;
@@ -294,12 +293,27 @@ export class Adm012Component {
     return name;
   }
 
+  obtenerData(adm012: Adm012) {
+    let peticion: Observable<any>;
+    peticion = this.adm012S.getAdm012Formato(
+      "90",
+      this.idModulo,
+      adm012.id_formato
+    );
+    this.sus = peticion.subscribe((resp) => {
+      if (resp["ok"]) {
+        this.auxmaModal = resp.data[0].formato_impresion;
+      } else {
+        if (resp["messagge"] === "No se encontraron registros") {
+          this.notyG.noty("error", resp["messagge"], 5000);
+        }
+      }
+    });
+  }
+
   OpcionesTable(adm_012: Adm012, tipo: string) {
-    console.log("opciones table; ", adm_012);
-    this.auxmaModal = adm_012;
-    // console.log("auxma en opciones table: ", this.auxmaModal);
+    this.obtenerData(adm_012);
     this.forma.reset(this.auxmaModal);
-    // console.log("forma despues de reset con auxmoda: ", this.forma.value);
     this.start.IdCod = "" + adm_012.id_formato;
     switch (tipo) {
       case "visualizar":
@@ -327,8 +341,6 @@ export class Adm012Component {
 
   OpcionesModal(tipo: string) {
     this.mostrarCheck = false;
-    console.log("entro opciones Modal");
-    console.log("tipo: ", tipo);
 
     switch (tipo) {
       case "nuevo":
@@ -349,7 +361,7 @@ export class Adm012Component {
           codigo_qr: true,
           checkauto: true,
         }); // resetea todo a null y estado a false
-        // console.log("reseteando form opciones Modal: ", this.forma.value);
+
         this.boolDisabled(false);
         this.mostrarCheck = true;
         this.forma.get("id_formato").setValue("auto");
@@ -358,7 +370,6 @@ export class Adm012Component {
         this.initG.labels();
         return;
       case "editar":
-        console.log("editando");
         this.start.CtrAc = tipo;
         this.boolDisabled(false);
         this.boolBtnGrupo(false, true);
@@ -372,7 +383,6 @@ export class Adm012Component {
         this.boolDisabled(true);
         break;
       case "cancelar":
-        console.log(this.start.CtrAc);
         if (this.insertar === "exito") {
           this.boolDisabled(true);
           this.boolBtnGrupo(true, false);
@@ -385,14 +395,14 @@ export class Adm012Component {
         return;
       case "guardar":
         this.boolDisabled(false);
-        console.log("Formulario Invalido?", this.forma);
+
         if (this.forma.invalid) {
           this.mostrarCheck = true;
           return;
         }
         this.btnGrupo.BtnLoadi = true;
         this.btnGrupo.BtnCance = false;
-        // console.log("Formulario values", this.forma.value);
+
         this.guardarDatos(this.forma.value, this.start.CtrAc);
         return;
     }
@@ -407,10 +417,10 @@ export class Adm012Component {
       this.forma.get("id_formato").disable();
       this.forma.get("descripcion").disable();
       this.forma.get("sigla").disable();
-      this.forma.get("tamano_impresion").disable();
-      this.forma.get("moneda").disable();
-      this.forma.get("codigo_cuenta").disable();
-      this.forma.get("numero_copias").disable();
+      // this.forma.get("tamano_impresion").disable();
+      // this.forma.get("moneda").disable();
+      // this.forma.get("codigo_cuenta").disable();
+      // this.forma.get("numero_copias").disable();
       this.forma.get("codigo_qr").disable();
       this.forma.get("logo_empresa").disable();
       this.forma.get("estado").disable();
@@ -423,7 +433,7 @@ export class Adm012Component {
       this.forma.get("moneda").enable();
       this.forma.get("checkauto").enable();
       this.forma.get("codigo_cuenta").enable();
-      this.forma.get("numero_cuenta").enable();
+      // this.forma.get("numero_cuenta").enable();
       this.forma.get("numero_copias").enable();
       this.forma.get("codigo_qr").enable();
       this.forma.get("logo_empresa").enable();
@@ -443,7 +453,6 @@ export class Adm012Component {
   }
 
   resetDatos() {
-    // console.log("auxmodal valores: ", this.auxmaModal);
     this.forma.reset(this.auxmaModal);
     this.initG.labels();
     this.initG.select();
@@ -454,23 +463,19 @@ export class Adm012Component {
       this.forma.get("id_formato").enable();
       this.forma.get("id_formato").setValue("");
       this.placeholdeAuto = "introducir codigo";
-      // console.log("id_documento value: ", this.forma.get("id_documento"));
     } else {
       this.forma.get("id_formato").setValue("auto");
       this.forma.get("id_formato").disable();
       this.placeholdeAuto = "automatico";
-      // console.log("id_documento auto: ", this.forma.get("id_documento"));
     }
     this.initG.labels();
   }
 
   adm012Selectgest(gestion: string) {
-    console.log("gestion change: ", gestion);
     this.idModulo = Number(gestion);
     this.getAdm012("all_data", "1");
   }
   adm012SelectTamImpr(tamano: string) {
-    // this.forma.get("id_formato").setValue("auto");
     this.id_tamano = Number(tamano);
   }
   adm012SelectMoneda(gestion: string) {
@@ -483,10 +488,8 @@ export class Adm012Component {
   }
 
   guardarDatos(adm_012: Adm012, contorlAccion: string) {
-    console.log("guardando datos-Accion: ", adm_012, contorlAccion);
     let peticion: Observable<any>;
     if (contorlAccion === "nuevo") {
-      console.log("Nuevo para guardar: ", adm_012, contorlAccion);
       peticion = this.adm012S.inAdm012(adm_012);
     } else if (contorlAccion === "editar") {
       peticion = this.adm012S.upAdm012(
@@ -579,8 +582,8 @@ export class Adm012Component {
 
   downloadPdfExel(tipo: string) {
     let peticion: Observable<any>;
-    const rutaPdf: string = "adm_000/adm_012/get-pdf/90/0";
-    const rutaExel: string = "adm_000/adm_012/get-excel/90/0";
+    const rutaPdf: string = "adm_000/adm_012/get-pdf/90/0/all_data";
+    const rutaExel: string = "adm_000/adm_012/get-excel/90/0/all_data";
     let tipoFile: string = "";
     const fileName: string = "adm012";
     switch (tipo) {

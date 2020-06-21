@@ -33,7 +33,7 @@ export class Adm012Service {
         })
       );
   }
-  getAdm012Formato(modulo: string, idModulo: number, id_formato: string) {
+  getAdm012Formato(modulo: string, idModulo: number, id_formato: number) {
     const url1 = `${url.prod}${adm000.adm012.getFormatoImpresion}${modulo}/${idModulo}/${id_formato}`;
     console.log("url get: ", url1);
     return this.httpClient
