@@ -1,13 +1,16 @@
 import { Component } from "@angular/core";
 import {
   Adm012,
+  Adm012SelectRegistros,
   Adm012SelectModulos,
   Adm012SelectMonedas,
-  Adm012SelectRegistros,
   Adm012SelectTamImp,
   Adm012SelectCodigoCuentas,
 } from "src/app/master/utils/models/main/adm_000/index.models";
 import { Adm012Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
+import url from "src/app/master/config/url.config";
+import { FileService } from "src/app/master/utils/service/main/global/file.service";
+import { saveAs } from "file-saver";
 import {
   NotyGlobal,
   InitGlobal,
@@ -30,8 +33,6 @@ import { debounceTime } from "rxjs/operators";
 })
 export class Adm012Component {
   textBuscarAdm012 = new FormControl("", []);
-  // buscar = true;
-  // texto = "all_data";
   sus: Subscription;
   numeroPag = 1;
   loading = true;
@@ -71,12 +72,16 @@ export class Adm012Component {
   placeholdeAuto = "automatico";
   insertar = "fall";
   nroRegistros: string = "10";
+  id_tamano: number = 1;
+  id_moneda: number = 1;
+  id_codigo: number = 1;
 
   constructor(
     private adm012S: Adm012Service,
     private fb: FormBuilder,
     private notyG: NotyGlobal,
-    private initG: InitGlobal
+    private initG: InitGlobal,
+    private fileS: FileService
   ) {
     this.getAdm012(this.start.Texto);
     this.crearFormulario();
@@ -122,17 +127,17 @@ export class Adm012Component {
       this.start.NumPa = Number(numePag);
       if (resp["ok"]) {
         this.auxma = resp.data[0].formatos_impresion;
-        if (this.selecModulos == undefined) {
+        if (this.selecModulos === undefined) {
           this.selecModulos = resp.data[0].modulos;
         }
-        if (this.selecModalMoneda == undefined) {
+        if (this.selecModalMoneda === undefined) {
           this.selecModalMoneda = resp.data[0].tipo_moneda;
         }
-        if (this.selecModalCodCuenta == undefined) {
+        if (this.selecModalCodCuenta === undefined) {
           this.selecModalCodCuenta = resp.data[0].codigo_cuenta;
         }
-        if (this.selecModalTamImpr == undefined) {
-          this.selecModalTamImpr = resp.data[0].tamaño_impresion;
+        if (this.selecModalTamImpr === undefined) {
+          this.selecModalTamImpr = resp.data[0].tamano_impresion;
         }
         this.initG.labels();
         this.initG.select();
@@ -140,7 +145,7 @@ export class Adm012Component {
         this.table = false;
       } else {
         if (resp["messagge"] === "No se encontraron registros") {
-          if (this.selecModulos == undefined) {
+          if (this.selecModulos === undefined) {
             this.selecModulos = resp.data[0].modulos;
           }
           this.auxma = [];
@@ -181,7 +186,7 @@ export class Adm012Component {
       id_formato: ["", [Validators.required]],
       descripcion: ["", [Validators.required]],
       sigla: ["", [Validators.required]],
-      tamaño_impresion: ["", [Validators.required]],
+      tamano_impresion: ["", [Validators.required]],
       moneda: ["", [Validators.required]],
       codigo_cuenta: ["", [Validators.required]],
       numero_copias: ["", [Validators.required]],
@@ -191,11 +196,7 @@ export class Adm012Component {
       estado: ["", [Validators.required]],
       nombre_modulo: [""],
     });
-    console.log("creando formulario: ", this.forma.value);
-    // console.log("creando formulario: ", this.forma.value);
   }
-
-  // añadir metodos
 
   paginacion(numero: string, eliminar = true) {
     const nume = Number(numero);
@@ -265,16 +266,19 @@ export class Adm012Component {
     this.forma.reset({
       id_modulo: this.idModulo,
       nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
-      id_documento: "auto",
+      id_formato: "auto",
+      tamano_impresion: this.id_tamano,
+      moneda: this.id_moneda,
+      codigo_cuenta: this.id_codigo,
       estado: false,
       checkauto: true,
     });
-    console.log("agregando nuevo: ", this.forma.value);
+
     this.start.CtrAc = "nuevo";
     this.ocultarSelect = false;
     this.mostrarCheck = true;
-    this.forma.get("id_documento").setValue("auto");
-    this.forma.get("id_documento").disable();
+    this.forma.get("id_formato").setValue("auto");
+    this.forma.get("id_formato").disable();
     this.initG.uniform();
     this.initG.labels();
     this.initG.select();
@@ -283,21 +287,33 @@ export class Adm012Component {
     let name: string = "";
     this.selecModulos.forEach((element) => {
       if (element.id_modulo === id) {
-        // console.log("Elemento encontrado: ", element.modulo);
         name = element.modulo;
       }
-      // console.log("Elemento No encontrado: ", element.modulo);
     });
     return name;
   }
 
+  obtenerData(adm012: Adm012) {
+    let peticion: Observable<any>;
+    peticion = this.adm012S.getAdm012Formato(
+      "90",
+      this.idModulo,
+      adm012.id_formato
+    );
+    this.sus = peticion.subscribe((resp) => {
+      if (resp["ok"]) {
+        this.auxmaModal = resp.data[0].formato_impresion;
+      } else {
+        if (resp["messagge"] === "No se encontraron registros") {
+          this.notyG.noty("error", resp["messagge"], 5000);
+        }
+      }
+    });
+  }
+
   OpcionesTable(adm_012: Adm012, tipo: string) {
-    console.log("opciones table; ", adm_012);
-    this.auxmaModal = adm_012;
-    console.log("auxma en opciones table: ", this.auxmaModal);
+    this.obtenerData(adm_012);
     this.forma.reset(this.auxmaModal);
-    console.log("forma despues de reset con auxmoda: ", this.forma.value);
-    // this.cargarDependencia(adm_011.idunidaddivision);
     this.start.IdCod = "" + adm_012.id_formato;
     switch (tipo) {
       case "visualizar":
@@ -311,7 +327,7 @@ export class Adm012Component {
         this.boolDisabled(false);
         this.forma.get("nombre_modulo").disable();
         this.forma.get("checkauto").disable();
-        this.forma.get("id_documento").disable();
+        this.forma.get("id_formato").disable();
         break;
       case "eliminar":
         // this.eliminarAdm011(adm_011);
@@ -325,8 +341,6 @@ export class Adm012Component {
 
   OpcionesModal(tipo: string) {
     this.mostrarCheck = false;
-    console.log("entro opciones Modal");
-    console.log("tipo: ", tipo);
 
     switch (tipo) {
       case "nuevo":
@@ -338,29 +352,28 @@ export class Adm012Component {
         this.start.CtrAc = tipo;
         this.boolBtnGrupo(false, true);
         this.btnGrupo.BtnCance = true;
-        // this.dependenciaAdm011 = [];
         this.forma.reset({
           id_modulo: this.idModulo,
           nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
           estado: false,
-          id_documento: "auto",
+          id_formato: "auto",
+          logo_empresa: true,
+          codigo_qr: true,
           checkauto: true,
         }); // resetea todo a null y estado a false
-        console.log("reseteando form opciones Modal: ", this.forma.value);
+
         this.boolDisabled(false);
-        // this.cargarDependencia2("1");
         this.mostrarCheck = true;
-        this.forma.get("id_documento").setValue("auto");
-        this.forma.get("id_documento").disable();
+        this.forma.get("id_formato").setValue("auto");
+        this.forma.get("id_formato").disable();
         this.initG.uniform();
         this.initG.labels();
         return;
       case "editar":
-        console.log("editando");
         this.start.CtrAc = tipo;
         this.boolDisabled(false);
         this.boolBtnGrupo(false, true);
-        this.forma.get("id_documento").disable();
+        this.forma.get("id_formato").disable();
         this.forma.get("checkauto").disable();
         return;
       case "salir":
@@ -370,7 +383,6 @@ export class Adm012Component {
         this.boolDisabled(true);
         break;
       case "cancelar":
-        console.log(this.start.CtrAc);
         if (this.insertar === "exito") {
           this.boolDisabled(true);
           this.boolBtnGrupo(true, false);
@@ -383,14 +395,14 @@ export class Adm012Component {
         return;
       case "guardar":
         this.boolDisabled(false);
-        console.log("Formulario Invalido?", this.forma);
+
         if (this.forma.invalid) {
           this.mostrarCheck = true;
           return;
         }
         this.btnGrupo.BtnLoadi = true;
         this.btnGrupo.BtnCance = false;
-        console.log("Formulario values", this.forma.value);
+
         this.guardarDatos(this.forma.value, this.start.CtrAc);
         return;
     }
@@ -402,24 +414,26 @@ export class Adm012Component {
     if (bool) {
       this.forma.get("nombre_modulo").disable();
       this.forma.get("checkauto").disable();
-      this.forma.get("estado").disable();
       this.forma.get("id_formato").disable();
       this.forma.get("descripcion").disable();
       this.forma.get("sigla").disable();
-      this.forma.get("tamano_impresion").disable();
-      this.forma.get("logo_empresa").disable();
+      // this.forma.get("tamano_impresion").disable();
+      // this.forma.get("moneda").disable();
+      // this.forma.get("codigo_cuenta").disable();
+      // this.forma.get("numero_copias").disable();
       this.forma.get("codigo_qr").disable();
+      this.forma.get("logo_empresa").disable();
       this.forma.get("estado").disable();
     } else {
       this.forma.get("id_modulo").enable();
       this.forma.get("id_formato").enable();
       this.forma.get("descripcion").enable();
       this.forma.get("sigla").enable();
-      this.forma.get("tamaño_impresion").enable();
+      this.forma.get("tamano_impresion").enable();
       this.forma.get("moneda").enable();
       this.forma.get("checkauto").enable();
       this.forma.get("codigo_cuenta").enable();
-      this.forma.get("numero_cuenta").enable();
+      // this.forma.get("numero_cuenta").enable();
       this.forma.get("numero_copias").enable();
       this.forma.get("codigo_qr").enable();
       this.forma.get("logo_empresa").enable();
@@ -439,7 +453,6 @@ export class Adm012Component {
   }
 
   resetDatos() {
-    // console.log("auxmodal valores: ", this.auxmaModal);
     this.forma.reset(this.auxmaModal);
     this.initG.labels();
     this.initG.select();
@@ -447,31 +460,36 @@ export class Adm012Component {
 
   habilitarAuto() {
     if (this.forma.get("checkauto").value) {
-      this.forma.get("id_documento").enable();
-      this.forma.get("id_documento").setValue("");
+      this.forma.get("id_formato").enable();
+      this.forma.get("id_formato").setValue("");
       this.placeholdeAuto = "introducir codigo";
-      // console.log("id_documento value: ", this.forma.get("id_documento"));
     } else {
-      this.forma.get("id_documento").setValue("auto");
-      this.forma.get("id_documento").disable();
+      this.forma.get("id_formato").setValue("auto");
+      this.forma.get("id_formato").disable();
       this.placeholdeAuto = "automatico";
-      // console.log("id_documento auto: ", this.forma.get("id_documento"));
     }
     this.initG.labels();
   }
 
   adm012Selectgest(gestion: string) {
-    console.log("gestion change: ", gestion);
-
     this.idModulo = Number(gestion);
     this.getAdm012("all_data", "1");
   }
+  adm012SelectTamImpr(tamano: string) {
+    this.id_tamano = Number(tamano);
+  }
+  adm012SelectMoneda(gestion: string) {
+    // this.forma.get("id_formato").setValue("auto");
+    this.id_moneda = Number(gestion);
+  }
+  adm012SelectCodigo(gestion: string) {
+    // this.forma.get("id_formato").setValue("auto");
+    this.id_codigo = Number(gestion);
+  }
 
   guardarDatos(adm_012: Adm012, contorlAccion: string) {
-    console.log("guardando datos-Accion: ", adm_012, contorlAccion);
     let peticion: Observable<any>;
     if (contorlAccion === "nuevo") {
-      console.log("Nuevo para guardar: ", adm_012, contorlAccion);
       peticion = this.adm012S.inAdm012(adm_012);
     } else if (contorlAccion === "editar") {
       peticion = this.adm012S.upAdm012(
@@ -490,8 +508,6 @@ export class Adm012Component {
         if (contorlAccion === "nuevo") {
           this.start.IdCod = resp["id_registro"];
           this.insertar = "exito";
-          // para que, cuando le de x, resetee el valor que
-          // se ha insertado recientemente entonces vamos a opcionModal en editar
         }
         this.getAdm012(this.start.Texto, this.start.NumPa.toString());
         this.notyG.noty("success", resp["mensaje"], 1000);
@@ -520,7 +536,7 @@ export class Adm012Component {
       }
     });
   }
-  // adm012SelectRegistro(nombre: string) {}
+
   // printDoc() {}
   // IrDashboard() {}
   // downloadPdfExel(tipo: string) {}
@@ -560,30 +576,31 @@ export class Adm012Component {
   //     w.close();
   //   }, 100);
   // }
-  // IrDashboard() {
-  //   window.location.href = url.principal;
-  // }
-  // downloadPdfExel(tipo: string) {
-  //   let peticion: Observable<any>;
-  //   const rutaPdf: string = "adm_000/adm_011/get-pdf/90/0";
-  //   const rutaExel: string = "adm_000/adm_011/get-excel/90/0";
-  //   let tipoFile: string = "";
-  //   const fileName: string = "adm011";
-  //   switch (tipo) {
-  //     case "pdf":
-  //       tipoFile = "application/pdf";
-  //       peticion = this.fileS.downloadFile({ fileName }, rutaPdf);
-  //       break;
-  //     case "exel":
-  //       tipoFile = "application/vnd.ms-excel";
-  //       peticion = this.fileS.downloadFile({ fileName }, rutaExel);
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  //   this.sus = peticion.subscribe((resp) => {
-  //     const archivo = new Blob([resp], { type: tipoFile });
-  //     saveAs(archivo, fileName);
-  //   });
-  // }
+  IrDashboard() {
+    window.location.href = url.principal;
+  }
+
+  downloadPdfExel(tipo: string) {
+    let peticion: Observable<any>;
+    const rutaPdf: string = "adm_000/adm_012/get-pdf/90/0/all_data";
+    const rutaExel: string = "adm_000/adm_012/get-excel/90/0/all_data";
+    let tipoFile: string = "";
+    const fileName: string = "adm012";
+    switch (tipo) {
+      case "pdf":
+        tipoFile = "application/pdf";
+        peticion = this.fileS.downloadFile({ fileName }, rutaPdf);
+        break;
+      case "exel":
+        tipoFile = "application/vnd.ms-excel";
+        peticion = this.fileS.downloadFile({ fileName }, rutaExel);
+        break;
+      default:
+        break;
+    }
+    this.sus = peticion.subscribe((resp) => {
+      const archivo = new Blob([resp], { type: tipoFile });
+      saveAs(archivo, fileName);
+    });
+  }
 }

@@ -125,7 +125,7 @@ export class ClaseDocComponent implements OnInit {
       this.start.NumPa = Number(numePag);
       if (resp["ok"]) {
         this.auxma = resp.data[0].clase_documentos;
-        if (this.selecDivModal == undefined) {
+        if (this.selecDivModal === undefined) {
           this.selecDivModal = resp.data[0].modulos;
         }
         this.initG.labels();
@@ -134,7 +134,7 @@ export class ClaseDocComponent implements OnInit {
         this.table = false;
       } else {
         if (resp["messagge"] === "No se encontraron registros") {
-          if (this.selecDivModal == undefined) {
+          if (this.selecDivModal === undefined) {
             this.selecDivModal = resp.data[0].modulos;
           }
           this.auxma = [];
@@ -264,7 +264,7 @@ export class ClaseDocComponent implements OnInit {
   ObtenerNombreModulo(id: number) {
     let name: string = "";
     this.selecDivModal.forEach((element) => {
-      if (element.id_modulo == id) {
+      if (element.id_modulo === id) {
         name = element.modulo;
       }
     });
@@ -510,7 +510,7 @@ export class ClaseDocComponent implements OnInit {
         const logoEmpr: string = resp.data[0].datos_empresa[0].logo_empresa;
         const sglEmpre: string = resp.data[0].datos_empresa[0].sigla;
         const htmlStart: string =
-          "<html> <head> <title>Ormate</title></head> <style type = 'text/css' > .footer-print { position: fixed; left: 0; bottom: 0; width: 100%; text-align: center;} .footer-div { display: flex; width: 100%; font-size: 15px; margin: auto; border-bottom: 0.3px solid black;} .footer-empr { width: 50%; text-align: left; padding-top: 0.5rem; } .footer-user { width: 50%; text-align: right; padding-top: 0.5rem; } @media print { @page { margin: 1.5cm; margin-bottom: 2cm; } table.report-container { page-break-after: always; } thead.report-header { display: table-header-group; } tfoot.report-footer { display: table-footer-group; } .table th, .table td { padding: 0.75rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; }      .centrado { text-align: center; } .font-size-title-comp { font-size: 20px;} .font-size-title-name { font-size: 14px; } body { margin: 0; } .margin-top-bottom { margin : 0.5rem 0} </style> <body style= 'margin : 0'> <table class='report-container' style='width: 100%;'>";
+          "<html> <head> <title>Ormate</title></head> <style type = 'text/css' > .footer-print { position: fixed; left: 0; bottom: 0; width: 100%; text-align: center;} .footer-div { display: flex; width: 100%; font-size: 15px; margin: auto; border-bottom: 0.3px solid black;} .footer-empr { width: 50%; text-align: left; padding-top: 0.5rem; } .footer-user { width: 50%; text-align: right; padding-top: 0.5rem; } @media print { @page { margin: 1.5cm; margin-bottom: 2cm; } } table.report-container { page-break-after: always; } thead.report-header { display: table-header-group; } tfoot.report-footer { display: table-footer-group; } .table th, .table td { padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; } .centrado { text-align: center; } .font-size-title-comp { font-size: 20px;} .font-size-title-name { font-size: 14px; } body { margin: 0; } .margin-top-bottom { margin : 0 0 0.5rem 0; } </style> <body style= 'margin : 0'> <table class = 'report-container' style='width: 100%;'> ";
         const header: string = `<thead class='report-header'>
         <tr>
             <th class='report-header-cell'>
@@ -526,26 +526,32 @@ export class ClaseDocComponent implements OnInit {
                           />
                         </div>
                         <div style='padding-left: 25; text-align: left;'>
-                          <p class='font-weight-bold margin-top-bottom' style='font-size: 16px;'>${sglEmpre}</p>
+                          <p class='font-weight-bold ' style='font-size: 16px; margin : 0 0 0.5rem 0; ' >${sglEmpre}</p>
                           <p>Direccion : Av. Monseñor Salvatierra # 150</p>
                           <p>Telf: 33-339868</p>
                           <p>Santa Cruz - Bolivia</p>
                         </div>
                       </div>
                       <div style='width: 50%; text-align: right;'>
-                        <p class = 'margin-top-bottom'>Fecha: ${feImpr}</p><p class = 'margin-top-bottom'>Impresión: ${hrImpr}</p> </div> </div> <div style='display: flex;'><div style='width: 25%;'></div><div style='width: 50%; text-align: center; justify-self: center;'><p class = 'margin-top-bottom' style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p class = 'margin-top-bottom' style='font-size: 14px;'>Administracion</p></div><div style='width: 25%;'></div></div></div></div></th></tr></thead>`;
+                        <p class = 'margin-top-bottom'>Fecha: ${feImpr}</p><p class = 'margin-top-bottom'>Impresión: ${hrImpr}</p> </div> </div> <div style='display: flex;'><div style='width: 25%;'></div><div style='width: 50%; text-align: center; justify-self: center;'><p class = 'margin-top-bottom' style='font-size: 20px; margin : 0 0 0.5rem 0;'>COMPONENTE DE FACTURACION</p><p class = 'margin-top-bottom' style='font-size: 14px; margin : 0 0 0.5rem 0;'>Administracion</p></div><div style='width: 25%;'></div></div></div></div></th></tr></thead>`;
         const tableStart: string =
           "<tbody class='report-content'><tr><td class='report-content-cell'><div class='main' style='margin-botton:0.5rem'> <table class='table' style='width: 100%;' >";
         const tableHead: string =
-          "<thead class='centrado'><tr class='bg-blue'><th style='width:10%'>Codigo</th><th style='width:35%'>Descripcion</th><th style='width:25%'>Sigla</th><th style='width:20%'>Componente</th><th style='width:10%'>Estado</th></tr></thead>";
+          "<thead class='centrado'><tr class='bg-blue'><th style = ' width: 10%;'>Codigo</th><th style=' width : 30%;'>Descripcion</th><th style=' width : 30%;'>Sigla</th><th style=' width : 20%; '>Componente</th><th style=' width : 10% ;'>Estado</th></tr></thead>";
         let tableData: string = "<tbody>";
         const data: Adm011[] = resp.data[0].clase_documentos;
         const long = data.length - 1;
         for (let i = long; i >= 0; i--) {
           tableData =
-            `<tr  class='centrado' ><td>${data[i].id_documento} </td><td>${
+            `<tr><td style = 'padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; text-align : center ; width : 20%;' >${
+              data[i].id_documento
+            } </td><td style = 'padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; white-space: nowrap; ' >${
               data[i].descripcion
-            } </td><td>${data[i].sigla} </td><td>${data[i].componente} </td><td>
+            } </td><td style = 'padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; white-space: nowrap; ' >${
+              data[i].sigla
+            } </td><td style = 'padding: 0.55rem 1.00rem; vertical-align: top; border-top: 1px solid #ddd; white-space: nowrap; ' >${
+              data[i].componente
+            } </td><td class='centrado' style = 'padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; text-align : center; ' >
         ${data[i].estado === true ? "activo" : "inactivo"} </td></tr>` +
             tableData;
         }
