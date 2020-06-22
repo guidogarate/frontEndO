@@ -112,7 +112,7 @@ export class LoginService {
             const modComp = component[l].id_unico;
             const compCom = component[l].componente;
             const idSegNivel = modulo[j].id_segundonivel;
-            const global = modulo[j].global;
+            const global = component[l].global;
             componUser.push({
               idComponen: modComp,
               componente: compCom,
