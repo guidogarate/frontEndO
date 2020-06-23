@@ -103,14 +103,12 @@ export class ModComponent implements OnInit, OnDestroy {
   }
 
   component(modulo: string, componente: string, glb: boolean) {
-    console.log(glb);
-    //  this.router.navigate(["/mod", modulo, componente]);
     if (glb) {
-      this.router.navigate(["/glb", "mod", modulo, "117"]);
+      this.router.navigate(["/glb", modulo, componente]);
     } else {
       this.router.navigate(["/mod", modulo, componente]);
     }
-    this.moduCompUsuario(this.data);
+    // this.moduCompUsuario(this.data);
   }
 
   moduCompUsuario(data: any) {

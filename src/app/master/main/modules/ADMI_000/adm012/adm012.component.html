@@ -47,11 +47,7 @@
                   (click)="nuevoAdm012()"
                   title="agregar"
                 ></i>
-                <i
-                  class="icon-printer2 puntero xxl"
-                  (click)="printDoc()"
-                  title="Imprimir"
-                ></i>
+                <i class="icon-printer2 puntero xxl" title="Imprimir"></i>
                 <div class="list-icons">
                   <div class="dropdown">
                     <a
@@ -101,7 +97,6 @@
                   width: fit-content;
                   background-color: white;
                 "
-                (change)="adm012SelectRegistro($event.target.value)"
               >
                 <option
                   *ngFor="let item of selectCantReg; let i = index"
@@ -495,7 +490,7 @@
                       >
                         <option
                           *ngFor="let item of selecModalTamImpr; let i = index"
-                          [value]="id_tamano_impresion"
+                          value="sas"
                         >
                           {{ item.descripcion }}
                         </option>
@@ -647,12 +642,7 @@
         <button type="button" class="btn btn-link" data-dismiss="modal">
           Cancel
         </button>
-        <button
-          type="button"
-          class="btn bg-primary"
-          data-dismiss="modal"
-          (click)="eliminarAdm012(auxmaModal)"
-        >
+        <button type="button" class="btn bg-primary" data-dismiss="modal">
           Aceptar
         </button>
       </div>
