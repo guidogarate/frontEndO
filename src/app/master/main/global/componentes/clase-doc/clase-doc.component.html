@@ -1,4 +1,4 @@
-<div class="row haciadentro animaciones superior h-100">
+<div class="row haciadentro animaciones superior h-100" *ngIf="mostrarConten">
   <div class="col-xl-12" style="margin-bottom: 0.5em;">
     <div class="card pb0 m0 h-100">
       <div
@@ -255,6 +255,7 @@
 </div>
 
 <div
+  *ngIf="mostrarConten"
   id="modal_adm_011"
   class="modal modal-pad-center"
   tabindex="-1"
@@ -375,7 +376,7 @@
                   class="text-center font-title modal-head-back-color"
                   disabled="true"
                   type="text"
-                  formControlName="nombre_modulo"
+                  value="{{ nombMod }}"
                 />
               </div>
               <div class="col-sm-4 col-0"></div>
@@ -532,6 +533,7 @@
 </div>
 
 <div
+  *ngIf="mostrarConten"
   id="modal_adm_011_eliminar"
   class="modal"
   tabindex="-1"

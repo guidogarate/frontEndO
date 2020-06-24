@@ -17,7 +17,7 @@ export class Adm011Service {
     texto: string
   ) {
     const url1 = `${url.prod}${adm000.adm011.getAdm011}${modulo}/${indice}/${idModulo}/${nroRegistros}/${texto}`;
-
+    console.log(url1);
     return this.httpClient.get(url1).pipe(
       map((resp) => {
         return resp;

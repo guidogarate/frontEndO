@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router, UrlTree, UrlSegmentGroup, UrlSegment } from "@angular/router";
 import {
   Adm011,
   Adm011Select,
@@ -32,7 +32,8 @@ import { saveAs } from "file-saver";
 })
 export class ClaseDocComponent implements OnInit {
   idenMod: string = "90";
-  nombMod: string = "administravcion";
+  nombMod: string = "";
+  mostrarConten: boolean = false;
 
   textBuscarAdm011 = new FormControl("", []);
   sus: Subscription;
@@ -74,16 +75,24 @@ export class ClaseDocComponent implements OnInit {
     private notyG: NotyGlobal,
     private initG: InitGlobal,
     private fileS: FileService,
-    route: ActivatedRoute,
     public router: Router
   ) {
-    console.log(route.snapshot);
-    setTimeout(() => {
-      this.getAdm011(this.start.Texto);
-    }, 1500);
-
-    this.crearFormulario();
-    this.cargarSelecRegistros();
+    const tree: UrlTree = router.parseUrl(router.url);
+    const g: UrlSegmentGroup = tree.root.children["primary"];
+    const s: UrlSegment[] = g.segments;
+    const enviarData = this.validarMod(s[1].path, s[2].path);
+    if (enviarData) {
+      setTimeout(() => {
+        this.getAdm011(this.start.Texto);
+      }, 1500);
+      this.crearFormulario();
+      this.cargarSelecRegistros();
+      this.mostrarConten = true;
+    } else {
+      this.mostrarConten = false;
+      this.router.navigate(["/bienvenido"]);
+      return;
+    }
     this.textBuscarAdm011.valueChanges
       .pipe(debounceTime(500))
       .subscribe((value) => {
@@ -96,6 +105,24 @@ export class ClaseDocComponent implements OnInit {
       });
   }
   ngOnInit(): void {}
+
+  validarMod(idRutaMod: string, component: string): boolean {
+    const modulo = JSON.parse(sessionStorage.getItem("modulo")) || [];
+    for (let i = 0; i < modulo.length; i++) {
+      if (modulo[i].componente === idRutaMod) {
+        const compo = modulo[i].compArray;
+        for (let j = 0; j < compo.length; j++) {
+          if (compo[j].componente === component) {
+            this.nombMod = modulo[i].descripcion;
+            this.idModulo = modulo[i].idModulo.toString();
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   getAdm011(texto: string, numePag = "1") {
     this.start.Busca = true;
     let peticion: Observable<any>;
@@ -262,7 +289,7 @@ export class ClaseDocComponent implements OnInit {
     this.initG.select();
   }
   ObtenerNombreModulo(id: number) {
-    let name: string = "";
+    let name: string = this.nombMod;
     this.selecDivModal.forEach((element) => {
       if (element.id_modulo === id) {
         name = element.modulo;
@@ -502,7 +529,13 @@ export class ClaseDocComponent implements OnInit {
 
   printDoc() {
     let peticion: Observable<any>;
-    peticion = this.adm011S.getAdm011Impr("90", "0", this.start.Texto);
+    peticion = this.adm011S.getAdm011(
+      "90",
+      "1",
+      this.idModulo,
+      "1000",
+      this.start.Texto
+    );
     this.sus = peticion.subscribe((resp) => {
       if (resp["ok"]) {
         const feImpr: string = resp["fecha"];
@@ -533,7 +566,7 @@ export class ClaseDocComponent implements OnInit {
                         </div>
                       </div>
                       <div style='width: 50%; text-align: right;'>
-                        <p class = 'margin-top-bottom'>Fecha: ${feImpr}</p><p class = 'margin-top-bottom'>Impresión: ${hrImpr}</p> </div> </div> <div style='display: flex;'><div style='width: 25%;'></div><div style='width: 50%; text-align: center; justify-self: center;'><p class = 'margin-top-bottom' style='font-size: 20px; margin : 0 0 0.5rem 0;'>COMPONENTE DE FACTURACION</p><p class = 'margin-top-bottom' style='font-size: 14px; margin : 0 0 0.5rem 0;'>Administracion</p></div><div style='width: 25%;'></div></div></div></div></th></tr></thead>`;
+                        <p class = 'margin-top-bottom'>Fecha: ${feImpr}</p><p class = 'margin-top-bottom'>Impresión: ${hrImpr}</p> </div> </div> <div style='display: flex;'><div style='width: 25%;'></div><div style='width: 50%; text-align: center; justify-self: center;'><p class = 'margin-top-bottom' style='font-size: 20px; margin : 0 0 0.5rem 0;'>CLASE DE DOCUMENTOS</p><p class = 'margin-top-bottom' style='font-size: 14px; margin : 0 0 0.5rem 0;'>${this.nombMod}</p></div><div style='width: 25%;'></div></div></div></div></th></tr></thead>`;
         const tableStart: string =
           "<tbody class='report-content'><tr><td class='report-content-cell'><div class='main' style='margin-botton:0.5rem'> <table class='table' style='width: 100%;' >";
         const tableHead: string =

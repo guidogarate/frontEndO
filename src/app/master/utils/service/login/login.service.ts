@@ -67,7 +67,6 @@ export class LoginService {
     const url1 = `${url.prod}${url.ingresar}`;
     return this.httpClient.post(url1, json).pipe(
       map((resp) => {
-        console.log(resp);
         if (resp["ok"]) {
           this.guardarToken(resp["datos"], resp["token"]);
           this.guardarMenu(resp["favoritos"], resp["menu"]);
@@ -104,7 +103,8 @@ export class LoginService {
       for (let j = 0; j < modulo.length; j++) {
         const mod = modulo[j].id_segundonivel;
         const comp = modulo[j].componente;
-        moduloUser.push({ idModulo: mod, componente: comp });
+        const desc = modulo[j].descripcion;
+        moduloUser.push({ idModulo: mod, componente: comp, descripcion: desc });
         const subModulo = modulo[j].sub_modulo || [];
         for (let k = 0; k < subModulo.length; k++) {
           const component = subModulo[k].componentes || [];
@@ -112,7 +112,7 @@ export class LoginService {
             const modComp = component[l].id_unico;
             const compCom = component[l].componente;
             const idSegNivel = modulo[j].id_segundonivel;
-            const global = modulo[j].global;
+            const global = component[l].global;
             componUser.push({
               idComponen: modComp,
               componente: compCom,
@@ -128,7 +128,8 @@ export class LoginService {
         return (
           arreglo.findIndex(
             (valorDelArreglo) =>
-              JSON.stringify(valorDelArreglo) === JSON.stringify(valorActual)
+              JSON.stringify(valorDelArreglo.componente) ===
+              JSON.stringify(valorActual.componente)
           ) === indiceActual
         );
       }
@@ -169,6 +170,7 @@ export class LoginService {
 export interface Modulo {
   idModulo: number;
   componente: string;
+  descripcion: string;
   compArray?: Componente[];
 }
 export interface Componente {

@@ -7,9 +7,11 @@ import { IndexAdm000Module } from "src/app/master/utils/service/main/modules/adm
 import { CLASE_DOC_ROUTES } from "./globalCompo.routes";
 import { ComponentesComponent } from "./componentes.component";
 import { ClaseDocComponent } from "./clase-doc/clase-doc.component";
+import { FormtImpComponent } from "./formt-imp/formt-imp.component";
+import { TipoTransComponent } from './tipo-trans/tipo-trans.component';
 
 @NgModule({
-  declarations: [ComponentesComponent, ClaseDocComponent],
+  declarations: [ComponentesComponent, ClaseDocComponent, FormtImpComponent, TipoTransComponent],
   imports: [
     RouterModule,
     CommonModule,
