@@ -1,12 +1,24 @@
 import { RouterModule, Routes } from "@angular/router";
-import { ClaseDocComponent } from "./clase-doc/clase-doc.component";
 import { ComponentesComponent } from "./componentes.component";
+import { ClaseDocComponent } from "./clase-doc/clase-doc.component";
+import { FormtImpComponent } from "./formt-imp/formt-imp.component";
+import { TipoTransComponent } from "./tipo-trans/tipo-trans.component";
 
 let ClaseDocdoRoutes: Routes = [
   {
     path: "117",
     component: ClaseDocComponent,
     data: { titulo: "adm011" },
+  },
+  {
+    path: "118",
+    component: FormtImpComponent,
+    data: { titulo: "adm012" },
+  },
+  {
+    path: "119",
+    component: TipoTransComponent,
+    data: { titulo: "adm013" },
   },
   // {
   //   path: "",

@@ -97,8 +97,6 @@ export class Adm012Service {
 
   inAdm012(adm_012: Adm012) {
     const url1 = `${url.prod}${adm000.adm012.inAdm012}`;
-    console.info("url INS 012: ", url1);
-    console.info("INS adm_012: ", adm_012);
     const json = JSON.stringify({
       id_modulo: adm_012.id_modulo,
       id_formato: adm_012.id_formato,
