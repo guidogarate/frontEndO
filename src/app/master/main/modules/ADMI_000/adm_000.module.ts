@@ -17,10 +17,8 @@ import { Adm010Component } from "./adm010/adm010.component";
 
 import { PipesModule } from "../../../utils/pipe/pipes.module";
 import { Adm009Component } from "./adm009/adm009.component";
-import { Adm011Component } from "./adm011/adm011.component";
 import { Adm012Component } from "./adm012/adm012.component";
 import { GlobalElemModule } from "../../global/elementos/globalEleme.module";
-import { GlobalCompoModule } from "../../global/componentes/globalCompo.module";
 
 @NgModule({
   declarations: [
@@ -34,7 +32,6 @@ import { GlobalCompoModule } from "../../global/componentes/globalCompo.module";
     Adm008Component,
     Adm009Component,
     Adm010Component,
-    Adm011Component,
     Adm012Component,
   ],
   providers: [DatePipe],
@@ -46,7 +43,6 @@ import { GlobalCompoModule } from "../../global/componentes/globalCompo.module";
     IndexAdm000Module,
     PipesModule,
     GlobalElemModule,
-    GlobalCompoModule,
   ],
 })
 export class ADM00Module {}
