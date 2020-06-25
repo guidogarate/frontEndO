@@ -10,14 +10,10 @@ export class Adm013Service {
   token = sessionStorage.getItem("id");
   constructor(private httpClient: HttpClient) {}
 
-  getAdm013(
-    modulo: string,
-    indice: string,
-    idModulo: number,
-    nroRegistros: string,
-    texto: string
-  ) {
-    const url1 = `${url.prod}${adm013.getListTiposTransaccion}${modulo}/${indice}/${idModulo}/${nroRegistros} ${texto}`;
+  // nroRegistros: string,
+  // /${nroRegistros}
+  getAdm013(modulo: string, indice: string, idModulo: number, texto: string) {
+    const url1 = `${url.prod}${adm013.getListTiposTransaccion}${modulo}/${indice}/${idModulo}/${texto}`;
     console.log("url get adm013: ", url1);
     return this.httpClient
       .get(url1, {
@@ -57,8 +53,6 @@ export class Adm013Service {
 
   inAdm013(adm_013: Adm013) {
     const url1 = `${url.prod}${adm013.inAdm013}`;
-    console.info("url INS 013: ", url1);
-    console.info("INS adm_013: ", adm_013);
     const json = JSON.stringify({
       id_modulo: adm_013.id_modulo,
       id_tipotran: adm_013.id_tipotran,

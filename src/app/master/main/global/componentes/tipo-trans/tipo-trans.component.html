@@ -1,1 +1,659 @@
-<p>tipo-trans works!</p>
+<div class="row haciadentro animaciones superior h-100">
+  <div class="col-xl-12" style="margin-bottom: 0.5em;">
+    <div class="card pb0 m0 h-100">
+      <div
+        class="card modal-head-back-color card-border"
+        style="margin-bottom: 0.5em;"
+      >
+        <div
+          class="header-elements-inline"
+          style="padding: 2em; padding-bottom: 0em;"
+        >
+          <h5 class="card-title font-weight-bold m0">
+            <i class="icon-cog title-icon align-vertical-icon-0"></i>
+            Tipos De Transacciones
+          </h5>
+        </div>
+        <div class="card m0 pb0 modal-head-back-color">
+          <div class="row p0 m0">
+            <div class="col-0 col-sm-3 col-md-4 col-lg-8 p0"></div>
+            <div class="col-6 col-sm-7 col-md-5 col-lg-2">
+              <div
+                class="form-group form-group-feedback form-group-feedback-right m0"
+              >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Buscar"
+                  id="buscarGrupoLupa"
+                />
+                <div *ngIf="start.Busca" class="form-control-feedback">
+                  <i class="icon-spinner2 spinner"></i>
+                </div>
+                <div *ngIf="!start.Busca" class="form-control-feedback">
+                  <label for="buscarGrupoLupa">
+                    <i class="icon-search4 puntero" title="buscar"></i
+                  ></label>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-sm-2 col-md-3 col-lg-2 p0">
+              <div class="list-icons float-right">
+                <i
+                  data-toggle="modal"
+                  data-target="#modal_adm_012"
+                  class="icon-diff-added puntero xxl"
+                  (click)="nuevoAdm012()"
+                  title="agregar"
+                ></i>
+                <i class="icon-printer2 puntero xxl" title="Imprimir"></i>
+                <div class="list-icons">
+                  <div class="dropdown">
+                    <a
+                      href="#"
+                      class="list-icons-item"
+                      data-toggle="dropdown"
+                      title="exportar a .."
+                    >
+                      <i class="icon-file-download xxl"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <p
+                        target="_blank"
+                        class="dropdown-item"
+                        (click)="downloadPdfExel('pdf')"
+                      >
+                        <i class="icon-file-pdf"></i>
+                        Export to .pdf
+                      </p>
+                      <a
+                        target="_blank"
+                        class="dropdown-item"
+                        (click)="downloadPdfExel('exel')"
+                      >
+                        <i class="icon-file-excel"></i> Export to .xls
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <i
+                  (click)="IrDashboard()"
+                  class="navbar-nav-link puntero"
+                  class="icon-exit xxl"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Ir a la página Principal"
+                ></i>
+              </div>
+            </div>
+          </div>
+          <div class="row p0 m0">
+            <div class="col-12 col-sm-1 col-md-1 col-lg-1">
+              <select
+                class="form-control selectCenter"
+                style="
+                  border-radius: 4em;
+                  width: fit-content;
+                  background-color: white;
+                "
+              >
+                <option
+                  *ngFor="let item of selectCantReg; let i = index"
+                  [value]="item.id_registro"
+                >
+                  {{ item.cantidad }}
+                </option>
+              </select>
+            </div>
+            <div class="col-0 col-sm-3 col-md-3 col-lg-3"></div>
+            <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-center">
+              <div class="form-group form-group-float m0">
+                <select
+                  class="form-control selectCenter"
+                  (change)="adm012Selectgest($event.target.value)"
+                >
+                  <option
+                    *ngFor="let item of selecModulos; let i = index"
+                    [value]="item.id_modulo"
+                  >
+                    {{ item.modulo }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-0 col-sm-4 col-md-4 col-lg-4"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p0 m0 card-border">
+        <div class="row m0 p0">
+          <div class="col-md-0"></div>
+          <div class="col-md-12 p0">
+            <div
+              class="table-responsive scroll-Table-Gestion"
+              *ngIf="auxma != undefined"
+            >
+              <table class="table table-sm table-hover">
+                <thead
+                  class="text-center"
+                  style="border-bottom: 2px solid #2196f3;"
+                >
+                  <tr class="modal-head-back-color">
+                    <th class="p-1">CODIGO</th>
+                    <th class="p-1">DESCRIPCION</th>
+                    <th class="p-1">SIGLA</th>
+                    <th class="p-1">TAMAÑO DE IMPRESION</th>
+                    <th class="p-1">LOGO DE EMPRESA</th>
+                    <th class="p-1">ESTADO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    class="puntero"
+                    *ngFor="
+                      let adm012 of auxma;
+                      let i = index;
+                      let impar = odd;
+                      let par = even
+                    "
+                    data-toggle="modal"
+                    data-target="#modal_adm_012"
+                    (click)="OpcionesTable(adm012, 'visualizar')"
+                    [ngClass]="{
+                      tablaCebradoPar: par,
+                      tablaCebradoImpar: impar
+                    }"
+                  >
+                    <td class="text-center">{{ adm012.id_formato }}</td>
+                    <td class="text-left">{{ adm012.descripcion }}</td>
+                    <td class="text-left">{{ adm012.sigla }}</td>
+                    <td class="text-left">{{ adm012.tamano_impresion }}</td>
+                    <td
+                      class="text-center"
+                      *ngIf="adm012.logo_empresa; else logoContent"
+                    >
+                      Si
+                    </td>
+                    <td class="text-center" *ngIf="adm012.estado; else content">
+                      Vigente
+                      <div class="list-icons d-inline-block float-right">
+                        <i
+                          class="icon-file-eye"
+                          title="visualizar"
+                          class="icon-file-eye icon-white puntero"
+                        ></i>
+                      </div>
+                    </td>
+                    <ng-template #content>
+                      <td class="text-center">
+                        Inactivo
+                        <div class="list-icons d-inline-block float-right">
+                          <i
+                            class="icon-file-eye"
+                            title="visualizar"
+                            class="icon-file-eye icon-white puntero"
+                          ></i>
+                        </div>
+                      </td>
+                    </ng-template>
+                    <ng-template #logoContent>
+                      <td class="text-center">
+                        No
+                      </td>
+                    </ng-template>
+                  </tr>
+                </tbody>
+              </table>
+              <br />
+            </div>
+          </div>
+          <div class="col-md-0"></div>
+        </div>
+      </div>
+      <div *ngIf="start.Loadi" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div
+        class="row m0 modal-head-back-color card-border border-top-0"
+        style="margin-bottom: 0.5em; padding-top: 0.5em;"
+      >
+        <div class="col-lg-4 d-none d-sm-none d-md-block">
+          <label class="form-control">App: Test</label>
+        </div>
+        <div class="col-lg-4 col-12">
+          <div *ngIf="!start.Loadi" class="row justify-content-center">
+            <ul class="pagination pagination-flat align-self-center">
+              <li class="page-item puntero">
+                <a (click)="paginacion('000')" class="page-link"
+                  >&larr; &nbsp; Atras</a
+                >
+              </li>
+              <ng-container *ngFor="let pg of pagi; let i = index">
+                <li
+                  [ngClass]="{
+                    'page-item': true,
+                    puntero: true,
+                    active: numeroPag === i + 1
+                  }"
+                >
+                  <a (click)="paginacion(pg.pag)" class="page-link">{{
+                    pg.pag
+                  }}</a>
+                </li>
+              </ng-container>
+              <li class="page-item puntero">
+                <a (click)="paginacion('999')" class="page-link"
+                  >Sig &nbsp; &rarr;</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-4 d-none d-sm-none d-md-block text-right">
+          <label class="form-control">Usuario: SAGESOFT</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TODO: new Modal -->
+<!-- <div
+  id="modal_adm_012"
+  class="modal modal-pad-center"
+  tabindex="-1"
+  data-backdrop="static"
+  data-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div
+      class="modal-content animacionmodal haciadentro"
+      style="border-radius: 1em;"
+    >
+      <form
+        [formGroup]="forma"
+        (ngSubmit)="OpcionesModal('guardar')"
+        ngNativeValidate
+        autocomplete="off"
+        class="form"
+      >
+        <div
+          class="modal-header modal-head-back-color"
+          style="
+            padding: 1em;
+            border-bottom: 1px solid #000000;
+            border-top-left-radius: 1em;
+            border-top-right-radius: 1em;
+          "
+        >
+          <h6 class="modal-title font-title">
+            <i class="icon-books align-vertical-icon-0"></i>
+            CLASE DE DOCUMENTOS
+          </h6>
+          <div class="list-icons float-right">
+            <a class="puntero" *ngIf="btnGrupo.BtnCance"
+              ><i
+                class="icon-undo2 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal('cancelar')"
+                title="Cancelar"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnGrupo.BtnNuevo">
+              <i
+                data-toggle="tooltip"
+                data-placement="top"
+                class="icon-diff-added xxl"
+                (click)="OpcionesModal('nuevo')"
+                title="nuevo"
+              ></i>
+            </a>
+            <button
+              *ngIf="btnGrupo.BtnGuard"
+              style="padding: 1px;"
+              type="submit"
+              class="btn btn-flat btn-icon btn-rounded"
+            >
+              <i
+                *ngIf="!btnGrupo.BtnLoadi"
+                class="icon-floppy-disk xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+              ></i>
+            </button>
+            <i
+              *ngIf="btnGrupo.BtnLoadi"
+              class="icon-spinner spinner position-left"
+              title="Guardando..."
+            >
+            </i>
+            <a *ngIf="btnGrupo.BtnEdita" class="puntero">
+              <i
+                class="icon-pencil7 xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                (click)="OpcionesModal('editar')"
+                title="editar"
+              >
+              </i
+            ></a>
+            <a class="puntero" *ngIf="btnGrupo.BtnElimi"
+              ><i
+                class="icon-trash xxl"
+                data-toggle="tooltip"
+                data-placement="top"
+                data-toggle="modal"
+                data-dismiss="modal"
+                data-target="#modal_adm_011_eliminar"
+                (click)="OpcionesModal('eliminar')"
+                title="Eliminar"
+              >
+              </i
+            ></a>
+            <a class="puntero">
+              <i
+                class="icon-exit xxl"
+                (click)="OpcionesModal('salir')"
+                data-toggle="tooltip"
+                data-placement="top"
+                data-dismiss="modal"
+                title="Salir"
+              >
+              </i
+            ></a>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="col-xl-12">
+            <div class="row" style="padding-bottom: 1em;">
+              <div class="col-sm-4 d-md-block"></div>
+              <div class="col-sm-4 col-12 pad-row-title">
+                <input
+                  style="
+                    width: inherit;
+                    border-radius: 1em;
+                    border-color: #080c0e;
+                  "
+                  class="text-center font-title modal-head-back-color"
+                  disabled="true"
+                  type="text"
+                  value="Contabilidad"
+                />
+              </div>
+              <div class="col-sm-4 d-none d-sm-none d-md-block"></div>
+            </div>
+            <div class="row">
+              <div class="col-md-2 col-12 text-center p0">
+                <div class="form-group form-group-float">
+                  <label class="form-group-float-label text-label"
+                    >Numeracion</label
+                  >
+                  <div
+                    class="custom-control custom-switch p0"
+                    style="margin-left: 3em;"
+                  >
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      formControlName="checkauto"
+                      (click)="habilitarAuto()"
+                      title="auxmaModal.estado"
+                      name="identificador"
+                      id="check1"
+                    />
+                    <label
+                      *ngIf="!this.forma.get('checkauto').value"
+                      class="custom-control-label"
+                      for="check1"
+                      >Manual</label
+                    >
+                    <label
+                      *ngIf="this.forma.get('checkauto').value"
+                      class="custom-control-label"
+                      for="check1"
+                      >Auto</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 col-12 pad-modal-title modal-title-pb">
+                <label class="col-lg-12 col-12 text-label text-center"
+                  >Codigo</label
+                >
+                <div class="col-lg-12 col-12">
+                  <input
+                    style="text-align: center;"
+                    type="text"
+                    class="form-control"
+                    oninvalid="this.setCustomValidity('codigo')"
+                    oninput="setCustomValidity('')"
+                    placeholder="{{ placeholdeAuto }}"
+                    formControlName="id_formato"
+                    name="id_formato"
+                    title="Acepta 3 digitos"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="col-md-5 col-12 pad-modal-title modal-title-pb">
+                <label class="col-lg-12 col-12 text-center text-label"
+                  >Descripcion</label
+                >
+                <div class="col-lg-12 col-12">
+                  <input
+                    type="text"
+                    class="form-control text-center"
+                    oninvalid="this.setCustomValidity('Introducir Descripcion')"
+                    oninput="setCustomValidity('')"
+                    placeholder="Introducir Descripcion"
+                    formControlName="descripcion"
+                    name="descripcion"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="col-md-3 col-12 pad-modal-title modal-title-pb">
+                <label class="col-lg-12 col-12 text-label text-center"
+                  >Descripcion Corta</label
+                >
+                <div class="col-lg-12 col-12">
+                  <input
+                    type="text"
+                    class="form-control text-center"
+                    oninvalid="this.setCustomValidity('Introducir Sigla')"
+                    oninput="setCustomValidity('')"
+                    placeholder="Introducir Sigla"
+                    formControlName="sigla"
+                    name="sigla"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+ 
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="row text-center">
+                  <div
+                    class="col-12 col-sm-4 col-md-4 col-lg-4 text-center pad-modal-title"
+                  >
+                    <div class="form-group form-group-float">
+                      <label
+                        class="form-group-float-label font-weight-semibold text-label"
+                        >Tamaño de Impresion</label
+                      >
+                      <select
+                        class="form-control selectCenter"
+                        (change)="adm012SelectTamImpr($event.target.value)"
+                      >
+                        <option
+                          *ngFor="let item of selecModalTamImpr; let i = index"
+                          value="sas"
+                        >
+                          {{ item.descripcion }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    class="col-12 col-sm-4 col-md-4 col-lg-4 text-center pad-modal-title"
+                  >
+                    <div class="form-group form-group-float">
+                      <label
+                        class="form-group-float-label font-weight-semibold text-label"
+                        >Moneda Imprimir</label
+                      >
+                      <select
+                        class="form-control selectCenter"
+                        (change)="adm012SelectMoneda($event.target.value)"
+                      >
+                        <option
+                          *ngFor="let item of selecModalMoneda; let i = index"
+                          [value]="item.id_moneda"
+                        >
+                          {{ item.descripcion }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    class="col-12 col-sm-4 col-md-4 col-lg-4 text-center pad-modal-title"
+                  >
+                    <div class="form-group form-group-float">
+                      <label
+                        class="form-group-float-label font-weight-semibold text-label"
+                        >Codigo de cuenta a Imprimir</label
+                      >
+                      <select
+                        class="form-control selectCenter"
+                        (change)="adm012SelectCodigo($event.target.value)"
+                      >
+                        <option
+                          *ngFor="
+                            let item of selecModalCodCuenta;
+                            let i = index
+                          "
+                          [value]="item.id_codigocuenta"
+                        >
+                          {{ item.descripcion }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-3 col-12 p0 pad-modal-title modal-title-pb">
+                <label class="col-lg-12 col-12 text-center text-label"
+                  >Numero de Copia</label
+                >
+                <div class="col-lg-12 col-12">
+                  <input
+                    type="text"
+                    class="form-control text-center"
+                    oninvalid="this.setCustomValidity('Introducir numero de copias')"
+                    oninput="setCustomValidity('')"
+                    placeholder="numero de copias"
+                    formControlName="numero_copias"
+                    name="numero_copias"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="col-md-1 d-none d-sm-none d-md-block"></div>
+              <div class="col-md-5 col-12 text-center p0">
+                <div class="row p0 m0" style="padding-bottom: 0.5rem;">
+                  <label class="col-sm-8 col-8 m0 text-label text-left"
+                    >Qr de Documento</label
+                  >
+                  <div class="col-sm-4 col-4 m0 custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      formControlName="codigo_qr"
+                      title="auxmaModal.codigo_qr"
+                      name="codigo_qr"
+                      id="codigo_qr"
+                    />
+                    <label class="custom-control-label" for="codigo_qr"></label>
+                  </div>
+                </div>
+                <div class="row p0 m0" style="padding-bottom: 0.5rem;">
+                  <label class="col-sm-8 col-8 m0 text-label text-left"
+                    >Logo de la Empresa</label
+                  >
+                  <div class="col-sm-4 col-4 m0 custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      formControlName="logo_empresa"
+                      title="auxmaModal.logo_empresa"
+                      name="logo_empresa"
+                      id="logo_empresa"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="logo_empresa"
+                    ></label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-12 text-center p0">
+                <div class="row p0 m0">
+                  <label class="col-sm-6 col-8 m0 text-label text-left"
+                    >Estado</label
+                  >
+                  <div class="col-sm-6 col-4 m0 custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      formControlName="estado"
+                      title="auxmaModal.estado"
+                      name="estado"
+                      id="estado"
+                    />
+                    <label class="custom-control-label" for="estado"></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <hr />
+    </div>
+  </div>
+</div> -->
+
+<!-- TODO: Eliminar Modal -->
+<!-- <div id="modal_adm_012_eliminar" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal5-title">adm011</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="auxmaModal != undefined">
+        <h6 class="font-weight-semibold">
+          Desea eliminar dato con codigo: {{ auxmaModal.id_formato }}
+        </h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" data-dismiss="modal">
+          Cancel
+        </button>
+        <button type="button" class="btn bg-primary" data-dismiss="modal">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div> -->
