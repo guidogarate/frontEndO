@@ -17,7 +17,6 @@ export class Adm011Service {
     texto: string
   ) {
     const url1 = `${url.prod}${adm000.adm011.getAdm011}${modulo}/${indice}/${idModulo}/${nroRegistros}/${texto}`;
-    console.log(url1);
     return this.httpClient.get(url1).pipe(
       map((resp) => {
         return resp;
@@ -27,7 +26,6 @@ export class Adm011Service {
 
   upAdm011(adm_011: Adm011, id_modulo: number, id_documento: string) {
     const url1 = `${url.prod}${adm000.adm011.upAdm011}${id_modulo}/${id_documento}`;
-    console.log("adm011", adm_011);
     const json = JSON.stringify({
       descripcion: adm_011.descripcion,
       sigla: adm_011.sigla,
@@ -52,8 +50,6 @@ export class Adm011Service {
 
   inAdm011(adm_011: Adm011) {
     const url1 = `${url.prod}${adm000.adm011.inAdm011}`;
-    console.info("url1 in: ", url1);
-    console.info("adm_011: ", adm_011);
     const json = JSON.stringify({
       id_modulo: adm_011.id_modulo,
       id_documento: adm_011.id_documento,
@@ -69,29 +65,10 @@ export class Adm011Service {
     );
   }
 
-  getAdm011Pdf(usuario: string, idModulo: number) {
-    const url1 = `${url.prod}${adm000.adm011.getPdf}${usuario}/${idModulo}`;
-    console.log("url get: ", url1);
-    return this.httpClient.get(url1);
-  }
-
-  getAdm011Impr(idMod: string, pag: string, texto: string) {
-    const url1 = `${url.prod}${adm000.adm011.getAdm011Impr}${idMod}/${pag}/${texto}`;
+  getAdm011Impr(idMod: string, idModulo: number, texto: string) {
+    const url1 = `${url.prod}${adm000.adm011.getAdm011Impr}${idMod}/${idModulo}/${texto}`;
     return this.httpClient.get(url1).pipe(
       map((resp) => {
-        return resp;
-      })
-    );
-  }
-
-  getAdm011Excel(usuario: string, idModulo: number) {
-    console.log("excel");
-    const url1 = `${url.prod}${adm000.adm011.getPdf}${usuario}/${idModulo}`;
-    console.log("url get: ", url1);
-    return this.httpClient.get(url1).pipe(
-      map((resp) => {
-        window.open(url1);
-        console.log(resp);
         return resp;
       })
     );

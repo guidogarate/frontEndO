@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router, UrlTree, UrlSegmentGroup, UrlSegment } from "@angular/router";
 import {
   Adm012,
   Adm012SelectRegistros,
@@ -33,6 +34,9 @@ import { debounceTime } from "rxjs/operators";
   styleUrls: ["./formt-imp.component.css"],
 })
 export class FormtImpComponent implements OnInit {
+  idenMod: string = "90";
+  nombMod: string = "as";
+
   textBuscarAdm012 = new FormControl("", []);
   sus: Subscription;
   numeroPag = 1;
@@ -82,21 +86,48 @@ export class FormtImpComponent implements OnInit {
     private fb: FormBuilder,
     private notyG: NotyGlobal,
     private initG: InitGlobal,
-    private fileS: FileService
+    private fileS: FileService,
+    public router: Router
   ) {
-    this.getAdm012(this.start.Texto);
-    this.crearFormulario();
-    this.cargarSelecRegistros();
-    this.textBuscarAdm012.valueChanges
-      .pipe(debounceTime(500))
-      .subscribe((value) => {
-        if (value.length > 1) {
-          this.getAdm012(value, "1");
-        } else {
-          this.start.Texto = "all_data";
-          this.getAdm012(this.start.Texto);
+    const tree: UrlTree = router.parseUrl(router.url);
+    const g: UrlSegmentGroup = tree.root.children["primary"];
+    const s: UrlSegment[] = g.segments;
+    const enviarData = this.validarMod(s[1].path, s[2].path);
+    if (enviarData) {
+      this.getAdm012(this.start.Texto);
+      this.crearFormulario();
+      this.cargarSelecRegistros();
+      this.textBuscarAdm012.valueChanges
+        .pipe(debounceTime(500))
+        .subscribe((value) => {
+          if (value.length > 1) {
+            this.getAdm012(value, "1");
+          } else {
+            this.start.Texto = "all_data";
+            this.getAdm012(this.start.Texto);
+          }
+        });
+    } else {
+      this.router.navigate(["/bienvenido"]);
+      return;
+    }
+  }
+
+  validarMod(idRutaMod: string, component: string): boolean {
+    const modulo = JSON.parse(sessionStorage.getItem("modulo")) || [];
+    for (let i = 0; i < modulo.length; i++) {
+      if (modulo[i].componente === idRutaMod) {
+        const compo = modulo[i].compArray;
+        for (let j = 0; j < compo.length; j++) {
+          if (compo[j].componente === component) {
+            this.nombMod = modulo[i].descripcion;
+            this.idModulo = modulo[i].idModulo.toString();
+            return true;
+          }
         }
-      });
+      }
+    }
+    return false;
   }
 
   ngOnInit(): void {}
@@ -286,8 +317,9 @@ export class FormtImpComponent implements OnInit {
     this.initG.labels();
     this.initG.select();
   }
+
   ObtenerNombreModulo(id: number) {
-    let name: string = "";
+    let name: string = this.nombMod;
     this.selecModulos.forEach((element) => {
       if (element.id_modulo === id) {
         name = element.modulo;
@@ -420,10 +452,6 @@ export class FormtImpComponent implements OnInit {
       this.forma.get("id_formato").disable();
       this.forma.get("descripcion").disable();
       this.forma.get("sigla").disable();
-      // this.forma.get("tamano_impresion").disable();
-      // this.forma.get("moneda").disable();
-      // this.forma.get("codigo_cuenta").disable();
-      // this.forma.get("numero_copias").disable();
       this.forma.get("codigo_qr").disable();
       this.forma.get("logo_empresa").disable();
       this.forma.get("estado").disable();
@@ -436,7 +464,6 @@ export class FormtImpComponent implements OnInit {
       this.forma.get("moneda").enable();
       this.forma.get("checkauto").enable();
       this.forma.get("codigo_cuenta").enable();
-      // this.forma.get("numero_cuenta").enable();
       this.forma.get("numero_copias").enable();
       this.forma.get("codigo_qr").enable();
       this.forma.get("logo_empresa").enable();
@@ -540,55 +567,102 @@ export class FormtImpComponent implements OnInit {
     });
   }
 
-  // printDoc() {}
-  // IrDashboard() {}
-  // downloadPdfExel(tipo: string) {}
+  printDoc() {
+    let peticion: Observable<any>;
+    peticion = this.adm012S.getAdm012Impr(
+      "90",
+      this.idModulo,
+      this.start.Texto
+    );
+    this.sus = peticion.subscribe((resp) => {
+      if (resp["ok"]) {
+        const feImpr: string = resp["fecha"];
+        const hrImpr: string = resp["horaImpresion"];
+        const logoEmpr: string = resp.data[0].datos_empresa[0].logo_empresa;
+        const sglEmpre: string = resp.data[0].datos_empresa[0].sigla;
+        const htmlStart: string =
+          "<html> <head> <title>Ormate</title></head> <style type = 'text/css' > .footer-print { position: fixed; left: 0; bottom: 0; width: 100%; text-align: center;} .footer-div { display: flex; width: 100%; font-size: 15px; margin: auto; border-bottom: 0.3px solid black;} .footer-empr { width: 50%; text-align: left; padding-top: 0.5rem; } .footer-user { width: 50%; text-align: right; padding-top: 0.5rem; } @media print { @page { margin: 1.5cm; margin-bottom: 2cm; } } table.report-container { page-break-after: always; } thead.report-header { display: table-header-group; } tfoot.report-footer { display: table-footer-group; } .table th, .table td { padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; } .centrado { text-align: center; } .font-size-title-comp { font-size: 20px;} .font-size-title-name { font-size: 14px; } body { margin: 0; } .margin-top-bottom { margin : 0 0 0.5rem 0; } </style> <body style= 'margin : 0'> <table class = 'report-container' style='width: 100%;'> ";
+        const header: string = `<thead class='report-header'>
+        <tr>
+            <th class='report-header-cell'>
+              <div class='header-info'>
+                <div  style='margin: auto;'>
+                  <div
+                    style='display: flex; font-size: 10px; margin: auto;'
+                  >
+                    <div  style='width: 50%; display: flex;'>
+                      <div>
+                        <img
+                          src=${logoEmpr} style='width: 100px; height: 100px;'
+                          />
+                        </div>
+                        <div style='padding-left: 25; text-align: left;'>
+                          <p class='font-weight-bold ' style='font-size: 16px; margin : 0 0 0.5rem 0; ' >${sglEmpre}</p>
+                          <p>Direccion : Av. Monseñor Salvatierra # 150</p>
+                          <p>Telf: 33-339868</p>
+                          <p>Santa Cruz - Bolivia</p>
+                        </div>
+                      </div>
+                      <div style='width: 50%; text-align: right;'>
+                        <p class = 'margin-top-bottom'>Fecha: ${feImpr}</p><p class = 'margin-top-bottom'>Impresión: ${hrImpr}</p> </div> </div> <div style='display: flex;'><div style='width: 25%;'></div><div style='width: 50%; text-align: center; justify-self: center;'><p class = 'margin-top-bottom' style='font-size: 20px; margin : 0 0 0.5rem 0;'>CLASE DE DOCUMENTOS</p><p class = 'margin-top-bottom' style='font-size: 14px; margin : 0 0 0.5rem 0;'>${this.nombMod}</p></div><div style='width: 25%;'></div></div></div></div></th></tr></thead>`;
+        const tableStart: string =
+          "<tbody class='report-content'><tr><td class='report-content-cell'><div class='main' style='margin-botton:0.5rem'> <table class='table' style='width: 100%;' >";
+        const tableHead: string =
+          "<thead class='centrado'><tr class='bg-blue'><th style = ' width: 10%;'>Codigo</th><th style=' width : 30%;'>Descripcion</th><th style=' width : 30%;'>Sigla</th><th style=' width : 20%; '>Componente</th><th style=' width : 10% ;'>Estado</th></tr></thead>";
+        let tableData: string = "<tbody>";
+        const data: any[] = resp.data[0].clase_documentos;
+        const long = data.length - 1;
+        for (let i = long; i >= 0; i--) {
+          tableData =
+            `<tr><td style = 'padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; text-align : center ; width : 20%;' >${
+              data[i].id_documento
+            } </td><td style = 'padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; white-space: nowrap; ' >${
+              data[i].descripcion
+            } </td><td style = 'padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; white-space: nowrap; ' >${
+              data[i].sigla
+            } </td><td style = 'padding: 0.55rem 1.00rem; vertical-align: top; border-top: 1px solid #ddd; white-space: nowrap; ' >${
+              data[i].componente
+            } </td><td class='centrado' style = 'padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; text-align : center; ' >
+        ${data[i].estado === true ? "activo" : "inactivo"} </td></tr>` +
+            tableData;
+        }
+        tableData = tableData + "</tbody>";
+        const tableEnd: string = "</table> </div></td></tr></tbody>";
+        const tableFooter: string =
+          "<tfoot class='report-footer'> <tr> <td class='report-footer-cell'> <footer class='footer-print'> <div class='footer-info'> <div class='footer-div'> <div class='footer-empr'>Aplic: Ormate</div> <div class='footer-user'>Usuario: Admin</div> </div> </div> </footer> </td> </tr> </tfoot>";
+        const htmlEnd: string = "</table></body></html>";
+        const mandarImprimir: string =
+          htmlStart +
+          header +
+          tableStart +
+          tableHead +
+          tableData +
+          tableEnd +
+          tableFooter +
+          htmlEnd;
+        const w = window.open();
+        w.document.write(mandarImprimir);
+        w.document.close();
+        setTimeout(() => {
+          w.print();
+          w.close();
+        }, 100);
+      } else {
+        this.notyG.noty("error", "Error al mandar a imprimir", 3000);
+      }
+    });
+  }
 
-  /* Metodos para imprimir y exportar adm 012*/
-  // printDoc() {
-  //   const htmlStart: string =
-  //     "<html><head><title>Imprimir</title><link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'  rel='stylesheet' type='text/css'/> </head><body>";
-  //   const header: string =
-  //     "<header><div style='padding: 5px 0; margin: auto;'><div style='display: flex; font-size: 10px; margin: auto;'><div style='width: 50%; display: flex;'><div><img src='https://pbs.twimg.com/profile_images/522791992762187776/CwgQU9cn_400x400.png' style='width: 100px; height: 100px;'/></div><div style='padding-left: 25;'><p>ORMATE</p><p>Direccion : Av. Monseñor Salvatierra # 150</p><p>Telf: 33-339868</p><p>Santa Cruz - Bolivia</p></div></div><div style='padding-left: 30%;'><p>Fecha: 18/05/2020</p><p>Impresión: 15:15:30</p></div></div><div style='display: flex;'><div style='width: 25%;'></div><div style='width: 50%; text-align: center; justify-self: center;'><p style='font-size: 20px;'>COMPONENTE DE FACTURACION</p><p style='font-size: 14px;'>administracion</p></div><div style='width: 25%;'></div></div></div></header>";
-  //   const tableStart: string = "<table class='table'>";
-  //   const tableHead: string =
-  //     "<thead class='text-center'><tr class='bg-blue'><th>Codigo</th><th>Descripcion</th><th>Sigla</th><th>Componente</th><th>Estado</th></tr></thead>";
-  //   let tableData: string = "<tbody>";
-  //   const long = this.auxma.length - 1;
-  //   for (let i = long; i >= 0; i--) {
-  //     tableData =
-  //       `<tr><td>${this.auxma[i].id_documento} </td><td>${this.auxma[i].descripcion} </td><td>${this.auxma[i].sigla} </td><td>${this.auxma[i].componente} </td><td>${this.auxma[i].estado} </td></tr>` +
-  //       tableData;
-  //   }
-  //   tableData = tableData + "</tbody>";
-  //   const tableEnd: string = "</table>";
-  //   const htmlEnd: string = "</body></html>";
-  //   const mandarImprimir: string =
-  //     htmlStart +
-  //     header +
-  //     tableStart +
-  //     tableHead +
-  //     tableData +
-  //     tableEnd +
-  //     htmlEnd;
-  //   const w = window.open();
-  //   w.document.write(mandarImprimir);
-  //   w.document.close();
-  //   setTimeout(() => {
-  //     w.print();
-  //     w.close();
-  //   }, 100);
-  // }
   IrDashboard() {
     window.location.href = url.principal;
   }
 
   downloadPdfExel(tipo: string) {
     let peticion: Observable<any>;
-    const rutaPdf: string = "adm_000/adm_012/get-pdf/90/0/all_data";
-    const rutaExel: string = "adm_000/adm_012/get-excel/90/0/all_data";
+    const rutaPdf: string = `adm_000/adm_012/get-pdf/${this.idenMod}/${this.idModulo}/all_data`;
+    const rutaExel: string = `adm_000/adm_012/get-excel/${this.idenMod}/${this.idModulo}/all_data`;
     let tipoFile: string = "";
-    const fileName: string = "adm012";
+    const fileName: string = "Formato Impresion - " + this.nombMod;
     switch (tipo) {
       case "pdf":
         tipoFile = "application/pdf";

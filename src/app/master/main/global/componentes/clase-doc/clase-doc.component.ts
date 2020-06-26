@@ -82,27 +82,25 @@ export class ClaseDocComponent implements OnInit {
     const s: UrlSegment[] = g.segments;
     const enviarData = this.validarMod(s[1].path, s[2].path);
     if (enviarData) {
-      setTimeout(() => {
-        this.getAdm011(this.start.Texto);
-      }, 1500);
+      this.getAdm011(this.start.Texto);
       this.crearFormulario();
       this.cargarSelecRegistros();
       this.mostrarConten = true;
+      this.textBuscarAdm011.valueChanges
+        .pipe(debounceTime(500))
+        .subscribe((value) => {
+          if (value.length > 1) {
+            this.getAdm011(value, "1");
+          } else {
+            this.start.Texto = "all_data";
+            this.getAdm011(this.start.Texto);
+          }
+        });
     } else {
       this.mostrarConten = false;
       this.router.navigate(["/bienvenido"]);
       return;
     }
-    this.textBuscarAdm011.valueChanges
-      .pipe(debounceTime(500))
-      .subscribe((value) => {
-        if (value.length > 1) {
-          this.getAdm011(value, "1");
-        } else {
-          this.start.Texto = "all_data";
-          this.getAdm011(this.start.Texto);
-        }
-      });
   }
   ngOnInit(): void {}
 
@@ -518,22 +516,11 @@ export class ClaseDocComponent implements OnInit {
     // $("#modal_adm_011_eliminar").modal("hide");
   }
 
-  GetAdm011Pdf() {
-    this.adm011S.getAdm011Pdf("90", this.idModulo).subscribe((resp) => {
-      if (resp["ok"]) {
-      } else {
-        // console.log("error: ", resp["mensaje"]);
-      }
-    });
-  }
-
   printDoc() {
     let peticion: Observable<any>;
-    peticion = this.adm011S.getAdm011(
+    peticion = this.adm011S.getAdm011Impr(
       "90",
-      "1",
       this.idModulo,
-      "1000",
       this.start.Texto
     );
     this.sus = peticion.subscribe((resp) => {
@@ -618,12 +605,13 @@ export class ClaseDocComponent implements OnInit {
   IrDashboard() {
     window.location.href = url.principal;
   }
+
   downloadPdfExel(tipo: string) {
     let peticion: Observable<any>;
-    const rutaPdf: string = "adm_000/adm_011/get-pdf/90/0/all_data";
-    const rutaExel: string = "adm_000/adm_011/get-excel/90/0/all_data";
+    const rutaPdf: string = `adm_000/adm_011/get-pdf/${this.idenMod}/${this.idModulo}/all_data`;
+    const rutaExel: string = `adm_000/adm_011/get-excel/${this.idenMod}/${this.idModulo}/all_data`;
     let tipoFile: string = "";
-    const fileName: string = "adm011";
+    const fileName: string = "Clase Documento - " + this.nombMod;
     switch (tipo) {
       case "pdf":
         tipoFile = "application/pdf";

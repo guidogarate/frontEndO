@@ -47,7 +47,11 @@
                   (click)="nuevoAdm012()"
                   title="agregar"
                 ></i>
-                <i class="icon-printer2 puntero xxl" title="Imprimir"></i>
+                <i
+                  class="icon-printer2 puntero xxl"
+                  (click)="printDoc()"
+                  title="Imprimir"
+                ></i>
                 <div class="list-icons">
                   <div class="dropdown">
                     <a
@@ -109,7 +113,7 @@
             <div class="col-0 col-sm-3 col-md-3 col-lg-3"></div>
             <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-center">
               <div class="form-group form-group-float m0">
-                <select
+                <!-- <select
                   class="form-control selectCenter"
                   (change)="adm012Selectgest($event.target.value)"
                 >
@@ -119,7 +123,8 @@
                   >
                     {{ item.modulo }}
                   </option>
-                </select>
+                </select> -->
+                {{ nombMod }}
               </div>
             </div>
             <div class="col-0 col-sm-4 col-md-4 col-lg-4"></div>
