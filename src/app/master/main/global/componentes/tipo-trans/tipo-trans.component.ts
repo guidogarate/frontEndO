@@ -10,7 +10,7 @@ import {
   Adm013SelectDependencia,
   Adm013SelectFormatoImpr,
 } from "src/app/master/utils/models/main/adm_000/index.models";
-import { Adm012Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
+import { Adm013Service } from "src/app/master/utils/service/main/modules/adm_000/index.shared.service";
 import url from "src/app/master/config/url.config";
 import { FileService } from "src/app/master/utils/service/main/global/file.service";
 import { saveAs } from "file-saver";
@@ -84,7 +84,13 @@ export class TipoTransComponent implements OnInit {
   id_moneda: number = 1;
   id_codigo: number = 1;
 
-  constructor() {
+  constructor(
+    private adm013S: Adm013Service,
+    private fb: FormBuilder,
+    private notyG: NotyGlobal,
+    private initG: InitGlobal,
+    private fileS: FileService
+  ) {
     this.cargarSelecRegistros();
   }
 
@@ -98,5 +104,100 @@ export class TipoTransComponent implements OnInit {
       { id_registro: 50, cantidad: "50" },
       { id_registro: 100, cantidad: "100" },
     ];
+  }
+
+  getAdm013(texto: string, numePag = "1") {
+    this.start.Busca = true;
+    let peticion: Observable<any>;
+    if (texto.length === 0 || texto === "all_data") {
+      this.start.Texto = "all_data";
+      peticion = this.adm013S.getAdm013(
+        "90",
+        numePag,
+        this.idModulo,
+        this.start.Texto
+      );
+    } else {
+      this.start.Texto = texto;
+      peticion = this.adm013S.getAdm013(
+        "90",
+        numePag,
+        this.idModulo,
+        this.start.Texto
+      );
+    }
+    this.sus = peticion.subscribe((resp) => {
+      if (!this.start.Conte) {
+        this.start.Conte = true;
+      }
+      this.start.NumPa = Number(numePag);
+      if (resp["ok"]) {
+        this.auxma = resp.data[0].tipos_transaccion;
+        if (this.selecModulos === undefined) {
+          this.selecModulos = resp.data[0].modulos;
+        }
+        if (this.selecModalMoneda === undefined) {
+          this.selecModalMoneda = resp.data[0].tipo_moneda;
+        }
+        if (this.selectClaseDoc === undefined) {
+          this.selectClaseDoc = resp.data[0].clase_documento;
+        }
+        if (this.selectCodTran === undefined) {
+          this.selectCodTran = resp.data[0].codigo_transaccion;
+        }
+        if (this.selectFormatoImpr === undefined) {
+          this.selectFormatoImpr = resp.data[0].formato_impresion;
+        }
+        this.initG.labels();
+        this.initG.select();
+        this.pagi = resp["cant"];
+        this.table = false;
+      } else {
+        if (resp["messagge"] === "No se encontraron registros") {
+          if (this.selecModulos === undefined) {
+            this.selecModulos = resp.data[0].modulos;
+          }
+          this.auxma = [];
+          this.initG.labels();
+          this.initG.select();
+          this.pagi = resp["cant"];
+          this.table = false;
+        } else {
+          this.notyG.noty("error", resp["messagge"], 5000);
+          this.selecModulos = [];
+
+          this.auxma = [];
+          this.pagi = [];
+          this.table = true;
+        }
+      }
+      this.start.Busca = false;
+      this.start.Loadi = false;
+      this.start.Table = true;
+      this.initG.select();
+      this.initG.labels();
+      this.initG.uniform();
+    });
+  }
+  crearFormulario() {
+    this.forma = this.fb.group({
+      id_modulo: ["0", [Validators.required]],
+      id_tipotran: ["", [Validators.required]],
+      descripcion: ["", [Validators.required]],
+      sigla: ["", [Validators.required]],
+      id_clase_documento: ["", [Validators.required]],
+      id_codigo_transaccion: ["", [Validators.required]],
+      id_moneda: ["", [Validators.required]],
+      cantidad_lineas: ["", [Validators.required]],
+      comprobante_estandar: ["", [Validators.required]],
+      duplicado: ["", [Validators.required]],
+      logo_empresa: ["", [Validators.required]],
+      id_rol: ["", [Validators.required]],
+      documento_preliminar: ["", [Validators.required]],
+      id_formato_impresion: ["", [Validators.required]],
+      estado: ["", [Validators.required]],
+      checkauto: [""],
+      nombre_modulo: [""],
+    });
   }
 }
