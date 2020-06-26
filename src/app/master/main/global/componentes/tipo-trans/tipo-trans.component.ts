@@ -200,4 +200,125 @@ export class TipoTransComponent implements OnInit {
       nombre_modulo: [""],
     });
   }
+  paginacion(numero: string, eliminar = true) {
+    const nume = Number(numero);
+    if (this.numeroPag === nume && eliminar) {
+      return;
+    }
+    const total = this.pagi.length;
+    let peticion: Observable<any>;
+    if (nume > 0 && nume <= total) {
+      this.numeroPag = nume;
+      peticion = this.adm013S.getAdm013(
+        "90",
+        this.numeroPag.toString(),
+        this.idModulo,
+        this.start.Texto
+      );
+    } else {
+      if (numero === "000") {
+        if (this.numeroPag === 1) {
+          return;
+        }
+        if (this.numeroPag === 1) {
+          this.numeroPag = 1;
+        } else {
+          this.numeroPag--;
+        }
+        peticion = this.adm013S.getAdm013(
+          "90",
+          this.numeroPag.toString(),
+          this.idModulo,
+          this.start.Texto
+        );
+      } else if (numero === "999") {
+        if (this.numeroPag === total) {
+          return;
+        }
+        if (this.numeroPag === total) {
+          this.numeroPag = total;
+        } else {
+          this.numeroPag++;
+        }
+        peticion = this.adm013S.getAdm013(
+          "90",
+          this.numeroPag.toString(),
+          this.idModulo,
+          this.start.Texto
+        );
+      }
+    }
+    this.sus = peticion.subscribe((resp) => {
+      if (resp["ok"]) {
+        this.auxma = resp.data[0].tipos_transaccion;
+        this.pagi = resp["cant"];
+      } else {
+        this.notyG.noty("error", resp["mensaje"], 5000);
+      }
+    });
+  }
+  boolBtnGrupo(editNuevo: boolean, cancelGuardar: boolean) {
+    this.btnGrupo.BtnCance = cancelGuardar;
+    this.btnGrupo.BtnEdita = editNuevo;
+    this.btnGrupo.BtnElimi = false;
+    this.btnGrupo.BtnGuard = cancelGuardar;
+    this.btnGrupo.BtnNuevo = editNuevo;
+  }
+  boolDisabled(bool: boolean) {
+    if (bool) {
+      this.forma.get("nombre_modulo").disable();
+      this.forma.get("checkauto").disable();
+      this.forma.get("id_formato").disable();
+      this.forma.get("descripcion").disable();
+      this.forma.get("sigla").disable();
+      // this.forma.get("tamano_impresion").disable();
+      // this.forma.get("moneda").disable();
+      // this.forma.get("codigo_cuenta").disable();
+      // this.forma.get("numero_copias").disable();
+      this.forma.get("codigo_qr").disable();
+      this.forma.get("logo_empresa").disable();
+      this.forma.get("estado").disable();
+    } else {
+      this.forma.get("id_modulo").enable();
+      this.forma.get("id_formato").enable();
+      this.forma.get("descripcion").enable();
+      this.forma.get("sigla").enable();
+      this.forma.get("tamano_impresion").enable();
+      this.forma.get("moneda").enable();
+      this.forma.get("checkauto").enable();
+      this.forma.get("codigo_cuenta").enable();
+      // this.forma.get("numero_cuenta").enable();
+      this.forma.get("numero_copias").enable();
+      this.forma.get("codigo_qr").enable();
+      this.forma.get("logo_empresa").enable();
+      this.forma.get("estado").enable();
+    }
+    this.initG.labels();
+    this.initG.select();
+  }
+
+  nuevoAdm012() {
+    this.boolBtnGrupo(false, true);
+    this.btnGrupo.BtnCance = false;
+    this.boolDisabled(false);
+    this.forma.reset({
+      id_modulo: this.idModulo,
+      nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
+      id_formato: "auto",
+      tamano_impresion: this.id_tamano,
+      moneda: this.id_moneda,
+      codigo_cuenta: this.id_codigo,
+      estado: false,
+      checkauto: true,
+    });
+
+    this.start.CtrAc = "nuevo";
+    this.ocultarSelect = false;
+    this.mostrarCheck = true;
+    this.forma.get("id_formato").setValue("auto");
+    this.forma.get("id_formato").disable();
+    this.initG.uniform();
+    this.initG.labels();
+    this.initG.select();
+  }
 }
