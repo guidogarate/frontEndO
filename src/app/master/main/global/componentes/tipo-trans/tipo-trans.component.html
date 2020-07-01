@@ -113,7 +113,7 @@
                   (change)="adm012Selectgest($event.target.value)"
                 >
                   <option
-                    *ngFor="let item of selecModulos; let i = index"
+                    *ngFor="let item of selectModulos; let i = index"
                     [value]="item.id_modulo"
                   >
                     {{ item.modulo }}
@@ -142,8 +142,7 @@
                     <th class="p-1">CODIGO</th>
                     <th class="p-1">DESCRIPCION</th>
                     <th class="p-1">SIGLA</th>
-                    <th class="p-1">TAMAÑO DE IMPRESION</th>
-                    <th class="p-1">LOGO DE EMPRESA</th>
+                    <th class="p-1">CLASE DCTO</th>
                     <th class="p-1">ESTADO</th>
                   </tr>
                 </thead>
@@ -164,16 +163,12 @@
                       tablaCebradoImpar: impar
                     }"
                   >
-                    <td class="text-center">{{ adm012.id_formato }}</td>
+                    <td class="text-center">
+                      {{ adm012.id_tipo_transaccion }}
+                    </td>
                     <td class="text-left">{{ adm012.descripcion }}</td>
                     <td class="text-left">{{ adm012.sigla }}</td>
-                    <td class="text-left">{{ adm012.tamano_impresion }}</td>
-                    <td
-                      class="text-center"
-                      *ngIf="adm012.logo_empresa; else logoContent"
-                    >
-                      Si
-                    </td>
+                    <td class="text-left">{{ adm012.clase_documento }}</td>
                     <td class="text-center" *ngIf="adm012.estado; else content">
                       Vigente
                       <div class="list-icons d-inline-block float-right">
@@ -194,11 +189,6 @@
                             class="icon-file-eye icon-white puntero"
                           ></i>
                         </div>
-                      </td>
-                    </ng-template>
-                    <ng-template #logoContent>
-                      <td class="text-center">
-                        No
                       </td>
                     </ng-template>
                   </tr>
@@ -260,7 +250,7 @@
 </div>
 
 <!-- TODO: new Modal -->
-<!-- <div
+<div
   id="modal_adm_012"
   class="modal modal-pad-center"
   tabindex="-1"
@@ -290,7 +280,7 @@
         >
           <h6 class="modal-title font-title">
             <i class="icon-books align-vertical-icon-0"></i>
-            CLASE DE DOCUMENTOS
+            TIPO DE TRANSACCIONES
           </h6>
           <div class="list-icons float-right">
             <a class="puntero" *ngIf="btnGrupo.BtnCance"
@@ -381,11 +371,12 @@
                   class="text-center font-title modal-head-back-color"
                   disabled="true"
                   type="text"
-                  value="Contabilidad"
+                  value="INVENTARIO"
                 />
               </div>
               <div class="col-sm-4 d-none d-sm-none d-md-block"></div>
             </div>
+            <!-- 1er fila -->
             <div class="row">
               <div class="col-md-2 col-12 text-center p0">
                 <div class="form-group form-group-float">
@@ -401,7 +392,7 @@
                       class="custom-control-input"
                       formControlName="checkauto"
                       (click)="habilitarAuto()"
-                      title="auxmaModal.estado"
+                      title="auxmaModal.checkauto"
                       name="identificador"
                       id="check1"
                     />
@@ -432,8 +423,8 @@
                     oninvalid="this.setCustomValidity('codigo')"
                     oninput="setCustomValidity('')"
                     placeholder="{{ placeholdeAuto }}"
-                    formControlName="id_formato"
-                    name="id_formato"
+                    formControlName="id_tipotran"
+                    name="id_tipotran"
                     title="Acepta 3 digitos"
                     required
                   />
@@ -474,7 +465,7 @@
                 </div>
               </div>
             </div>
- 
+            <!-- 2da fila -->
             <div class="row">
               <div class="col-xl-12">
                 <div class="row text-center">
@@ -484,14 +475,14 @@
                     <div class="form-group form-group-float">
                       <label
                         class="form-group-float-label font-weight-semibold text-label"
-                        >Tamaño de Impresion</label
+                        >CLASE DCTO</label
                       >
                       <select
                         class="form-control selectCenter"
                         (change)="adm012SelectTamImpr($event.target.value)"
                       >
                         <option
-                          *ngFor="let item of selecModalTamImpr; let i = index"
+                          *ngFor="let item of selectClaseDoc; let i = index"
                           value="sas"
                         >
                           {{ item.descripcion }}
@@ -505,14 +496,14 @@
                     <div class="form-group form-group-float">
                       <label
                         class="form-group-float-label font-weight-semibold text-label"
-                        >Moneda Imprimir</label
+                        >CODIGO EN TRANSACCION</label
                       >
                       <select
                         class="form-control selectCenter"
                         (change)="adm012SelectMoneda($event.target.value)"
                       >
                         <option
-                          *ngFor="let item of selecModalMoneda; let i = index"
+                          *ngFor="let item of selectCodTran; let i = index"
                           [value]="item.id_moneda"
                         >
                           {{ item.descripcion }}
@@ -526,17 +517,14 @@
                     <div class="form-group form-group-float">
                       <label
                         class="form-group-float-label font-weight-semibold text-label"
-                        >Codigo de cuenta a Imprimir</label
+                        >MONEDA DE REGISTRO</label
                       >
                       <select
                         class="form-control selectCenter"
                         (change)="adm012SelectCodigo($event.target.value)"
                       >
                         <option
-                          *ngFor="
-                            let item of selecModalCodCuenta;
-                            let i = index
-                          "
+                          *ngFor="let item of selectMoneda; let i = index"
                           [value]="item.id_codigocuenta"
                         >
                           {{ item.descripcion }}
@@ -547,27 +535,77 @@
                 </div>
               </div>
             </div>
-            
+            <!-- 3er fila opc 1 -->
             <div class="row">
-              <div class="col-md-3 col-12 p0 pad-modal-title modal-title-pb">
-                <label class="col-lg-12 col-12 text-center text-label"
-                  >Numero de Copia</label
-                >
-                <div class="col-lg-12 col-12">
-                  <input
-                    type="text"
-                    class="form-control text-center"
-                    oninvalid="this.setCustomValidity('Introducir numero de copias')"
-                    oninput="setCustomValidity('')"
-                    placeholder="numero de copias"
-                    formControlName="numero_copias"
-                    name="numero_copias"
-                    required
-                  />
+              <div
+                class="col-12 col-sm-4 col-md-4 col-lg-4 text-center pad-modal-title"
+              >
+                <div class="form-group form-group-float">
+                  <label
+                    class="form-group-float-label font-weight-semibold text-label"
+                    >DOCTO PRELIMINAR</label
+                  >
+                  <select
+                    class="form-control selectCenter"
+                    (change)="adm012SelectTamImpr($event.target.value)"
+                  >
+                    <option
+                      *ngFor="let item of selectDocPreliminar; let i = index"
+                      value="sas"
+                    >
+                      {{ item.descripcion }}
+                    </option>
+                  </select>
                 </div>
               </div>
-              <div class="col-md-1 d-none d-sm-none d-md-block"></div>
-              <div class="col-md-5 col-12 text-center p0">
+              <div
+                class="col-12 col-sm-4 col-md-4 col-lg-4 text-center pad-modal-title"
+              >
+                <div class="form-group form-group-float">
+                  <label
+                    class="form-group-float-label font-weight-semibold text-label"
+                    >DOCUMENTO STANDAR</label
+                  >
+                  <select
+                    class="form-control selectCenter"
+                    (change)="adm012SelectTamImpr($event.target.value)"
+                  >
+                    <option
+                      *ngFor="let item of selectDocStandar; let i = index"
+                      value="sas"
+                    >
+                      {{ item.descripcion }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div
+                class="col-12 col-sm-4 col-md-4 col-lg-4 text-center pad-modal-title"
+              >
+                <div class="form-group form-group-float">
+                  <label class="form-group-float-label text-label"
+                    >ESTADO</label
+                  >
+                  <div
+                    class="custom-control custom-switch p0"
+                    style="margin-left: 3em;"
+                  >
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      formControlName="checkauto"
+                      (click)="habilitarAuto()"
+                      title="auxmaModal.estado"
+                      name="estado"
+                      id="estado"
+                    />
+                    <label class="custom-control-label" for="estado"></label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TODO: por Editar -->
+              <!-- <div class="col-md-5 col-12 text-center p0">
                 <div class="row p0 m0" style="padding-bottom: 0.5rem;">
                   <label class="col-sm-8 col-8 m0 text-label text-left"
                     >Qr de Documento</label
@@ -603,8 +641,8 @@
                     ></label>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-3 col-12 text-center p0">
+              </div> -->
+              <!-- <div class="col-md-3 col-12 text-center p0">
                 <div class="row p0 m0">
                   <label class="col-sm-6 col-8 m0 text-label text-left"
                     >Estado</label
@@ -621,6 +659,170 @@
                     <label class="custom-control-label" for="estado"></label>
                   </div>
                 </div>
+              </div> -->
+            </div>
+            <!-- 3er fila Opc 2  -->
+            <div class="row">
+              <div
+                class="col-12 col-sm-4 col-md-4 col-lg-4 text-center pad-modal-title"
+              >
+                <div class="form-group form-group-float">
+                  <label
+                    class="form-group-float-label font-weight-semibold text-label"
+                    >CON DEPENDENCIA</label
+                  >
+                  <select
+                    class="form-control selectCenter"
+                    (change)="adm012SelectTamImpr($event.target.value)"
+                  >
+                    <option
+                      *ngFor="let item of selectDependencia; let i = index"
+                      value="sas"
+                    >
+                      {{ item.descripcion }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div
+                class="col-12 col-sm-4 col-md-4 col-lg-4 text-center pad-modal-title"
+              >
+                <label class="col-lg-12 col-12 text-center text-label"
+                  >CANTIDAD DE LINEAS</label
+                >
+                <div class="col-lg-12 col-12">
+                  <input
+                    type="text"
+                    class="form-control text-center"
+                    oninvalid="this.setCustomValidity('Cantidad Lineas')"
+                    oninput="setCustomValidity('')"
+                    placeholder="cantidad de lineas"
+                    formControlName="cantidad_lineas"
+                    name="cantidad_lineas"
+                    required
+                  />
+                </div>
+              </div>
+              <div
+                class="col-12 col-sm-4 col-md-4 col-lg-4 text-center pad-modal-title"
+              >
+                <div class="form-group form-group-float">
+                  <label
+                    class="form-group-float-label font-weight-semibold text-label"
+                    >DCTO PRELIMINAR</label
+                  >
+                  <select
+                    class="form-control selectCenter"
+                    (change)="adm012SelectTamImpr($event.target.value)"
+                  >
+                    <option
+                      *ngFor="let item of selectDocPreliminar; let i = index"
+                      value="sas"
+                    >
+                      {{ item.descripcion }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div
+                class="col-12 col-sm-4 col-md-4 col-lg-4 text-center pad-modal-title"
+              >
+                <div class="form-group form-group-float">
+                  <label
+                    class="form-group-float-label font-weight-semibold text-label"
+                    >CON DEPENDENCIA</label
+                  >
+                  <select
+                    class="form-control selectCenter"
+                    (change)="adm012SelectTamImpr($event.target.value)"
+                  >
+                    <option
+                      *ngFor="let item of selectDependencia; let i = index"
+                      value="sas"
+                    >
+                      {{ item.descripcion }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div
+                class="col-12 col-sm-4 col-md-4 col-lg-4 text-center pad-modal-title"
+              >
+                <div class="form-group form-group-float">
+                  <label
+                    class="form-group-float-label font-weight-semibold text-label"
+                    >CON DEPENDENCIA</label
+                  >
+                  <select
+                    class="form-control selectCenter"
+                    (change)="adm012SelectTamImpr($event.target.value)"
+                  >
+                    <option
+                      *ngFor="let item of selectDependencia; let i = index"
+                      value="sas"
+                    >
+                      {{ item.descripcion }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-5 col-md-5 col-lg-5 text-center p0">
+                <div class="row p0 m0" style="padding-bottom: 0.5rem;">
+                  <label class="col-sm-9 col-9 m0 text-label text-left"
+                    >PERMITIR DUPLICADOS</label
+                  >
+                  <div class="col-sm-3 col-3 m0 custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      formControlName="duplicado"
+                      title="auxmaModal.duplicado"
+                      name="duplicado"
+                      id="duplicado"
+                    />
+                    <label class="custom-control-label" for="duplicado"></label>
+                  </div>
+                </div>
+                <div class="row p0 m0" style="padding-bottom: 0.5rem;">
+                  <label class="col-sm-9 col-9 m0 text-label text-left"
+                    >INCLUIR PROVEEDOR</label
+                  >
+                  <div class="col-sm-3 col-3 m0 custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      formControlName="logo_empresa"
+                      title="auxmaModal.logo_empresa"
+                      name="logo_empresa"
+                      id="logo_empresa"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="logo_empresa"
+                    ></label>
+                  </div>
+                </div>
+                <div class="row p0 m0" style="padding-bottom: 0.5rem;">
+                  <label class="col-sm-9 col-9 m0 text-label text-left"
+                    >Logo de la Empresa</label
+                  >
+                  <div class="col-sm-3 col-3 m0 custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      formControlName="logo_empresa"
+                      title="auxmaModal.logo_empresa"
+                      name="logo_empresa"
+                      id="logo_empresa"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="logo_empresa"
+                    ></label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -629,7 +831,7 @@
       <hr />
     </div>
   </div>
-</div> -->
+</div>
 
 <!-- TODO: Eliminar Modal -->
 <!-- <div id="modal_adm_012_eliminar" class="modal" tabindex="-1">

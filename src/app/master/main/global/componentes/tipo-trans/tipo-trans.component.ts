@@ -37,7 +37,7 @@ import { debounceTime } from "rxjs/operators";
 })
 export class TipoTransComponent implements OnInit {
   selectCantReg: any;
-  textBuscarAdm012 = new FormControl("", []);
+  textBuscarAdm013 = new FormControl("", []);
   sus: Subscription;
   numeroPag = 1;
   loading = true;
@@ -46,8 +46,8 @@ export class TipoTransComponent implements OnInit {
   pagi: Paginacion[];
   auxma: Adm013[];
   auxmaModal: Adm013;
-  selecModulos: Adm013SelectModulos[];
-  selecModalMoneda: Adm013SelectMonedas[];
+  selectModulos: Adm013SelectModulos[];
+  selectMoneda: Adm013SelectMonedas[];
   selectClaseDoc: Adm013SelectClaseDoc[];
   selectCodTran: Adm013SelectCodTran[];
   selectDocPreliminar: Adm013SelectDocPreliminar[];
@@ -92,6 +92,18 @@ export class TipoTransComponent implements OnInit {
     private fileS: FileService
   ) {
     this.cargarSelecRegistros();
+    this.getAdm013(this.start.Texto);
+    this.crearFormulario();
+    this.textBuscarAdm013.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe((value) => {
+        if (value.length > 1) {
+          this.getAdm013(value, "1");
+        } else {
+          this.start.Texto = "all_data";
+          this.getAdm013(this.start.Texto);
+        }
+      });
   }
 
   ngOnInit(): void {}
@@ -133,11 +145,11 @@ export class TipoTransComponent implements OnInit {
       this.start.NumPa = Number(numePag);
       if (resp["ok"]) {
         this.auxma = resp.data[0].tipos_transaccion;
-        if (this.selecModulos === undefined) {
-          this.selecModulos = resp.data[0].modulos;
+        if (this.selectModulos === undefined) {
+          this.selectModulos = resp.data[0].modulos;
         }
-        if (this.selecModalMoneda === undefined) {
-          this.selecModalMoneda = resp.data[0].tipo_moneda;
+        if (this.selectMoneda === undefined) {
+          this.selectMoneda = resp.data[0].tipo_moneda;
         }
         if (this.selectClaseDoc === undefined) {
           this.selectClaseDoc = resp.data[0].clase_documento;
@@ -154,8 +166,8 @@ export class TipoTransComponent implements OnInit {
         this.table = false;
       } else {
         if (resp["messagge"] === "No se encontraron registros") {
-          if (this.selecModulos === undefined) {
-            this.selecModulos = resp.data[0].modulos;
+          if (this.selectModulos === undefined) {
+            this.selectModulos = resp.data[0].modulos;
           }
           this.auxma = [];
           this.initG.labels();
@@ -164,7 +176,7 @@ export class TipoTransComponent implements OnInit {
           this.table = false;
         } else {
           this.notyG.noty("error", resp["messagge"], 5000);
-          this.selecModulos = [];
+          this.selectModulos = [];
 
           this.auxma = [];
           this.pagi = [];
@@ -266,35 +278,52 @@ export class TipoTransComponent implements OnInit {
   }
   boolDisabled(bool: boolean) {
     if (bool) {
-      this.forma.get("nombre_modulo").disable();
-      this.forma.get("checkauto").disable();
-      this.forma.get("id_formato").disable();
+      this.forma.get("id_modulo").disable();
+      this.forma.get("id_tipotran").disable();
       this.forma.get("descripcion").disable();
       this.forma.get("sigla").disable();
-      // this.forma.get("tamano_impresion").disable();
-      // this.forma.get("moneda").disable();
-      // this.forma.get("codigo_cuenta").disable();
-      // this.forma.get("numero_copias").disable();
-      this.forma.get("codigo_qr").disable();
-      this.forma.get("logo_empresa").disable();
+      this.forma.get("id_clase_documento").disable();
+      this.forma.get("id_codigo_transaccion").disable();
+      this.forma.get("id_moneda").disable();
+      this.forma.get("cantidad_lineas").disable();
+      this.forma.get("comprobante_estandar").disable();
+      this.forma.get("duplicado").disable();
+      this.forma.get("id_rol").disable();
+      this.forma.get("documento_preliminar").disable();
+      this.forma.get("checkauto").disable();
+      this.forma.get("id_formato_impresion").disable();
       this.forma.get("estado").disable();
+      this.forma.get("nombre_modulo").disable();
     } else {
       this.forma.get("id_modulo").enable();
-      this.forma.get("id_formato").enable();
+      this.forma.get("id_tipotran").enable();
       this.forma.get("descripcion").enable();
       this.forma.get("sigla").enable();
-      this.forma.get("tamano_impresion").enable();
-      this.forma.get("moneda").enable();
+      this.forma.get("id_clase_documento").enable();
+      this.forma.get("id_codigo_transaccion").enable();
+      this.forma.get("id_moneda").enable();
+      this.forma.get("cantidad_lineas").enable();
+      this.forma.get("comprobante_estandar").enable();
+      this.forma.get("duplicado").enable();
+      this.forma.get("id_rol").enable();
+      this.forma.get("documento_preliminar").enable();
       this.forma.get("checkauto").enable();
-      this.forma.get("codigo_cuenta").enable();
-      // this.forma.get("numero_cuenta").enable();
-      this.forma.get("numero_copias").enable();
-      this.forma.get("codigo_qr").enable();
-      this.forma.get("logo_empresa").enable();
+      this.forma.get("id_formato_impresion").enable();
       this.forma.get("estado").enable();
+      this.forma.get("nombre_modulo").enable();
     }
     this.initG.labels();
     this.initG.select();
+  }
+
+  ObtenerNombreModulo(id: number) {
+    let name: string = "";
+    this.selectModulos.forEach((element) => {
+      if (element.id_modulo === id) {
+        name = element.modulo;
+      }
+    });
+    return name;
   }
 
   nuevoAdm012() {
