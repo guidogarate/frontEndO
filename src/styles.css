@@ -209,6 +209,15 @@ body {
 .modal-pad-center {
   padding-left: calc(20%);
 }
+.enLinea {
+  white-space: nowrap;
+}
+.pad-r-0 {
+  padding-right: 0rem;
+}
+.text-min {
+  font-size: 0.71rem;
+}
 @media screen and (max-width: 600px) {
   .modal-pad-center {
     padding-left: 0px;

@@ -92,6 +92,7 @@ export class TipoTransComponent implements OnInit {
     private fileS: FileService
   ) {
     this.cargarSelecRegistros();
+    this.cargarSelects();
     this.getAdm013(this.start.Texto);
     this.crearFormulario();
     this.textBuscarAdm013.valueChanges
@@ -115,6 +116,28 @@ export class TipoTransComponent implements OnInit {
       { id_registro: 25, cantidad: "25" },
       { id_registro: 50, cantidad: "50" },
       { id_registro: 100, cantidad: "100" },
+    ];
+  }
+  cargarSelects() {
+    this.selectFormatoImpr = [
+      { id_formato_impresion: 1, descripcion: "PRELIMINAR CONTABILIDAD" },
+      { id_formato_impresion: 1, descripcion: "PRELIMINAR ADMINISTRACION" },
+      { id_formato_impresion: 1, descripcion: "PRELIMINAR INVENTARIO" },
+    ];
+    this.selectDocPreliminar = [
+      { documento_preliminar: 10, descripcion: "PRELIMINAR Inventario" },
+      { documento_preliminar: 20, descripcion: "PRELIMINAR ADM" },
+      { documento_preliminar: 30, descripcion: "PRELIMINAR CONTABILIDAD" },
+    ];
+    this.selectDocStandar = [
+      { comprobante_estandar: 10, descripcion: "COMP-STANDAR1" },
+      { comprobante_estandar: 10, descripcion: "COMP-STANDAR2" },
+      { comprobante_estandar: 10, descripcion: "COMP-STANDAR3" },
+    ];
+    this.selectDependencia = [
+      { id_codigo_Dep: 10, descripcion: "SOLICITUD-INV" },
+      { id_codigo_Dep: 10, descripcion: "SOLICITUD-ADM" },
+      { id_codigo_Dep: 10, descripcion: "SOLICITUD-CONT" },
     ];
   }
 
@@ -349,5 +372,163 @@ export class TipoTransComponent implements OnInit {
     this.initG.uniform();
     this.initG.labels();
     this.initG.select();
+  }
+  OpcionesTable(adm_013: Adm013, tipo: string) {
+    // this.obtenerData(adm_013);
+    this.forma.reset(this.auxmaModal);
+    this.start.IdCod = "" + adm_013.id_tipotran;
+    switch (tipo) {
+      case "visualizar":
+        this.btnGrupo.BtnEdita = true;
+        this.btnGrupo.BtnNuevo = true;
+        this.boolDisabled(true);
+        break;
+      case "editar":
+        this.btnGrupo.BtnCance = true;
+        this.btnGrupo.BtnGuard = true;
+        this.boolDisabled(false);
+        this.forma.get("nombre_modulo").disable();
+        this.forma.get("checkauto").disable();
+        this.forma.get("id_formato").disable();
+        break;
+      case "eliminar":
+        // this.eliminarAdm011(adm_011);
+        return;
+      default:
+        this.notyG.noty("error", "Operacion incorrecta", 5000);
+        break;
+    }
+    this.start.CtrAc = tipo;
+  }
+
+  OpcionesModal(tipo: string) {
+    this.mostrarCheck = false;
+
+    switch (tipo) {
+      case "nuevo":
+        if (this.insertar === "exito") {
+          this.boolDisabled(true);
+          this.boolBtnGrupo(true, false);
+          return;
+        }
+        this.start.CtrAc = tipo;
+        this.boolBtnGrupo(false, true);
+        this.btnGrupo.BtnCance = true;
+        this.forma.reset({
+          id_modulo: this.idModulo,
+          nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
+          estado: true,
+          id_formato: "auto",
+          duplicados: true,
+          codigo_qr: true,
+          checkauto: true,
+        }); // resetea todo a null y estado a false
+
+        this.boolDisabled(false);
+        this.mostrarCheck = true;
+        this.forma.get("id_tipotran").setValue("auto");
+        this.forma.get("id_tipotran").disable();
+        this.initG.uniform();
+        this.initG.labels();
+        return;
+      case "editar":
+        this.start.CtrAc = tipo;
+        this.boolDisabled(false);
+        this.boolBtnGrupo(false, true);
+        this.forma.get("id_tipotran").disable();
+        this.forma.get("checkauto").disable();
+        return;
+      case "salir":
+        this.insertar = "fall";
+        this.placeholdeAuto = "automatico";
+        this.resetDatos();
+        this.boolDisabled(true);
+        break;
+      case "cancelar":
+        if (this.insertar === "exito") {
+          this.boolDisabled(true);
+          this.boolBtnGrupo(true, false);
+          return;
+        }
+        this.placeholdeAuto = "automatico";
+        this.resetDatos();
+        this.boolDisabled(true);
+        this.boolBtnGrupo(true, false);
+        return;
+      case "guardar":
+        this.boolDisabled(false);
+
+        if (this.forma.invalid) {
+          this.mostrarCheck = true;
+          return;
+        }
+        this.btnGrupo.BtnLoadi = true;
+        this.btnGrupo.BtnCance = false;
+
+        this.guardarDatos(this.forma.value, this.start.CtrAc);
+        return;
+    }
+    this.boolBtnGrupo(true, true);
+    this.boolBtnGrupo(false, false);
+  }
+
+  resetDatos() {
+    this.forma.reset(this.auxmaModal);
+    this.initG.labels();
+    this.initG.select();
+  }
+  guardarDatos(adm_013: Adm013, contorlAccion: string) {
+    let peticion: Observable<any>;
+    if (contorlAccion === "nuevo") {
+      peticion = this.adm013S.inAdm013(adm_013);
+    } else if (contorlAccion === "editar") {
+      peticion = this.adm013S.upAdm012(
+        adm_013,
+        this.idModulo,
+        "" + adm_013.id_tipotran
+      );
+    } else {
+      this.notyG.noty("error", "control Accion Invalido", 2000);
+    }
+    this.sus = peticion.subscribe((resp) => {
+      this.btnGrupo.BtnLoadi = false;
+      this.boolDisabled(true);
+      this.boolBtnGrupo(true, false);
+      if (resp["ok"]) {
+        if (contorlAccion === "nuevo") {
+          this.start.IdCod = resp["id_registro"];
+          this.insertar = "exito";
+        }
+        this.getAdm013(this.start.Texto, this.start.NumPa.toString());
+        this.notyG.noty("success", resp["mensaje"], 1000);
+      } else {
+        this.boolBtnGrupo(false, true);
+        this.boolDisabled(false);
+        this.notyG.noty("error", resp["mensaje"], 3000);
+      }
+    });
+  }
+  downloadPdfExel(tipo: string) {
+    let peticion: Observable<any>;
+    const rutaPdf: string = "adm_000/adm_013/get-pdf/90/0/all_data";
+    const rutaExel: string = "adm_000/adm_013/get-excel/90/0/all_data";
+    let tipoFile: string = "";
+    const fileName: string = "adm013";
+    switch (tipo) {
+      case "pdf":
+        tipoFile = "application/pdf";
+        peticion = this.fileS.downloadFile({ fileName }, rutaPdf);
+        break;
+      case "exel":
+        tipoFile = "application/vnd.ms-excel";
+        peticion = this.fileS.downloadFile({ fileName }, rutaExel);
+        break;
+      default:
+        break;
+    }
+    this.sus = peticion.subscribe((resp) => {
+      const archivo = new Blob([resp], { type: tipoFile });
+      saveAs(archivo, fileName);
+    });
   }
 }

@@ -732,14 +732,14 @@
                 <div class="form-group form-group-float">
                   <label
                     class="form-group-float-label font-weight-semibold text-label"
-                    >CON DEPENDENCIA</label
+                    >FORMATO DE IMPRESION</label
                   >
                   <select
                     class="form-control selectCenter"
                     (change)="adm012SelectTamImpr($event.target.value)"
                   >
                     <option
-                      *ngFor="let item of selectDependencia; let i = index"
+                      *ngFor="let item of selectFormatoImpr; let i = index"
                       value="sas"
                     >
                       {{ item.descripcion }}
@@ -753,14 +753,14 @@
                 <div class="form-group form-group-float">
                   <label
                     class="form-group-float-label font-weight-semibold text-label"
-                    >CON DEPENDENCIA</label
+                    >DOCUMENTO STANDAR</label
                   >
                   <select
                     class="form-control selectCenter"
                     (change)="adm012SelectTamImpr($event.target.value)"
                   >
                     <option
-                      *ngFor="let item of selectDependencia; let i = index"
+                      *ngFor="let item of selectDocStandar; let i = index"
                       value="sas"
                     >
                       {{ item.descripcion }}
@@ -768,12 +768,15 @@
                   </select>
                 </div>
               </div>
-              <div class="col-12 col-sm-5 col-md-5 col-lg-5 text-center p0">
+              <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-center p0">
                 <div class="row p0 m0" style="padding-bottom: 0.5rem;">
-                  <label class="col-sm-9 col-9 m0 text-label text-left"
+                  <label
+                    class="col-sm-9 col-9 m0 text-label text-left enLinea text-min"
                     >PERMITIR DUPLICADOS</label
                   >
-                  <div class="col-sm-3 col-3 m0 custom-control custom-switch">
+                  <div
+                    class="col-sm-3 col-3 m0 custom-control custom-switch pad-r-0"
+                  >
                     <input
                       type="checkbox"
                       class="custom-control-input"
@@ -786,10 +789,12 @@
                   </div>
                 </div>
                 <div class="row p0 m0" style="padding-bottom: 0.5rem;">
-                  <label class="col-sm-9 col-9 m0 text-label text-left"
+                  <label class="col-sm-9 col-9 m0 text-label text-left enLinea"
                     >INCLUIR PROVEEDOR</label
                   >
-                  <div class="col-sm-3 col-3 m0 custom-control custom-switch">
+                  <div
+                    class="col-sm-3 col-3 m0 custom-control custom-switch pad-r-0"
+                  >
                     <input
                       type="checkbox"
                       class="custom-control-input"
@@ -806,21 +811,20 @@
                 </div>
                 <div class="row p0 m0" style="padding-bottom: 0.5rem;">
                   <label class="col-sm-9 col-9 m0 text-label text-left"
-                    >Logo de la Empresa</label
+                    >Estado</label
                   >
-                  <div class="col-sm-3 col-3 m0 custom-control custom-switch">
+                  <div
+                    class="col-sm-3 col-3 m0 custom-control custom-switch pad-r-0"
+                  >
                     <input
                       type="checkbox"
                       class="custom-control-input"
-                      formControlName="logo_empresa"
+                      formControlName="estado"
                       title="auxmaModal.logo_empresa"
-                      name="logo_empresa"
-                      id="logo_empresa"
+                      name="estado"
+                      id="estado"
                     />
-                    <label
-                      class="custom-control-label"
-                      for="logo_empresa"
-                    ></label>
+                    <label class="custom-control-label" for="estado"></label>
                   </div>
                 </div>
               </div>
