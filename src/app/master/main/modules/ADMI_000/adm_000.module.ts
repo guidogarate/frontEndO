@@ -17,7 +17,6 @@ import { Adm010Component } from "./adm010/adm010.component";
 
 import { PipesModule } from "../../../utils/pipe/pipes.module";
 import { Adm009Component } from "./adm009/adm009.component";
-import { Adm012Component } from "./adm012/adm012.component";
 import { GlobalElemModule } from "../../global/elementos/globalEleme.module";
 
 @NgModule({
@@ -32,7 +31,6 @@ import { GlobalElemModule } from "../../global/elementos/globalEleme.module";
     Adm008Component,
     Adm009Component,
     Adm010Component,
-    Adm012Component,
   ],
   providers: [DatePipe],
   imports: [

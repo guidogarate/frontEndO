@@ -77,7 +77,6 @@
                   </div>
                 </div>
                 <i
-                  (click)="IrDashboard()"
                   class="navbar-nav-link puntero"
                   class="icon-exit xxl"
                   data-toggle="tooltip"
@@ -108,10 +107,7 @@
             <div class="col-0 col-sm-3 col-md-3 col-lg-3"></div>
             <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-center">
               <div class="form-group form-group-float m0">
-                <select
-                  class="form-control selectCenter"
-                  (change)="adm012Selectgest($event.target.value)"
-                >
+                <select class="form-control selectCenter">
                   <option
                     *ngFor="let item of selectModulos; let i = index"
                     [value]="item.id_modulo"
@@ -391,7 +387,6 @@
                       type="checkbox"
                       class="custom-control-input"
                       formControlName="checkauto"
-                      (click)="habilitarAuto()"
                       title="auxmaModal.checkauto"
                       name="identificador"
                       id="check1"
@@ -477,10 +472,7 @@
                         class="form-group-float-label font-weight-semibold text-label"
                         >CLASE DCTO</label
                       >
-                      <select
-                        class="form-control selectCenter"
-                        (change)="adm012SelectTamImpr($event.target.value)"
-                      >
+                      <select class="form-control selectCenter">
                         <option
                           *ngFor="let item of selectClaseDoc; let i = index"
                           value="sas"
@@ -498,10 +490,7 @@
                         class="form-group-float-label font-weight-semibold text-label"
                         >CODIGO EN TRANSACCION</label
                       >
-                      <select
-                        class="form-control selectCenter"
-                        (change)="adm012SelectMoneda($event.target.value)"
-                      >
+                      <select class="form-control selectCenter">
                         <option
                           *ngFor="let item of selectCodTran; let i = index"
                           [value]="item.id_moneda"
@@ -519,10 +508,7 @@
                         class="form-group-float-label font-weight-semibold text-label"
                         >MONEDA DE REGISTRO</label
                       >
-                      <select
-                        class="form-control selectCenter"
-                        (change)="adm012SelectCodigo($event.target.value)"
-                      >
+                      <select class="form-control selectCenter">
                         <option
                           *ngFor="let item of selectMoneda; let i = index"
                           [value]="item.id_codigocuenta"
@@ -545,10 +531,7 @@
                     class="form-group-float-label font-weight-semibold text-label"
                     >DOCTO PRELIMINAR</label
                   >
-                  <select
-                    class="form-control selectCenter"
-                    (change)="adm012SelectTamImpr($event.target.value)"
-                  >
+                  <select class="form-control selectCenter">
                     <option
                       *ngFor="let item of selectDocPreliminar; let i = index"
                       value="sas"
@@ -566,10 +549,7 @@
                     class="form-group-float-label font-weight-semibold text-label"
                     >DOCUMENTO STANDAR</label
                   >
-                  <select
-                    class="form-control selectCenter"
-                    (change)="adm012SelectTamImpr($event.target.value)"
-                  >
+                  <select class="form-control selectCenter">
                     <option
                       *ngFor="let item of selectDocStandar; let i = index"
                       value="sas"
@@ -594,7 +574,6 @@
                       type="checkbox"
                       class="custom-control-input"
                       formControlName="checkauto"
-                      (click)="habilitarAuto()"
                       title="auxmaModal.estado"
                       name="estado"
                       id="estado"
@@ -671,10 +650,7 @@
                     class="form-group-float-label font-weight-semibold text-label"
                     >CON DEPENDENCIA</label
                   >
-                  <select
-                    class="form-control selectCenter"
-                    (change)="adm012SelectTamImpr($event.target.value)"
-                  >
+                  <select class="form-control selectCenter">
                     <option
                       *ngFor="let item of selectDependencia; let i = index"
                       value="sas"
@@ -711,10 +687,7 @@
                     class="form-group-float-label font-weight-semibold text-label"
                     >DCTO PRELIMINAR</label
                   >
-                  <select
-                    class="form-control selectCenter"
-                    (change)="adm012SelectTamImpr($event.target.value)"
-                  >
+                  <select class="form-control selectCenter">
                     <option
                       *ngFor="let item of selectDocPreliminar; let i = index"
                       value="sas"
@@ -734,10 +707,7 @@
                     class="form-group-float-label font-weight-semibold text-label"
                     >FORMATO DE IMPRESION</label
                   >
-                  <select
-                    class="form-control selectCenter"
-                    (change)="adm012SelectTamImpr($event.target.value)"
-                  >
+                  <select class="form-control selectCenter">
                     <option
                       *ngFor="let item of selectFormatoImpr; let i = index"
                       value="sas"
@@ -755,10 +725,7 @@
                     class="form-group-float-label font-weight-semibold text-label"
                     >DOCUMENTO STANDAR</label
                   >
-                  <select
-                    class="form-control selectCenter"
-                    (change)="adm012SelectTamImpr($event.target.value)"
-                  >
+                  <select class="form-control selectCenter">
                     <option
                       *ngFor="let item of selectDocStandar; let i = index"
                       value="sas"

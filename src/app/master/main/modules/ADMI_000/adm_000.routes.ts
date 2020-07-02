@@ -10,7 +10,6 @@ import { Adm007Component } from "./adm007/adm007.component";
 import { Adm008Component } from "./adm008/adm008.component";
 import { Adm009Component } from "./adm009/adm009.component";
 import { Adm010Component } from "./adm010/adm010.component";
-import { Adm012Component } from "./adm012/adm012.component";
 
 let adm000_Routes: Routes = [
   {
@@ -62,11 +61,6 @@ let adm000_Routes: Routes = [
     path: "114",
     component: Adm010Component,
     data: { titulo: "adm010" },
-  },
-  {
-    path: "adm012",
-    component: Adm012Component,
-    data: { titulo: "adm012" },
   },
   {
     path: "",
