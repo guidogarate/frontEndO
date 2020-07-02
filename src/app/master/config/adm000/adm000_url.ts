@@ -80,8 +80,7 @@ export const adm000 = {
     inAdm012: "adm_000/adm_012/insert-formatos-impresion",
     upAdm012: "adm_000/adm_012/update-formatos-impresion/",
     delAdm012: "adm_000/adm_012/delete-formatos-impresion/",
-    // getPdf: "adm_000/adm_012/get-pdf/",
-    // getExcel: "adm_000/adm_012/get-excel/",
+    getAdm012Impr: "adm_000/adm_012/get-impresion/",
   },
   adm013: {
     getListTiposTransaccion: "adm_000/adm_013/get-tipos-transaccion/",
@@ -89,7 +88,5 @@ export const adm000 = {
     inAdm013: "adm_000/adm_013/insert-tipos-transaccion",
     upAdm013: "adm_000/adm_013/update-tipos-transaccion/",
     delAdm013: "adm_000/adm_013/delete-tipos-transaccion/",
-    // getPdf: "adm_000/adm_013/get-pdf/",
-    // getExcel: "adm_000/adm_013/get-excel/",
   },
 };

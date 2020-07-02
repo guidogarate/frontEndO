@@ -37,7 +37,7 @@ export class Adm012Service {
     const json = JSON.stringify({
       descripcion: adm_012.descripcion,
       sigla: adm_012.sigla,
-      tamaño_impresion: adm_012.tamaño_impresion,
+      tamano_impresion: adm_012.tamano_impresion,
       moneda: adm_012.moneda,
       codigo_cuenta: adm_012.codigo_cuenta,
       numero_copias: adm_012.numero_copias,
@@ -68,7 +68,7 @@ export class Adm012Service {
       id_formato: adm_012.id_formato,
       descripcion: adm_012.descripcion,
       sigla: adm_012.sigla,
-      tamaño_impresion: adm_012.tamaño_impresion,
+      tamaño_impresion: adm_012.tamano_impresion,
       moneda: adm_012.moneda,
       codigo_cuenta: adm_012.codigo_cuenta,
       numero_copias: adm_012.numero_copias,
@@ -84,7 +84,7 @@ export class Adm012Service {
   }
 
   getAdm012Impr(idMod: string, idModulo: number, texto: string) {
-    const url1 = `${url.prod}${adm000.adm011.getAdm011Impr}${idMod}/${idModulo}/${texto}`;
+    const url1 = `${url.prod}${adm000.adm012.getAdm012Impr}${idMod}/${idModulo}/${texto}`;
     return this.httpClient.get(url1).pipe(
       map((resp) => {
         return resp;

@@ -113,17 +113,6 @@
             <div class="col-0 col-sm-3 col-md-3 col-lg-3"></div>
             <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-center">
               <div class="form-group form-group-float m0">
-                <!-- <select
-                  class="form-control selectCenter"
-                  (change)="adm012Selectgest($event.target.value)"
-                >
-                  <option
-                    *ngFor="let item of selecModulos; let i = index"
-                    [value]="item.id_modulo"
-                  >
-                    {{ item.modulo }}
-                  </option>
-                </select> -->
                 {{ nombMod }}
               </div>
             </div>
@@ -164,7 +153,7 @@
                     "
                     data-toggle="modal"
                     data-target="#modal_adm_012"
-                    (click)="OpcionesTable(adm012, 'visualizar')"
+                    (click)="OpcionesTable(adm012)"
                     [ngClass]="{
                       tablaCebradoPar: par,
                       tablaCebradoImpar: impar
@@ -387,11 +376,12 @@
                   class="text-center font-title modal-head-back-color"
                   disabled="true"
                   type="text"
-                  value="Contabilidad"
+                  value="{{ nombMod }}"
                 />
               </div>
               <div class="col-sm-4 d-none d-sm-none d-md-block"></div>
             </div>
+            <!-- TODO: Primera fila -->
             <div class="row">
               <div class="col-md-2 col-12 text-center p0">
                 <div class="form-group form-group-float">
@@ -493,12 +483,14 @@
                         >Tamaño de Impresion</label
                       >
                       <select
+                        formControlName="tamano_impresion"
                         class="form-control selectCenter"
                         (change)="adm012SelectTamImpr($event.target.value)"
+                        required
                       >
                         <option
-                          *ngFor="let item of selecModalTamImpr; let i = index"
-                          value="sas"
+                          *ngFor="let item of selecModalTamImpr"
+                          [value]="item.id_tamano_impresion"
                         >
                           {{ item.descripcion }}
                         </option>
@@ -514,11 +506,13 @@
                         >Moneda Imprimir</label
                       >
                       <select
+                        formControlName="moneda_imprimir"
                         class="form-control selectCenter"
                         (change)="adm012SelectMoneda($event.target.value)"
+                        required
                       >
                         <option
-                          *ngFor="let item of selecModalMoneda; let i = index"
+                          *ngFor="let item of selecModalMoneda"
                           [value]="item.id_moneda"
                         >
                           {{ item.descripcion }}
@@ -535,14 +529,13 @@
                         >Codigo de cuenta a Imprimir</label
                       >
                       <select
+                        formControlName="codigo_cuenta"
                         class="form-control selectCenter"
                         (change)="adm012SelectCodigo($event.target.value)"
+                        required
                       >
                         <option
-                          *ngFor="
-                            let item of selecModalCodCuenta;
-                            let i = index
-                          "
+                          *ngFor="let item of selecModalCodCuenta"
                           [value]="item.id_codigocuenta"
                         >
                           {{ item.descripcion }}

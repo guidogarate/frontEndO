@@ -4,7 +4,7 @@ export interface Adm012 {
   id_formato: number;
   descripcion: string;
   sigla: string;
-  tamaño_impresion: string;
+  tamano_impresion: string;
   moneda: string;
   codigo_cuenta: string;
   numero_copias: string;

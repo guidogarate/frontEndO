@@ -3,30 +3,30 @@ import {
   FormControl,
   FormGroup,
   FormBuilder,
-  Validators
+  Validators,
 } from "@angular/forms";
 import { Cont003Service } from "src/app/master/utils/service/main/modules/cont_000/index.shared.service";
 import {
   NotyGlobal,
-  InitGlobal
+  InitGlobal,
 } from "src/app/master/utils/global/index.global";
 import {
   Paginacion,
-  DataEmpresa
+  DataEmpresa,
 } from "src/app/master/utils/models/main/global/index.models";
 import glb001 from "src/app/master/config/glb000/glb001_btn";
 import glb002 from "src/app/master/config/glb000/glb002_start";
 import { Observable, Subscription } from "rxjs";
 import {
   Cont003,
-  Cont003Select
+  Cont003Select,
 } from "src/app/master/utils/models/main/cont_000/index.models";
 import { debounceTime } from "rxjs/operators";
 
 @Component({
   selector: "app-cont003",
   templateUrl: "./cont003.component.html",
-  styleUrls: ["./cont003.component.css"]
+  styleUrls: ["./cont003.component.css"],
 })
 export class Cont003Component implements OnDestroy {
   btnGrupo = glb001;
@@ -56,7 +56,7 @@ export class Cont003Component implements OnDestroy {
     this.crearFormulario();
     this.textBuscarAdm009.valueChanges
       .pipe(debounceTime(500))
-      .subscribe(value => {
+      .subscribe((value) => {
         if (value.length > 1) {
           this.getCont003(value, "1", this.gestion);
         } else {
@@ -74,7 +74,7 @@ export class Cont003Component implements OnDestroy {
       checkauto: [""],
       division: ["", [Validators.required]],
       dependencia: [""],
-      estado: ["", [Validators.required]]
+      estado: ["", [Validators.required]],
     });
   }
 
@@ -88,7 +88,7 @@ export class Cont003Component implements OnDestroy {
       this.start.Texto = texto;
       peticion = this.cont003S.geCont003("10", numePag, gst, this.start.Texto);
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       this.gestion = resp.usr[0].datos_empresa[0].gestiones[0].gestion;
       if (!this.start.Conte) {
         this.start.Conte = true;
@@ -136,6 +136,7 @@ export class Cont003Component implements OnDestroy {
 
   OpcionesTable(cont_003: Cont003, tipo: string) {
     this.auxmaModal = cont_003;
+    console.log(this.auxmaModal);
     this.forma.reset(this.auxmaModal);
     this.cargarDependencia(cont_003.idunidaddivision);
     this.start.IdCod = cont_003.idunidaddivision;
@@ -291,7 +292,7 @@ export class Cont003Component implements OnDestroy {
         );
       }
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       if (resp["ok"]) {
         this.auxma = resp.usr[0].unidades_division;
         this.pagi = resp["cant"];
@@ -313,7 +314,7 @@ export class Cont003Component implements OnDestroy {
     if (long === 7) {
       const dato = {
         dependencia: null,
-        descripcion: "."
+        descripcion: ".",
       };
       this.ocultarSelect = false;
       this.dependenciaCont003.push(dato);
@@ -324,7 +325,7 @@ export class Cont003Component implements OnDestroy {
         if (7 === this.auxma[index].idunidaddivision.length) {
           const dato = {
             dependencia: this.auxma[index].idunidaddivision,
-            descripcion: this.auxma[index].descripcion
+            descripcion: this.auxma[index].descripcion,
           };
           this.dependenciaCont003.push(dato);
         }
@@ -334,7 +335,7 @@ export class Cont003Component implements OnDestroy {
         if (10 === this.auxma[index].idunidaddivision.length) {
           const dato = {
             dependencia: this.auxma[index].idunidaddivision,
-            descripcion: this.auxma[index].descripcion
+            descripcion: this.auxma[index].descripcion,
           };
           this.dependenciaCont003.push(dato);
         }
@@ -344,7 +345,7 @@ export class Cont003Component implements OnDestroy {
         if (13 === this.auxma[index].idunidaddivision.length) {
           const dato = {
             dependencia: this.auxma[index].idunidaddivision,
-            descripcion: this.auxma[index].descripcion
+            descripcion: this.auxma[index].descripcion,
           };
           this.dependenciaCont003.push(dato);
         }
@@ -354,7 +355,7 @@ export class Cont003Component implements OnDestroy {
         if (16 === this.auxma[index].idunidaddivision.length) {
           const dato = {
             dependencia: this.auxma[index].idunidaddivision,
-            descripcion: this.auxma[index].descripcion
+            descripcion: this.auxma[index].descripcion,
           };
           this.dependenciaCont003.push(dato);
         }
@@ -364,7 +365,7 @@ export class Cont003Component implements OnDestroy {
         if (19 === this.auxma[index].idunidaddivision.length) {
           const dato = {
             dependencia: this.auxma[index].idunidaddivision,
-            descripcion: this.auxma[index].descripcion
+            descripcion: this.auxma[index].descripcion,
           };
           this.dependenciaCont003.push(dato);
         }
@@ -381,7 +382,7 @@ export class Cont003Component implements OnDestroy {
     if (id_terr === 1) {
       const dato = {
         dependencia: null,
-        descripcion: "."
+        descripcion: ".",
       };
       this.ocultarSelect = false;
       this.dependenciaCont003.push(dato);
@@ -399,7 +400,7 @@ export class Cont003Component implements OnDestroy {
       if (id_terr - 1 === this.auxma[index].division) {
         const dato = {
           dependencia: this.auxma[index].idunidaddivision,
-          descripcion: this.auxma[index].descripcion
+          descripcion: this.auxma[index].descripcion,
         };
         this.dependenciaCont003.push(dato);
       }
@@ -438,7 +439,7 @@ export class Cont003Component implements OnDestroy {
     } else {
       this.notyG.noty("error", "control Accion Invalido", 2000);
     }
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       this.btnGrupo.BtnLoadi = false;
       this.boolDisabled(true);
       this.boolBtnGrupo(true, false);
@@ -476,7 +477,7 @@ export class Cont003Component implements OnDestroy {
     let peticion: Observable<any>;
     peticion = this.cont003S.deCont003(id_cod);
     let numPag = this.start.NumPa;
-    this.sus = peticion.subscribe(resp => {
+    this.sus = peticion.subscribe((resp) => {
       if (resp["ok"]) {
         if (this.auxma.length === 1) {
           numPag--;

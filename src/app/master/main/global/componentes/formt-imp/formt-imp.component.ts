@@ -15,6 +15,7 @@ import { saveAs } from "file-saver";
 import {
   NotyGlobal,
   InitGlobal,
+  PrintGlobal,
 } from "src/app/master/utils/global/index.global";
 import glb001 from "src/app/master/config/glb000/glb001_btn";
 import glb002 from "src/app/master/config/glb000/glb002_start";
@@ -35,7 +36,7 @@ import { debounceTime } from "rxjs/operators";
 })
 export class FormtImpComponent implements OnInit {
   idenMod: string = "90";
-  nombMod: string = "as";
+  nombMod: string = "";
 
   textBuscarAdm012 = new FormControl("", []);
   sus: Subscription;
@@ -86,6 +87,7 @@ export class FormtImpComponent implements OnInit {
     private fb: FormBuilder,
     private notyG: NotyGlobal,
     private initG: InitGlobal,
+    private prinG: PrintGlobal,
     private fileS: FileService,
     public router: Router
   ) {
@@ -166,6 +168,7 @@ export class FormtImpComponent implements OnInit {
         }
         if (this.selecModalMoneda === undefined) {
           this.selecModalMoneda = resp.data[0].tipo_moneda;
+          console.log(this.selecModalMoneda);
         }
         if (this.selecModalCodCuenta === undefined) {
           this.selecModalCodCuenta = resp.data[0].codigo_cuenta;
@@ -216,19 +219,17 @@ export class FormtImpComponent implements OnInit {
 
   crearFormulario() {
     this.forma = this.fb.group({
-      id_modulo: ["0", [Validators.required]],
+      checkauto: ["true"],
       id_formato: ["", [Validators.required]],
       descripcion: ["", [Validators.required]],
       sigla: ["", [Validators.required]],
       tamano_impresion: ["", [Validators.required]],
-      moneda: ["", [Validators.required]],
+      moneda_imprimir: ["", [Validators.required]],
       codigo_cuenta: ["", [Validators.required]],
       numero_copias: ["", [Validators.required]],
       codigo_qr: ["", [Validators.required]],
       logo_empresa: ["", [Validators.required]],
-      checkauto: [""],
       estado: ["", [Validators.required]],
-      nombre_modulo: [""],
     });
   }
 
@@ -299,10 +300,9 @@ export class FormtImpComponent implements OnInit {
     this.boolDisabled(false);
     this.forma.reset({
       id_modulo: this.idModulo,
-      nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
       id_formato: "auto",
       tamano_impresion: this.id_tamano,
-      moneda: this.id_moneda,
+      moneda_imprimir: this.id_moneda,
       codigo_cuenta: this.id_codigo,
       estado: false,
       checkauto: true,
@@ -318,17 +318,7 @@ export class FormtImpComponent implements OnInit {
     this.initG.select();
   }
 
-  ObtenerNombreModulo(id: number) {
-    let name: string = this.nombMod;
-    this.selecModulos.forEach((element) => {
-      if (element.id_modulo === id) {
-        name = element.modulo;
-      }
-    });
-    return name;
-  }
-
-  obtenerData(adm012: Adm012) {
+  OpcionesTable(adm012: Adm012) {
     let peticion: Observable<any>;
     peticion = this.adm012S.getAdm012Formato(
       "90",
@@ -337,7 +327,12 @@ export class FormtImpComponent implements OnInit {
     );
     this.sus = peticion.subscribe((resp) => {
       if (resp["ok"]) {
-        this.auxmaModal = resp.data[0].formato_impresion;
+        this.auxmaModal = resp.data[0].formato_impresion[0];
+        this.forma.reset(this.auxmaModal);
+        console.log(this.forma.value);
+        this.boolDisabled(true);
+        this.boolBtnGrupo(true, false);
+        this.btnGrupo.BtnElimi = true;
       } else {
         if (resp["messagge"] === "No se encontraron registros") {
           this.notyG.noty("error", resp["messagge"], 5000);
@@ -346,37 +341,8 @@ export class FormtImpComponent implements OnInit {
     });
   }
 
-  OpcionesTable(adm_012: Adm012, tipo: string) {
-    this.obtenerData(adm_012);
-    this.forma.reset(this.auxmaModal);
-    this.start.IdCod = "" + adm_012.id_formato;
-    switch (tipo) {
-      case "visualizar":
-        this.btnGrupo.BtnEdita = true;
-        this.btnGrupo.BtnNuevo = true;
-        this.boolDisabled(true);
-        break;
-      case "editar":
-        this.btnGrupo.BtnCance = true;
-        this.btnGrupo.BtnGuard = true;
-        this.boolDisabled(false);
-        this.forma.get("nombre_modulo").disable();
-        this.forma.get("checkauto").disable();
-        this.forma.get("id_formato").disable();
-        break;
-      case "eliminar":
-        // this.eliminarAdm011(adm_011);
-        return;
-      default:
-        this.notyG.noty("error", "Operacion incorrecta", 5000);
-        break;
-    }
-    this.start.CtrAc = tipo;
-  }
-
   OpcionesModal(tipo: string) {
     this.mostrarCheck = false;
-
     switch (tipo) {
       case "nuevo":
         if (this.insertar === "exito") {
@@ -389,7 +355,6 @@ export class FormtImpComponent implements OnInit {
         this.btnGrupo.BtnCance = true;
         this.forma.reset({
           id_modulo: this.idModulo,
-          nombre_modulo: this.ObtenerNombreModulo(this.idModulo),
           estado: false,
           id_formato: "auto",
           logo_empresa: true,
@@ -424,20 +389,18 @@ export class FormtImpComponent implements OnInit {
           return;
         }
         this.placeholdeAuto = "automatico";
-        this.resetDatos();
+        this.forma.reset(this.auxmaModal);
         this.boolDisabled(true);
         this.boolBtnGrupo(true, false);
         return;
       case "guardar":
         this.boolDisabled(false);
-
         if (this.forma.invalid) {
           this.mostrarCheck = true;
           return;
         }
         this.btnGrupo.BtnLoadi = true;
         this.btnGrupo.BtnCance = false;
-
         this.guardarDatos(this.forma.value, this.start.CtrAc);
         return;
     }
@@ -447,22 +410,24 @@ export class FormtImpComponent implements OnInit {
 
   boolDisabled(bool: boolean) {
     if (bool) {
-      this.forma.get("nombre_modulo").disable();
       this.forma.get("checkauto").disable();
       this.forma.get("id_formato").disable();
       this.forma.get("descripcion").disable();
       this.forma.get("sigla").disable();
+      this.forma.get("tamano_impresion").disable();
+      this.forma.get("moneda_imprimir").disable();
+      this.forma.get("codigo_cuenta").disable();
+      this.forma.get("numero_copias").disable();
       this.forma.get("codigo_qr").disable();
       this.forma.get("logo_empresa").disable();
       this.forma.get("estado").disable();
     } else {
-      this.forma.get("id_modulo").enable();
+      this.forma.get("checkauto").enable();
       this.forma.get("id_formato").enable();
       this.forma.get("descripcion").enable();
       this.forma.get("sigla").enable();
       this.forma.get("tamano_impresion").enable();
-      this.forma.get("moneda").enable();
-      this.forma.get("checkauto").enable();
+      this.forma.get("moneda_imprimir").enable();
       this.forma.get("codigo_cuenta").enable();
       this.forma.get("numero_copias").enable();
       this.forma.get("codigo_qr").enable();
@@ -473,7 +438,6 @@ export class FormtImpComponent implements OnInit {
     this.initG.select();
   }
 
-  // 11
   boolBtnGrupo(editNuevo: boolean, cancelGuardar: boolean) {
     this.btnGrupo.BtnCance = cancelGuardar;
     this.btnGrupo.BtnEdita = editNuevo;
@@ -483,7 +447,7 @@ export class FormtImpComponent implements OnInit {
   }
 
   resetDatos() {
-    this.forma.reset(this.auxmaModal);
+    this.forma.reset();
     this.initG.labels();
     this.initG.select();
   }
@@ -501,10 +465,6 @@ export class FormtImpComponent implements OnInit {
     this.initG.labels();
   }
 
-  adm012Selectgest(gestion: string) {
-    this.idModulo = Number(gestion);
-    this.getAdm012("all_data", "1");
-  }
   adm012SelectTamImpr(tamano: string) {
     this.id_tamano = Number(tamano);
   }
@@ -580,56 +540,50 @@ export class FormtImpComponent implements OnInit {
         const hrImpr: string = resp["horaImpresion"];
         const logoEmpr: string = resp.data[0].datos_empresa[0].logo_empresa;
         const sglEmpre: string = resp.data[0].datos_empresa[0].sigla;
-        const htmlStart: string =
-          "<html> <head> <title>Ormate</title></head> <style type = 'text/css' > .footer-print { position: fixed; left: 0; bottom: 0; width: 100%; text-align: center;} .footer-div { display: flex; width: 100%; font-size: 15px; margin: auto; border-bottom: 0.3px solid black;} .footer-empr { width: 50%; text-align: left; padding-top: 0.5rem; } .footer-user { width: 50%; text-align: right; padding-top: 0.5rem; } @media print { @page { margin: 1.5cm; margin-bottom: 2cm; } } table.report-container { page-break-after: always; } thead.report-header { display: table-header-group; } tfoot.report-footer { display: table-footer-group; } .table th, .table td { padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; } .centrado { text-align: center; } .font-size-title-comp { font-size: 20px;} .font-size-title-name { font-size: 14px; } body { margin: 0; } .margin-top-bottom { margin : 0 0 0.5rem 0; } </style> <body style= 'margin : 0'> <table class = 'report-container' style='width: 100%;'> ";
-        const header: string = `<thead class='report-header'>
-        <tr>
-            <th class='report-header-cell'>
-              <div class='header-info'>
-                <div  style='margin: auto;'>
-                  <div
-                    style='display: flex; font-size: 10px; margin: auto;'
-                  >
-                    <div  style='width: 50%; display: flex;'>
-                      <div>
-                        <img
-                          src=${logoEmpr} style='width: 100px; height: 100px;'
-                          />
-                        </div>
-                        <div style='padding-left: 25; text-align: left;'>
-                          <p class='font-weight-bold ' style='font-size: 16px; margin : 0 0 0.5rem 0; ' >${sglEmpre}</p>
-                          <p>Direccion : Av. Monseñor Salvatierra # 150</p>
-                          <p>Telf: 33-339868</p>
-                          <p>Santa Cruz - Bolivia</p>
-                        </div>
-                      </div>
-                      <div style='width: 50%; text-align: right;'>
-                        <p class = 'margin-top-bottom'>Fecha: ${feImpr}</p><p class = 'margin-top-bottom'>Impresión: ${hrImpr}</p> </div> </div> <div style='display: flex;'><div style='width: 25%;'></div><div style='width: 50%; text-align: center; justify-self: center;'><p class = 'margin-top-bottom' style='font-size: 20px; margin : 0 0 0.5rem 0;'>CLASE DE DOCUMENTOS</p><p class = 'margin-top-bottom' style='font-size: 14px; margin : 0 0 0.5rem 0;'>${this.nombMod}</p></div><div style='width: 25%;'></div></div></div></div></th></tr></thead>`;
-        const tableStart: string =
-          "<tbody class='report-content'><tr><td class='report-content-cell'><div class='main' style='margin-botton:0.5rem'> <table class='table' style='width: 100%;' >";
-        const tableHead: string =
-          "<thead class='centrado'><tr class='bg-blue'><th style = ' width: 10%;'>Codigo</th><th style=' width : 30%;'>Descripcion</th><th style=' width : 30%;'>Sigla</th><th style=' width : 20%; '>Componente</th><th style=' width : 10% ;'>Estado</th></tr></thead>";
+        const htmlStart: string = this.prinG.htmlStart();
+        const header: string = this.prinG.header(
+          logoEmpr,
+          sglEmpre,
+          feImpr,
+          hrImpr,
+          this.nombMod
+        );
+        const tableStart: string = this.prinG.tableStart();
+        const tableHead: string = this.prinG.tableHead2();
         let tableData: string = "<tbody>";
-        const data: any[] = resp.data[0].clase_documentos;
+        const data: any[] = resp.data[0].formatos_impresion;
         const long = data.length - 1;
         for (let i = long; i >= 0; i--) {
           tableData =
-            `<tr><td style = 'padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; text-align : center ; width : 20%;' >${
-              data[i].id_documento
-            } </td><td style = 'padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; white-space: nowrap; ' >${
-              data[i].descripcion
-            } </td><td style = 'padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; white-space: nowrap; ' >${
-              data[i].sigla
-            } </td><td style = 'padding: 0.55rem 1.00rem; vertical-align: top; border-top: 1px solid #ddd; white-space: nowrap; ' >${
-              data[i].componente
-            } </td><td class='centrado' style = 'padding: 0.55rem 1.25rem; vertical-align: top; border-top: 1px solid #ddd; text-align : center; ' >
-        ${data[i].estado === true ? "activo" : "inactivo"} </td></tr>` +
-            tableData;
+            `<tr class="centrado">
+            <td>
+              ${data[i].id_formato}
+            </td>
+            <td style="white-space: nowrap;">
+            ${data[i].descripcion}
+            </td>
+            <td>
+              <p style="white-space: nowrap;">${data[i].sigla}</p>
+              <p>${data[i].moneda_imprimir}</p>
+            </td>
+            <td>
+              <p style="white-space: nowrap;">${data[i].tamaño_impresion}</p>
+              <p style="white-space: nowrap;">${data[i].codigo_cuenta}</p>
+            </td>
+            <td>
+              <p>${data[i].logo_empresa === true ? "Si" : "No"}</p>
+              <p>${data[i].numero_copias}</p>
+            </td>
+            <td>
+              <p>${data[i].estado === true ? "Activo" : "Inactivo"}</p>
+              <p>${data[i].codigo_qr === true ? "Si" : "No"}</p>
+            </td>
+          </tr>` + tableData;
         }
         tableData = tableData + "</tbody>";
         const tableEnd: string = "</table> </div></td></tr></tbody>";
-        const tableFooter: string =
-          "<tfoot class='report-footer'> <tr> <td class='report-footer-cell'> <footer class='footer-print'> <div class='footer-info'> <div class='footer-div'> <div class='footer-empr'>Aplic: Ormate</div> <div class='footer-user'>Usuario: Admin</div> </div> </div> </footer> </td> </tr> </tfoot>";
+        const user = JSON.parse(sessionStorage.getItem("datos_user"));
+        const tableFooter: string = this.prinG.tableFooter(user.aduscodu);
         const htmlEnd: string = "</table></body></html>";
         const mandarImprimir: string =
           htmlStart +

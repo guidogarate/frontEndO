@@ -577,8 +577,8 @@ export class ClaseDocComponent implements OnInit {
         }
         tableData = tableData + "</tbody>";
         const tableEnd: string = "</table> </div></td></tr></tbody>";
-        const tableFooter: string =
-          "<tfoot class='report-footer'> <tr> <td class='report-footer-cell'> <footer class='footer-print'> <div class='footer-info'> <div class='footer-div'> <div class='footer-empr'>Aplic: Ormate</div> <div class='footer-user'>Usuario: Admin</div> </div> </div> </footer> </td> </tr> </tfoot>";
+        const user = JSON.parse(sessionStorage.getItem("datos_user"));
+        const tableFooter: string = `<tfoot class='report-footer'> <tr> <td class='report-footer-cell'> <footer class='footer-print'> <div class='footer-info'> <div class='footer-div'> <div class='footer-empr'>Aplic: Ormate</div> <div class='footer-user'>Usuario: ${user.aduscodu}</div> </div> </div> </footer> </td> </tr> </tfoot>`;
         const htmlEnd: string = "</table></body></html>";
         const mandarImprimir: string =
           htmlStart +
